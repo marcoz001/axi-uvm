@@ -1,0 +1,39 @@
+This is a Dual-top UVM testbench for the wishbone-to-axi bridge.  
+  * Emulator friendly (TB side is event driven. no @clock)
+  * Pipelined AXI driver
+  * Polymorphic interface
+  * params_pkg.sv contains all dut parameters
+  * a master driver - acts as an AXI master
+  * a slave driver  - acts as an AXI slave
+    
+The environment starts the seq. The test tweaks settings for the sequence or type_overrides to use different sequence
+    
+Testplan
+    Transfers from single byte up to full width
+    Starting address from bus-aligned up every byte to next alignment
+  WB: Classic Standard SINGLE WRITE cycle (WB B4 Spec 3.2.3)
+    
+    Pipelined/outstanding address phases and responses`
+    
+  
+  
+Day 1 - Identify needed files, create stubs. (agents, drivers, monitors, seq[r|item]), etc
+Day 2 - Create interfaces, one for each bus, DUT i/f, instantiate DUT and if/s in testbench, 
+        Create stub base test, make sure compiles and runs without failing (wont actually do anything)
+Day 3 -  Write stub seq. and stub functions; ( write() and read() )
+         Start seq from base test, do simple API calls (write, read), verifies driver, monitors, scoreboard and coverage collector are hooked up.
+           Write I/F methods  (driver/driver_bfm or driver/interface) -Veloce friendly
+         Write seq item
+             NOTE: didn't get scoreboard or covcoll hooked up on day 3.  just monitor detecting bus activity but not sending out port event
+
+Day 4 - Hooked coverage collector up. receives from monitor
+             Trying to use existing wb_bfm (https://github.com/olofk/wb_bfm) but seems to be incomplete. Doesn't compile  
+                                            
+Day 5 - slave sequence stubs
+             
+             
+             
+             
+             polymorphic itnerfaces introduce a dependencyon uvm in the RTL (abstract class of type uvm_object for type overriding.)
+               
+       scemi pipes aren't supported in edaplayground so no streaming pipes between HDL and HVL
