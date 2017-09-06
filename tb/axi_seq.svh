@@ -1,5 +1,3 @@
-
-
 class axi_seq extends uvm_sequence #(axi_seq_item);
   
     `uvm_object_utils(axi_seq)

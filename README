@@ -28,6 +28,7 @@ Day 3 -  Write stub seq. and stub functions; ( write() and read() )
 
 Day 4 - Hooked coverage collector up. receives from monitor
              Trying to use existing wb_bfm (https://github.com/olofk/wb_bfm) but seems to be incomplete. Doesn't compile  
+        After digging at it, I've concluded tht trying to modify the olofk code to work as a slave seq will be at least as much work as writing from scratch. ;(
                                             
 Day 5 - slave sequence stubs
              

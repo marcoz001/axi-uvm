@@ -37,6 +37,7 @@ class axim2wbsp_base_test extends uvm_test;
   
   axi_env m_env;
   axi_seq m_seq;
+  axi_responder_seq  m_resp_seq  ;
   
   function new (string name="axim2wbsp_base_test", uvm_component parent=null);
     super.new(name, parent);
@@ -46,7 +47,11 @@ class axim2wbsp_base_test extends uvm_test;
     super.build_phase(phase);
 
     m_env = axi_env::type_id::create("m_env", this);
+    
     m_seq = axi_seq::type_id::create("m_seq");
+    m_resp_seq = axi_responder_seq::type_id::create("m_resp_seq");
+    
+    
   endfunction : build_phase
   
   task run_phase(uvm_phase phase);
@@ -54,10 +59,11 @@ class axim2wbsp_base_test extends uvm_test;
 
         #1000
 
-    
-        m_seq.start(m_env.m_seqr);
+    fork
+        m_resp_seq.start(m_env.m_responder_seqr);
+    join_none
+        m_seq.start(m_env.m_driver_seqr);
 
-    
     #1000
     
      phase.drop_objection(this);

@@ -57,12 +57,13 @@ interface axi_if #(
                      inout  wire                         rlast,  // Read last
                      inout  wire                         rready  // Read Response ready
                     );
-
+  import axi_pkg::*;
   
 
   logic [C_AXI_ID_WIDTH-1:0]	 iawid;
   logic [C_AXI_ADDR_WIDTH-1:0]   iawaddr;
   logic                          iawvalid;
+  logic                          iawready;
   logic [7:0]                    iawlen;
   logic [2:0]                    iawsize;
   logic [1:0]                    iawburst;
@@ -104,11 +105,14 @@ interface axi_if #(
   logic [C_AXI_DATA_WIDTH-1:0]   irdata;
   logic                          irlast;
   logic                          irready;
+
   
+
   
   assign awid    = iawid;
   assign awaddr  = iawaddr;
   assign awvalid = iawvalid;
+  assign awready = iawready;
   assign awlen   = iawlen;
   assign awsize  = iawsize;
   assign awburst = iawburst;
@@ -151,7 +155,8 @@ interface axi_if #(
   initial begin
      iawid    = 'z;
      iawaddr  = 'z;
-     iawvalid = 1'b0;
+     iawvalid = 'z;
+     iawready = 'z;
      iawlen   = 'z;
      iawsize  = 'z;
      iawburst = 2'b10;
@@ -192,11 +197,12 @@ interface axi_if #(
   
   end
   
-import axi_pkg::*;
+
 
 //  extern task  write(bit [63:0] addr, bit [63:0] data);
 
-
+   driver_type_t m_type;
+  
   
   
 class axi_if_concrete extends axi_if_abstract;
@@ -211,27 +217,22 @@ class axi_if_concrete extends axi_if_abstract;
   task write(bit [63:0] addr, bit [7:0] data[], bit [7:0] id);
      $display("YO, axi_if.write");
     @(posedge clk);
-
-      iawvalid <= 1'b1;
-      iawaddr  <= addr;
-      iawid    <= id;
-      iawlen   = 'h0;
-      iawsize  = 3'b010;
-
-    @(posedge clk);
       iawvalid <= 1'b0;
 
     @(posedge clk);
-      iwvalid <= 1'b1; 
-      iwdata  = 'hdeadbeef;
-      iwstrb  = 'hF;
-      iwlast  = 'b1;
+      iawvalid <= 1'b1;
+      iawaddr  <= addr;
+      iawid    <= id;
+      iawlen   <= 'h0;
+      iawsize  <= 3'b010;
 
-    if (wready != 1'b1) 
-      @(posedge wready);
-    
     @(posedge clk);
-      iwvalid <= 1'b0;
+     while (awready != 1'b1) begin
+         @(posedge clk);
+      end
+
+    iawvalid <= 1'b0;
+
     
   endtask : write
 
@@ -256,18 +257,24 @@ class axi_if_concrete extends axi_if_abstract;
     
   endtask : read
   
-  
-  
+  task set_awready(bit state);
+    @(posedge clk);
+
+    iawready <= state;
+    
+  endtask : set_awready
+
   
 endclass : axi_if_concrete
   
-    function void use_concrete_class;
+  function void use_concrete_class(axi_pkg::driver_type_t drv_type);
 
-    axi_if_abstract::type_id::set_type_override( axi_if_concrete::get_type());
-     
-     `uvm_info("blah", $sformatf("%m -- HEY, running set_inst_override in _if"), UVM_INFO)
-   endfunction : use_concrete_class
-  
-  
+   m_type=drv_type;
+
+   axi_if_abstract::type_id::set_type_override( axi_if_concrete::get_type());
+   `uvm_info("blah", $sformatf("%m -- HEY, running set_inst_override in _if"), UVM_INFO)
+
+endfunction : use_concrete_class
+
 endinterface : axi_if
 

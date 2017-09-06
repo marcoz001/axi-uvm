@@ -8,5 +8,7 @@ import uvm_pkg::*;
 `include "axi_if_abstract.svh"
 
 //AXI ENUMS...
+  
+typedef enum {e_DRIVER, e_RESPONDER} driver_type_t;
 
 endpackage : axi_pkg

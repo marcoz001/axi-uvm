@@ -111,9 +111,57 @@ module tb;
   axi_if #(.C_AXI_ID_WIDTH   (C_AXI_ID_WIDTH),
               .C_AXI_DATA_WIDTH (C_AXI_DATA_WIDTH),
               .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH)
-             ) axi_vif (.clk   (clk),
-                           .reset (reset),
-                           .awready(axi_awready),
+          ) axi_driver_vif (.clk   (clk),
+               .reset (reset),
+               .awready(axi_awready),
+               .awid(axi_awid),
+               .awaddr(axi_awaddr),
+               .awlen(axi_awlen),
+               .awsize(axi_awsize),
+               .awburst(axi_awburst),
+               .awlock(axi_awlock),
+               .awcache(axi_awcache),
+               .awprot(axi_awprot),
+               .awqos(axi_awqos),
+               .awvalid(axi_awvalid),
+  
+               .wready(axi_wread),
+               .wdata(axi_wdata),
+               .wstrb(axi_wstrb),
+               .wlast(axi_wlast),
+               .wvalid(axi_wvalid),
+  
+               .bid(axi_bid),
+               .bresp(axi_bresp),
+               .bvalid(axi_bvalid),
+               .bready(axi_bready),
+                
+               .arready(axi_arready),
+               .arid(axi_arid),
+               .araddr(axi_araddr),
+               .arlen(axi_arlen),
+               .arsize(axi_arsize),
+               .arburst(axi_arburst),
+               .arlock(axi_arlock),
+               .arcache(axi_arcache),
+               .arprot(axi_arprot),
+               .arqos(axi_arqos),
+               .arvalid(axi_arvalid),
+  
+               .rid(axi_rid),
+               .rresp(axi_rresp),
+               .rvalid(axi_rvalid),
+               .rdata(axi_rdata),
+               .rlast(axi_rlast),
+               .rready(axi_rready)
+             );
+  
+    axi_if #(.C_AXI_ID_WIDTH   (C_AXI_ID_WIDTH),
+              .C_AXI_DATA_WIDTH (C_AXI_DATA_WIDTH),
+              .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH)
+            ) axi_responder_vif (.clk   (clk),
+               .reset (reset),
+               .awready(axi_awready),
                .awid(axi_awid),
                .awaddr(axi_awaddr),
                .awlen(axi_awlen),
@@ -175,7 +223,7 @@ module tb;
         );
   
          
-  
+  /*
   
   axim2wbsp #( .C_AXI_ID_WIDTH(C_AXI_ID_WIDTH),
               .C_AXI_DATA_WIDTH(C_AXI_DATA_WIDTH),
@@ -246,7 +294,7 @@ module tb;
                .i_wb_data(wb_outdata),
                .i_wb_err(wb_err) 
                );
-  
+  */
  
   
   
@@ -265,7 +313,9 @@ initial begin
 end
 
 initial begin
-  axi_vif.use_concrete_class();
+  axi_driver_vif.use_concrete_class(.drv_type(axi_pkg::e_DRIVER));
+  axi_responder_vif.use_concrete_class(.drv_type(axi_pkg::e_RESPONDER));
+
   //axi_rd_vif.use_concrete_class();
   //wb_vif.use_concrete_class();
 
@@ -274,8 +324,8 @@ end
   
 initial begin
   $dumpfile("dump.vcd");
-  $dumpvars(0, dut.axi_write_decoder); //(1);
-  //$dumpvars(0); //(1);
+  //$dumpvars(0, dut.axi_write_decoder); //(1);
+  $dumpvars(1); //(1);
 
 end
   

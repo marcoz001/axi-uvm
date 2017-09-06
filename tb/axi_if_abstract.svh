@@ -4,8 +4,9 @@ class axi_if_abstract extends uvm_object;
   extern function new (string name="axi_if_abstract");
   
     extern virtual task write(bit [63:0] addr, bit [7:0] data[], bit [7:0] id);
-      extern virtual task read(bit [63:0] addr, bit [7:0] data[], bit [7:0] id);
-  extern virtual task wait_for_awvalid;
+    extern virtual task read(bit [63:0] addr, bit [7:0] data[], bit [7:0] id);
+    extern virtual task wait_for_awvalid;
+    extern virtual task set_awready(bit state);
   
 endclass : axi_if_abstract;
     
@@ -26,3 +27,7 @@ endtask : read
 task axi_if_abstract::wait_for_awvalid;
   `uvm_warning(this.get_type_name(), "WARNING. Virtual function wait_for_awvalid() not defined.")
 endtask : wait_for_awvalid
+      
+task axi_if_abstract::set_awready(bit state);
+  `uvm_warning(this.get_type_name(), "WARNING. Virtual function set_awready() not defined.")
+endtask : set_awready
