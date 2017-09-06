@@ -7,6 +7,7 @@ class axi_seq_item extends uvm_sequence_item;
     rand bit [6:0]  id;      // these are top level parameters in DUT. how get here?
     rand cmd_t      cmd;
 
+
     extern function        new        (string name="axi_seq_item");
     extern function string convert2string;
     extern function void   do_copy    (uvm_object rhs);

@@ -34,13 +34,15 @@ task axi_monitor::run_phase(uvm_phase phase);
    axi_seq_item original_item;
    axi_seq_item item;
   
+  vif.wait_for_not_in_reset();
   original_item = axi_seq_item::type_id::create("original_item");
    forever begin
-      vif.wait_for_awvalid;
-     `uvm_info(this.get_type_name, "YO, detected an awvalid", UVM_INFO)
+     vif.wait_for_awready_awvalid();
+     `uvm_info(this.get_type_name, "YO, detected an awvalid", UVM_HIGH)
 
      $cast(item, original_item.clone());
      ap.write(item);
+     vif.wait_for_clks(.cnt(1));
      
    end
 endtask : run_phase

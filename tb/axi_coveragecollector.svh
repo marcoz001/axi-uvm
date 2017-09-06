@@ -13,6 +13,6 @@ function axi_coveragecollector::new(string name="axi_coveragecollector", uvm_com
 endfunction : new
     
 function void axi_coveragecollector::write(axi_seq_item t);
-        `uvm_info(this.get_type_name(), $sformatf("%s", t.convert2string()), UVM_INFO)
+  `uvm_info(this.get_type_name(), $sformatf("%s", t.convert2string()), UVM_HIGH)
 endfunction : write
       

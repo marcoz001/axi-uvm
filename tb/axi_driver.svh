@@ -54,42 +54,55 @@ task axi_driver::driver_run_phase;
 
   axi_seq_item item;
   
+    vif.set_awvalid(1'b0);
+ 
   
-  `uvm_info(this.get_type_name(), "HEY< YOU< driver_run_phase", UVM_INFO)
+  `uvm_info(this.get_type_name(), "driver_run_phase", UVM_INFO)
   forever begin    
   
     seq_item_port.get_next_item(item);  
       if (item.cmd == WRITE) begin
          write(item);
       end else begin
-        vif.read(item.addr, item.data, item.id);
+        vif.read(item.addr, item.data, item.len, item.id);
       end
       `uvm_info(this.get_type_name(), $sformatf("%s", item.convert2string()), UVM_INFO)
 
+    `uvm_info(this.get_type_name(), "waiting on driver_run_phase.item_done()", UVM_INFO)
       seq_item_port.item_done();
+    `uvm_info(this.get_type_name(), "waiting on driver_run_phase.item_done() - done", UVM_INFO)
       
   end
 endtask : driver_run_phase
     
 task axi_driver::responder_run_phase;
-  axi_seq_item original_item;
   axi_seq_item item;
   
-  original_item = axi_seq_item::type_id::create("original_item", this);
-  
+  item = axi_seq_item::type_id::create("item", this);
+ 
   `uvm_info(this.get_type_name(), "HEY< YOU< responder_run_phase", UVM_INFO)
-  vif.set_awready(1'b0);
+  vif.set_awready_toggle_mask(m_config.awready_toggle_mask);
+  
+  vif.wait_for_not_in_reset();
   forever begin
     
+    `uvm_info(this.get_type_name(), "waiting on get_next_item()", UVM_INFO)
     seq_item_port.get_next_item(item);  
-    vif.wait_for_awvalid();
-    `uvm_info(this.get_type_name(), "Got saw awvalid", UVM_INFO)
-    $cast(item, original_item.clone());
-    vif.read(.addr(item.addr), .data(item.data), .id(item.id));
-    `uvm_info(this.get_type_name(), "YOOHOO Got saw awvalid", UVM_INFO)
-    
-    vif.set_awready(1'b1);
+    `uvm_info(this.get_type_name(), "waiting on get_next_item() - done", UVM_INFO)
+
+    `uvm_info(this.get_type_name(), "waiting on wait_for_awvalid()", UVM_INFO)
+    vif.wait_for_awready_awvalid();
+    `uvm_info(this.get_type_name(), "waiting on wait_for_awvalid() - done", UVM_INFO)
+    //$cast(item, original_item.clone());
+    vif.read(.addr(item.addr), .data(item.data), .len(item.len), .id(item.id));
+    `uvm_info(this.get_type_name(), $sformatf("%s", item.convert2string()), UVM_INFO)
+
+    `uvm_info(this.get_type_name(), "waiting on responder_run_phase.item_done()", UVM_INFO)
     seq_item_port.item_done();
+    `uvm_info(this.get_type_name(), "waiting on responder_run_phase.item_done() - done", UVM_INFO)
+    
+    
+    vif.wait_for_clks(.cnt(1));
     
   end
 endtask : responder_run_phase

@@ -107,6 +107,15 @@ interface axi_if #(
   logic                          irready;
 
   
+  logic [31:0] awready_toggle_mask;
+  bit          awready_toggle_mask_enable=0;
+
+  logic [31:0]  wready_toggle_mask;
+  bit           wready_toggle_mask_enable=0;
+  
+  logic [31:0]  bready_toggle_mask;
+  bit           bready_toggle_mask_enable=0;
+
 
   
   assign awid    = iawid;
@@ -216,63 +225,149 @@ class axi_if_concrete extends axi_if_abstract;
   //       
   task write(bit [63:0] addr, bit [7:0] data[], bit [7:0] id);
      $display("YO, axi_if.write");
-    @(posedge clk);
-      iawvalid <= 1'b0;
+//    @(negedge clk);
+//      iawvalid <= 1'b0;
 
-    @(posedge clk);
+    @(negedge clk);
       iawvalid <= 1'b1;
       iawaddr  <= addr;
       iawid    <= id;
       iawlen   <= 'h0;
       iawsize  <= 3'b010;
 
-    @(posedge clk);
+    @(negedge clk);
      while (awready != 1'b1) begin
-         @(posedge clk);
-      end
+       @(negedge clk);
+     end
 
-    iawvalid <= 1'b0;
+     iawvalid <= 1'b0;
 
     
   endtask : write
 
+  task wait_for_not_in_reset;
+    wait (reset == 1'b0);
+  endtask : wait_for_not_in_reset;
   
   task wait_for_awvalid; // _and_awready ?
-    @(posedge awvalid);
+
+    while (awvalid != 1'b1) begin
+      @(posedge clk); 
+    end
+
   endtask : wait_for_awvalid;
+  
+  task wait_for_awready_awvalid;
+
+    while (awready != 1'b1 || awvalid != 1'b1) begin
+      @(posedge clk); 
+    end
+    
+  endtask : wait_for_awready_awvalid
   
   // @Todo: dynamic arrays (data[]) obviously don't work on a real Veloce
   // but for the sake of simplicity
-  task read(bit [63:0] addr, bit [7:0] data[], bit [7:0] id);
+  task read(output bit [63:0] addr, output bit [7:0] data[], output int len, output bit [7:0] id);
       $display("YO, axi_if.read");
-    @(posedge clk);
+   // @(posedge clk);
 
-      iarready <= 1'b1;
-      iaraddr  <= addr;
+    id   = awid;
+    addr = awaddr;
+    data = new[4];
+    data[3]=8'hde;
+    data[2]=8'had;
+    data[1]=8'hbe;
+    data[0]=8'hef;
+    len=4;
+    
+    //data = 'h0; // awdata;
+    //  iarready <= 1'b1;
+    //  iaraddr  <= addr;
       
-      iarid    <= id;
+    //  iarid    <= id;
 
-    @(posedge clk);
-      iarready <= 1'b0;
+    //@(posedge clk);
+    //  iarready <= 1'b0;
     
   endtask : read
   
   task set_awready(bit state);
-    @(posedge clk);
+    @(negedge clk);
 
     iawready <= state;
     
   endtask : set_awready
 
+task set_awvalid(bit state);
+  @(negedge clk);
+
+    iawvalid <= state;
+    
+endtask : set_awvalid
+  
+  // wait for n clock cycles. Default: 1
+  task wait_for_clks(int cnt=1);
+    if (cnt==0) return;
+      
+    repeat (cnt) @(posedge clk);
+  endtask : wait_for_clks
+  
+  task set_awready_toggle_mask(bit [31:0] mask);
+    awready_toggle_mask=mask;
+    awready_toggle_mask_enable=1;
+  endtask : set_awready_toggle_mask
+  
+  
+  task clr_awready_toggle_mask();
+     awready_toggle_mask_enable =0;
+
+  endtask : clr_awready_toggle_mask
+  
+
   
 endclass : axi_if_concrete
+  
+
+// *ready toggling  
+initial begin
+   forever begin
+     @(negedge clk) begin
+        if (awready_toggle_mask_enable == 1'b1) begin
+            awready_toggle_mask[31:0] <= {awready_toggle_mask[30:0], awready_toggle_mask[31]};
+            iawready                  <= awready_toggle_mask[31];
+         end
+      end
+   end
+end
+  
+initial begin
+   forever begin
+     @(negedge clk) begin
+        if (wready_toggle_mask_enable == 1'b1) begin
+            wready_toggle_mask[31:0] <= {wready_toggle_mask[30:0], wready_toggle_mask[31]};
+            iwready                 <= wready_toggle_mask[31];
+         end
+      end
+   end
+end
+
+initial begin
+   forever begin
+      @(negedge clk) begin
+         if (bready_toggle_mask_enable == 1'b1) begin
+            bready_toggle_mask[31:0] <= {bready_toggle_mask[30:0], bready_toggle_mask[31]};
+            ibready                  <= bready_toggle_mask[31];
+         end
+      end
+   end
+end
   
   function void use_concrete_class(axi_pkg::driver_type_t drv_type);
 
    m_type=drv_type;
 
    axi_if_abstract::type_id::set_type_override( axi_if_concrete::get_type());
-   `uvm_info("blah", $sformatf("%m -- HEY, running set_inst_override in _if"), UVM_INFO)
+   // `uvm_info("blah", $sformatf("%m -- HEY, running set_inst_override in _if"), UVM_INFO)
 
 endfunction : use_concrete_class
 
