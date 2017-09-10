@@ -23,10 +23,24 @@ task axi_seq::body;
      
         $cast(item, original_item.clone());
         start_item(item);
-  assert( item.randomize() with {cmd==WRITE;});
+  assert( item.randomize() with {cmd        == e_WRITE; 
+                                 burst_size == e_8BYTES;
+                                 burst_type == e_INCR;}) else begin
+           `uvm_error(this.get_type_name(),
+                      $sformatf("Unable to randomize %s",  item.get_full_name()));
+        end
         finish_item(item);
-       `uvm_info(this.get_type_name(), $sformatf("%s", item.convert2string()), UVM_HIGH)
+   fork
+     begin
+  `uvm_info(this.get_type_name(), "waiting on get_response()", UVM_INFO)
+
+  get_response(item);
+  `uvm_info(this.get_type_name(), "waiting on get_response() - done", UVM_INFO)
+     end
+  join_none
+  `uvm_info(this.get_type_name(), $sformatf("%s", item.convert2string()), UVM_HIGH)
   
+  wait fork;
 endtask : body
     
 

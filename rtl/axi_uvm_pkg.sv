@@ -5,14 +5,15 @@ import uvm_pkg::*;
 
 import axi_pkg::*;
 
-  typedef enum bit {WRITE=0, READ=1} cmd_t;
+typedef enum bit {e_WRITE=0, e_READ=1} cmd_t;
+
   
 `include "axi_agent_config.svh"
 
 `include "axi_seq_item.svh"
+`include "axi_sequencer.svh"
 `include "axi_seq.svh"
 `include "axi_responder_seq.svh"
-`include "axi_sequencer.svh"
 
 `include "axi_driver.svh"
 `include "axi_monitor.svh"

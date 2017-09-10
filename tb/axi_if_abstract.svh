@@ -10,10 +10,24 @@ class axi_if_abstract extends uvm_object;
         
     extern virtual task set_awready(bit state);
     extern virtual task set_awvalid(bit state);
-    extern virtual task wait_for_clks(int cnt=1);
+    extern virtual task set_wready(bit state);
+    extern virtual task set_wvalid(bit state);
+    extern virtual task set_bready(bit state);
+    extern virtual task set_bvalid(bit state);
+
+      extern virtual task wait_for_clks(int cnt=1);
     extern virtual task set_awready_toggle_mask(bit [31:0] mask);
     extern virtual task clr_awready_toggle_mask();
+    extern virtual task set_wready_toggle_mask(bit [31:0] mask);
+    extern virtual task clr_wready_toggle_mask();
+    extern virtual task set_bready_toggle_mask(bit [31:0] mask);
+    extern virtual task clr_bready_toggle_mask();
     extern virtual task wait_for_not_in_reset;
+    extern virtual task wait_for_wready();
+      
+    extern virtual task write_aw(axi_seq_item_aw_vector_s s);
+    extern virtual task write_w(bit [31:0] data, bit [3:0] wstrb, bit valid);
+    extern virtual function bit get_ready_valid;
 
       
 endclass : axi_if_abstract;
@@ -24,43 +38,94 @@ endfunction : new
     
     
     task axi_if_abstract::write(bit [63:0] addr, bit [7:0] data[], bit [7:0] id);
-  `uvm_warning(this.get_type_name(), "WARNING. Virtual function write() not defined.")
+  `uvm_error(this.get_type_name(), "WARNING. Virtual function write() not defined.")
 endtask : write
 
       task axi_if_abstract::read(output bit [63:0] addr, output bit [7:0] data[], output int len, output bit [7:0] id);
-  `uvm_warning(this.get_type_name(), "WARNING. Virtual function read() not defined.")
+  `uvm_error(this.get_type_name(), "WARNING. Virtual function read() not defined.")
 endtask : read
 
     
 task axi_if_abstract::wait_for_awvalid;
-  `uvm_warning(this.get_type_name(), "WARNING. Virtual task wait_for_awvalid() not defined.")
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task wait_for_awvalid() not defined.")
 endtask : wait_for_awvalid
       
       
 task axi_if_abstract::wait_for_awready_awvalid;
-  `uvm_warning(this.get_type_name(), "WARNING. Virtual task wait_for_awready_awvalid() not defined.")
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task wait_for_awready_awvalid() not defined.")
 endtask : wait_for_awready_awvalid
       
 task axi_if_abstract::set_awready(bit state);
-  `uvm_warning(this.get_type_name(), "WARNING. Virtual task set_awready() not defined.")
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task set_awready() not defined.")
 endtask : set_awready
       
 task axi_if_abstract::set_awvalid(bit state);
-  `uvm_warning(this.get_type_name(), "WARNING. Virtual task set_awvalid() not defined.")
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task set_awvalid() not defined.")
 endtask : set_awvalid
       
+task axi_if_abstract::set_wready(bit state);
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task set_wready() not defined.")
+endtask : set_wready
+      
+task axi_if_abstract::set_wvalid(bit state);
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task set_wvalid() not defined.")
+endtask : set_wvalid
+      
+task axi_if_abstract::set_bready(bit state);
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task set_bready() not defined.")
+endtask : set_bready
+
+task axi_if_abstract::set_bvalid(bit state);
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task set_bvalid() not defined.")
+endtask : set_bvalid
+      
+      
 task axi_if_abstract::wait_for_clks(int cnt=1);
-  `uvm_warning(this.get_type_name(), "WARNING. Virtual task wait_for_clks() not defined.")
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task wait_for_clks() not defined.")
 endtask : wait_for_clks
       
 task axi_if_abstract::set_awready_toggle_mask(bit [31:0] mask);
-  `uvm_warning(this.get_type_name(), "WARNING. Virtual task set_awready_toggle_mask() not defined.")
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task set_awready_toggle_mask() not defined.")
 endtask : set_awready_toggle_mask
       
 task axi_if_abstract::clr_awready_toggle_mask();
-  `uvm_warning(this.get_type_name(), "WARNING. Virtual task clr_awready_toggle_mask() not defined.")
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task clr_awready_toggle_mask() not defined.")
 endtask : clr_awready_toggle_mask
+  
+task axi_if_abstract::set_wready_toggle_mask(bit [31:0] mask);
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task set_wready_toggle_mask() not defined.")
+endtask : set_wready_toggle_mask
+      
+task axi_if_abstract::clr_wready_toggle_mask();
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task clr_wready_toggle_mask() not defined.")
+endtask : clr_wready_toggle_mask
+  
+task axi_if_abstract::set_bready_toggle_mask(bit [31:0] mask);
+    `uvm_error(this.get_type_name(), "WARNING. Virtual task set_bready_toggle_mask() not defined.")
+endtask : set_bready_toggle_mask
+      
+task axi_if_abstract::clr_bready_toggle_mask();
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task clr_bready_toggle_mask() not defined.")
+endtask : clr_bready_toggle_mask
       
 task axi_if_abstract::wait_for_not_in_reset;
-  `uvm_warning(this.get_type_name(), "WARNING. Virtual task wait_for_not_in_reset() not defined.")
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task wait_for_not_in_reset() not defined.")
 endtask : wait_for_not_in_reset;
+      
+task axi_if_abstract::write_aw(axi_seq_item_aw_vector_s s);
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task write_aw() not defined.")
+endtask : write_aw
+  
+      task axi_if_abstract::write_w(bit [31:0] data, bit [3:0] wstrb, bit valid);
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task write_w() not defined.")
+endtask : write_w
+      
+      
+task axi_if_abstract::wait_for_wready();
+  `uvm_error(this.get_type_name(), "WARNING. Virtual task wait_for_wready() not defined.")
+endtask : wait_for_wready
+      
+      
+      function bit axi_if_abstract::get_ready_valid();
+        `uvm_error(this.get_type_name(), "WARNING. Virtual function get_ready_valid() not defined.")
+        endfunction : get_ready_valid

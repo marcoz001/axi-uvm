@@ -125,7 +125,7 @@ module tb;
                .awqos(axi_awqos),
                .awvalid(axi_awvalid),
   
-               .wready(axi_wread),
+               .wready(axi_wready),
                .wdata(axi_wdata),
                .wstrb(axi_wstrb),
                .wlast(axi_wlast),
@@ -173,7 +173,7 @@ module tb;
                .awqos(axi_awqos),
                .awvalid(axi_awvalid),
   
-               .wready(axi_wread),
+               .wready(axi_wready),
                .wdata(axi_wdata),
                .wstrb(axi_wstrb),
                .wlast(axi_wlast),

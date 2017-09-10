@@ -5,10 +5,74 @@ package axi_pkg;
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
-`include "axi_if_abstract.svh"
+
 
 //AXI ENUMS...
-  
+
+
 typedef enum {e_DRIVER, e_RESPONDER} driver_type_t;
+
+typedef enum logic [2:0] {e_1BYTE    = 3'b000,
+                          e_2BYTES   = 3'b001,
+                          e_4BYTES   = 3'b010,
+                          e_8BYTES   = 3'b011,
+                          e_16BYTES  = 3'b100,
+                          e_32BYTES  = 3'b101,
+                          e_64BYTES  = 3'b110,
+                          e_128BYTES = 3'b111 } burst_size_t;
+
+typedef enum logic [1:0] {e_FIXED    = 2'b00,
+                          e_INCR     = 2'b01,
+                          e_WRAP     = 2'b10,
+                          e_RESERVED = 2'b11 } burst_type_t;
+
+typedef enum logic [1:0] {e_OKAY    = 2'b00,
+                          e_EXOKAY  = 2'b01,
+                          e_SLVERR  = 2'b10,
+                          e_DECERR  = 2'b11} response_type_t;
+
+
+parameter C_AXI_ID_WIDTH = 6;
+parameter C_AXI_DATA_WIDTH = 32;
+parameter C_AXI_ADDR_WIDTH = 32;
+
+
+typedef struct packed {
+  logic [C_AXI_ID_WIDTH-1:0]	 awid;
+  logic [C_AXI_ADDR_WIDTH-1:0]   awaddr;
+  logic                          awvalid;
+  logic                          awready;
+  logic [7:0]                    awlen;
+  burst_size_t                    awsize;
+  burst_type_t                    awburst;
+  logic [0:0]                    awlock;
+  logic [3:0]                    awcache;
+  logic [2:0]                    awprot;
+  logic [3:0]                    awqos;
+  
+} axi_seq_item_aw_vector_s;
+
+localparam int AXI_SEQ_ITEM_AW_NUM_BITS = $bits(axi_seq_item_aw_vector_s);
+
+typedef bit[AXI_SEQ_ITEM_AW_NUM_BITS-1:0] axi_seq_item_aw_vector_t;
+
+/*
+
+typedef struct packed {
+    bit                          wready;
+    bit [C_AXI_DATA_WIDTH-1:0]   wdata;
+    bit [C_AXI_DATA_WIDTH/8-1:0] wstrb;
+    bit                          wlast;
+    bit                          wvalid;
+  
+} axi_seq_item_w_vector_s;
+
+parameter int AXI_SEQ_ITEM_W_NUM_BITS = $bits(axi_seq_item_w_vector_s);
+
+typedef bit[AXI_SEQ_ITEM_W_NUM_BITS-1:0] axi_seq_item_w_vector_t;
+*/
+
+
+`include "axi_if_abstract.svh"
 
 endpackage : axi_pkg

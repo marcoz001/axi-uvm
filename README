@@ -38,3 +38,23 @@ Day 5 - slave sequence stubs
              polymorphic itnerfaces introduce a dependencyon uvm in the RTL (abstract class of type uvm_object for type overriding.)
                
        scemi pipes aren't supported in edaplayground so no streaming pipes between HDL and HVL
+               
+Good whitepaper on slave sequences: 
+http://www.verilab.com/files/reactive_slaves_presentation.pdf
+http://www.verilab.com/files/litterick_uvm_slaves2_paper.pdf
+
+Parallel/pipelined driver:
+https://www.quora.com/What-is-the-best-way-to-model-an-out-of-order-transaction-driver-in-UVM
+               
+I've seen this approach all over so I'm going with it, since it's likely widely,and easily, understood.               
+               
+               
+// @Todo:   error injection\
+// @Todo:   What if awready never asserted?
+// @Todo:   What if data before address?
+// @Todo:   what if response before data (or addr)?   
+// @Todo:   verifiy unaligned xfers
+// @Todo:   narrow xfers
+// @Todo:   write address and write data at same time
+               
+//@Todo: deadlock - verify master must not wait for AWREADY to be assertd before driving WVALID (AXI spec - A3.3.1  (pg. A3-42)

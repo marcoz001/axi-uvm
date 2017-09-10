@@ -1,12 +1,29 @@
 class axi_seq_item extends uvm_sequence_item;
   `uvm_object_utils(axi_seq_item)
 
-    rand bit [63:0] addr;
-         bit [7:0]  data [];  
-    randc bit [3:0]  len;// data len not AXI burstlen.
-    rand bit [6:0]  id;      // these are top level parameters in DUT. how get here?
-    rand cmd_t      cmd;
+    //widths are top-level parameters. but we're setting to max here.
+    // A recommendation from veloce docs
+    rand  bit [6:0]    id;
+    rand  bit [63:0]   addr;
+          bit          valid []; // keep valid with data, then can also toggle easily in this env
+          bit [7:0]    data  [];
+          bit          wstrb [];
+          bit          valid [];
+    rand  int          len;  
+    rand  burst_size_t burst_size; // Burst size
+    rand  burst_type_t burst_type;
+          logic [0:0]  lock   = 'h0;
+          logic [3:0]  cache  = 'h0;
+          logic [2:0]  prot   = 'h0;
+          logic [3:0]  qos    = 'h0;
+  
+    rand  cmd_t        cmd; // read or write
 
+  constraint easier_testing {len > 40;
+                             len < 60;}
+  
+    constraint max_len {len > 0;
+                        len < 256*128;} // AXI4 is 256-beat burst by 128-byte wide
 
     extern function        new        (string name="axi_seq_item");
     extern function string convert2string;
@@ -16,7 +33,11 @@ class axi_seq_item extends uvm_sequence_item;
       
     extern function void   post_randomize;
       
+    extern static function void   aw_from_class(input  axi_seq_item             t,
+                                         output axi_seq_item_aw_vector_s v);
       
+    extern static function void   aw_to_class(output axi_seq_item             t,
+                                       input  axi_seq_item_aw_vector_s v);
 
 endclass : axi_seq_item
     
@@ -31,7 +52,10 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
     $sformat(s, "%s ID = 0x%0x ",   s, id);
     $sformat(s, "%s Len = 0x%0x ",   s, len);
-
+    $sformat(s, "%s BurstSize = 0x%0x (%s)",   s, burst_size, burst_size.name);
+    $sformat(s, "%s BurstType = 0x%0x (%s)",   s, burst_type, burst_type.name);
+  
+  
   for (int i =0; i< len; i++) begin
       $sformat(sdata, "%s 0x%02x ", sdata, data[i]);
     end
@@ -79,16 +103,57 @@ endfunction : do_compare
 function void axi_seq_item::do_print(uvm_printer printer);
   printer.m_string = convert2string();
 endfunction : do_print
-  
         
 function void axi_seq_item::post_randomize;
   super.post_randomize;
           
   data=new[len];
-
+  wstrb=new[len];
+  valid=new[len];  // only need one per beat instead of one per byte,
+                   // we won't use the extras.
   for (int i=0; i < len; i++) begin
     data[i] = i;
-//    data[i] = $random;
+    wstrb[i]=$random();
+    valid[i]=$random();
+    //    data[i] = $random;
   end  
-          
+  
 endfunction : post_randomize
+  
+  
+  static function void axi_seq_item::aw_from_class(input  axi_seq_item             t,
+                                                   output axi_seq_item_aw_vector_s v);
+    
+    axi_seq_item_aw_vector_s s;
+    
+     s.awid    = t.id;
+     s.awaddr  = t.addr;
+     s.awlen   = t.len;
+     s.awsize  = t.burst_size;
+     s.awburst = t.burst_type;
+     s.awlock  = t.lock; 
+     s.awcache = t.cache;
+     s.awprot  = t.prot;
+     s.awqos   = t.qos;
+    v = s;
+  endfunction : aw_from_class
+ 
+  static function void axi_seq_item::aw_to_class(output axi_seq_item             t,
+                                                 input  axi_seq_item_aw_vector_s v);
+    axi_seq_item_aw_vector_s s;
+    s = v;
+    
+    t = new();
+    
+     t.id          = s.awid;
+     t.addr        = s.awaddr;
+     t.len         = s.awlen;
+     t.burst_size  = s.awsize;
+     t.burst_type  = s.awburst;
+     t.lock        = s.awlock; 
+     t.cache       = s.awcache;
+     t.prot        = s.awprot;
+     t.qos         = s.awqos;
+
+  endfunction : aw_to_class
+          

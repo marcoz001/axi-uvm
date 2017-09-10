@@ -168,22 +168,22 @@ interface axi_if #(
      iawready = 'z;
      iawlen   = 'z;
      iawsize  = 'z;
-     iawburst = 2'b10;
-     iawlock  = 'h0; 
-     iawcache = 'h0;
-     iawprot  = 'h0;
-     iawqos   = 'h0;
+     iawburst = 'z;
+     iawlock  = 'z; 
+     iawcache = 'z;
+     iawprot  = 'z;
+     iawqos   = 'z;
   
      iwready = 'z;
      iwdata  = 'z;
      iwstrb  = 'z;
-     iwlast  = 1'b0;
-     iwvalid = 'h0;
+     iwlast  = 'z;
+     iwvalid = 'z;
   
      ibid    = 'z;
      ibresp  = 'z;
-     ibvalid = 'b0;
-     ibready = 1'b1;
+     ibvalid = 'z;
+     ibready = 'z;
     
      iarready = 'z;
      iarid    = 'z;
@@ -222,7 +222,8 @@ class axi_if_concrete extends axi_if_abstract;
   endfunction : new
   
   //@Todo: how to have data[] be veloce friendly? 
-  //       
+  //  either just write words/ctl lines directly
+  // or put most of logic in i/f
   task write(bit [63:0] addr, bit [7:0] data[], bit [7:0] id);
      $display("YO, axi_if.write");
 //    @(negedge clk);
@@ -245,29 +246,84 @@ class axi_if_concrete extends axi_if_abstract;
     
   endtask : write
 
+  task write_aw(axi_seq_item_aw_vector_s s);
+    
+    
+    bit clk_val;
+
+    
+    clk_val = clk;                             // --
+
+    @(negedge clk);
+    
+    $display("YO, axi_if.write_aw");
+    
+     iawvalid <= 1'b1;
+     iawid    <= s.awid;
+     iawaddr  <= s.awaddr;
+     iawlen   <= s.awlen;
+     iawsize  <= s.awsize;
+     iawburst <= s.awburst;
+     iawlock  <= s.awlock; 
+     iawcache <= s.awcache;
+     iawprot  <= s.awprot;
+     iawqos   <= s.awqos;
+
+    while (awready != 1'b1) 
+      @(negedge clk);
+    iawvalid <= 1'b0;
+
+    iawid     <= 'z;
+     iawaddr  <= 'z;
+     iawlen   <= 'z;
+     iawsize  <= 'z;
+     iawburst <= 'z;
+     iawlock  <= 'z; 
+     iawcache <= 'z;
+     iawprot  <= 'z;
+     iawqos   <= 'z;
+
+    
+  endtask : write_aw
+  
+  
+  task write_w(bit [31:0] data, bit [3:0] wstrb, bit valid);
+    $display("YO, axi_if.write_w");
+
+ //   @(posedge clk);
+//  wait_for_clks(.cnt(1));
+    
+    iwvalid <= valid; // 1'b1;
+    
+    iwdata  <= data;
+    iwstrb  <= wstrb;
+    iwlast  <= 1'b0;
+
+endtask : write_w
+
   task wait_for_not_in_reset;
     wait (reset == 1'b0);
   endtask : wait_for_not_in_reset;
   
-  task wait_for_awvalid; // _and_awready ?
+task wait_for_awvalid; // _and_awready ?
 
     while (awvalid != 1'b1) begin
       @(posedge clk); 
     end
 
-  endtask : wait_for_awvalid;
+endtask : wait_for_awvalid;
   
-  task wait_for_awready_awvalid;
+task wait_for_awready_awvalid;
 
     while (awready != 1'b1 || awvalid != 1'b1) begin
       @(posedge clk); 
     end
     
-  endtask : wait_for_awready_awvalid
+endtask : wait_for_awready_awvalid
   
   // @Todo: dynamic arrays (data[]) obviously don't work on a real Veloce
   // but for the sake of simplicity
-  task read(output bit [63:0] addr, output bit [7:0] data[], output int len, output bit [7:0] id);
+task read(output bit [63:0] addr, output bit [7:0] data[], output int len, output bit [7:0] id);
       $display("YO, axi_if.read");
    // @(posedge clk);
 
@@ -289,21 +345,38 @@ class axi_if_concrete extends axi_if_abstract;
     //@(posedge clk);
     //  iarready <= 1'b0;
     
-  endtask : read
+endtask : read
   
-  task set_awready(bit state);
+task set_awready(bit state);
     @(negedge clk);
-
     iawready <= state;
-    
-  endtask : set_awready
+endtask : set_awready
 
 task set_awvalid(bit state);
   @(negedge clk);
-
-    iawvalid <= state;
-    
+  iawvalid <= state;
 endtask : set_awvalid
+  
+task set_wready(bit state);
+  @(posedge clk);
+    iwready <= state;
+endtask : set_wready
+
+task set_wvalid(bit state);
+  @(posedge clk);
+  iwvalid <= state;
+endtask : set_wvalid
+  
+task set_bready(bit state);
+  @(posedge clk);
+    ibready <= state;
+endtask : set_bready
+
+task set_bvalid(bit state);
+  @(posedge clk);
+  ibvalid <= state;
+endtask : set_bvalid
+  
   
   // wait for n clock cycles. Default: 1
   task wait_for_clks(int cnt=1);
@@ -312,19 +385,52 @@ endtask : set_awvalid
     repeat (cnt) @(posedge clk);
   endtask : wait_for_clks
   
-  task set_awready_toggle_mask(bit [31:0] mask);
+  
+task wait_for_wready;
+  while (wready != 1'b1)
+    @(posedge clk);
+  
+  //@(posedge clk);
+  //while (wready != 1'b1) 
+  //    @(posedge clk);
+
+endtask : wait_for_wready
+  
+  
+function bit get_ready_valid;
+  return wvalid & wready;
+  endfunction : get_ready_valid;
+  
+task set_awready_toggle_mask(bit [31:0] mask);
     awready_toggle_mask=mask;
     awready_toggle_mask_enable=1;
-  endtask : set_awready_toggle_mask
+endtask : set_awready_toggle_mask
   
   
-  task clr_awready_toggle_mask();
+task clr_awready_toggle_mask();
      awready_toggle_mask_enable =0;
-
-  endtask : clr_awready_toggle_mask
+endtask : clr_awready_toggle_mask
   
-
+task set_wready_toggle_mask(bit [31:0] mask);
+    wready_toggle_mask=mask;
+    wready_toggle_mask_enable=1;
+endtask : set_wready_toggle_mask
   
+  
+task clr_wready_toggle_mask();
+     wready_toggle_mask_enable =0;
+endtask : clr_wready_toggle_mask
+
+  task set_bready_toggle_mask(bit [31:0] mask);
+    bready_toggle_mask=mask;
+    bready_toggle_mask_enable=1;
+endtask : set_bready_toggle_mask
+  
+  
+task clr_bready_toggle_mask();
+     bready_toggle_mask_enable =0;
+endtask : clr_bready_toggle_mask
+
 endclass : axi_if_concrete
   
 
@@ -342,11 +448,11 @@ end
   
 initial begin
    forever begin
-     @(negedge clk) begin
+     @(posedge clk) begin
         if (wready_toggle_mask_enable == 1'b1) begin
             wready_toggle_mask[31:0] <= {wready_toggle_mask[30:0], wready_toggle_mask[31]};
             iwready                 <= wready_toggle_mask[31];
-         end
+        end
       end
    end
 end
