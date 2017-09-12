@@ -53,24 +53,20 @@ typedef struct packed {
 } axi_seq_item_aw_vector_s;
 
 localparam int AXI_SEQ_ITEM_AW_NUM_BITS = $bits(axi_seq_item_aw_vector_s);
-
 typedef bit[AXI_SEQ_ITEM_AW_NUM_BITS-1:0] axi_seq_item_aw_vector_t;
 
-/*
+
 
 typedef struct packed {
-    bit                          wready;
-    bit [C_AXI_DATA_WIDTH-1:0]   wdata;
-    bit [C_AXI_DATA_WIDTH/8-1:0] wstrb;
-    bit                          wlast;
-    bit                          wvalid;
+  logic [C_AXI_DATA_WIDTH-1:0]   wdata;
+  logic [C_AXI_DATA_WIDTH/8-1:0] wstrb;
+  logic                          wlast;
+  logic                          wvalid;
   
 } axi_seq_item_w_vector_s;
 
-parameter int AXI_SEQ_ITEM_W_NUM_BITS = $bits(axi_seq_item_w_vector_s);
-
+localparam int AXI_SEQ_ITEM_W_NUM_BITS = $bits(axi_seq_item_w_vector_s);
 typedef bit[AXI_SEQ_ITEM_W_NUM_BITS-1:0] axi_seq_item_w_vector_t;
-*/
 
 
 `include "axi_if_abstract.svh"

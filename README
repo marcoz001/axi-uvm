@@ -48,6 +48,11 @@ https://www.quora.com/What-is-the-best-way-to-model-an-out-of-order-transaction-
                
 I've seen this approach all over so I'm going with it, since it's likely widely,and easily, understood.               
                
+Per: https://verificationacademy.com/cookbook/emulation/example
+Clock Synchronization -
+    Note that all tasks in BFMs must start by synchronizing to a clock edge. 
+    This is required by TBX XRTL. 
+          
                
 // @Todo:   error injection\
 // @Todo:   What if awready never asserted?

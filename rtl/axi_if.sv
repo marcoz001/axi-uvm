@@ -224,6 +224,7 @@ class axi_if_concrete extends axi_if_abstract;
   //@Todo: how to have data[] be veloce friendly? 
   //  either just write words/ctl lines directly
   // or put most of logic in i/f
+  /*
   task write(bit [63:0] addr, bit [7:0] data[], bit [7:0] id);
      $display("YO, axi_if.write");
 //    @(negedge clk);
@@ -245,7 +246,7 @@ class axi_if_concrete extends axi_if_abstract;
 
     
   endtask : write
-
+*/
   task write_aw(axi_seq_item_aw_vector_s s);
     
     
@@ -256,7 +257,7 @@ class axi_if_concrete extends axi_if_abstract;
 
     @(negedge clk);
     
-    $display("YO, axi_if.write_aw");
+   // $display("YO, axi_if.write_aw");
     
      iawvalid <= 1'b1;
      iawid    <= s.awid;
@@ -286,27 +287,60 @@ class axi_if_concrete extends axi_if_abstract;
     
   endtask : write_aw
   
+    
+task write_w(axi_seq_item_w_vector_s  s);
   
-  task write_w(bit [31:0] data, bit [3:0] wstrb, bit valid);
-    $display("YO, axi_if.write_w");
-
- //   @(posedge clk);
-//  wait_for_clks(.cnt(1));
+   wait_for_clks(.cnt(1));
     
-    iwvalid <= valid; // 1'b1;
+    iwvalid <= s.wvalid; // 1'b1;
     
-    iwdata  <= data;
-    iwstrb  <= wstrb;
-    iwlast  <= 1'b0;
+    iwdata  <= s.wdata;
+    iwstrb  <= s.wstrb;
+    iwlast  <= s.wlast;
 
 endtask : write_w
+  
+  
+  // ********************
+  task read_aw(output axi_seq_item_aw_vector_s s);
+    
+    
+   // $display("YO, axi_if.write_aw");
+    
+     s.awvalid = awvalid;
+     s.awid    = awid;
+     s.awaddr  = awaddr;
+     s.awlen   = awlen;
+     s.awsize  = awsize;
+     s.awburst = awburst;
+     s.awlock  = awlock; 
+     s.awcache = awcache;
+     s.awprot  = awprot;
+     s.awqos   = awqos;
+
+   
+  endtask : read_aw
+  
+  
+  // ********************
+  task read_w(output axi_seq_item_w_vector_s  s);
+
+    
+    s.wvalid = wvalid;
+    
+    s.wdata = wdata;
+    s.wstrb = wstrb;
+    s.wlast = wlast;
+
+endtask : read_w 
+
 
   task wait_for_not_in_reset;
     wait (reset == 1'b0);
   endtask : wait_for_not_in_reset;
   
 task wait_for_awvalid; // _and_awready ?
-
+  
     while (awvalid != 1'b1) begin
       @(posedge clk); 
     end
@@ -397,15 +431,22 @@ task wait_for_wready;
 endtask : wait_for_wready
   
   
-function bit get_ready_valid;
+function bit get_wready_wvalid;
   return wvalid & wready;
-  endfunction : get_ready_valid;
+endfunction : get_wready_wvalid;
   
 task set_awready_toggle_mask(bit [31:0] mask);
     awready_toggle_mask=mask;
     awready_toggle_mask_enable=1;
 endtask : set_awready_toggle_mask
   
+function bit get_wready;
+  return wready;
+endfunction : get_wready
+  
+function bit get_wvalid;
+  return wvalid;
+endfunction : get_wvalid
   
 task clr_awready_toggle_mask();
      awready_toggle_mask_enable =0;

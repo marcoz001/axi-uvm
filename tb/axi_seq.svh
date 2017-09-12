@@ -24,7 +24,7 @@ task axi_seq::body;
         $cast(item, original_item.clone());
         start_item(item);
   assert( item.randomize() with {cmd        == e_WRITE; 
-                                 burst_size == e_8BYTES;
+                                 burst_size == e_4BYTES;
                                  burst_type == e_INCR;}) else begin
            `uvm_error(this.get_type_name(),
                       $sformatf("Unable to randomize %s",  item.get_full_name()));

@@ -4,16 +4,16 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   axi_if_abstract vif;
   axi_agent_config    m_config;
   
-  mailbox driver_writeaddress_mbx  = new(0);  //unbounded mailboxes
-  mailbox driver_writedata_mbx     = new(0);
-  mailbox driver_writeresponse_mbx = new(0);
+  mailbox #(axi_seq_item) driver_writeaddress_mbx  = new(0);  //unbounded mailboxes
+  mailbox #(axi_seq_item) driver_writedata_mbx     = new(0);
+  mailbox #(axi_seq_item) driver_writeresponse_mbx = new(0);
 
   // probably unnecessary but
   // having different variables
   // makes it easier for me to follow (less confusing)
-  mailbox responder_writeaddress_mbx  = new(0);  //unbounded mailboxes
-  mailbox responder_writedata_mbx     = new(0);
-  mailbox responder_writeresponse_mbx = new(0);
+  mailbox #(axi_seq_item) responder_writeaddress_mbx  = new(0);  //unbounded mailboxes
+  mailbox #(axi_seq_item) responder_writedata_mbx     = new(0);
+  mailbox #(axi_seq_item) responder_writeresponse_mbx = new(0);
 
   
   extern function new (string name="axi_driver", uvm_component parent=null);
@@ -75,6 +75,7 @@ endtask : run_phase
 task axi_driver::driver_run_phase;
 
   axi_seq_item item;
+  axi_seq_item item2;
   
     vif.set_awvalid(1'b0);
     vif.set_wvalid(1'b0);
@@ -88,27 +89,18 @@ task axi_driver::driver_run_phase;
     driver_write_response();
   join_none
   
-  `uvm_info(this.get_type_name(), "driver_run_phase", UVM_INFO)
   forever begin    
   
     seq_item_port.get_next_item(item);  
+    $cast(item2,item.clone());
     if (item.cmd == e_WRITE) begin
       driver_writeaddress_mbx.put(item);
-//         write(item);
-      //end else begin
-      //  vif.read(item.addr, item.data, item.len, item.id);
-      end
-      `uvm_info(this.get_type_name(), $sformatf("%s", item.convert2string()), UVM_INFO)
+//      driver_writeaddress_mbx.put(item2);
 
-    //`uvm_info(this.get_type_name(), "waiting on driver_run_phase.item_done()", UVM_INFO)
-      seq_item_port.item_done();
-    //`uvm_info(this.get_type_name(), "waiting on driver_run_phase.item_done() - done", UVM_INFO)
-    `uvm_info(this.get_type_name(), "waiting on driver_run_phase.seq_item_port.put() ", UVM_INFO)
-    #500ns 
-    
+    end
+    `uvm_info(this.get_type_name(), $sformatf("%s", item.convert2string()), UVM_HIGH)
+    seq_item_port.item_done();
     seq_item_port.put(item);  
-    `uvm_info(this.get_type_name(), "waiting on driver_run_phase.seq_item_port.put() - done", UVM_INFO)
-      
   end
 endtask : driver_run_phase
     
@@ -196,43 +188,69 @@ task axi_driver::driver_write_address;
   
 endtask : driver_write_address
     
+    
 task axi_driver::driver_write_data;
-  axi_seq_item item;
+  axi_seq_item item=null;
+  axi_seq_item next_item=null;
   int i=0;
-  int validcntr=0; 
-  logic [31:0]  idata;
-  logic [3:0]   iwstrb;
-  bit           ivalid;
+  bit rv;
+  int pktcnt=0;
+  
+  axi_seq_item_w_vector_s s;
   
   forever begin
-     driver_writedata_mbx.get(item);
+    
+    driver_writedata_mbx.try_get(item);
+    if (item==null) begin
+       driver_writedata_mbx.get(item);
+    end else begin
+       i=0;
+    end
+    
 
-    i=0;
-    validcntr=0;
-    while (i<item.len/4) begin
-      vif.wait_for_clks(.cnt(1));
-      if (vif.get_ready_valid() == 1'b1)  begin
-        i++;
-        validcntr++;
-      end
-      idata={item.data[i*4+3],
-             item.data[i*4+2],
-             item.data[i*4+1],
-             item.data[i*4+0]};
-      iwstrb={item.wstrb[i*4+3],
-              item.wstrb[i*4+2],
-              item.wstrb[i*4+1],
-              item.wstrb[i*4+0]};
-      ivalid=item.valid[validcntr];
-      vif.write_w(.data(idata), .wstrb(iwstrb), .valid(ivalid));
-      if (ivalid == 1'b0) begin
-        validcntr++;
+    while (item != null) begin  
+  
+      `uvm_info(this.get_type_name(), $sformatf("wready=%b, wvalid=%b, wready_wvalid=%b", vif.get_wready(), vif.get_wvalid(), vif.get_wready_wvalid()), UVM_INFO)
+
+       s.wdata={item.data[i*4+3],item.data[i*4+2],item.data[i*4+1],item.data[i*4+0]};
+       s.wstrb=i;
+       s.wlast = 1'b0;
+
+      if (i==(item.len/4-1)) begin
+          s.wvalid = 1'b1;
+          s.wlast  = 1'b1;
+
+      end else if (i<item.len/4-1) begin
+          s.wvalid = 1'b1;
+       end
+      `uvm_info(this.get_type_name(), $sformatf("s.data=0x%0x", s.wdata), UVM_INFO)
+       vif.write_w(.s(s));
+
+      if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
+         i++;
+       end
+
+      if (i==(item.len/4)) begin
+        if (pktcnt < 2) begin
+          driver_writedata_mbx.put(item);
+          pktcnt++;
+        end else begin
+          driver_writeresponse_mbx.put(item);
+        end
+        
+          item=null;
+          i=0;
+          driver_writedata_mbx.try_get(item);
+          // if no next xfer, then not back to back so drive signals low again
+          if (item==null) begin
+            s.wvalid=1'b0;
+            s.wlast=1'b0;
+            s.wdata='h0;
+            vif.write_w(.s(s));
+          end
       end
       
-    end
-    vif.set_wvalid(1'b0);
-    
-     driver_writeresponse_mbx.put(item);
+     end
   end    
 
 
@@ -247,22 +265,73 @@ task axi_driver::driver_write_response;
   end    
 endtask : driver_write_response
 
+    
+    
 task axi_driver::responder_write_address;
   
-  axi_seq_item item;
+  axi_seq_item             item;
+  axi_seq_item_aw_vector_s s;
+  
   
   forever begin
-     responder_writeaddress_mbx.get(item);
+    responder_writeaddress_mbx.get(item);
+    `uvm_info(this.get_type_name(), "Getting address", UVM_INFO)
+    vif.read_aw(.s(s));
+    axi_seq_item::aw_to_class(.t(item), .v(s));
+    
+    item.data=new[item.len];
+    item.wlast=new[item.len];
+    item.wstrb=new[item.len];
+      
     responder_writedata_mbx.put(item);
   end    
 endtask : responder_write_address
     
+    
+    
 task axi_driver::responder_write_data;
   
+  int          i;
   axi_seq_item item;
+  axi_seq_item litem;
+  int          datacnt;
+  axi_seq_item_w_vector_s s;
+  bit foo;
   
   forever begin
      responder_writedata_mbx.get(item);
+    `uvm_info(this.get_type_name(), 
+              $sformatf("Waiting for data for %s",
+                        item.convert2string()), 
+              UVM_INFO)
+    
+      i=0;
+      while (i<item.len/4) begin
+         vif.wait_for_clks(.cnt(1));
+        if (vif.get_wready_wvalid() == 1'b1)  begin
+          vif.read_w(s);
+          axi_seq_item::w_to_class(
+            {item.data[i*4+3],
+             item.data[i*4+2],
+             item.data[i*4+1],
+             item.data[i*4+0]},
+            {item.wstrb[i*4+3],
+             item.wstrb[i*4+2],
+             item.wstrb[i*4+1],
+             item.wstrb[i*4+0]},
+            foo,
+            item.wlast[i],
+            .v(s));
+         
+           i++;
+        `uvm_info(this.get_type_name(), 
+                  $sformatf("GOT for data for %s",
+                        item.convert2string()), 
+              UVM_INFO)
+      end
+      
+    end
+
      responder_writeresponse_mbx.put(item);
   end    
 endtask : responder_write_data

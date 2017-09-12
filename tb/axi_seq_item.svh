@@ -5,10 +5,11 @@ class axi_seq_item extends uvm_sequence_item;
     // A recommendation from veloce docs
     rand  bit [6:0]    id;
     rand  bit [63:0]   addr;
-          bit          valid []; // keep valid with data, then can also toggle easily in this env
+  bit          valid []; // keep valid with data,
+                         // then can also toggle easily in this env
           bit [7:0]    data  [];
           bit          wstrb [];
-          bit          valid [];
+          bit          wlast [];
     rand  int          len;  
     rand  burst_size_t burst_size; // Burst size
     rand  burst_type_t burst_type;
@@ -20,7 +21,8 @@ class axi_seq_item extends uvm_sequence_item;
     rand  cmd_t        cmd; // read or write
 
   constraint easier_testing {len > 40;
-                             len < 60;}
+                             len < 60;
+                             (len % 4) == 0;}
   
     constraint max_len {len > 0;
                         len < 256*128;} // AXI4 is 256-beat burst by 128-byte wide
@@ -33,12 +35,28 @@ class axi_seq_item extends uvm_sequence_item;
       
     extern function void   post_randomize;
       
-    extern static function void   aw_from_class(input  axi_seq_item             t,
-                                         output axi_seq_item_aw_vector_s v);
+    extern static function void   aw_from_class(
+      ref    axi_seq_item             t,
+      output axi_seq_item_aw_vector_s v);
       
-    extern static function void   aw_to_class(output axi_seq_item             t,
-                                       input  axi_seq_item_aw_vector_s v);
+    extern static function void   aw_to_class(
+      ref    axi_seq_item             t,
+      input  axi_seq_item_aw_vector_s v);
 
+    extern static function void   w_from_class(
+      input  [31:0]                  wdata,
+      input  [3:0]                   wstrb,
+      input                          wvalid,
+      input                          wlast,
+      output axi_seq_item_w_vector_s v);
+      
+    extern static function void   w_to_class(
+      output  [31:0]                  wdata,
+      output  [3:0]                   wstrb,
+      output                          wvalid,
+      output                          wlast,
+      input  axi_seq_item_w_vector_s  v);
+      
 endclass : axi_seq_item
     
 function axi_seq_item::new (string name="axi_seq_item");
@@ -50,8 +68,8 @@ function string axi_seq_item::convert2string;
     string sdata;
     $sformat(s, "%s", super.convert2string());
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
-    $sformat(s, "%s ID = 0x%0x ",   s, id);
-    $sformat(s, "%s Len = 0x%0x ",   s, len);
+  $sformat(s, "%s ID = 0x%0x",   s, id);
+  $sformat(s, "%s Len = 0x%0x  (0x%0x)",   s, len, len/4);
     $sformat(s, "%s BurstSize = 0x%0x (%s)",   s, burst_size, burst_size.name);
     $sformat(s, "%s BurstType = 0x%0x (%s)",   s, burst_type, burst_type.name);
   
@@ -109,22 +127,24 @@ function void axi_seq_item::post_randomize;
           
   data=new[len];
   wstrb=new[len];
-  valid=new[len];  // only need one per beat instead of one per byte,
+  valid=new[len*2];  // only need one per beat instead of one per byte,
                    // we won't use the extras.
   for (int i=0; i < len; i++) begin
     data[i] = i;
-    wstrb[i]=$random();
+    wstrb[i]=i; // $random();
     valid[i]=$random();
+    valid[i+len]=$random();
     //    data[i] = $random;
   end  
   
 endfunction : post_randomize
   
   
-  static function void axi_seq_item::aw_from_class(input  axi_seq_item             t,
-                                                   output axi_seq_item_aw_vector_s v);
+static function void axi_seq_item::aw_from_class(
+  ref  axi_seq_item             t,
+  output axi_seq_item_aw_vector_s v);
     
-    axi_seq_item_aw_vector_s s;
+  axi_seq_item_aw_vector_s s;
     
      s.awid    = t.id;
      s.awaddr  = t.addr;
@@ -136,14 +156,15 @@ endfunction : post_randomize
      s.awprot  = t.prot;
      s.awqos   = t.qos;
     v = s;
-  endfunction : aw_from_class
+endfunction : aw_from_class
  
-  static function void axi_seq_item::aw_to_class(output axi_seq_item             t,
-                                                 input  axi_seq_item_aw_vector_s v);
+static function void axi_seq_item::aw_to_class(
+  ref    axi_seq_item             t,
+  input  axi_seq_item_aw_vector_s v);
     axi_seq_item_aw_vector_s s;
     s = v;
     
-    t = new();
+   // t = new();
     
      t.id          = s.awid;
      t.addr        = s.awaddr;
@@ -155,5 +176,43 @@ endfunction : post_randomize
      t.prot        = s.awprot;
      t.qos         = s.awqos;
 
-  endfunction : aw_to_class
+endfunction : aw_to_class
+          
+      
+static function void axi_seq_item::w_from_class(
+  input  [31:0]                  wdata,
+  input  [3:0]                   wstrb,
+  input                          wvalid,
+  input                          wlast,
+  output axi_seq_item_w_vector_s v);
+    
+  axi_seq_item_w_vector_s s;
+    
+     s.wdata   = wdata;
+     s.wstrb   = wstrb;
+     s.wlast   = wlast;
+     s.wvalid  = wvalid;
+
+  v = s;
+endfunction : w_from_class
+ 
+static function void axi_seq_item::w_to_class(
+  output  [31:0]                  wdata,
+  output  [3:0]                   wstrb,
+  output                          wvalid,
+  output                          wlast,
+  input  axi_seq_item_w_vector_s  v);
+  
+    axi_seq_item_w_vector_s s;
+
+    s = v;
+    
+//    t = new();
+    
+     wdata   = s.wdata;
+     wstrb   = s.wstrb;
+     wlast   = s.wlast;
+     wvalid  = s.wvalid;
+
+endfunction : w_to_class
           

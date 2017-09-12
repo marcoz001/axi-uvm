@@ -67,7 +67,7 @@ class axim2wbsp_base_test extends uvm_test;
       m_seq.start(m_env.m_driver_seqr);
     //join_none
     
-    #1000
+    #10000
     
      phase.drop_objection(this);
   endtask : run_phase
