@@ -31,7 +31,7 @@ class axi_if_abstract extends uvm_object;
     extern virtual task wait_for_wready();
       
     extern virtual task write_aw(axi_seq_item_aw_vector_s s);
-    extern virtual task write_w (axi_seq_item_w_vector_s  s);
+      extern virtual task write_w (axi_seq_item_w_vector_s  s, bit waitforwready=0);
       
     extern virtual task read_aw(output axi_seq_item_aw_vector_s s);
     extern virtual task read_w(output axi_seq_item_w_vector_s  s);
@@ -152,7 +152,7 @@ task axi_if_abstract::write_aw(axi_seq_item_aw_vector_s s);
              "WARNING. Virtual task write_aw() not defined.")
 endtask : write_aw
   
-task axi_if_abstract::write_w(axi_seq_item_w_vector_s  s);
+      task axi_if_abstract::write_w(axi_seq_item_w_vector_s  s, bit waitforwready=0);
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task write_w() not defined.")
 endtask : write_w

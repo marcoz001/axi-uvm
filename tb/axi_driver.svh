@@ -36,7 +36,8 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   extern task          responder_write_address;
   extern task          responder_write_data;
   extern task          responder_write_response;
-
+   
+    reg foo;
     
 endclass : axi_driver    
     
@@ -191,10 +192,11 @@ endtask : driver_write_address
     
 task axi_driver::driver_write_data;
   axi_seq_item item=null;
-  axi_seq_item next_item=null;
   int i=0;
+  int validcntr=0;
   bit rv;
   int pktcnt=0;
+
   
   axi_seq_item_w_vector_s s;
   
@@ -205,54 +207,63 @@ task axi_driver::driver_write_data;
        driver_writedata_mbx.get(item);
     end else begin
        i=0;
+      validcntr=0;
     end
-    
 
     while (item != null) begin  
-  
-      `uvm_info(this.get_type_name(), $sformatf("wready=%b, wvalid=%b, wready_wvalid=%b", vif.get_wready(), vif.get_wvalid(), vif.get_wready_wvalid()), UVM_INFO)
 
-       s.wdata={item.data[i*4+3],item.data[i*4+2],item.data[i*4+1],item.data[i*4+0]};
-       s.wstrb=i;
-       s.wlast = 1'b0;
+       // defaults. not needed but  I think is cleaner
+       s.wvalid = 'b0;
+       s.wdata  = 'hfeed_beef;
+       s.wstrb  = 'h0;
+       s.wlast  = 1'b0;
 
-      if (i==(item.len/4-1)) begin
-          s.wvalid = 1'b1;
-          s.wlast  = 1'b1;
-
-      end else if (i<item.len/4-1) begin
-          s.wvalid = 1'b1;
-       end
-      `uvm_info(this.get_type_name(), $sformatf("s.data=0x%0x", s.wdata), UVM_INFO)
-       vif.write_w(.s(s));
-
-      if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
-         i++;
-       end
-
-      if (i==(item.len/4)) begin
-        if (pktcnt < 2) begin
-          driver_writedata_mbx.put(item);
-          pktcnt++;
+      if (i<item.len/4) begin
+        s.wvalid=item.valid[validcntr];
+        s.wdata={item.data[i*4+3],item.data[i*4+2],item.data[i*4+1],item.data[i*4+0]};
+        s.wstrb=i;item.wstrb[validcntr]; 
+        if (i==(item.len/4-1)) begin
+           s.wlast=1'b1;//item.wlast[i];
         end else begin
-          driver_writeresponse_mbx.put(item);
+           s.wlast=1'b0;
         end
-        
-          item=null;
-          i=0;
-          driver_writedata_mbx.try_get(item);
-          // if no next xfer, then not back to back so drive signals low again
-          if (item==null) begin
-            s.wvalid=1'b0;
-            s.wlast=1'b0;
-            s.wdata='h0;
-            vif.write_w(.s(s));
-          end
       end
       
-     end
-  end    
+      vif.write_w(.s(s),.waitforwready(1));
 
+      validcntr++;
+
+      if (i==(item.len/4 -1)) begin
+         if (pktcnt < 2) begin
+            driver_writedata_mbx.put(item);
+            pktcnt++;
+         end else begin
+            driver_writeresponse_mbx.put(item);
+         end
+         item=null;  // explicitly set to null, don't rely on try_get below
+         validcntr=0;
+
+         driver_writedata_mbx.try_get(item);
+         // if no next xfer, then not back to back so drive signals low again
+        // after a clock so the last word gets on the bus.
+         if (item==null) begin
+            s.wvalid = 1'b0;
+            s.wlast  = 1'b0;
+            s.wdata  = 'h0;
+            s.wstrb  = 'h0;
+           vif.write_w(.s(s),.waitforwready(1));
+         end
+      end
+
+      if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
+          if (i==(item.len/4 -1)) begin
+            i=0;
+          end else if (i<item.len/4) begin
+            i++;
+          end
+      end
+    end    
+end
 
 endtask : driver_write_data
     

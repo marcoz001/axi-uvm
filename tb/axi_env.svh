@@ -33,7 +33,7 @@ function void axi_env::build_phase (uvm_phase phase);
   
   m_axidriver_agent.m_config.m_active            = UVM_ACTIVE;
   m_axidriver_agent.m_config.drv_type            = e_DRIVER;
-  m_axidriver_agent.m_config.bready_toggle_mask  = 32'hA55A_CCCC;
+  m_axidriver_agent.m_config.bready_toggle_mask  = 32'h5555_5555;
 
   assert(m_axiresponder_agent.m_config.randomize()) else begin
     `uvm_error(this.get_type_name(), $sformatf("Unable to randomize %s", m_axiresponder_agent.m_config.get_name()));
@@ -42,7 +42,7 @@ function void axi_env::build_phase (uvm_phase phase);
   m_axiresponder_agent.m_config.m_active            = UVM_ACTIVE;
   m_axiresponder_agent.m_config.drv_type            = e_RESPONDER;
   m_axiresponder_agent.m_config.awready_toggle_mask = 32'h0000_0001;
-  m_axiresponder_agent.m_config.wready_toggle_mask  = 32'hFFFF_FFFF;
+  //m_axiresponder_agent.m_config.wready_toggle_mask  = 32'hCCCC_CCCC;
   
   // m_wb_agent = wb_agent::type_id::create("m_wb_agent", this);
 endfunction : build_phase

@@ -288,16 +288,24 @@ class axi_if_concrete extends axi_if_abstract;
   endtask : write_aw
   
     
-task write_w(axi_seq_item_w_vector_s  s);
+  task write_w(axi_seq_item_w_vector_s  s, bit waitforwready=0);
   
-   wait_for_clks(.cnt(1));
+   //wait_for_clks(.cnt(1));
+  @(posedge clk) begin
+    if (waitforwready == 1'b1) begin
+      while (wready != 1'b1) begin
+        @(posedge clk);
+      end
+    end  
     
+    //if (wready == 1'b1) begin //  && wvalid == 1'b1) begin
     iwvalid <= s.wvalid; // 1'b1;
     
     iwdata  <= s.wdata;
     iwstrb  <= s.wstrb;
     iwlast  <= s.wlast;
-
+    //end
+  end
 endtask : write_w
   
   
