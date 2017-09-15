@@ -29,9 +29,11 @@ class axi_if_abstract extends uvm_object;
     extern virtual task clr_bready_toggle_mask();
     extern virtual task wait_for_not_in_reset;
     extern virtual task wait_for_wready();
+    extern virtual task wait_for_bvalid();
       
-    extern virtual task write_aw(axi_seq_item_aw_vector_s s);
-      extern virtual task write_w (axi_seq_item_w_vector_s  s, bit waitforwready=0);
+    extern virtual task     write_aw(axi_seq_item_aw_vector_s s);
+    extern virtual task     write_w (axi_seq_item_w_vector_s  s, bit waitforwready=0);
+      extern virtual function void read_b  (output axi_seq_item_b_vector_s  s);
       
     extern virtual task read_aw(output axi_seq_item_aw_vector_s s);
     extern virtual task read_w(output axi_seq_item_w_vector_s  s);
@@ -39,6 +41,10 @@ class axi_if_abstract extends uvm_object;
     extern virtual function bit get_wready_wvalid;
     extern virtual function bit get_wready;
     extern virtual function bit get_wvalid;
+      
+    extern virtual function bit get_bvalid;
+    extern virtual function bit get_bready;
+        
       
       
 endclass : axi_if_abstract;
@@ -189,3 +195,24 @@ function bit axi_if_abstract::get_wvalid();
    `uvm_error(this.get_type_name(), 
               "WARNING. Virtual function get_wvalid() not defined.")
 endfunction : get_wvalid
+      
+      
+function bit axi_if_abstract::get_bready();
+   `uvm_error(this.get_type_name(), 
+              "WARNING. Virtual function get_bready() not defined.")
+endfunction : get_bready
+      
+function bit axi_if_abstract::get_bvalid();
+   `uvm_error(this.get_type_name(), 
+              "WARNING. Virtual function get_bvalid() not defined.")
+endfunction : get_bvalid
+      
+task axi_if_abstract::wait_for_bvalid();
+  `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task wait_for_bvalid() not defined.")
+endtask : wait_for_bvalid
+      
+      function void axi_if_abstract::read_b(output axi_seq_item_b_vector_s  s);
+    `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task read_b() not defined.")
+endfunction : read_b

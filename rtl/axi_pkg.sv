@@ -69,6 +69,14 @@ localparam int AXI_SEQ_ITEM_W_NUM_BITS = $bits(axi_seq_item_w_vector_s);
 typedef bit[AXI_SEQ_ITEM_W_NUM_BITS-1:0] axi_seq_item_w_vector_t;
 
 
+typedef struct packed {
+  logic [C_AXI_ID_WIDTH-1:0]     bid;
+  logic [1:0]                    bresp;
+} axi_seq_item_b_vector_s;
+
+localparam int AXI_SEQ_ITEM_B_NUM_BITS = $bits(axi_seq_item_b_vector_s);
+typedef bit[AXI_SEQ_ITEM_B_NUM_BITS-1:0] axi_seq_item_b_vector_t;
+
 `include "axi_if_abstract.svh"
 
 endpackage : axi_pkg

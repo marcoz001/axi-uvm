@@ -44,19 +44,20 @@ task axi_monitor::run_phase(uvm_phase phase);
   
   vif.wait_for_not_in_reset();
   original_item = axi_seq_item::type_id::create("original_item");
-   forever begin
-     vif.wait_for_awready_awvalid();
-     `uvm_info(this.get_type_name, "YO, detected an awvalid", UVM_HIGH)
+//   forever begin
+  `uvm_info(this.get_type_name, "waiting on wait_for_awvalid()", UVM_INFO)
+  vif.wait_for_awvalid();
+  `uvm_info(this.get_type_name, "waiting on wait_for_awvalid() - done", UVM_INFO)
 
      $cast(item, original_item.clone());
      ap.write(item);
      
-     if (m_config.drv_type == e_RESPONDER) begin
-       driver_activity_ap.write(item);
-     end
+  //   if (m_config.drv_type == e_RESPONDER) begin
+   //    driver_activity_ap.write(item);
+   //  end
      
-     vif.wait_for_clks(.cnt(1));
+ //    vif.wait_for_clks(.cnt(1));
      
-   end
+//   end
 endtask : run_phase
   

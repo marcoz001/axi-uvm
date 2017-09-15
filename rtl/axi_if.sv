@@ -250,14 +250,7 @@ class axi_if_concrete extends axi_if_abstract;
   task write_aw(axi_seq_item_aw_vector_s s);
     
     
-    bit clk_val;
-
-    
-    clk_val = clk;                             // --
-
-    @(negedge clk);
-    
-   // $display("YO, axi_if.write_aw");
+     wait_for_clks(.cnt(1));
     
      iawvalid <= 1'b1;
      iawid    <= s.awid;
@@ -270,11 +263,13 @@ class axi_if_concrete extends axi_if_abstract;
      iawprot  <= s.awprot;
      iawqos   <= s.awqos;
 
-    while (awready != 1'b1) 
-      @(negedge clk);
-    iawvalid <= 1'b0;
-
-    iawid     <= 'z;
+     wait_for_clks(.cnt(1));
+     while (awready != 1'b1) begin
+        wait_for_clks(.cnt(1));
+     end
+    
+     iawvalid <= 1'b0;
+     iawid    <= 'z;
      iawaddr  <= 'z;
      iawlen   <= 'z;
      iawsize  <= 'z;
@@ -289,14 +284,19 @@ class axi_if_concrete extends axi_if_abstract;
   
     
   task write_w(axi_seq_item_w_vector_s  s, bit waitforwready=0);
-  
-   //wait_for_clks(.cnt(1));
-  @(posedge clk) begin
-    if (waitforwready == 1'b1) begin
-      while (wready != 1'b1) begin
-        @(posedge clk);
-      end
-    end  
+  //  $display("write_w - start");
+   wait_for_clks(.cnt(1));
+  // @(posedge clk) begin
+     
+ //     if (waitforwready == 1'b1) begin
+ //       $display("write_w - waitforwready");
+ //        while (wready != 1'b1) begin
+ //          $display("write_w - waiting on clk/wready");
+
+ //          @(posedge clk);
+        //wait_for_clks(.cnt(1));
+ //        end
+ //     end  
     
     //if (wready == 1'b1) begin //  && wvalid == 1'b1) begin
     iwvalid <= s.wvalid; // 1'b1;
@@ -304,8 +304,8 @@ class axi_if_concrete extends axi_if_abstract;
     iwdata  <= s.wdata;
     iwstrb  <= s.wstrb;
     iwlast  <= s.wlast;
-    //end
-  end
+  //end
+  //end
 endtask : write_w
   
   
@@ -347,20 +347,19 @@ endtask : read_w
     wait (reset == 1'b0);
   endtask : wait_for_not_in_reset;
   
-task wait_for_awvalid; // _and_awready ?
-  
-    while (awvalid != 1'b1) begin
-      @(posedge clk); 
-    end
-
+task wait_for_awvalid;
+  @(posedge awvalid);  
 endtask : wait_for_awvalid;
   
 task wait_for_awready_awvalid;
 
-    while (awready != 1'b1 || awvalid != 1'b1) begin
-      @(posedge clk); 
-    end
-    
+  if (awready == 1'b1 && awvalid == 1'b1) 
+    return;
+  else  if (awvalid == 1'b1)
+    @(posedge awready);
+  else  if (awready == 1'b1)
+    @(posedge awvalid);
+
 endtask : wait_for_awready_awvalid
   
   // @Todo: dynamic arrays (data[]) obviously don't work on a real Veloce
@@ -390,32 +389,32 @@ task read(output bit [63:0] addr, output bit [7:0] data[], output int len, outpu
 endtask : read
   
 task set_awready(bit state);
-    @(negedge clk);
+    wait_for_clks(.cnt(1));
     iawready <= state;
 endtask : set_awready
 
 task set_awvalid(bit state);
-  @(negedge clk);
+  wait_for_clks(.cnt(1));
   iawvalid <= state;
 endtask : set_awvalid
   
 task set_wready(bit state);
-  @(posedge clk);
+  wait_for_clks(.cnt(1));
     iwready <= state;
 endtask : set_wready
 
 task set_wvalid(bit state);
-  @(posedge clk);
+  wait_for_clks(.cnt(1));
   iwvalid <= state;
 endtask : set_wvalid
   
 task set_bready(bit state);
-  @(posedge clk);
+  wait_for_clks(.cnt(1));
     ibready <= state;
 endtask : set_bready
 
 task set_bvalid(bit state);
-  @(posedge clk);
+  wait_for_clks(.cnt(1));
   ibvalid <= state;
 endtask : set_bvalid
   
@@ -430,7 +429,7 @@ endtask : set_bvalid
   
 task wait_for_wready;
   while (wready != 1'b1)
-    @(posedge clk);
+    wait_for_clks(.cnt(1));
   
   //@(posedge clk);
   //while (wready != 1'b1) 
@@ -456,6 +455,19 @@ function bit get_wvalid;
   return wvalid;
 endfunction : get_wvalid
   
+function bit get_bready;
+  return bready;
+endfunction : get_bready
+  
+function bit get_bvalid;
+  return bvalid;
+endfunction : get_bvalid
+  
+  
+task wait_for_bvalid;
+  @(posedge bvalid);
+endtask : wait_for_bvalid
+  
 task clr_awready_toggle_mask();
      awready_toggle_mask_enable =0;
 endtask : clr_awready_toggle_mask
@@ -470,7 +482,7 @@ task clr_wready_toggle_mask();
      wready_toggle_mask_enable =0;
 endtask : clr_wready_toggle_mask
 
-  task set_bready_toggle_mask(bit [31:0] mask);
+task set_bready_toggle_mask(bit [31:0] mask);
     bready_toggle_mask=mask;
     bready_toggle_mask_enable=1;
 endtask : set_bready_toggle_mask
@@ -480,13 +492,45 @@ task clr_bready_toggle_mask();
      bready_toggle_mask_enable =0;
 endtask : clr_bready_toggle_mask
 
-endclass : axi_if_concrete
+  function void read_b(output axi_seq_item_b_vector_s  s);
+  s.bid   = bid;
+  s.bresp = bresp;
+endfunction : read_b
   
+endclass : axi_if_concrete
 
+  initial begin
+iawready <= 1'b1;
+iwready <= 1'b1;
+    ibready <= 1'b1;
+//ibresp <= 'h0;
+//ibid <= 'h0;
+  end
+ 
+  initial begin
+    forever begin
+      @(posedge clk) begin
+        if (wlast == 1'b1) begin
+          ibvalid <= 1'b1;
+          ibid <= 'h3;
+          ibresp <= 'h2;
+        end else begin
+          ibvalid <= 1'b0;
+          ibid <= 'h0;
+          ibresp <= 'h0;
+        end
+      end
+      
+    end
+  end
+  
+  
+  
+/*
 // *ready toggling  
 initial begin
    forever begin
-     @(negedge clk) begin
+     @(posedge clk) begin
         if (awready_toggle_mask_enable == 1'b1) begin
             awready_toggle_mask[31:0] <= {awready_toggle_mask[30:0], awready_toggle_mask[31]};
             iawready                  <= awready_toggle_mask[31];
@@ -508,7 +552,7 @@ end
 
 initial begin
    forever begin
-      @(negedge clk) begin
+     @(posedge clk) begin
          if (bready_toggle_mask_enable == 1'b1) begin
             bready_toggle_mask[31:0] <= {bready_toggle_mask[30:0], bready_toggle_mask[31]};
             ibready                  <= bready_toggle_mask[31];
@@ -516,7 +560,7 @@ initial begin
       end
    end
 end
-  
+  */
   function void use_concrete_class(axi_pkg::driver_type_t drv_type);
 
    m_type=drv_type;

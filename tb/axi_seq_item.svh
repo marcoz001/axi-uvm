@@ -20,6 +20,9 @@ class axi_seq_item extends uvm_sequence_item;
           logic [2:0]  prot   = 'h0;
           logic [3:0]  qos    = 'h0;
   
+  logic [6-1:0] bid = 'hF;
+  logic [1:0]   bresp = 'h3;
+  
     rand  cmd_t        cmd; // read or write
 
   constraint easier_testing {len > 40;
@@ -69,6 +72,17 @@ class axi_seq_item extends uvm_sequence_item;
       output                          wlast,
       input  axi_seq_item_w_vector_s  v);
       
+    extern static function void  b_from_class(
+      input  [5:0]     bid,
+      input  [1:0]     bresp,
+      output axi_seq_item_b_vector_s v);
+
+    extern static function void  b_to_class(
+      output  [5:0]     bid,
+      output  [1:0]     bresp,
+      input axi_seq_item_b_vector_s v);
+      
+      
 endclass : axi_seq_item
     
 function axi_seq_item::new (string name="axi_seq_item");
@@ -84,30 +98,65 @@ function string axi_seq_item::convert2string;
   $sformat(s, "%s Len = 0x%0x  (0x%0x)",   s, len, len/4);
     $sformat(s, "%s BurstSize = 0x%0x (%s)",   s, burst_size, burst_size.name);
     $sformat(s, "%s BurstType = 0x%0x (%s)",   s, burst_type, burst_type.name);
+  $sformat(s, "%s BID = 0x%0x",   s, bid);
+  $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
   
   
   for (int i =0; i< len; i++) begin
       $sformat(sdata, "%s 0x%02x ", sdata, data[i]);
     end
-    $sformat(s, "%s %s", s, sdata);
+  $sformat(s, "%s Data: %s", s, sdata);
   
     return s;
 endfunction : convert2string
  
 function void axi_seq_item::do_copy(uvm_object rhs);
-    
+    int i;
+    int j;
     axi_seq_item _rhs;
     $cast(_rhs, rhs);
     super.do_copy(rhs);
 
     addr  = _rhs.addr;
-    id  = _rhs.id;
-    len  = _rhs.len;
+    id    = _rhs.id;
+    len   = _rhs.len;
+  
+    burst_size = _rhs.burst_size;
+    burst_type = _rhs.burst_type;
+    lock       = _rhs.lock;
+    cache      = _rhs.cache;
+    prot       = _rhs.prot;
+    qos        = _rhs.qos;
+  
+    bid        = _rhs.bid;
+    bresp      = _rhs.bresp;
+  
+    cmd        = _rhs.cmd;
 
-    for (int i=0;i<len;i++) begin
+    j=_rhs.data.size();
+    data  = new[j];
+    for (int i=0;i<j;i++) begin
       data[i]  = _rhs.data[i];
     end
-  
+    
+    j=_rhs.wstrb.size();
+    wstrb  = new[j];
+    for (int i=0;i<j;i++) begin
+      wstrb[i]  = _rhs.wstrb[i];
+    end
+
+    j=_rhs.valid.size();
+    valid  = new[j];
+    for (int i=0;i<j;i++) begin
+      valid[i]  = _rhs.valid[i];
+    end
+
+    j=_rhs.wlast.size();
+    wlast  = new[j];
+    for (int i=0;i<j;i++) begin
+      wlast[i] = _rhs.wlast[i];
+    end
+
   
 endfunction : do_copy
   
@@ -235,13 +284,38 @@ static function void axi_seq_item::w_to_class(
     axi_seq_item_w_vector_s s;
 
     s = v;
-    
-//    t = new();
-    
+
      wdata   = s.wdata;
      wstrb   = s.wstrb;
      wlast   = s.wlast;
      wvalid  = s.wvalid;
 
 endfunction : w_to_class
+          
+static function void axi_seq_item::b_from_class(
+  input  [5:0]     bid,
+  input  [1:0]     bresp,
+  output axi_seq_item_b_vector_s v);
+    
+  axi_seq_item_b_vector_s s;
+    
+     s.bid     = bid;
+     s.bresp   = bresp;
+
+  v = s;
+endfunction : b_from_class
+ 
+static function void axi_seq_item::b_to_class(
+  output  [5:0]     bid,
+  output  [1:0]     bresp,
+  input  axi_seq_item_b_vector_s  v);
+  
+    axi_seq_item_b_vector_s s;
+
+    s = v;
+
+     bid   = s.bid;
+     bresp = s.bresp;
+
+endfunction : b_to_class
           
