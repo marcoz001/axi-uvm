@@ -1,3 +1,32 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// Filename: 	axi_pkg.sv
+//
+// Purpose:	
+//          enums, defines, typedefs needed in AXI 
+//
+// Creator:	Matt Dew
+//
+////////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (C) 2017, Matt Dew
+//
+// This program is free software (firmware): you can redistribute it and/or
+// modify it under the terms of  the GNU General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or (at
+// your option) any later version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTIBILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// License:	GPL, v3, as defined and found on www.gnu.org,
+//		http://www.gnu.org/licenses/gpl.html
+//
+//
+////////////////////////////////////////////////////////////////////////////////
+
 package axi_pkg;
 
 // Ugh, we now have a dependency on uvm in the RTL.

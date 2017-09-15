@@ -1,7 +1,31 @@
-// How much can be done in this interface determins how much the driver and seq do.
-// This interface MUST REMAIN veloce friendly.  How to handle burst data drives
-// much of the design.
-
+////////////////////////////////////////////////////////////////////////////////
+//
+// Filename: 	axi_if.svh
+//
+// Purpose:	
+//          bindable interface for AXI UVM environment
+//
+// Creator:	Matt Dew
+//
+////////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (C) 2017, Matt Dew
+//
+// This program is free software (firmware): you can redistribute it and/or
+// modify it under the terms of  the GNU General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or (at
+// your option) any later version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTIBILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// License:	GPL, v3, as defined and found on www.gnu.org,
+//		http://www.gnu.org/licenses/gpl.html
+//
+//
+////////////////////////////////////////////////////////////////////////////////
 
 interface axi_if #(
                       parameter C_AXI_ID_WIDTH   = 6,

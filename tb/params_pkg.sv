@@ -1,3 +1,4 @@
+
 package params_pkg;
 
   parameter AXI_ID_WIDTH   = 6;

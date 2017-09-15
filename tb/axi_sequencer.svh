@@ -1,5 +1,31 @@
-// typedef uvm_sequencer #(axi_seq_item) axi_sequencer;
-
+////////////////////////////////////////////////////////////////////////////////
+//
+// Filename: 	axi_sequencer.svh
+//
+// Purpose:	
+//          UVM sequencer for AXI UVM environment
+//
+// Creator:	Matt Dew
+//
+////////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (C) 2017, Matt Dew
+//
+// This program is free software (firmware): you can redistribute it and/or
+// modify it under the terms of  the GNU General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or (at
+// your option) any later version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTIBILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// License:	GPL, v3, as defined and found on www.gnu.org,
+//		http://www.gnu.org/licenses/gpl.html
+//
+//
+////////////////////////////////////////////////////////////////////////////////
 class axi_sequencer extends uvm_sequencer #(axi_seq_item);
   `uvm_component_utils(axi_sequencer)
 

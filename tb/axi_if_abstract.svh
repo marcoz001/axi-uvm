@@ -1,3 +1,31 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// Filename: 	axi_if_abstract.svh
+//
+// Purpose:	
+//          abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment
+//
+// Creator:	Matt Dew
+//
+////////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (C) 2017, Matt Dew
+//
+// This program is free software (firmware): you can redistribute it and/or
+// modify it under the terms of  the GNU General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or (at
+// your option) any later version.
+//
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTIBILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// License:	GPL, v3, as defined and found on www.gnu.org,
+//		http://www.gnu.org/licenses/gpl.html
+//
+//
+////////////////////////////////////////////////////////////////////////////////
 class axi_if_abstract extends uvm_object;
   `uvm_object_utils(axi_if_abstract)
   
