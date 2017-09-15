@@ -223,38 +223,14 @@ class axi_if_concrete extends axi_if_abstract;
     super.new(name);
   endfunction : new
   
-  //@Todo: how to have data[] be veloce friendly? 
-  //  either just write words/ctl lines directly
-  // or put most of logic in i/f
-  /*
-  task write(bit [63:0] addr, bit [7:0] data[], bit [7:0] id);
-     $display("YO, axi_if.write");
-//    @(negedge clk);
-//      iawvalid <= 1'b0;
-
-    @(negedge clk);
-      iawvalid <= 1'b1;
-      iawaddr  <= addr;
-      iawid    <= id;
-      iawlen   <= 'h0;
-      iawsize  <= 3'b010;
-
-    @(negedge clk);
-     while (awready != 1'b1) begin
-       @(negedge clk);
-     end
-
-     iawvalid <= 1'b0;
-
-    
-  endtask : write
-*/
-  task write_aw(axi_seq_item_aw_vector_s s);
-    
+task write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
     
      wait_for_clks(.cnt(1));
+     while (awready != 1'b1) begin
+        wait_for_clks(.cnt(1));
+     end
     
-     iawvalid <= 1'b1;
+     iawvalid <= valid;
      iawid    <= s.awid;
      iawaddr  <= s.awaddr;
      iawlen   <= s.awlen;
@@ -265,11 +241,8 @@ class axi_if_concrete extends axi_if_abstract;
      iawprot  <= s.awprot;
      iawqos   <= s.awqos;
 
-     wait_for_clks(.cnt(1));
-     while (awready != 1'b1) begin
-        wait_for_clks(.cnt(1));
-     end
-    
+     //wait_for_clks(.cnt(1));
+ /*   
      iawvalid <= 1'b0;
      iawid    <= 'z;
      iawaddr  <= 'z;
@@ -280,34 +253,25 @@ class axi_if_concrete extends axi_if_abstract;
      iawcache <= 'z;
      iawprot  <= 'z;
      iawqos   <= 'z;
-
+*/
     
-  endtask : write_aw
+endtask : write_aw
   
     
-  task write_w(axi_seq_item_w_vector_s  s, bit waitforwready=0);
-  //  $display("write_w - start");
-   wait_for_clks(.cnt(1));
-  // @(posedge clk) begin
-     
-      if (waitforwready == 1'b1) begin
- //     $display("write_w - waitforwready");
-         while (wready != 1'b1) begin
- //          $display("write_w - waiting on clk/wready");
+task write_w(axi_seq_item_w_vector_s  s, bit waitforwready=0);
 
- //          @(posedge clk);
-             wait_for_clks(.cnt(1));
-         end
-      end  
+   wait_for_clks(.cnt(1));
+   if (waitforwready == 1'b1) begin
+      while (wready != 1'b1) begin
+         wait_for_clks(.cnt(1));
+      end
+   end  
     
-    //if (wready == 1'b1) begin //  && wvalid == 1'b1) begin
-    iwvalid <= s.wvalid; // 1'b1;
-    
+    iwvalid <= s.wvalid;
     iwdata  <= s.wdata;
     iwstrb  <= s.wstrb;
     iwlast  <= s.wlast;
-  //end
-  //end
+
 endtask : write_w
   
   
@@ -553,7 +517,7 @@ initial begin
       end
    end
 end
-
+/*
 initial begin
    forever begin
      @(posedge clk) begin
@@ -564,7 +528,7 @@ initial begin
       end
    end
 end
-  
+ */ 
   function void use_concrete_class(axi_pkg::driver_type_t drv_type);
 
    m_type=drv_type;

@@ -31,7 +31,7 @@ class axi_if_abstract extends uvm_object;
     extern virtual task wait_for_wready();
     extern virtual task wait_for_bvalid();
       
-    extern virtual task     write_aw(axi_seq_item_aw_vector_s s);
+      extern virtual task     write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
     extern virtual task     write_w (axi_seq_item_w_vector_s  s, bit waitforwready=0);
       extern virtual function void read_b  (output axi_seq_item_b_vector_s  s);
       
@@ -153,7 +153,7 @@ task axi_if_abstract::wait_for_not_in_reset;
              "WARNING. Virtual task wait_for_not_in_reset() not defined.")
 endtask : wait_for_not_in_reset;
       
-task axi_if_abstract::write_aw(axi_seq_item_aw_vector_s s);
+      task axi_if_abstract::write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task write_aw() not defined.")
 endtask : write_aw

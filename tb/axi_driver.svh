@@ -167,20 +167,7 @@ responder_writeaddress_mbx.put(item);
     
  // end
 endtask : responder_run_phase
-    
-    // write and read() helper functions to talk to the write() and read() functions in the interface/bfm.  Should this ever actually get used in an emulator, code changes are kept together.
-/*
 
-task axi_driver::write(ref axi_seq_item item);
-  axi_seq_item_aw_vector_s v;
-  
-  axi_seq_item::aw_from_class(.t(item), .v(v));
-  vif.write_aw(.s(v));
-  
-    
-   //vif.write(item.addr, item.data, item.id);
-endtask : write
-*/  
     
 task axi_driver::driver_write_address;
   
@@ -189,16 +176,23 @@ task axi_driver::driver_write_address;
   
   forever begin
      // grab next address
-    
+
      driver_writeaddress_mbx.get(item);
     `uvm_info(this.get_type_name(), $sformatf("driver_write_address: %s", item.convert2string()), UVM_INFO)
-  
-     axi_seq_item::aw_from_class(.t(item), .v(v));
-     vif.write_aw(.s(v));
 
+    while (item != null) begin
+       axi_seq_item::aw_from_class(.t(item), .v(v));
+      vif.write_aw(.s(v), .valid(1'b1));
+
+       driver_writedata_mbx.put(item);
+      
+       item=null;
     
-     driver_writedata_mbx.put(item);
-
+       driver_writeaddress_mbx.try_get(item);
+      if (item==null) begin
+        vif.write_aw(.s(v), .valid(1'b0));
+      end
+    end  
   end
   
 endtask : driver_write_address
@@ -215,18 +209,11 @@ task axi_driver::driver_write_data;
   axi_seq_item_w_vector_s s;
   
   forever begin
-  //  `uvm_info(this.get_type_name(), $sformatf("driver_write_data, top"), UVM_INFO)   
-    
-    driver_writedata_mbx.try_get(item);
-    if (item==null) begin
-    //  `uvm_info(this.get_type_name(), $sformatf("waiting on .get()"), UVM_INFO)   
 
-       driver_writedata_mbx.get(item);
-   //   `uvm_info(this.get_type_name(), $sformatf("driver_write_data: %s", item.convert2string()), UVM_INFO)
-    end else begin
-       i=0;
-      validcntr=0;
-    end
+    driver_writedata_mbx.get(item);
+
+    i=0;
+    validcntr=0;
 
     while (item != null) begin  
 
@@ -246,21 +233,17 @@ task axi_driver::driver_write_data;
            s.wlast=1'b0;
         end
       end
-//      `uvm_info(this.get_type_name(), $sformatf("Item: %s", item.convert2string()), UVM_INFO)
       vif.write_w(.s(s),.waitforwready(1));
 
       validcntr++;
-   //   `uvm_info(this.get_type_name(), $sformatf("driver_write_data i=%d, validcntr=%d", i, validcntr), UVM_INFO)
       if (i==(item.len/4 -1)) begin
          if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
 
             driver_writeresponse_mbx.put(item);
             item=null;  // explicitly set to null, don't rely on try_get below
-//         if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
 
             validcntr=0;
             i=0;
-//         end
   
            driver_writedata_mbx.try_get(item);
          // if no next xfer, then not back to back so drive signals low again
@@ -269,7 +252,6 @@ task axi_driver::driver_write_data;
               s.wlast  = 1'b0;
               s.wdata  = 'h0;
               s.wstrb  = 'h0;
-          // i=0;
              vif.write_w(.s(s),.waitforwready(1));
            end
         end
@@ -278,16 +260,7 @@ task axi_driver::driver_write_data;
            i++;
         end
       end
-      `uvm_info(this.get_type_name(), $sformatf("driver_write_data(): wready and wvalid I: %d", i), UVM_INFO)
-/*
-      if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
-          if (i==(item.len/4 -1)) begin
-            i=0;
-          end else if (i<item.len/4) begin
-            i++;
-          end
-      end
-*/      
+
     end    
 end
 
