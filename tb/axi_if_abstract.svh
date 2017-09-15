@@ -47,7 +47,7 @@ class axi_if_abstract extends uvm_object;
         
       
       
-endclass : axi_if_abstract;
+endclass : axi_if_abstract
     
 function axi_if_abstract::new (string name="axi_if_abstract");  
   super.new(name);

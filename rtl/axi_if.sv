@@ -58,6 +58,7 @@ interface axi_if #(
                      inout  wire                         rready  // Read Response ready
                     );
   import axi_pkg::*;
+
   
 
   logic [C_AXI_ID_WIDTH-1:0]	 iawid;
@@ -212,7 +213,8 @@ interface axi_if #(
 
    driver_type_t m_type;
   
-  
+ import uvm_pkg::*;
+`include "uvm_macros.svh"
   
 class axi_if_concrete extends axi_if_abstract;
   `uvm_object_utils(axi_if_concrete)
@@ -288,15 +290,15 @@ class axi_if_concrete extends axi_if_abstract;
    wait_for_clks(.cnt(1));
   // @(posedge clk) begin
      
- //     if (waitforwready == 1'b1) begin
- //       $display("write_w - waitforwready");
- //        while (wready != 1'b1) begin
+      if (waitforwready == 1'b1) begin
+ //     $display("write_w - waitforwready");
+         while (wready != 1'b1) begin
  //          $display("write_w - waiting on clk/wready");
 
  //          @(posedge clk);
-        //wait_for_clks(.cnt(1));
- //        end
- //     end  
+             wait_for_clks(.cnt(1));
+         end
+      end  
     
     //if (wready == 1'b1) begin //  && wvalid == 1'b1) begin
     iwvalid <= s.wvalid; // 1'b1;
@@ -312,6 +314,8 @@ endtask : write_w
   // ********************
   task read_aw(output axi_seq_item_aw_vector_s s);
     
+
+    
     
    // $display("YO, axi_if.write_aw");
     
@@ -319,8 +323,8 @@ endtask : write_w
      s.awid    = awid;
      s.awaddr  = awaddr;
      s.awlen   = awlen;
-     s.awsize  = awsize;
-     s.awburst = awburst;
+    s.awsize  = awsize;
+    s.awburst = awburst;
      s.awlock  = awlock; 
      s.awcache = awcache;
      s.awprot  = awprot;
@@ -500,8 +504,8 @@ endfunction : read_b
 endclass : axi_if_concrete
 
   initial begin
-iawready <= 1'b1;
-iwready <= 1'b1;
+//iawready <= 1'b1;
+//iwready <= 1'b1;
     ibready <= 1'b1;
 //ibresp <= 'h0;
 //ibid <= 'h0;
@@ -526,7 +530,7 @@ iwready <= 1'b1;
   
   
   
-/*
+
 // *ready toggling  
 initial begin
    forever begin
@@ -560,7 +564,7 @@ initial begin
       end
    end
 end
-  */
+  
   function void use_concrete_class(axi_pkg::driver_type_t drv_type);
 
    m_type=drv_type;

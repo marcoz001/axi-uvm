@@ -104,7 +104,7 @@ task axi_driver::driver_run_phase;
     if (item2.cmd == e_WRITE) begin
       driver_writeaddress_mbx.put(item2);
     end
-    `uvm_info(this.get_type_name(), $sformatf("driver_run_phase: %s", item.convert2string()), UVM_INFO)
+ //   `uvm_info(this.get_type_name(), $sformatf("driver_run_phase: %s", item.convert2string()), UVM_INFO)
 //    seq_item_port.item_done(item);
     //#1500
     //`uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put()", UVM_INFO)
@@ -189,6 +189,7 @@ task axi_driver::driver_write_address;
   
   forever begin
      // grab next address
+    
      driver_writeaddress_mbx.get(item);
     `uvm_info(this.get_type_name(), $sformatf("driver_write_address: %s", item.convert2string()), UVM_INFO)
   
@@ -214,11 +215,14 @@ task axi_driver::driver_write_data;
   axi_seq_item_w_vector_s s;
   
   forever begin
+  //  `uvm_info(this.get_type_name(), $sformatf("driver_write_data, top"), UVM_INFO)   
     
     driver_writedata_mbx.try_get(item);
     if (item==null) begin
+    //  `uvm_info(this.get_type_name(), $sformatf("waiting on .get()"), UVM_INFO)   
+
        driver_writedata_mbx.get(item);
-      `uvm_info(this.get_type_name(), $sformatf("driver_write_data: %s", item.convert2string()), UVM_INFO)
+   //   `uvm_info(this.get_type_name(), $sformatf("driver_write_data: %s", item.convert2string()), UVM_INFO)
     end else begin
        i=0;
       validcntr=0;
@@ -246,28 +250,36 @@ task axi_driver::driver_write_data;
       vif.write_w(.s(s),.waitforwready(1));
 
       validcntr++;
-
+   //   `uvm_info(this.get_type_name(), $sformatf("driver_write_data i=%d, validcntr=%d", i, validcntr), UVM_INFO)
       if (i==(item.len/4 -1)) begin
-     //    if (pktcnt < 2) begin
-     //       driver_writedata_mbx.put(item);
-     //       pktcnt++;
-     //    end else begin
+         if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
+
             driver_writeresponse_mbx.put(item);
-     //    end
-         item=null;  // explicitly set to null, don't rely on try_get below
-         validcntr=0;
+            item=null;  // explicitly set to null, don't rely on try_get below
+//         if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
 
-         driver_writedata_mbx.try_get(item);
+            validcntr=0;
+            i=0;
+//         end
+  
+           driver_writedata_mbx.try_get(item);
          // if no next xfer, then not back to back so drive signals low again
-         if (item==null) begin
-            s.wvalid = 1'b0;
-            s.wlast  = 1'b0;
-            s.wdata  = 'h0;
-            s.wstrb  = 'h0;
-           vif.write_w(.s(s),.waitforwready(1));
-         end
+           if (item==null) begin
+              s.wvalid = 1'b0;
+              s.wlast  = 1'b0;
+              s.wdata  = 'h0;
+              s.wstrb  = 'h0;
+          // i=0;
+             vif.write_w(.s(s),.waitforwready(1));
+           end
+        end
+      end else if (i<item.len/4) begin
+        if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
+           i++;
+        end
       end
-
+      `uvm_info(this.get_type_name(), $sformatf("driver_write_data(): wready and wvalid I: %d", i), UVM_INFO)
+/*
       if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
           if (i==(item.len/4 -1)) begin
             i=0;
@@ -275,6 +287,7 @@ task axi_driver::driver_write_data;
             i++;
           end
       end
+*/      
     end    
 end
 
@@ -287,14 +300,14 @@ task axi_driver::driver_write_response;
   
   forever begin
     driver_writeresponse_mbx.get(item);
-    `uvm_info(this.get_type_name(), "HEY, driver_write_response!!!!", UVM_INFO)
+ //   `uvm_info(this.get_type_name(), "HEY, driver_write_response!!!!", UVM_INFO)
     vif.wait_for_bvalid();
     vif.read_b(.s(s));
     item.bid   = s.bid;
     item.bresp = s.bresp;
-    `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put()", UVM_INFO)
+ //   `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put()", UVM_INFO)
     seq_item_port.put(item);  
-    `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put() - done", UVM_INFO)
+  //  `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put() - done", UVM_INFO)
     `uvm_info(this.get_type_name(), $sformatf("driver_write_response: %s", item.convert2string()), UVM_INFO)
     
   end    

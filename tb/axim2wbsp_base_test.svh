@@ -58,10 +58,10 @@ class axim2wbsp_base_test extends uvm_test;
         phase.raise_objection(this);
 
         #1000
-//
-//    fork
-//        m_resp_seq.start(m_env.m_responder_seqr);
-//    join_none
+
+    fork
+        m_resp_seq.start(m_env.m_responder_seqr);
+    join_none
 
     //fork
       m_seq.start(m_env.m_driver_seqr);

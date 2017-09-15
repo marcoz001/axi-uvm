@@ -13,9 +13,12 @@ class axi_seq_item extends uvm_sequence_item;
     rand  bit          wstrb [];
     rand  bit          wlast [];
     rand  int          len;  
-    rand  burst_size_t burst_size; // Burst size
-    rand  burst_type_t burst_type;
-          logic [0:0]  lock   = 'h0;
+    //rand  burst_size_t burst_size; // Burst size
+    //rand  burst_type_t burst_type;
+    rand logic [2:0] burst_size; // Burst size
+    rand logic [1:0] burst_type;
+
+  logic [0:0]  lock   = 'h0;
           logic [3:0]  cache  = 'h0;
           logic [2:0]  prot   = 'h0;
           logic [3:0]  qos    = 'h0;
@@ -25,7 +28,7 @@ class axi_seq_item extends uvm_sequence_item;
   
     rand  cmd_t        cmd; // read or write
 
-  constraint easier_testing {len > 40;
+  constraint easier_testing {len >= 'h10;
                              len < 60;
                              (len % 4) == 0;}
   
@@ -96,8 +99,8 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
   $sformat(s, "%s ID = 0x%0x",   s, id);
   $sformat(s, "%s Len = 0x%0x  (0x%0x)",   s, len, len/4);
-    $sformat(s, "%s BurstSize = 0x%0x (%s)",   s, burst_size, burst_size.name);
-    $sformat(s, "%s BurstType = 0x%0x (%s)",   s, burst_type, burst_type.name);
+    $sformat(s, "%s BurstSize = 0x%0x ",   s, burst_size);
+    $sformat(s, "%s BurstType = 0x%0x ",   s, burst_type);
   $sformat(s, "%s BID = 0x%0x",   s, bid);
   $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
   
@@ -205,12 +208,14 @@ function void axi_seq_item::post_randomize;
     wlast[i] = 1'b1;
   end
   wlast[0] = 1'b1;
-/*
+
+   
   j=valid.size();
   for (int i=0;i<j;i++) begin
     valid[i] = 1'b1;
   end
-*/
+
+  data[len-1] = 'hFE; // specific value to eaily identify last byte
   
   //assert(valid.randomize()) else begin
   //  `uvm_error(this.get_type_name, "Unable to randomize valid");
@@ -218,7 +223,7 @@ function void axi_seq_item::post_randomize;
 endfunction : post_randomize
   
   
-static function void axi_seq_item::aw_from_class(
+ function void axi_seq_item::aw_from_class(
   ref  axi_seq_item             t,
   output axi_seq_item_aw_vector_s v);
     
@@ -236,7 +241,7 @@ static function void axi_seq_item::aw_from_class(
     v = s;
 endfunction : aw_from_class
  
-static function void axi_seq_item::aw_to_class(
+ function void axi_seq_item::aw_to_class(
   ref    axi_seq_item             t,
   input  axi_seq_item_aw_vector_s v);
     axi_seq_item_aw_vector_s s;
@@ -257,7 +262,7 @@ static function void axi_seq_item::aw_to_class(
 endfunction : aw_to_class
           
       
-static function void axi_seq_item::w_from_class(
+ function void axi_seq_item::w_from_class(
   input  [31:0]                  wdata,
   input  [3:0]                   wstrb,
   input                          wvalid,
@@ -274,7 +279,7 @@ static function void axi_seq_item::w_from_class(
   v = s;
 endfunction : w_from_class
  
-static function void axi_seq_item::w_to_class(
+ function void axi_seq_item::w_to_class(
   output  [31:0]                  wdata,
   output  [3:0]                   wstrb,
   output                          wvalid,
@@ -292,7 +297,7 @@ static function void axi_seq_item::w_to_class(
 
 endfunction : w_to_class
           
-static function void axi_seq_item::b_from_class(
+ function void axi_seq_item::b_from_class(
   input  [5:0]     bid,
   input  [1:0]     bresp,
   output axi_seq_item_b_vector_s v);
@@ -305,7 +310,7 @@ static function void axi_seq_item::b_from_class(
   v = s;
 endfunction : b_from_class
  
-static function void axi_seq_item::b_to_class(
+ function void axi_seq_item::b_to_class(
   output  [5:0]     bid,
   output  [1:0]     bresp,
   input  axi_seq_item_b_vector_s  v);

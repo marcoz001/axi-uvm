@@ -43,8 +43,10 @@ typedef struct packed {
   logic                          awvalid;
   logic                          awready;
   logic [7:0]                    awlen;
-  burst_size_t                    awsize;
-  burst_type_t                    awburst;
+//  burst_size_t                    awsize;
+//  burst_type_t                    awburst;
+  logic [2:0]  awsize;
+  logic [1:0]  awburst;
   logic [0:0]                    awlock;
   logic [3:0]                    awcache;
   logic [2:0]                    awprot;
