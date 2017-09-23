@@ -132,8 +132,8 @@ interface axi_if #(
   logic                          irready;
 
   
-  logic [31:0] awready_toggle_mask;
-  bit          awready_toggle_mask_enable=0;
+  logic [31:0] awready_toggle_pattern;
+  bit          awready_toggle_pattern_enable=0;
 
   logic [31:0]  wready_toggle_mask;
   bit           wready_toggle_mask_enable=0;
@@ -248,12 +248,14 @@ class axi_if_concrete extends axi_if_abstract;
   endfunction : new
   
 task write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
+  
+//  int i='h10;
+//  forever begin
     
-     wait_for_clks(.cnt(1));
-     while (awready != 1'b1) begin
-        wait_for_clks(.cnt(1));
-     end
-    
+//  reg orig_valid;
+//  wait_for_clks(.cnt(1));
+//  @(posedge clk) begin
+
      iawvalid <= valid;
      iawid    <= s.awid;
      iawaddr  <= s.awaddr;
@@ -264,21 +266,40 @@ task write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
      iawcache <= s.awcache;
      iawprot  <= s.awprot;
      iawqos   <= s.awqos;
+  
 
-     //wait_for_clks(.cnt(1));
- /*   
-     iawvalid <= 1'b0;
-     iawid    <= 'z;
-     iawaddr  <= 'z;
-     iawlen   <= 'z;
-     iawsize  <= 'z;
-     iawburst <= 'z;
-     iawlock  <= 'z; 
-     iawcache <= 'z;
-     iawprot  <= 'z;
-     iawqos   <= 'z;
-*/
+    // this works if awready not already asserted
+  //  if (awvalid == 1'b1 && awready == 1'b1) begin
+   //   iawvalid <= 1'b0;
+    //  iawaddr <= 'h0;
+     // return;
+   // end else  
+  /// this works if awready already asserted 
+ //   if (valid == 1'b1 && awready == 1'b1) begin
+  //     return;
+   //  end
     
+//  end
+ // end
+//  if (awready != 1'b1) begin
+//    @(posedge awready);
+//  end
+  /*
+      while (awready != 1'b1) begin
+        wait_for_clks(.cnt(1));
+     end
+    */
+/*
+  forever begin
+    @(posedge clk) begin
+//      if (awready == 1'b1 && awvalid == 1'b1) begin
+      if (awready == 1'b1) begin
+iawvalid <= 1'b0;
+        return;
+      end      
+    end
+  end
+  */
 endtask : write_aw
   
     
@@ -297,7 +318,25 @@ task write_w(axi_seq_item_w_vector_s  s, bit waitforwready=0);
     iwlast  <= s.wlast;
 
 endtask : write_w
+
+task write_b(axi_seq_item_b_vector_s s, bit valid=1'b1);
+  //$display("%t write_b(bid=%d, bresp=%d",$time, s.bid, s.bresp);
+  wait_for_clks(.cnt(1));
+  ibvalid <= valid;
+  ibid    <= s.bid;
+  ibresp  <= s.bresp;
+
+   // only wait for bready if we're asserting bvalid.
+  if (valid == 1'b1) begin
+     while (bready != 1'b1) begin
+    //   $display("%t: write_b...waiting for bready", $time);
+           wait_for_clks(.cnt(1));
+     end
+  end  
   
+  //$display("%t write_b: done", $time);
+
+endtask : write_b
   
   // ********************
   task read_aw(output axi_seq_item_aw_vector_s s);
@@ -343,6 +382,19 @@ task wait_for_awvalid;
   @(posedge awvalid);  
 endtask : wait_for_awvalid;
   
+  
+task wait_for_write_address(output axi_seq_item_aw_vector_s s);
+    //wait_for_awready_awvalid();
+  forever begin
+    @(posedge clk) begin
+      if (awready == 1'b1 && awvalid== 1'b1) begin
+        read_aw(.s(s));
+        return;
+      end
+    end  
+  end
+endtask : wait_for_write_address
+  
 task wait_for_awready_awvalid;
 
   if (awready == 1'b1 && awvalid == 1'b1) 
@@ -351,13 +403,15 @@ task wait_for_awready_awvalid;
     @(posedge awready);
   else  if (awready == 1'b1)
     @(posedge awvalid);
+  else
+    @(posedge awvalid or posedge awready)  wait_for_awready_awvalid();
 
 endtask : wait_for_awready_awvalid
   
   // @Todo: dynamic arrays (data[]) obviously don't work on a real Veloce
   // but for the sake of simplicity
 task read(output bit [63:0] addr, output bit [7:0] data[], output int len, output bit [7:0] id);
-      $display("YO, axi_if.read");
+//      $display("YO, axi_if.read");
    // @(posedge clk);
 
     id   = awid;
@@ -429,15 +483,25 @@ task wait_for_wready;
 
 endtask : wait_for_wready
   
+ 
+function bit get_awready_awvalid;
+  return awready & awvalid;
+endfunction : get_awready_awvalid;
+
+function bit get_awready;
+  return awready;
+endfunction : get_awready;
+
+  
   
 function bit get_wready_wvalid;
   return wvalid & wready;
 endfunction : get_wready_wvalid;
   
-task set_awready_toggle_mask(bit [31:0] mask);
-    awready_toggle_mask=mask;
-    awready_toggle_mask_enable=1;
-endtask : set_awready_toggle_mask
+function enable_awready_toggle_pattern(bit [31:0] pattern);
+    awready_toggle_pattern=pattern;
+    awready_toggle_pattern_enable=1;
+endfunction : enable_awready_toggle_pattern
   
 function bit get_wready;
   return wready;
@@ -460,9 +524,9 @@ task wait_for_bvalid;
   @(posedge bvalid);
 endtask : wait_for_bvalid
   
-task clr_awready_toggle_mask();
-     awready_toggle_mask_enable =0;
-endtask : clr_awready_toggle_mask
+task disable_awready_toggle_pattern();
+     awready_toggle_pattern_enable =0;
+endtask : disable_awready_toggle_pattern
   
 task set_wready_toggle_mask(bit [31:0] mask);
     wready_toggle_mask=mask;
@@ -491,45 +555,49 @@ endfunction : read_b
   
 endclass : axi_if_concrete
 
-  initial begin
-//iawready <= 1'b1;
-//iwready <= 1'b1;
-    ibready <= 1'b1;
-//ibresp <= 'h0;
-//ibid <= 'h0;
-  end
- 
-  initial begin
-    forever begin
-      @(posedge clk) begin
-        if (wlast == 1'b1) begin
-          ibvalid <= 1'b1;
-          ibid <= 'h3;
-          ibresp <= 'h2;
-        end else begin
-          ibvalid <= 1'b0;
-          ibid <= 'h0;
-          ibresp <= 'h0;
-        end
-      end
-      
-    end
-  end
-  
-  
-  
 
 // *ready toggling  
 initial begin
    forever begin
      @(posedge clk) begin
-        if (awready_toggle_mask_enable == 1'b1) begin
-            awready_toggle_mask[31:0] <= {awready_toggle_mask[30:0], awready_toggle_mask[31]};
-            iawready                  <= awready_toggle_mask[31];
+       if (awready_toggle_pattern_enable == 1'b1) begin
+         awready_toggle_pattern[31:0] <= {awready_toggle_pattern[30:0], awready_toggle_pattern[31]};
+            iawready                  <= awready_toggle_pattern[31];
          end
       end
    end
 end
+/*
+  reg wlast_q;
+  // temporary stub to handle bvalid after wlast
+initial begin
+   forever begin
+     @(posedge clk) begin
+       if (reset == 1'b1) begin
+          wlast_q <= 1'b0;
+         ibvalid <= 1'b0;
+         ibid <= 'h0;
+         ibresp <= 'h0;
+
+       end else begin
+         wlast_q <= wlast;
+         if ((wlast == 1'b0) && (wlast_q == 1'b1)) begin
+           ibvalid <= 1'b1;
+          ibid <= 'h3;
+          ibresp <= 'h2;
+
+         end  else if (bready == 1'b1) begin
+             ibvalid <= 1'b0;
+          ibid <= 'h0;
+          ibresp <= 'h0;
+
+         end
+         
+       end
+     end
+   end
+end
+*/  
   
 initial begin
    forever begin
@@ -541,7 +609,7 @@ initial begin
       end
    end
 end
-/*
+
 initial begin
    forever begin
      @(posedge clk) begin
@@ -552,7 +620,7 @@ initial begin
       end
    end
 end
- */ 
+ 
   function void use_concrete_class(axi_pkg::driver_type_t drv_type);
 
    m_type=drv_type;

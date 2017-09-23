@@ -56,7 +56,7 @@ function void axi_env::build_phase (uvm_phase phase);
 
   m_axidriver_agent.m_config.m_active            = UVM_ACTIVE;
   m_axidriver_agent.m_config.drv_type            = e_DRIVER;
-  m_axidriver_agent.m_config.bready_toggle_mask  = 32'hA55A_CCCC;
+  m_axidriver_agent.m_config.bready_toggle_mask  = 32'h0001_0001;
 
   
   m_axiresponder_agent = axi_agent::type_id::create("m_axiresponder_agent", this);
@@ -69,7 +69,7 @@ function void axi_env::build_phase (uvm_phase phase);
   
   m_axiresponder_agent.m_config.m_active            = UVM_ACTIVE;
   m_axiresponder_agent.m_config.drv_type            = e_RESPONDER;
-  m_axiresponder_agent.m_config.awready_toggle_mask = 32'hFFFF_FFFF;
+  //m_axiresponder_agent.m_config.awready_toggle_mask = 32'hFFFF_FFFF;
   //m_axiresponder_agent.m_config.wready_toggle_mask  = 32'hF7FF_FFFF;
   
   

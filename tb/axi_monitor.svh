@@ -67,24 +67,42 @@ endfunction : connect_phase
 
     
 task axi_monitor::run_phase(uvm_phase phase);
-   axi_seq_item original_item;
-   axi_seq_item item;
+   axi_seq_item             original_item;
+   axi_seq_item             item;
+    axi_seq_item item2;
+   axi_seq_item_aw_vector_s aw_s;
   
   vif.wait_for_not_in_reset();
   original_item = axi_seq_item::type_id::create("original_item");
+  original_item.len=0;
+  
   forever begin
-  `uvm_info(this.get_type_name, "waiting on wait_for_awvalid()", UVM_INFO)
-  vif.wait_for_awvalid();
-  `uvm_info(this.get_type_name, "waiting on wait_for_awvalid() - done", UVM_INFO)
-
+ // `uvm_info(this.get_type_name, "waiting on wait_for_awvalid()", UVM_INFO)
+  //vif.wait_for_awvalid();
+    // vif.wait_for_awready_awvalid();
+    vif.wait_for_write_address(.s(aw_s));
+    
+//    vif.read_aw(.s(aw_s));
      $cast(item, original_item.clone());
+//    item = axi_seq_item::type_id::create("item");
+
+    axi_seq_item::aw_to_class(.t(item), .v(aw_s));
+    item.cmd = axi_uvm_pkg::e_WRITE;
+    $cast(item2, item);
+
+ //   `uvm_info(this.get_type_name, "waiting on wait_for_awvalid() - done", UVM_INFO)
+ //       `uvm_info(this.get_type_name(), 
+ //                 $sformatf("axi_MONITOR %s",
+ //                       item.convert2string()), 
+ //             UVM_INFO)
+
      ap.write(item);
      
      if (m_config.drv_type == e_RESPONDER) begin
-       driver_activity_ap.write(item);
+       driver_activity_ap.write(item2);
      end
      
-     vif.wait_for_clks(.cnt(1));
+//     vif.wait_for_clks(.cnt(1));
      
    end
 endtask : run_phase

@@ -49,8 +49,8 @@ class axi_if_abstract extends uvm_object;
     extern virtual task set_bvalid(bit state);
 
     extern virtual task wait_for_clks(int cnt=1);
-    extern virtual task set_awready_toggle_mask(bit [31:0] mask);
-    extern virtual task clr_awready_toggle_mask();
+      extern virtual function enable_awready_toggle_pattern(bit [31:0] pattern);
+    extern virtual task disable_awready_toggle_pattern();
     extern virtual task set_wready_toggle_mask(bit [31:0] mask);
     extern virtual task clr_wready_toggle_mask();
     extern virtual task set_bready_toggle_mask(bit [31:0] mask);
@@ -59,19 +59,28 @@ class axi_if_abstract extends uvm_object;
     extern virtual task wait_for_wready();
     extern virtual task wait_for_bvalid();
       
-      extern virtual task     write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
+    extern virtual task     write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
     extern virtual task     write_w (axi_seq_item_w_vector_s  s, bit waitforwready=0);
-      extern virtual function void read_b  (output axi_seq_item_b_vector_s  s);
+    extern virtual task write_b(axi_seq_item_b_vector_s s, bit valid=1'b1);
+
+    extern virtual function void read_b  (output axi_seq_item_b_vector_s  s);
       
     extern virtual task read_aw(output axi_seq_item_aw_vector_s s);
     extern virtual task read_w(output axi_seq_item_w_vector_s  s);
       
-    extern virtual function bit get_wready_wvalid;
+    extern virtual function bit get_awready_awvalid;
+    extern virtual function bit get_awready;
+
+      
+      extern virtual function bit get_wready_wvalid;
     extern virtual function bit get_wready;
     extern virtual function bit get_wvalid;
       
     extern virtual function bit get_bvalid;
     extern virtual function bit get_bready;
+
+
+    extern virtual task wait_for_write_address(output axi_seq_item_aw_vector_s s);
         
       
       
@@ -146,15 +155,15 @@ task axi_if_abstract::wait_for_clks(int cnt=1);
              "WARNING. Virtual task wait_for_clks() not defined.")
 endtask : wait_for_clks
       
-task axi_if_abstract::set_awready_toggle_mask(bit [31:0] mask);
+      function axi_if_abstract::enable_awready_toggle_pattern(bit [31:0] pattern);
   `uvm_error(this.get_type_name(),
-             "WARNING. Virtual task set_awready_toggle_mask() not defined.")
-endtask : set_awready_toggle_mask
+             "WARNING. Virtual function enable_awready_toggle_pattern() not defined.")
+endfunction : enable_awready_toggle_pattern
       
-task axi_if_abstract::clr_awready_toggle_mask();
+task axi_if_abstract::disable_awready_toggle_pattern();
   `uvm_error(this.get_type_name(),
-             "WARNING. Virtual task clr_awready_toggle_mask() not defined.")
-endtask : clr_awready_toggle_mask
+             "WARNING. Virtual task disable_awready_toggle_pattern() not defined.")
+endtask : disable_awready_toggle_pattern
   
 task axi_if_abstract::set_wready_toggle_mask(bit [31:0] mask);
   `uvm_error(this.get_type_name(),
@@ -181,16 +190,20 @@ task axi_if_abstract::wait_for_not_in_reset;
              "WARNING. Virtual task wait_for_not_in_reset() not defined.")
 endtask : wait_for_not_in_reset;
       
-      task axi_if_abstract::write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
+task axi_if_abstract::write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task write_aw() not defined.")
 endtask : write_aw
   
-      task axi_if_abstract::write_w(axi_seq_item_w_vector_s  s, bit waitforwready=0);
+task axi_if_abstract::write_w(axi_seq_item_w_vector_s  s, bit waitforwready=0);
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task write_w() not defined.")
 endtask : write_w
-      
+    
+task axi_if_abstract::write_b(axi_seq_item_b_vector_s s, bit valid=1'b1);
+  `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task write_b() not defined.")
+endtask : write_b
      
 task axi_if_abstract::read_aw(output axi_seq_item_aw_vector_s s);
   `uvm_error(this.get_type_name(),
@@ -202,12 +215,23 @@ task axi_if_abstract::read_w(output axi_seq_item_w_vector_s  s);
              "WARNING. Virtual task read_w() not defined.")
 endtask : read_w
       
+function bit axi_if_abstract::get_awready_awvalid();
+   `uvm_error(this.get_type_name(),
+              "WARNING. Virtual function get_awready_awvalid() not defined.")
+endfunction : get_awready_awvalid
+
+function bit axi_if_abstract::get_awready();
+   `uvm_error(this.get_type_name(),
+              "WARNING. Virtual function get_awready() not defined.")
+endfunction : get_awready
+
       
 task axi_if_abstract::wait_for_wready();
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task wait_for_wready() not defined.")
 endtask : wait_for_wready
       
+
       
 function bit axi_if_abstract::get_wready_wvalid();
    `uvm_error(this.get_type_name(),
@@ -240,7 +264,13 @@ task axi_if_abstract::wait_for_bvalid();
              "WARNING. Virtual task wait_for_bvalid() not defined.")
 endtask : wait_for_bvalid
       
-      function void axi_if_abstract::read_b(output axi_seq_item_b_vector_s  s);
+function void axi_if_abstract::read_b(output axi_seq_item_b_vector_s  s);
     `uvm_error(this.get_type_name(),
              "WARNING. Virtual task read_b() not defined.")
 endfunction : read_b
+      
+task axi_if_abstract::wait_for_write_address(output axi_seq_item_aw_vector_s s);
+    `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task wait_for_write_address() not defined.")
+  
+endtask : wait_for_write_address

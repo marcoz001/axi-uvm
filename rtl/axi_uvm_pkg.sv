@@ -35,7 +35,10 @@ import uvm_pkg::*;
 
 import axi_pkg::*;
 
-typedef enum bit {e_WRITE=0, e_READ=1} cmd_t;
+typedef enum int {e_WRITE=0,
+                  e_READ=1,
+                  e_SETAWREADYTOGGLEPATTERN=2 // set awready toggle pattern
+                 } cmd_t;
 
   
 `include "axi_agent_config.svh"

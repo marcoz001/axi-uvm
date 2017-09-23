@@ -40,7 +40,7 @@ class axi_seq_item extends uvm_sequence_item;
     rand  bit [7:0]    data  [];
     rand  bit          wstrb [];
     rand  bit          wlast [];
-    rand  int          len;  
+    rand  int          len=0;  
     //rand  burst_size_t burst_size; // Burst size
     //rand  burst_type_t burst_type;
     rand logic [2:0] burst_size; // Burst size
@@ -55,6 +55,7 @@ class axi_seq_item extends uvm_sequence_item;
   logic [1:0]   bresp = 'h3;
   
     rand  cmd_t        cmd; // read or write
+  rand   logic [31:0] toggle_pattern;
 
   constraint easier_testing {len >= 'h10;
                              len < 60;
@@ -123,17 +124,23 @@ endfunction : new
 function string axi_seq_item::convert2string;
     string s;
     string sdata;
+  int j=0;
     $sformat(s, "%s", super.convert2string());
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
-  $sformat(s, "%s ID = 0x%0x",   s, id);
-  $sformat(s, "%s Len = 0x%0x  (0x%0x)",   s, len, len/4);
+    $sformat(s, "%s ID = 0x%0x",   s, id);
+    $sformat(s, "%s Len = 0x%0x  (0x%0x)",   s, len, len/4);
     $sformat(s, "%s BurstSize = 0x%0x ",   s, burst_size);
     $sformat(s, "%s BurstType = 0x%0x ",   s, burst_type);
-  $sformat(s, "%s BID = 0x%0x",   s, bid);
-  $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
+    $sformat(s, "%s BID = 0x%0x",   s, bid);
+    $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
   
-  
-  for (int i =0; i< len; i++) begin
+/*
+assert (len == data.size()) else begin
+    `uvm_error(this.get_type_name(), $sformatf("member 'len [%d]' does not match data.size() [%d]", len, data.size()))
+  end
+*/
+  j=data.size();
+  for (int i =0; i< j; i++) begin
       $sformat(sdata, "%s 0x%02x ", sdata, data[i]);
     end
   $sformat(s, "%s Data: %s", s, sdata);
@@ -163,13 +170,15 @@ function void axi_seq_item::do_copy(uvm_object rhs);
     bresp      = _rhs.bresp;
   
     cmd        = _rhs.cmd;
-
+/*
     j=_rhs.data.size();
     data  = new[j];
     for (int i=0;i<j;i++) begin
       data[i]  = _rhs.data[i];
     end
-    
+  */
+  data=new[_rhs.data.size()](_rhs.data);
+  
     j=_rhs.wstrb.size();
     wstrb  = new[j];
     for (int i=0;i<j;i++) begin
@@ -240,7 +249,7 @@ function void axi_seq_item::post_randomize;
    
   j=valid.size();
   for (int i=0;i<j;i++) begin
-    valid[i] = 1'b1;
+    valid[i] = $random;
   end
 
   data[len-1] = 'hFE; // specific value to eaily identify last byte

@@ -104,13 +104,10 @@ endtask : run_phase
 task axi_driver::driver_run_phase;
 
   axi_seq_item item;
-  axi_seq_item item2;
   
-    vif.set_awvalid(1'b0);
-    vif.set_wvalid(1'b0);
-
-    vif.set_bready_toggle_mask(m_config.bready_toggle_mask);
-
+  vif.set_awvalid(1'b0);
+  vif.set_wvalid(1'b0);
+  vif.set_bready_toggle_mask(m_config.bready_toggle_mask);
   
   fork
     driver_write_address();
@@ -119,28 +116,11 @@ task axi_driver::driver_run_phase;
   join_none
   
   forever begin    
-//    seq_item_port.get_next_item(item);  
-//    $cast(item2,item.clone());
-//    #1ns 
-    //    seq_item_port.item_done(item); 
     // Using item_done also triggers get_response() in the seq.
-
     seq_item_port.get(item);  
-    $cast(item2,item.clone());
-    item2.set_id_info(item);
-    //#3ns 
-    if (item2.cmd == e_WRITE) begin
-      driver_writeaddress_mbx.put(item2);
+    if (item.cmd == e_WRITE) begin
+      driver_writeaddress_mbx.put(item);
     end
- //   `uvm_info(this.get_type_name(), $sformatf("driver_run_phase: %s", item.convert2string()), UVM_INFO)
-//    seq_item_port.item_done(item);
-    //#1500
-    //`uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put()", UVM_INFO)
-    
-   // seq_item_port.put(item2);  
-   // `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put() - done", UVM_INFO)
-
-  
   end  //forever
 endtask : driver_run_phase
     
@@ -158,42 +138,23 @@ task axi_driver::responder_run_phase;
 
   
   `uvm_info(this.get_type_name(), "HEY< YOU< responder_run_phase", UVM_INFO)
-  vif.set_awready_toggle_mask(m_config.awready_toggle_mask);
+  //vif.s_awready_toggle_mask(m_config.awready_toggle_mask);
   vif.set_wready_toggle_mask(m_config.wready_toggle_mask);
-  vif.set_bvalid(1'b0);
   
   vif.wait_for_not_in_reset();
-  //forever begin
+  forever begin
     
-    `uvm_info(this.get_type_name(), "waiting on get_next_item()", UVM_INFO)
     item = axi_seq_item::type_id::create("item", this);
-    seq_item_port.get_next_item(item);  
-    `uvm_info(this.get_type_name(), "waiting on get_next_item() - done", UVM_INFO)
-
-    `uvm_info(this.get_type_name(), "waiting on wait_for_awready_awvalid()", UVM_INFO)
-    //vif.wait_for_awready_awvalid();
-    
-    `uvm_info(this.get_type_name(), "waiting on wait_for_awready_awvalid() - done", UVM_INFO)
-    //$cast(item, original_item.clone());
+    seq_item_port.get(item);  
     `uvm_info(this.get_type_name(), $sformatf("DRVa: %s", item.convert2string()), UVM_INFO)
 
-    //vif.read(.addr(item.addr), .data(item.data), .len(item.len), .id(item.id));
-    //vif.write_data(
-    //write(item);
-   // `uvm_info(this.get_type_name(), $sformatf("DRVb: %s", item.convert2string()), UVM_INFO)
-
-   // `uvm_info(this.get_type_name(), "waiting on responder_run_phase.item_done()", UVM_INFO)
-    //seq_item_port.item_done();
-   // `uvm_info(this.get_type_name(), "waiting on responder_run_phase.item_done() - done", UVM_INFO)
-   // `uvm_info(this.get_type_name(), "waiting on responder_run_phase.seq_item_port.put() ", UVM_INFO)
-responder_writeaddress_mbx.put(item);
-//responder_writeresponse_mbx.get(item);
-//    seq_item_port.put(item);  
-  //  `uvm_info(this.get_type_name(), "waiting on responder_run_phase.seq_item_port.put() - done", UVM_INFO)
-    
-    vif.wait_for_clks(.cnt(1));
-    
- // end
+    if (item.cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN) begin
+      vif.enable_awready_toggle_pattern(.pattern(item.toggle_pattern));
+    end else begin
+       responder_writeaddress_mbx.put(item);
+    end
+  end
+                                        
 endtask : responder_run_phase
 
     
@@ -201,28 +162,51 @@ task axi_driver::driver_write_address;
   
   axi_seq_item item;
   axi_seq_item_aw_vector_s v;
-  
+
+  int validcntr=0;
+  int validcntr_max;
+  bit ivalid;
   forever begin
-     // grab next address
 
+    if (item == null) begin
      driver_writeaddress_mbx.get(item);
-    `uvm_info(this.get_type_name(), $sformatf("driver_write_address: %s", item.convert2string()), UVM_INFO)
-
-    while (item != null) begin
-       axi_seq_item::aw_from_class(.t(item), .v(v));
-      vif.write_aw(.s(v), .valid(1'b1));
-
-       driver_writedata_mbx.put(item);
-      
-       item=null;
+     axi_seq_item::aw_from_class(.t(item), .v(v));
+     validcntr=0;
+      validcntr_max=item.valid.size()-1; // don't go past end
+    end
     
-       driver_writeaddress_mbx.try_get(item);
-      if (item==null) begin
-        vif.write_aw(.s(v), .valid(1'b0));
+    if (item != null) begin
+       vif.wait_for_clks(.cnt(1));
+
+       ivalid=item.valid[validcntr];
+       if (vif.get_awready_awvalid == 1'b1) begin
+         driver_writedata_mbx.put(item);
+         item=null;
+         validcntr=0;
+         ivalid=0;
+         v.awaddr = 'h0;
+         v.awid='h0;
+         v.awsize='h0;
+         v.awburst = 'h0;
+
+         driver_writeaddress_mbx.try_get(item);
+         if (item!=null) begin
+            axi_seq_item::aw_from_class(.t(item), .v(v));
+           ivalid=item.valid[validcntr];
+           validcntr_max=item.valid.size()-1; // don't go past end
+           
+         end
       end
     end  
-  end
-  
+
+    vif.write_aw(.s(v), .valid(ivalid));
+    validcntr++;
+    if (validcntr > validcntr_max) begin
+      validcntr=0;
+    end
+
+  end  // forever
+    
 endtask : driver_write_address
     
     
@@ -302,7 +286,7 @@ task axi_driver::driver_write_response;
   forever begin
     driver_writeresponse_mbx.get(item);
  //   `uvm_info(this.get_type_name(), "HEY, driver_write_response!!!!", UVM_INFO)
-    vif.wait_for_bvalid();
+  //  vif.wait_for_bvalid();
     vif.read_b(.s(s));
     item.bid   = s.bid;
     item.bresp = s.bresp;
@@ -391,13 +375,25 @@ endtask : responder_write_data
 task axi_driver::responder_write_response;
   
   axi_seq_item item;
+  axi_seq_item_b_vector_s s;
   
   forever begin
      responder_writeresponse_mbx.get(item);
-          vif.wait_for_clks(.cnt(1));
-    vif.set_bvalid(1'b1);
-          vif.wait_for_clks(.cnt(1));
-    vif.set_bvalid(1'b0);
-       // seq_item_port.put(item);  
-  end    
+    
+    while (item != null) begin
+      s.bid   = 'h3;
+      s.bresp = 'h1;
+      vif.write_b(.s(s), .valid(1'b1));
+
+      item = null;
+      responder_writeresponse_mbx.try_get(item);
+
+      if (item == null) begin
+        s.bid = 'h0;
+        s.bresp = 'h0;
+        vif.write_b(.s(s), .valid(1'b0));
+      end
+    end // while      
+  end  //forever
+  
 endtask : responder_write_response
