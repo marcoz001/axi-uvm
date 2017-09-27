@@ -39,7 +39,7 @@ import uvm_pkg::*;
 //AXI ENUMS...
 
 
-typedef enum {e_DRIVER, e_RESPONDER} driver_type_t;
+//typedef enum {e_DRIVER, e_RESPONDER} driver_type_t;
 
 typedef enum logic [2:0] {e_1BYTE    = 3'b000,
                           e_2BYTES   = 3'b001,
@@ -93,6 +93,7 @@ typedef struct packed {
   logic [C_AXI_DATA_WIDTH/8-1:0] wstrb;
   logic                          wlast;
   logic                          wvalid;
+  logic [C_AXI_ID_WIDTH-1:0]     wid;
   
 } axi_seq_item_w_vector_s;
 

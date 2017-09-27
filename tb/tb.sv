@@ -313,8 +313,8 @@ initial begin
 end
 
 initial begin
-  axi_driver_vif.use_concrete_class(.drv_type(axi_pkg::e_DRIVER));
-  axi_responder_vif.use_concrete_class(.drv_type(axi_pkg::e_RESPONDER));
+  axi_driver_vif.use_concrete_class(); //.drv_type(axi_pkg::e_DRIVER));
+  axi_responder_vif.use_concrete_class(); //.drv_type(axi_pkg::e_RESPONDER));
 
   //axi_rd_vif.use_concrete_class();
   //wb_vif.use_concrete_class();

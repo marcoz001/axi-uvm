@@ -53,7 +53,18 @@ Clock Synchronization -
     Note that all tasks in BFMs must start by synchronizing to a clock edge. 
     This is required by TBX XRTL. 
           
+               The tb doesn'tt have timing/clk information so doing things like:
+               wait one clk between write address xactions, isn't possible.
+               how does the sequence send 'wait-N-clks' to the driver?
+      
+                 when monitor detects read address,  does it send the read_data sequence items to the responder?
                
+                   Does teh scoreboard compare at every clk or at end of xfer?
+                   if complete xfer ? <- that should trigger othe error
+                     if every clock, then more tlm activity
+                       what if extra wlast or rlast?
+                         missing wlast or rlast?
+                         How detect? 
 // @Todo:   error injection\
 // @Todo:   What if awready never asserted?
 // @Todo:   What if data before address?

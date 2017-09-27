@@ -68,7 +68,11 @@ task axi_seq::body;
      start_item(item);
      assert( item.randomize() with {cmd        == e_WRITE; 
                                     burst_size == e_4BYTES;
-                                    burst_type == e_INCR;}) else begin
+                                    burst_type == e_INCR;
+                                    addr       <  'h4;
+                                    len        >  'h0;
+                                    len        <  'h10;}
+                                   ) else begin
          `uvm_error(this.get_type_name(),
                     $sformatf("Unable to randomize %s",  item.get_full_name()));
      end  //assert

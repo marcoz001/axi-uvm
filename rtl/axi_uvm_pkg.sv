@@ -38,9 +38,24 @@ import axi_pkg::*;
 typedef enum int {e_WRITE=0,
                   e_READ=1,
                   e_SETAWREADYTOGGLEPATTERN=2 // set awready toggle pattern
+
+                 
+                 /*
+                 e_WRITEADDRESS,
+                 e_WRITEDATA,
+                 e_WRITERESPONSE,
+                 e_READADDRESS,
+                 e_READDATA,
+                 */
                  } cmd_t;
 
-  
+
+//
+
+typedef enum {e_DRIVER, e_RESPONDER} driver_type_t;
+
+`include "memory.svh"
+
 `include "axi_agent_config.svh"
 
 `include "axi_seq_item.svh"

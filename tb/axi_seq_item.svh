@@ -43,23 +43,30 @@ class axi_seq_item extends uvm_sequence_item;
     rand  int          len=0;  
     //rand  burst_size_t burst_size; // Burst size
     //rand  burst_type_t burst_type;
+         logic [7:0] awlen;      // calculated later using the addr and len properties. 
     rand logic [2:0] burst_size; // Burst size
     rand logic [1:0] burst_type;
 
-  logic [0:0]  lock   = 'h0;
+          logic [0:0]  lock   = 'h0;
           logic [3:0]  cache  = 'h0;
           logic [2:0]  prot   = 'h0;
           logic [3:0]  qos    = 'h0;
   
-  logic [6-1:0] bid = 'hF;
-  logic [1:0]   bresp = 'h3;
+          logic [6-1:0] bid   = 'hF;
+          logic [1:0]   bresp = 'h3;
   
     rand  cmd_t        cmd; // read or write
+  
   rand   logic [31:0] toggle_pattern;
-
+  
+  
+  rand int number_bytes;
+/*
   constraint easier_testing {len >= 'h10;
                              len < 60;
                              (len % 4) == 0;}
+ */
+  constraint number_bytes_c {number_bytes == 4;}
   
   
     constraint max_len {len > 0;
@@ -81,6 +88,25 @@ class axi_seq_item extends uvm_sequence_item;
     extern function void   do_print   (uvm_printer printer);
       
     extern function void   post_randomize;
+      
+    extern function bit [63:0] calculate_aligned_address(
+     input bit [63:0] addr,
+     input int        number_bytes);
+      
+    extern function int calculate_beats(
+      input bit [63:0] addr,
+      input int        number_bytes,
+      input int        burst_length);
+      
+    extern function void update_wstrb(
+      input bit [63:0] addr,
+      input bit        wstrb [],
+      const ref bit [7:0]  data [],
+      input int        number_bytes,
+      input int        burst_length, 
+      ref   bit        new_wstrb [],
+      ref   bit [7:0]  new_data [],
+      output int       new_beat_cnt);
       
     extern static function void   aw_from_class(
       ref    axi_seq_item             t,
@@ -233,7 +259,7 @@ function void axi_seq_item::post_randomize;
                      // we won't use the extras.
   for (int i=0; i < len; i++) begin
     data[i] = i;
-    wstrb[i]=i; // $random();
+    wstrb[i]=1'b1; // $random();
    // wlast[i]=1'b0;
     //valid[i]=$random();
     //valid[i+len]=$random();
@@ -246,20 +272,115 @@ function void axi_seq_item::post_randomize;
   end
   wlast[0] = 1'b1;
 
-   
+  
   j=valid.size();
   for (int i=0;i<j;i++) begin
     valid[i] = $random;
   end
 
+  valid[0] = 1'b1;
+  valid[1] = 1'b1;
+  valid[2] = 1'b0;
+
+  
   data[len-1] = 'hFE; // specific value to eaily identify last byte
   
   //assert(valid.randomize()) else begin
   //  `uvm_error(this.get_type_name, "Unable to randomize valid");
   //end
 endfunction : post_randomize
+      
+function bit [63:0] axi_seq_item::calculate_aligned_address(
+  input bit [63:0] addr,
+  input int number_bytes);
   
+  bit [63:0] aligned_address ;
+        
+        // address - starting address
+        // data_bus_bytes - width of data bus (in bytes)
+        // number_bytes - number of bytes per beat (must be consistent throughout burst)
+        //              - unless doing a partial transfer, this matches data_bus_bytes
+        // 
+        
+        aligned_address = int'(addr/number_bytes)*number_bytes;
+        return aligned_address;
+        
+endfunction : calculate_aligned_address
   
+function int axi_seq_item::calculate_beats(
+    input bit [63:0] addr,
+    input int number_bytes,
+    input int burst_length);
+  
+  int beats;
+  bit [63:0] aligned_addr;
+  
+  aligned_addr=calculate_aligned_address(.addr(addr),
+                                         .number_bytes(number_bytes));
+                                         
+        // address - starting address
+        // burst_length - total length of burst (in bytes)
+        // data_bus_bytes - width of data bus (in bytes)
+        // number_bytes - number of bytes per beat (must be consistent throughout burst)
+        //              - this matches data_bus_bytes unless doing a partial transfer
+  beats = ((addr-aligned_addr)+burst_length)/number_bytes;
+  return beats;
+endfunction : calculate_beats
+      
+      // update wstrb[] array account for aligned_address.
+      // basically, if address isn't aligned, then
+      // shift wstrb by (addr-aligned_addr) and insert
+      // 0's so those addresses aren't written.
+      // Also adjust for partial tranfer if applicable.
+function void axi_seq_item::update_wstrb(
+        input bit [63:0] addr,
+        input bit        wstrb [],
+        const ref bit [7:0] data [],
+        input int number_bytes,
+        input int burst_length,
+        ref   bit       new_wstrb [],
+        ref   bit [7:0] new_data [],
+        output int      new_beat_cnt);
+        
+        bit [63:0] aligned_addr ;
+        
+       real z;
+        //bit new_wstrb[];
+        int wstrb_size;
+ 
+        int alignment_offset;
+
+        aligned_addr=calculate_aligned_address(.addr(addr),
+                                         .number_bytes(number_bytes));
+
+        alignment_offset = addr-aligned_addr;
+        wstrb_size       = wstrb.size();
+  
+        new_wstrb = new[alignment_offset+wstrb_size];
+        new_data  = new[alignment_offset+wstrb_size];
+
+        for (int i=0;i<alignment_offset;i++) begin
+           new_wstrb[i] = 1'b0;
+           new_data[i]  = 7'h00;
+        end
+  
+        for (int i=0, j=alignment_offset; i<wstrb_size; i++,j++) begin
+            new_wstrb[j] = wstrb[i];
+            new_data[j]  = data[i];
+        end
+
+  // round up beatcnt
+  z = real'(((real'(alignment_offset+burst_length))/real'(number_bytes)));
+  if (int'(z) == z) begin
+     new_beat_cnt = z;
+  end else begin
+     new_beat_cnt = z+1;
+  end
+  
+  `uvm_info(this.get_type_name(), $sformatf("XXXXXXXXXXXX alignment_offset: %d; burst_length: %d; new_length:%d; z:%f; new_beat_cnt: %d", alignment_offset, burst_length, new_data.size(), z, new_beat_cnt), UVM_INFO)
+  
+endfunction : update_wstrb
+      
  function void axi_seq_item::aw_from_class(
   ref  axi_seq_item             t,
   output axi_seq_item_aw_vector_s v);

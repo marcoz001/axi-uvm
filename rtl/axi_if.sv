@@ -235,7 +235,7 @@ interface axi_if #(
 
 //  extern task  write(bit [63:0] addr, bit [63:0] data);
 
-   driver_type_t m_type;
+ //  driver_type_t m_type;
   
  import uvm_pkg::*;
 `include "uvm_macros.svh"
@@ -394,6 +394,32 @@ task wait_for_write_address(output axi_seq_item_aw_vector_s s);
     end  
   end
 endtask : wait_for_write_address
+
+task wait_for_write_data(output axi_seq_item_w_vector_s s);
+
+  forever begin
+    @(posedge clk) begin
+      if (wready == 1'b1 && wvalid== 1'b1) begin
+        read_w(.s(s));
+        return;
+      end
+    end  
+  end
+endtask : wait_for_write_data
+
+task wait_for_write_response(output axi_seq_item_b_vector_s s);
+
+  forever begin
+    @(posedge clk) begin
+      if (bready == 1'b1 && bvalid== 1'b1) begin
+        read_b(.s(s));
+        return;
+      end
+    end  
+  end
+endtask : wait_for_write_response
+  
+  
   
 task wait_for_awready_awvalid;
 
@@ -548,7 +574,7 @@ task clr_bready_toggle_mask();
      bready_toggle_mask_enable =0;
 endtask : clr_bready_toggle_mask
 
-  function void read_b(output axi_seq_item_b_vector_s  s);
+function void read_b(output axi_seq_item_b_vector_s  s);
   s.bid   = bid;
   s.bresp = bresp;
 endfunction : read_b
@@ -621,9 +647,9 @@ initial begin
    end
 end
  
-  function void use_concrete_class(axi_pkg::driver_type_t drv_type);
+  function void use_concrete_class(); //axi_pkg::driver_type_t drv_type);
 
-   m_type=drv_type;
+//   m_type=drv_type;
 
    axi_if_abstract::type_id::set_type_override( axi_if_concrete::get_type());
    // `uvm_info("blah", $sformatf("%m -- HEY, running set_inst_override in _if"), UVM_INFO)

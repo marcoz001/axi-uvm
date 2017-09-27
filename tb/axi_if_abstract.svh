@@ -80,7 +80,9 @@ class axi_if_abstract extends uvm_object;
     extern virtual function bit get_bready;
 
 
-    extern virtual task wait_for_write_address(output axi_seq_item_aw_vector_s s);
+    extern virtual task wait_for_write_address  (output axi_seq_item_aw_vector_s s);
+    extern virtual task wait_for_write_data     (output axi_seq_item_w_vector_s  s);
+    extern virtual task wait_for_write_response (output axi_seq_item_b_vector_s  s);
         
       
       
@@ -274,3 +276,15 @@ task axi_if_abstract::wait_for_write_address(output axi_seq_item_aw_vector_s s);
              "WARNING. Virtual task wait_for_write_address() not defined.")
   
 endtask : wait_for_write_address
+      
+task axi_if_abstract::wait_for_write_data(output axi_seq_item_w_vector_s s);
+    `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task wait_for_write_data() not defined.")
+  
+endtask : wait_for_write_data
+      
+task axi_if_abstract::wait_for_write_response(output axi_seq_item_b_vector_s s);
+    `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task wait_for_write_response() not defined.")
+  
+endtask : wait_for_write_response

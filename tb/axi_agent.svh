@@ -37,7 +37,7 @@ class axi_agent extends uvm_agent;
   axi_monitor         m_monitor;
   axi_sequencer       m_seqr;
   axi_coveragecollector m_coveragecollector;
-  
+  memory              m_memory;
   
   extern function new (string name="axi_agent", uvm_component parent=null);
   extern function void build_phase              (uvm_phase phase);
@@ -73,11 +73,12 @@ function void axi_agent::build_phase(uvm_phase phase);
 
   m_monitor = axi_monitor::type_id::create("m_monitor", this);
   m_monitor.m_config=m_config;
-  
   m_coveragecollector = axi_coveragecollector::type_id::create("m_coveragecollector", this);
 
-
-  
+  if (m_config.drv_type == axi_uvm_pkg::e_RESPONDER) begin
+     m_memory = memory::type_id::create("m_memory", this);
+     m_monitor.m_memory = m_memory;
+  end
 endfunction : build_phase
     
 function void axi_agent::connect_phase (uvm_phase phase);
