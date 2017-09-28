@@ -4,7 +4,7 @@
 //
 // Project:	Pipelined Wishbone to AXI converter - UVM testbench
 //
-// Purpose:	
+// Purpose:
 //          Top Level Testbench
 //
 // Creator:	Matt Dew
@@ -33,22 +33,22 @@
 
 
 module tb;
-  
+
    import params_pkg::*;
 
    parameter C_AXI_ID_WIDTH   = params_pkg::AXI_ID_WIDTH;
    parameter C_AXI_ADDR_WIDTH = params_pkg::AXI_ADDR_WIDTH;
    parameter C_AXI_DATA_WIDTH = params_pkg::AXI_DATA_WIDTH;
-  
+
   `include "uvm_macros.svh"
   import uvm_pkg::*;
-  
+
   import axi_uvm_pkg::*;
 
-  
+
   logic clk;
   logic reset;
-  
+
   wire                          axi_awready;
   wire [C_AXI_ID_WIDTH-1:0]	    axi_awid;
   wire [C_AXI_ADDR_WIDTH-1:0]   axi_awaddr;
@@ -60,14 +60,14 @@ module tb;
   wire [2:0]                    axi_awprot;   // Write Protection type
   wire [3:0]                    axi_awqos;    // Write Quality of Svc
   wire                          axi_awvalid;  // Write address valid
-  
+
   // AXI write data channel signals
   wire                          axi_wready;   // Write data ready
   wire [C_AXI_DATA_WIDTH-1:0]   axi_wdata;    // Write data
   wire [C_AXI_DATA_WIDTH/8-1:0] axi_wstrb;    // Write strobes
-  wire                          axi_wlast;    // Last write transaction   
+  wire                          axi_wlast;    // Last write transaction
   wire                          axi_wvalid;   // Write valid
-  
+
   // AXI write response channel signals
   wire [C_AXI_ID_WIDTH-1:0]     axi_bid;      // Response ID
   wire [1:0]                    axi_bresp;    // Write response
@@ -86,15 +86,15 @@ module tb;
   wire [2:0]                   axi_arprot;  // Read Protection type
   wire [3:0]                   axi_arqos;   // Read Protection type
   wire                         axi_arvalid; // Read address valid
-  
-// AXI read data channel signals   
+
+// AXI read data channel signals
   wire [C_AXI_ID_WIDTH-1:0]    axi_rid;     // Response ID
   wire [1:0]		           axi_rresp;   // Read response
   wire                         axi_rvalid;  // Read reponse valid
   wire [C_AXI_DATA_WIDTH-1:0]  axi_rdata;   // Read data
   wire                         axi_rlast;   // Read last
   wire                         axi_rready;  // Read Response ready
-  
+
 //  wire                            o_reset;
   wire                            wb_cyc;
   wire                            wb_stb;
@@ -106,8 +106,8 @@ module tb;
   wire                            wb_ack;
   wire                            wb_stall;
   wire                            wb_err;
-  
-  
+
+
   axi_if #(.C_AXI_ID_WIDTH   (C_AXI_ID_WIDTH),
               .C_AXI_DATA_WIDTH (C_AXI_DATA_WIDTH),
               .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH)
@@ -124,18 +124,18 @@ module tb;
                .awprot(axi_awprot),
                .awqos(axi_awqos),
                .awvalid(axi_awvalid),
-  
+
                .wready(axi_wready),
                .wdata(axi_wdata),
                .wstrb(axi_wstrb),
                .wlast(axi_wlast),
                .wvalid(axi_wvalid),
-  
+
                .bid(axi_bid),
                .bresp(axi_bresp),
                .bvalid(axi_bvalid),
                .bready(axi_bready),
-                
+
                .arready(axi_arready),
                .arid(axi_arid),
                .araddr(axi_araddr),
@@ -147,7 +147,7 @@ module tb;
                .arprot(axi_arprot),
                .arqos(axi_arqos),
                .arvalid(axi_arvalid),
-  
+
                .rid(axi_rid),
                .rresp(axi_rresp),
                .rvalid(axi_rvalid),
@@ -155,7 +155,7 @@ module tb;
                .rlast(axi_rlast),
                .rready(axi_rready)
              );
-  
+
     axi_if #(.C_AXI_ID_WIDTH   (C_AXI_ID_WIDTH),
               .C_AXI_DATA_WIDTH (C_AXI_DATA_WIDTH),
               .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH)
@@ -172,18 +172,18 @@ module tb;
                .awprot(axi_awprot),
                .awqos(axi_awqos),
                .awvalid(axi_awvalid),
-  
+
                .wready(axi_wready),
                .wdata(axi_wdata),
                .wstrb(axi_wstrb),
                .wlast(axi_wlast),
                .wvalid(axi_wvalid),
-  
+
                .bid(axi_bid),
                .bresp(axi_bresp),
                .bvalid(axi_bvalid),
                .bready(axi_bready),
-                
+
                .arready(axi_arready),
                .arid(axi_arid),
                .araddr(axi_araddr),
@@ -195,7 +195,7 @@ module tb;
                .arprot(axi_arprot),
                .arqos(axi_arqos),
                .arvalid(axi_arvalid),
-  
+
                .rid(axi_rid),
                .rresp(axi_rresp),
                .rvalid(axi_rvalid),
@@ -203,8 +203,8 @@ module tb;
                .rlast(axi_rlast),
                .rready(axi_rready)
              );
-  
-  
+
+
   wb_if #(.C_AXI_DATA_WIDTH (C_AXI_DATA_WIDTH),
           .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH)
          ) wb_vif (.clk   (clk),
@@ -221,14 +221,14 @@ module tb;
           .outdata  (wb_outdata),
           .err   (wb_err)
         );
-  
-         
+
+
   /*
-  
+
   axim2wbsp #( .C_AXI_ID_WIDTH(C_AXI_ID_WIDTH),
               .C_AXI_DATA_WIDTH(C_AXI_DATA_WIDTH),
               .C_AXI_ADDR_WIDTH(C_AXI_ADDR_WIDTH)
-             ) 
+             )
               dut
              (
                .i_clk(clk),	// System clock
@@ -246,20 +246,20 @@ module tb;
                .i_axi_awprot(axi_awprot),
                .i_axi_awqos(axi_awqos),
                .i_axi_awvalid(axi_awvalid),
-  
+
                 // AXI write data channel signals
                .o_axi_wready(axi_wread),
                .i_axi_wdata(axi_wdata),
                .i_axi_wstrb(axi_wstrb),
                .i_axi_wlast(axi_wlast),
                .i_axi_wvalid(axi_wvalid),
-  
+
                // AXI write response channel signals
                .o_axi_bid(axi_bid),
                .o_axi_bresp(axi_bresp),
                .o_axi_bvalid(axi_bvalid),
                .i_axi_bready(axi_bready),
-  
+
                // AXI read address channel signals
                .o_axi_arready(axi_arready),
                .i_axi_arid(axi_arid),
@@ -272,8 +272,8 @@ module tb;
                .i_axi_arprot(axi_arprot),
                .i_axi_arqos(axi_arqos),
                .i_axi_arvalid(axi_arvalid),
-  
-               // AXI read data channel signals   
+
+               // AXI read data channel signals
                .o_axi_rid(axi_rid),
                .o_axi_rresp(axi_rresp),
                .o_axi_rvalid(axi_rvalid),
@@ -292,12 +292,12 @@ module tb;
                .i_wb_ack(wb_ack),
                .i_wb_stall(wb_stall),
                .i_wb_data(wb_outdata),
-               .i_wb_err(wb_err) 
+               .i_wb_err(wb_err)
                );
   */
- 
-  
-  
+
+
+
   // tbx clkgen
 initial begin
    clk = 0;
@@ -319,16 +319,16 @@ initial begin
   //axi_rd_vif.use_concrete_class();
   //wb_vif.use_concrete_class();
 
-  run_test("axim2wbsp_base_test");    
+  run_test("axim2wbsp_base_test");
 end
-  
+
 initial begin
   $dumpfile("dump.vcd");
   //$dumpvars(0, dut.axi_write_decoder); //(1);
   $dumpvars(1); //(1);
 
 end
-  
+
 endmodule : tb
 
 

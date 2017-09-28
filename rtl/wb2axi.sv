@@ -40,12 +40,12 @@ module wb2axi
     output                    m_axi_wlast,
     output                    m_axi_wvalid,
     input                     m_axi_wready,
-    
+
     input [AXI_ID_WIDTH-1:0]  m_axi_bid,
     input [1:0]               m_axi_bresp,
     input                     m_axi_bvalid,
     output                    m_axi_bready,
-    
+
     output [AXI_ID_WIDTH-1:0] m_axi_arid,
     output [ADDR_WIDTH-1:0]   m_axi_araddr,
     output [7:0]              m_axi_arlen,
@@ -56,7 +56,7 @@ module wb2axi
     output [3:0]              m_axi_arqos,
     output                    m_axi_arvalid,
     input                     m_axi_arready,
-    
+
     input [AXI_ID_WIDTH-1:0]  m_axi_rid,
     input [DATA_WIDTH-1:0]    m_axi_rdata,
     input [1:0]               m_axi_rresp,
@@ -86,10 +86,10 @@ module wb2axi
    assign m_axi_arcache = 4'b0000;
    assign m_axi_arprot = 3'b010;
    assign m_axi_arqos = 4'b0000;
-   
+
    logic                             write_transfer;
    logic                             read_transfer;
-   
+
    assign write_transfer = (wb_cyc_i & wb_stb_i) & wb_we_i;
    assign read_transfer = (wb_cyc_i & wb_stb_i) & !wb_we_i;
 
@@ -117,14 +117,14 @@ module wb2axi
            ardone <= 1;
       end
    end
-   
+
    assign m_axi_awvalid = write_transfer & !awdone;
    assign m_axi_wvalid = write_transfer & !wdone;
    assign m_axi_arvalid = read_transfer & !ardone;
 
    assign m_axi_bready = 1;
    assign m_axi_rready = 1;
-   
+
    logic transfer_done, transfer_success;
    assign transfer_done = m_axi_bvalid | m_axi_rvalid;
    assign transfer_success = (m_axi_bvalid & !m_axi_bresp[1]) |
@@ -136,5 +136,5 @@ module wb2axi
 
    assign wb_dat_o = m_axi_rdata;
 
-   
+
 endmodule // wb2axi

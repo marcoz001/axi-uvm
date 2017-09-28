@@ -2,7 +2,7 @@
 //
 // Filename: 	axi_env_config.svh
 //
-// Purpose:	
+// Purpose:
 //          UVM environment configuration object for AXI UVM environment
 //
 // Creator:	Matt Dew
@@ -28,12 +28,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 class axi_env_config extends uvm_object;
   `uvm_object_utils(axi_env_config)
-  
+
   extern function new (string name="axi_env_config");
-    
+
 endclass : axi_env_config
-    
+
 function axi_env_config::new (string name="axi_env_config");
   super.new(name);
 endfunction : new
-  

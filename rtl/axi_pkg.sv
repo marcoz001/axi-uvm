@@ -2,8 +2,8 @@
 //
 // Filename: 	axi_pkg.sv
 //
-// Purpose:	
-//          enums, defines, typedefs needed in AXI 
+// Purpose:
+//          enums, defines, typedefs needed in AXI
 //
 // Creator:	Matt Dew
 //
@@ -80,7 +80,7 @@ typedef struct packed {
   logic [3:0]                    awcache;
   logic [2:0]                    awprot;
   logic [3:0]                    awqos;
-  
+
 } axi_seq_item_aw_vector_s;
 
 localparam int AXI_SEQ_ITEM_AW_NUM_BITS = $bits(axi_seq_item_aw_vector_s);
@@ -94,7 +94,7 @@ typedef struct packed {
   logic                          wlast;
   logic                          wvalid;
   logic [C_AXI_ID_WIDTH-1:0]     wid;
-  
+
 } axi_seq_item_w_vector_s;
 
 localparam int AXI_SEQ_ITEM_W_NUM_BITS = $bits(axi_seq_item_w_vector_s);

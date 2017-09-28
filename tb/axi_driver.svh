@@ -2,7 +2,7 @@
 //
 // Filename: 	axi_driver.svh
 //
-// Purpose:	
+// Purpose:
 //          UVM driver for AXI UVM environment
 //
 // Creator:	Matt Dew
@@ -28,10 +28,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 class axi_driver extends uvm_driver #(axi_seq_item);
   `uvm_component_utils(axi_driver)
-  
+
   axi_if_abstract vif;
   axi_agent_config    m_config;
-  
+
   mailbox #(axi_seq_item) driver_writeaddress_mbx  = new(0);  //unbounded mailboxes
   mailbox #(axi_seq_item) driver_writedata_mbx     = new(0);
   mailbox #(axi_seq_item) driver_writeresponse_mbx = new(0);
@@ -43,20 +43,20 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   mailbox #(axi_seq_item) responder_writedata_mbx     = new(0);
   mailbox #(axi_seq_item) responder_writeresponse_mbx = new(0);
 
-  
+
   extern function new (string name="axi_driver", uvm_component parent=null);
 
   extern function void build_phase              (uvm_phase phase);
   extern function void connect_phase            (uvm_phase phase);
   extern function void end_of_elaboration_phase (uvm_phase phase);
   extern task          run_phase                (uvm_phase phase);
-    
+
   //extern task          write(ref axi_seq_item item);
-    
-    
+
+
   extern task          driver_run_phase;
   extern task          responder_run_phase;
-    
+
   extern task          driver_write_address;
   extern task          driver_write_data;
   extern task          driver_write_response;
@@ -64,25 +64,25 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   extern task          responder_write_address;
   extern task          responder_write_data;
   extern task          responder_write_response;
-   
+
     reg foo;
-    
-endclass : axi_driver    
-    
+
+endclass : axi_driver
+
 function axi_driver::new (
   string        name   = "axi_driver",
   uvm_component parent = null);
-  
+
   super.new(name, parent);
 endfunction : new
-    
+
 function void axi_driver::build_phase (uvm_phase phase);
   super.build_phase(phase);
-  
+
   vif = axi_if_abstract::type_id::create("vif", this);
 
 endfunction : build_phase
-  
+
 function void axi_driver::connect_phase (uvm_phase phase);
   super.connect_phase(phase);
 endfunction : connect_phase
@@ -90,7 +90,7 @@ endfunction : connect_phase
 function void axi_driver::end_of_elaboration_phase (uvm_phase phase);
   super.end_of_elaboration_phase(phase);
 endfunction : end_of_elaboration_phase
-    
+
 task axi_driver::run_phase(uvm_phase phase);
 
   if (m_config.drv_type == e_DRIVER) begin
@@ -98,54 +98,54 @@ task axi_driver::run_phase(uvm_phase phase);
   end else if (m_config.drv_type == e_RESPONDER) begin
      responder_run_phase;
   end
-  
+
 endtask : run_phase
 
 task axi_driver::driver_run_phase;
 
   axi_seq_item item;
-  
+
   vif.set_awvalid(1'b0);
   vif.set_wvalid(1'b0);
   vif.set_bready_toggle_mask(m_config.bready_toggle_mask);
-  
+
   fork
     driver_write_address();
     driver_write_data();
     driver_write_response();
   join_none
-  
-  forever begin    
+
+  forever begin
     // Using item_done also triggers get_response() in the seq.
-    seq_item_port.get(item);  
+    seq_item_port.get(item);
     if (item.cmd == e_WRITE) begin
       driver_writeaddress_mbx.put(item);
     end
   end  //forever
 endtask : driver_run_phase
-    
+
 task axi_driver::responder_run_phase;
   axi_seq_item item;
-  
+
   item = axi_seq_item::type_id::create("item", this);
 
-  
+
     fork
     responder_write_address();
     responder_write_data();
     responder_write_response();
   join_none
 
-  
+
   `uvm_info(this.get_type_name(), "HEY< YOU< responder_run_phase", UVM_INFO)
   //vif.s_awready_toggle_mask(m_config.awready_toggle_mask);
   vif.set_wready_toggle_mask(m_config.wready_toggle_mask);
-  
+
   vif.wait_for_not_in_reset();
   forever begin
-    
+
     item = axi_seq_item::type_id::create("item", this);
-    seq_item_port.get(item);  
+    seq_item_port.get(item);
     `uvm_info(this.get_type_name(), $sformatf("DRVa: %s", item.convert2string()), UVM_INFO)
 
     if (item.cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN) begin
@@ -154,7 +154,7 @@ task axi_driver::responder_run_phase;
        responder_writeaddress_mbx.put(item);
     end
   end
-                                        
+
 endtask : responder_run_phase
     /*
 // DataTransfer() from AXI Spec. A3.4.2
@@ -169,23 +169,23 @@ task axi_driver::DataTransfer(bit [63:0]          start_address,
     // IsWrite is TRUE fora  write, and FALSE for a read
     // Burst_Length = beat cnt
     // dtsize is data transfer size (total bytes)
-  
-  
+
+
     bit [63:0] addr;
     bit [63:0] aligned_address;
     bit        aligned;
     int        dtsize;
-  
+
     addr            = start_address;
     aligned_address = (int(addr/number_bytes) * number_bytes);
     aligned         = (aligned_address == addr);
     dtdize          = Number_Bytes * Burst_Length;
-    
+
   if (item.burst_type == axi_pkg::e_WRAP) begin
        Lower_Wrap_Boundary = (int(addr/dtdize) * dtsize);
        Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
     end
-    
+
     for (int n=1; n<Burst_Length; n++) begin
        Lower_Byte_Lane = addr - (int(addr/Data_Bus_Bytes)) * Data_Bus_Bytes;
        if (aligned) begin
@@ -193,13 +193,13 @@ task axi_driver::DataTransfer(bit [63:0]          start_address,
        end else begin
           Upper_Byte_Lane = Aligned_Address + Number_Butes - 1 - (int(addr/Data_Bus_Bytes)) * Data_Bus_Bytes;
        end
-       
-       
+
+
       if (iswrite) begin
           dwrite(addr, low_byte, high_byte);
       else
           dread(addr,low_byte, high_byte);
-        
+
       // Increment address if necessary
         if (item.burst_type != axi_pkg::e_FIXED) begin
           if (aligned) begin
@@ -216,22 +216,22 @@ task axi_driver::DataTransfer(bit [63:0]          start_address,
           end
         end // (item.burst_type != axi_pkg::e_FIXED)
     end
-    
-endtask : datatransfer    
+
+endtask : datatransfer
     */
-    
+
 task axi_driver::driver_write_address;
-  
+
   axi_seq_item item;
   axi_seq_item_aw_vector_s v;
 
   int validcntr=0;
   int validcntr_max;
   bit ivalid;
-  
+
    bit [63:0] aligned_addr;
-  
-  
+
+
   forever begin
 
     if (item == null) begin
@@ -240,13 +240,13 @@ task axi_driver::driver_write_address;
       v.awlen  = item.calculate_beats(.addr(item.addr),
                                       .number_bytes(item.number_bytes),
                                       .burst_length(item.len));
-      
+
       v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
                                                 .number_bytes(4));
       validcntr=0;
       validcntr_max=item.valid.size()-1; // don't go past end
     end
-    
+
     if (item != null) begin
        vif.wait_for_clks(.cnt(1));
 
@@ -267,17 +267,17 @@ task axi_driver::driver_write_address;
            v.awlen  = item.calculate_beats(.addr(v.awaddr),
                                            .number_bytes(4),
                                            .burst_length(item.len));
-      
+
            v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
                                                      .number_bytes(4));
-           
-           
+
+
            ivalid=item.valid[validcntr];
            validcntr_max=item.valid.size()-1; // don't go past end
-           
+
          end
       end
-    end  
+    end
 
     vif.write_aw(.s(v), .valid(ivalid));
     validcntr++;
@@ -286,7 +286,7 @@ task axi_driver::driver_write_address;
     end
 
   end  // forever
-    
+
 endtask : driver_write_address
 
 task axi_driver::driver_write_data;
@@ -300,7 +300,7 @@ task axi_driver::driver_write_data;
   int        iNumber_Bytes;
   int        Burst_Length_Bytes;
   int        Data_Bus_Bytes;
-  
+
   bit [63:0] Lower_Wrap_Boundary;
   bit [63:0] Upper_Wrap_Boundary;
   int        Lower_Byte_Lane;
@@ -312,20 +312,20 @@ task axi_driver::driver_write_data;
   int        validcntr;
   int dataoffset=0;
   int item_needs_init;
-  
+
   forever begin
 
     if (item == null) begin
        driver_writedata_mbx.get(item);
        item_needs_init=1;
     end
-    
-    if (item != null) begin  
+
+    if (item != null) begin
 
       vif.wait_for_clks(.cnt(1));
 
       `uvm_info(this.get_type_name(), "INIT != NULL", UVM_INFO)
-      
+
        // defaults. not needed but  I think is cleaner in sim
 //       s.wvalid = 'b0;
 //       s.wdata  = 'hfeed_beef;
@@ -337,10 +337,10 @@ task axi_driver::driver_write_data;
          if (aligned == 0)
             aligned = 1;
 
-         `uvm_info("ATSTART", $sformatf("n:%0d, Burst_Length_Bytes:%0d", n, Burst_Length_Bytes), UVM_INFO)          
+         `uvm_info("ATSTART", $sformatf("n:%0d, Burst_Length_Bytes:%0d", n, Burst_Length_Bytes), UVM_INFO)
           if (n>=Burst_Length_Bytes) begin
              driver_writeresponse_mbx.put(item);
-             item = null;  
+             item = null;
              driver_writedata_mbx.try_get(item);
              n=0;
              dataoffset=0;
@@ -352,7 +352,7 @@ task axi_driver::driver_write_data;
              end
           end
        end  // (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1)
-      
+
           if (item_needs_init == 1) begin
              addr           = item.addr;
              Start_Address  = item.addr;
@@ -391,13 +391,13 @@ task axi_driver::driver_write_data;
                addr    = addr + Number_Bytes;
                aligned = 1'b1;
            end
-         end // (item.burst_type != axi_pkg::e_FIXED)        
+         end // (item.burst_type != axi_pkg::e_FIXED)
 */
           end // (item_needs_init == 1)
-       
-       
+
+
       if (item != null) begin
-      
+
           if ((Burst_Length_Bytes - n) < Number_Bytes) begin
              iNumber_Bytes = Burst_Length_Bytes - n;
           end else begin
@@ -412,12 +412,12 @@ task axi_driver::driver_write_data;
              Upper_Byte_Lane = Aligned_Address + iNumber_Bytes - 1;
           end
           `uvm_info(this.get_type_name(), $sformatf("0000 - Lower_Byte_Lane: %0d; Uper_Byte_Lane: %0d; dataoffset:%0d, n:%0d, iNumber_Bytes:%0d; Aligned_Addr:0x%0x, addr:0x%0x; aligned:%b, item_needs_init:%0d", Lower_Byte_Lane, Upper_Byte_Lane, dataoffset, n, iNumber_Bytes, Aligned_Address, addr, aligned, item_needs_init), UVM_INFO)
-      
+
           s.wvalid = item.valid[validcntr++]; // 1'b1;
           s.wstrb  = 'h0;
           s.wdata  = 'h0;
           s.wlast  = 1'b0;
-        
+
           dataoffset=n;
           `uvm_info(this.get_type_name(), $sformatf("AAAA - Lower_Byte_Lane: %0d; Uper_Byte_Lane: %0d; dataoffset:%0d, n:%0d, iNumber_Bytes:%0d; Aligned_Addr:0x%0x, addr:0x%0x; aligned:%b, item_needs_init:%0d", Lower_Byte_Lane, Upper_Byte_Lane, dataoffset, n, iNumber_Bytes, Aligned_Address, addr, aligned, item_needs_init), UVM_INFO)
           for (int j=Lower_Byte_Lane;j<=Upper_Byte_Lane;j++) begin
@@ -434,11 +434,11 @@ task axi_driver::driver_write_data;
           vif.write_w(.s(s),.waitforwready(0));
 
       //end // for (n...)
-      
+
 //      `uvm_info(this.get_type_name(), $sformatf("n:%0d, dataoffset=%0d, Burst_length_Bytes: %0d", n, dataoffset, Burst_Length_Bytes), UVM_INFO)
-      end // (item != null) 
+      end // (item != null)
     end
-      
+
       if (item == null) begin
 
          s.wvalid = 1'b0;
@@ -446,21 +446,21 @@ task axi_driver::driver_write_data;
          s.wdata  = 'h0;
  //      s.wid    = 'h0; AXI3 only
          s.wstrb  = 'h0;
-        
+
          vif.wait_for_clks(.cnt(1));
          vif.write_w(.s(s),.waitforwready(0));
     //  end else begin
      //    item_needs_init=1;
       end
-     
+
   end // forever
-endtask : driver_write_data    
-    
-    
-    
-    
-    
-/*    
+endtask : driver_write_data
+
+
+
+
+
+/*
 task axi_driver::driver_write_data;
   axi_seq_item item=null;
   int i=0;
@@ -469,15 +469,15 @@ task axi_driver::driver_write_data;
   int pktcnt=0;
   int new_beat_cnt;
 
-  
+
   axi_seq_item_w_vector_s s;
   bit iwstrb [];
-  bit [7:0] new_data []; 
-  
+  bit [7:0] new_data [];
+
   forever begin
 
     driver_writedata_mbx.get(item);
-    item.update_wstrb(.addr  (item.addr), 
+    item.update_wstrb(.addr  (item.addr),
                       .wstrb (item.wstrb),
                       .data         (item.data),
                       .number_bytes (4),
@@ -485,13 +485,13 @@ task axi_driver::driver_write_data;
                       .new_wstrb    (iwstrb),
                       .new_data     (new_data),
                       .new_beat_cnt (new_beat_cnt));
-           
+
 
 
     i=0;
     validcntr=0;
 
-    while (item != null) begin  
+    while (item != null) begin
 
        // defaults. not needed but  I think is cleaner
        s.wvalid = 'b0;
@@ -504,7 +504,7 @@ task axi_driver::driver_write_data;
         s.wvalid=item.valid[validcntr];
         for (int j=0;j<4;j++) begin
 //        s.wdata={item.data[i*4+3],item.data[i*4+2],item.data[i*4+1],item.data[i*4+0]};
-//        s.wstrb=iwstrb; // i;//item.wstrb[validcntr]; 
+//        s.wstrb=iwstrb; // i;//item.wstrb[validcntr];
           s.wdata[j*8+:8] = new_data[i*4+j];
           s.wstrb[j]      = iwstrb[j+i];
         end
@@ -518,7 +518,7 @@ task axi_driver::driver_write_data;
       vif.write_w(.s(s),.waitforwready(1));
 
       validcntr++;
-      
+
       //if (i==(item.len/4 -1)) begin
       if (i==(new_beat_cnt - 1)) begin
          if ((vif.get_wready() == 1'b1) && (s.wvalid==1'b1)) begin
@@ -528,7 +528,7 @@ task axi_driver::driver_write_data;
 
             validcntr=0;
             i=0;
-  
+
            driver_writedata_mbx.try_get(item);
          // if no next xfer, then not back to back so drive signals low again
            if (item==null) begin
@@ -546,19 +546,19 @@ task axi_driver::driver_write_data;
         end
       end
 
-    end    
+    end
 end
 
 endtask : driver_write_data
 */
-    
-    
-    
+
+
+
 task axi_driver::driver_write_response;
-  
+
   axi_seq_item            item;
   axi_seq_item_b_vector_s s;
-  
+
   forever begin
     driver_writeresponse_mbx.get(item);
     `uvm_info(this.get_type_name(), "HEY, driver_write_response!!!!", UVM_INFO)
@@ -567,53 +567,53 @@ task axi_driver::driver_write_response;
     item.bid   = s.bid;
     item.bresp = s.bresp;
  //   `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put()", UVM_INFO)
-    seq_item_port.put(item);  
+    seq_item_port.put(item);
   //  `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put() - done", UVM_INFO)
     `uvm_info(this.get_type_name(), $sformatf("driver_write_response: %s", item.convert2string()), UVM_INFO)
-    
-  end    
+
+  end
 endtask : driver_write_response
 
-    
-    
+
+
 task axi_driver::responder_write_address;
-  
+
   axi_seq_item             item;
   axi_seq_item_aw_vector_s s;
-  
-  
+
+
   forever begin
     responder_writeaddress_mbx.get(item);
     `uvm_info(this.get_type_name(), "axi_driver::responder_write_address Getting address", UVM_INFO)
     vif.read_aw(.s(s));
     axi_seq_item::aw_to_class(.t(item), .v(s));
-    
+
     item.data=new[item.len];
     item.wlast=new[item.len];
     item.wstrb=new[item.len];
-      
+
     responder_writedata_mbx.put(item);
-  end    
+  end
 endtask : responder_write_address
-    
-    
-    
+
+
+
 task axi_driver::responder_write_data;
-  
+
   int          i;
   axi_seq_item item;
   axi_seq_item litem;
   int          datacnt;
   axi_seq_item_w_vector_s s;
   bit foo;
-  
+
   forever begin
      responder_writedata_mbx.get(item);
-    `uvm_info(this.get_type_name(), 
+    `uvm_info(this.get_type_name(),
               $sformatf("axi_driver::responder_write_data - Waiting for data for %s",
-                        item.convert2string()), 
+                        item.convert2string()),
               UVM_INFO)
-    
+
       i=0;
       while (i<item.len/4) begin
          vif.wait_for_clks(.cnt(1));
@@ -631,31 +631,31 @@ task axi_driver::responder_write_data;
             foo,
             item.wlast[i],
             .v(s));
-         
+
            i++;
-        `uvm_info(this.get_type_name(), 
+        `uvm_info(this.get_type_name(),
                   $sformatf("axi_driver::responder_write_data GOT %d for data for %s", i,
-                        item.convert2string()), 
+                        item.convert2string()),
               UVM_INFO)
       end
-      
+
     end
-        `uvm_info(this.get_type_name(), 
+        `uvm_info(this.get_type_name(),
                   $sformatf("axi_driver::responder_write_data responder_writeresponse_mbx.put - %s",
-                        item.convert2string()), 
+                        item.convert2string()),
               UVM_INFO)
      responder_writeresponse_mbx.put(item);
-  end    
+  end
 endtask : responder_write_data
-    
+
 task axi_driver::responder_write_response;
-  
+
   axi_seq_item item;
   axi_seq_item_b_vector_s s;
-  
+
   forever begin
      responder_writeresponse_mbx.get(item);
-    
+
     while (item != null) begin
       s.bid   = 'h3;
       s.bresp = 'h1;
@@ -669,7 +669,7 @@ task axi_driver::responder_write_response;
         s.bresp = 'h0;
         vif.write_b(.s(s), .valid(1'b0));
       end
-    end // while      
+    end // while
   end  //forever
-  
+
 endtask : responder_write_response

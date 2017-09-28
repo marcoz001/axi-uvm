@@ -2,7 +2,7 @@
 //
 // Filename: 	axi_monitor.svh
 //
-// Purpose:	
+// Purpose:
 //          UVM monitor for AXI UVM environment
 //
 // Creator:	Matt Dew
@@ -28,9 +28,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 class axi_monitor extends uvm_monitor;
   `uvm_component_utils(axi_monitor)
-  
+
   uvm_analysis_port #(axi_seq_item) ap;
-  
+
   uvm_analysis_port #(axi_seq_item) driver_activity_ap; // detect driver activity
 
   uvm_analysis_port #(axi_seq_item) write_address_ap;
@@ -43,30 +43,30 @@ class axi_monitor extends uvm_monitor;
   axi_seq_item_w_vector_s  w_q[$];
   axi_seq_item_aw_vector_s aw_q[$];
   axi_seq_item_b_vector_s  b_q[$];
-  
+
   // used to kick off slave seq
   axi_if_abstract     vif;
   axi_agent_config    m_config;
   memory              m_memory;
-  
+
   extern function new (string name="axi_monitor", uvm_component parent=null);
 
   extern function void build_phase              (uvm_phase phase);
   extern function void connect_phase            (uvm_phase phase);
   extern task          run_phase                (uvm_phase phase);
 
-    
+
   extern task monitor_write_address();
   extern task monitor_write_data();
   extern task monitor_write_response();
-   
+
 endclass : axi_monitor
 
-    
+
 function axi_monitor::new (string name="axi_monitor", uvm_component parent=null);
   super.new(name, parent);
 endfunction : new
-    
+
 function void axi_monitor::build_phase (uvm_phase phase);
   super.build_phase(phase);
 
@@ -80,19 +80,19 @@ function void axi_monitor::build_phase (uvm_phase phase);
   write_response_ap = new("write_response_ap", this);
   read_address_ap   = new("read_address_ap",   this);
   read_data_ap      = new("read_data_ap",      this);
-  
-  
+
+
   vif=axi_if_abstract::type_id::create("vif", this);
 
 endfunction : build_phase
-  
+
 function void axi_monitor::connect_phase (uvm_phase phase);
   super.connect_phase(phase);
 endfunction : connect_phase
 
 //    Good article here:
 //https://verificationacademy.com/verification-horizons/june-2013-volume-9-issue-2/Monitors-Monitors-Everywhere-Who-Is-Monitoring-the-Monitors
-    
+
 /*
 Each channel has an analysis port.  If data arrives 1st, it doesn't matter. scoreboard can wait on address before reading data.
 have 5 forever loops just waiting for *valid/ready and appropriate signals.
@@ -105,7 +105,7 @@ what about memory?
 
 
 */
-    
+
 task axi_monitor::monitor_write_address();
    axi_seq_item             original_item;
    axi_seq_item             item;
@@ -115,12 +115,12 @@ task axi_monitor::monitor_write_address();
    original_item = axi_seq_item::type_id::create("original_item");
    original_item.len=0;
 
-  
+
   forever begin
     vif.wait_for_write_address(.s(aw_s));
     aw_q.push_back(aw_s);
     `uvm_info(this.get_type_name(), "got addr", UVM_INFO)
-    
+
 //     if (m_config.drv_type == axi_uvm_pkg::e_RESPONDER) begin
 //         m_memory.write(aw_s.awaddr, 'hef);
 //     end
@@ -132,12 +132,12 @@ task axi_monitor::monitor_write_address();
     $cast(item2, item);
 
      ap.write(item);
-     
+
      if (m_config.drv_type == e_RESPONDER) begin
        driver_activity_ap.write(item2);
      end
-  
-  end  
+
+  end
 endtask : monitor_write_address
 
     /*
@@ -149,19 +149,19 @@ task axi_monitor::monitor_write_data();
   axi_seq_item_w_vector_s  w_s;
   int offset=0;
   int maxoffset=0;
-  bit [31:0] data; 
+  bit [31:0] data;
   bit [63:0] addr;
-  
+
   forever begin
     vif.wait_for_write_data(.s(w_s));
     if (m_config.drv_type == axi_uvm_pkg::e_RESPONDER) begin
-      
+
       if (aw_q.size() == 0) begin
          w_q.push_back(w_s);
       end else begin // if (aw_q.size() == 0)
         addr=aw_q[0].awaddr;
-        maxoffset=aw_q[0].awlen; // 
-      
+        maxoffset=aw_q[0].awlen; //
+
          // if anything in data queue, write it out
          while (w_q.size() > 0) begin
             data=w_q.pop_front();
@@ -170,7 +170,7 @@ task axi_monitor::monitor_write_data();
                offset++;
             end
          end
-        
+
          // then write new data to memory
          data=w_s.wdata;
          for (int i=0;i<4;i++) begin
@@ -183,10 +183,10 @@ task axi_monitor::monitor_write_data();
         if (offset>=maxoffset) begin
             aw_q.pop_front(); // @Todo: push to where?
             offset=0;
-            
+
           `uvm_info(this.get_type_name(), "End of pkt. Resetting...", UVM_INFO)
          end
-      
+
       end
     `uvm_info(this.get_type_name(), "got data", UVM_INFO)
     end //if drv_type
@@ -195,17 +195,17 @@ endtask : monitor_write_data
 
 task axi_monitor::monitor_write_response();
   axi_seq_item_b_vector_s  b_s;
-  
+
   forever begin
     vif.wait_for_write_response(.s(b_s));
     b_q.push_front(b_s);
     `uvm_info(this.get_type_name(), "got response", UVM_INFO)
 
-  end  
+  end
 endtask : monitor_write_response
 
 
-    
+
 task axi_monitor::run_phase(uvm_phase phase);
   fork
     monitor_write_address();
@@ -214,4 +214,3 @@ task axi_monitor::run_phase(uvm_phase phase);
 
   join
 endtask : run_phase
-  

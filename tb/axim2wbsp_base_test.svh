@@ -4,7 +4,7 @@
 //
 // Project:	Pipelined Wishbone to AXI converter - UVM testbench
 //
-// Purpose:	
+// Purpose:
 //          Base test for the AXI2WB test environment
 //
 // Creator:	Matt Dew
@@ -32,28 +32,28 @@
 //
 
 class axim2wbsp_base_test extends uvm_test;
-  
+
   `uvm_component_utils(axim2wbsp_base_test)
-  
+
   axi_env m_env;
   axi_seq m_seq;
   axi_responder_seq  m_resp_seq  ;
-  
+
   function new (string name="axim2wbsp_base_test", uvm_component parent=null);
     super.new(name, parent);
   endfunction : new
-  
+
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
 
     m_env = axi_env::type_id::create("m_env", this);
-    
+
     m_seq = axi_seq::type_id::create("m_seq");
     m_resp_seq = axi_responder_seq::type_id::create("m_resp_seq");
-    
-    
+
+
   endfunction : build_phase
-  
+
   task run_phase(uvm_phase phase);
         phase.raise_objection(this);
 
@@ -67,11 +67,11 @@ class axim2wbsp_base_test extends uvm_test;
     //fork
       m_seq.start(m_env.m_driver_seqr);
     //join_none
-    
+
     #2000
-    
+
      phase.drop_objection(this);
   endtask : run_phase
-  
-  
+
+
 endclass : axim2wbsp_base_test

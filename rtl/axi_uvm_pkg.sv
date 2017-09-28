@@ -2,7 +2,7 @@
 //
 // Filename: 	axi_uvm_pkg.sv
 //
-// Purpose:	
+// Purpose:
 //          Systemverilog package for AXI UVM environment
 //
 // Creator:	Matt Dew
@@ -39,7 +39,7 @@ typedef enum int {e_WRITE=0,
                   e_READ=1,
                   e_SETAWREADYTOGGLEPATTERN=2 // set awready toggle pattern
 
-                 
+
                  /*
                  e_WRITEADDRESS,
                  e_WRITEDATA,

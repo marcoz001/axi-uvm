@@ -60,8 +60,8 @@ module	aximrd2wbsp #(
 	input		[2:0]		i_axi_arprot,	// Read Protection type
 	input		[3:0]		i_axi_arqos,	// Read Protection type
 	input				i_axi_arvalid,	// Read address valid
-  
-// AXI read data channel signals   
+
+// AXI read data channel signals
 	output	wire [C_AXI_ID_WIDTH-1:0] o_axi_rid,     // Response ID
 	output	wire [1:0]		o_axi_rresp,   // Read response
 	output	reg			o_axi_rvalid,  // Read reponse valid
@@ -113,8 +113,8 @@ module	aximrd2wbsp #(
 	reg	[LGFIFO-1:0]	fifo_head, fifo_neck, fifo_torso, fifo_tail;
 
 	// Since we need to insure that these pointers wrap properly at
-	// LGFIFO bits, and since it is confusing to do that within IF 
-	// statements, 
+	// LGFIFO bits, and since it is confusing to do that within IF
+	// statements,
 	wire	[LGFIFO-1:0]	next_head, next_neck, next_torso, next_tail,
 				almost_head;
 	wire		fifo_full;
@@ -189,7 +189,7 @@ module	aximrd2wbsp #(
 	always @(posedge i_axi_clk)
 		afifo[fifo_head] <= { wr_fifo_id, wr_last, wr_fifo_addr };
 
-	reg	err_state;	
+	reg	err_state;
 	initial o_wb_cyc   = 1'b0;
 	initial o_wb_stb   = 1'b0;
 	initial fifo_neck  = 0;

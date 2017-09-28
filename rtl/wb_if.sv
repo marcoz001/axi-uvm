@@ -13,7 +13,7 @@ interface wb_if #(parameter C_AXI_ADDR_WIDTH = 32,
                   inout wire [C_AXI_DATA_WIDTH-1:0]   outdata,
                   inout wire                          err
                  );
-  
+
   logic                          icyc;
   logic                          istb;
   logic                          iwe;
@@ -24,7 +24,7 @@ interface wb_if #(parameter C_AXI_ADDR_WIDTH = 32,
   logic                          istall;
   logic [C_AXI_DATA_WIDTH-1:0]   ioutdata;
   logic                          ierr;
-  
+
   assign cyc     = icyc;
   assign stb     = istb;
   assign we      = iwe;
@@ -35,9 +35,9 @@ interface wb_if #(parameter C_AXI_ADDR_WIDTH = 32,
   assign stall   = istall;
   assign outdata = ioutdata;
   assign err     = ierr;
-  
+
 initial begin
-  
+
   icyc     = 'z;
   istb     = 'z;
   iwe      = 'z;
@@ -48,14 +48,14 @@ initial begin
   istall   = 1'b0;
   ioutdata = 'z;
   ierr     = 1'b0;
-  
-  
-  
+
+
+
 end
 
 
-  
-  
-  
-  
+
+
+
+
 endinterface : wb_if

@@ -4,7 +4,7 @@
 //
 // Project:	Pipelined Wishbone to AXI converter
 //
-// Purpose:	So ... this converter works in the other direction.  This 
+// Purpose:	So ... this converter works in the other direction.  This
 //		converter takes AXI commands, and organizes them into pipelined
 //	wishbone commands.
 //
@@ -64,20 +64,20 @@ module axim2wbsp #(
 	input		[2:0]		i_axi_awprot,	// Write Protection type
 	input		[3:0]		i_axi_awqos,	// Write Quality of Svc
 	input				i_axi_awvalid,	// Write address valid
-  
+
 // AXI write data channel signals
 	output	wire			o_axi_wready,  // Write data ready
 	input		[C_AXI_DATA_WIDTH-1:0]	i_axi_wdata,	// Write data
 	input		[C_AXI_DATA_WIDTH/8-1:0] i_axi_wstrb,	// Write strobes
-	input				i_axi_wlast,	// Last write transaction   
+	input				i_axi_wlast,	// Last write transaction
 	input				i_axi_wvalid,	// Write valid
-  
+
 // AXI write response channel signals
 	output	wire [C_AXI_ID_WIDTH-1:0] o_axi_bid,	// Response ID
 	output	wire [1:0]		o_axi_bresp,	// Write response
 	output	wire 			o_axi_bvalid,  // Write reponse valid
 	input				i_axi_bready,  // Response ready
-  
+
 // AXI read address channel signals
 	output	wire			o_axi_arready,	// Read address ready
 	input		[C_AXI_ID_WIDTH-1:0]	i_axi_arid,	// Read ID
@@ -90,8 +90,8 @@ module axim2wbsp #(
 	input		[2:0]		i_axi_arprot,	// Read Protection type
 	input		[3:0]		i_axi_arqos,	// Read Protection type
 	input				i_axi_arvalid,	// Read address valid
-  
-// AXI read data channel signals   
+
+// AXI read data channel signals
 	output	wire [C_AXI_ID_WIDTH-1:0] o_axi_rid,     // Response ID
 	output	wire [1:0]		o_axi_rresp,   // Read response
 	output	wire			o_axi_rvalid,  // Read reponse valid

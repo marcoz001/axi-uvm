@@ -2,7 +2,7 @@
 //
 // Filename: 	axi_responder_seq.svh
 //
-// Purpose:	
+// Purpose:
 //          UVM responder sequence for AXI UVM environment
 //
 // Creator:	Matt Dew
@@ -26,33 +26,33 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
-class axi_responder_seq extends axi_seq; 
-    
+class axi_responder_seq extends axi_seq;
+
   `uvm_object_utils(axi_responder_seq)
-  
+
   `uvm_declare_p_sequencer (axi_sequencer)
-  
-  
+
+
   logic [7:0] mem [];
-  
+
   extern function   new (string name="axi_responder_seq");
   extern task       body;
 
 endclass : axi_responder_seq
-    
+
     function axi_responder_seq::new (string name="axi_responder_seq");
   super.new(name);
 endfunction : new
-    
+
 task axi_responder_seq::body;
      axi_seq_item drv_item;
      axi_seq_item item;
 
    item = axi_seq_item::type_id::create("item");
 
-  
+
   `uvm_info(this.get_type_name(), "YO~! starting responder_seq", UVM_INFO)
-     
+
     // set up toggle pattern in responder
        item.toggle_pattern = 32'h5A30_C123;
        item.toggle_pattern = 32'hFFFF_FFFF;
@@ -62,21 +62,20 @@ task axi_responder_seq::body;
   item.cmd            = e_SETAWREADYTOGGLEPATTERN;
        start_item(item);
        finish_item(item);
-  
-  
+
+
 
      forever begin
        // recommended by verilab but doesn't
        // this break the child-doesn't-know-about-parent model?
-       p_sequencer.request_fifo.get(drv_item); 
+       p_sequencer.request_fifo.get(drv_item);
 
        start_item(drv_item);
        finish_item(drv_item);
-       `uvm_info(this.get_type_name(), 
-                 $sformatf(" <-HEY0HEY0HEY0 -> %s", 
-                           drv_item.convert2string()), 
+       `uvm_info(this.get_type_name(),
+                 $sformatf(" <-HEY0HEY0HEY0 -> %s",
+                           drv_item.convert2string()),
                  UVM_INFO)
      end
-  
+
 endtask : body
-    

@@ -19,7 +19,7 @@
 //	transiting from the Wishbone (as master) to the AXI bus (as slave) and
 //	back again.
 //
-//	Since the AXI bus allows transactions to be reordered, whereas the 
+//	Since the AXI bus allows transactions to be reordered, whereas the
 //	wishbone does not, this core can be configured to reorder return
 //	transactions as well.
 //
@@ -76,20 +76,20 @@ module wbm2axisp #(
 	output	wire	[2:0]		o_axi_awprot,	// Write Protection type
 	output	wire	[3:0]		o_axi_awqos,	// Write Quality of Svc
 	output	reg			o_axi_awvalid,	// Write address valid
-  
+
 // AXI write data channel signals
 	input				i_axi_wready,  // Write data ready
 	output	reg	[C_AXI_DATA_WIDTH-1:0]	o_axi_wdata,	// Write data
 	output	reg	[C_AXI_DATA_WIDTH/8-1:0] o_axi_wstrb,	// Write strobes
-	output	wire			o_axi_wlast,	// Last write transaction   
+	output	wire			o_axi_wlast,	// Last write transaction
 	output	reg			o_axi_wvalid,	// Write valid
-  
+
 // AXI write response channel signals
 	input	[C_AXI_ID_WIDTH-1:0]	i_axi_bid,	// Response ID
 	input	[1:0]			i_axi_bresp,	// Write response
 	input				i_axi_bvalid,  // Write reponse valid
 	output	wire			o_axi_bready,  // Response ready
-  
+
 // AXI read address channel signals
 	input				i_axi_arready,	// Read address ready
 	output	wire	[C_AXI_ID_WIDTH-1:0]	o_axi_arid,	// Read ID
@@ -102,8 +102,8 @@ module wbm2axisp #(
 	output	wire	[2:0]		o_axi_arprot,	// Read Protection type
 	output	wire	[3:0]		o_axi_arqos,	// Read Protection type
 	output	reg			o_axi_arvalid,	// Read address valid
-  
-// AXI read data channel signals   
+
+// AXI read data channel signals
 	input	[C_AXI_ID_WIDTH-1:0]	i_axi_rid,     // Response ID
 	input	[1:0]			i_axi_rresp,   // Read response
 	input				i_axi_rvalid,  // Read reponse valid
@@ -349,7 +349,7 @@ module wbm2axisp #(
 				||((i_axi_rvalid)&&(i_axi_rresp[1]))
 				||((i_axi_bvalid)&&(i_axi_bresp[1])));
 	end endgenerate
-	
+
 
 	// Now, the difficult signal ... the stall signal
 	// Let's build for a single cycle input ... and only stall if something

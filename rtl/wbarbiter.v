@@ -48,7 +48,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //
-module	wbarbiter(i_clk, 
+module	wbarbiter(i_clk,
 	// Bus A -- the priority bus
 	i_a_cyc, i_a_stb, i_a_we, i_a_adr, i_a_dat, i_a_sel,
 		o_a_ack, o_a_stall, o_a_err,
@@ -72,7 +72,7 @@ module	wbarbiter(i_clk,
 	input		[(DW-1):0]	i_b_dat;
 	input		[(DW/8-1):0]	i_b_sel;
 	output	wire			o_b_ack, o_b_stall, o_b_err;
-	// 
+	//
 	output	wire			o_cyc, o_stb, o_we;
 	output	wire	[(AW-1):0]	o_adr;
 	output	wire	[(DW-1):0]	o_dat;
@@ -81,7 +81,7 @@ module	wbarbiter(i_clk,
 
   	reg	r_a_owner;
 
-  
+
 	// Go high immediately (new cycle) if ...
 	//	Previous cycle was low and *someone* is requesting a bus cycle
 	// Go low immadiately if ...
@@ -100,7 +100,7 @@ module	wbarbiter(i_clk,
 
 	// Realistically, if neither master owns the bus, the output is a
 	// don't care.  Thus we trigger off whether or not 'A' owns the bus.
-	// If 'B' owns it all we care is that 'A' does not.  Likewise, if 
+	// If 'B' owns it all we care is that 'A' does not.  Likewise, if
 	// neither owns the bus than the values on the various lines are
 	// irrelevant.
 	//
@@ -124,8 +124,8 @@ module	wbarbiter(i_clk,
 	assign	o_a_stall = ( r_a_owner) ? i_stall : 1'b1;
 	assign	o_b_stall = (~r_a_owner) ? i_stall : 1'b1;
 
-	// 
-	// 
+	//
+	//
 	assign	o_a_err = ( r_a_owner) ? i_err : 1'b0;
 	assign	o_b_err = (~r_a_owner) ? i_err : 1'b0;
 
