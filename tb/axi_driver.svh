@@ -309,98 +309,150 @@ task axi_driver::driver_write_data;
   bit [63:0] addr;
   int        dtsize;
   int n=0;
+  int        validcntr;
+  int dataoffset=0;
+  int item_needs_init;
+  
   forever begin
 
-    driver_writedata_mbx.get(item);
+    if (item == null) begin
+       driver_writedata_mbx.get(item);
+       item_needs_init=1;
+    end
+    
+    if (item != null) begin  
 
-    while (item != null) begin  
+      vif.wait_for_clks(.cnt(1));
 
-    addr           = item.addr;
-    Start_Address  = item.addr;
-    Number_Bytes   = item.number_bytes;
-    Burst_Length_Bytes   = item.len;
-    Data_Bus_Bytes    = 4; // @Todo: parameter? fetch from cfg_db?
-    Mode              = item.burst_type;
-    Aligned_Address   = (int'(addr/Number_Bytes) * Number_Bytes);
-    aligned           = (Aligned_Address == addr);
-    dtsize            = Number_Bytes * Burst_Length_Bytes;
-
+      `uvm_info(this.get_type_name(), "INIT != NULL", UVM_INFO)
+      
        // defaults. not needed but  I think is cleaner in sim
-       s.wvalid = 'b0;
-       s.wdata  = 'hfeed_beef;
-       s.wstrb  = 'h0;
-       s.wlast  = 1'b0;
+//       s.wvalid = 'b0;
+//       s.wdata  = 'hfeed_beef;
+//       s.wstrb  = 'h0;
+//       s.wlast  = 1'b0;
 
-       if (item.burst_type == axi_pkg::e_WRAP) begin
-          Lower_Wrap_Boundary = (int'(addr/dtsize) * dtsize);
-          Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
-       end else begin
-          Lower_Wrap_Boundary = 'h0;
-          Upper_Wrap_Boundary = -1;
+       if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
+          n =  dataoffset;
+         if (aligned == 0)
+            aligned = 1;
 
-       end
-      n=0;
-      while (n<Burst_Length_Bytes) begin
-        
-        if ((Burst_Length_Bytes - n) < Number_Bytes) begin
-          iNumber_Bytes = Burst_Length_Bytes - n;
-        end else begin
-          iNumber_Bytes = Number_Bytes;
-        end
+         `uvm_info("ATSTART", $sformatf("n:%0d, Burst_Length_Bytes:%0d", n, Burst_Length_Bytes), UVM_INFO)          
+          if (n>=Burst_Length_Bytes) begin
+             driver_writeresponse_mbx.put(item);
+             item = null;  
+             driver_writedata_mbx.try_get(item);
+             n=0;
+             dataoffset=0;
+             if (item != null) begin
+                `uvm_info("FOO", "next item avail!", UVM_INFO)
+                item_needs_init=1;
+             end else begin
+                `uvm_info("FOO", "Nooooo next item avail!", UVM_INFO)
+             end
+          end
+       end  // (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1)
+      
+          if (item_needs_init == 1) begin
+             addr           = item.addr;
+             Start_Address  = item.addr;
+             Number_Bytes   = item.number_bytes;
+             Burst_Length_Bytes   = item.len;
+             Data_Bus_Bytes    = 4; // @Todo: parameter? fetch from cfg_db?
+             Mode              = item.burst_type;
+             Aligned_Address   = (int'(addr/Number_Bytes) * Number_Bytes);
+             aligned           = (Aligned_Address == addr);
+             dtsize            = Number_Bytes * Burst_Length_Bytes;
+             validcntr         = 0;
+             if (item.burst_type == axi_pkg::e_WRAP) begin
+                Lower_Wrap_Boundary = (int'(addr/dtsize) * dtsize);
+                Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
+             end else begin
+                Lower_Wrap_Boundary = 'h0;
+                Upper_Wrap_Boundary = -1;
+             end
 
-        if (aligned) begin
+             //n = 0;
+             item_needs_init=0;
+//          end else begin
+//             aligned=1;
+/*
+        // Increment address if necessary
+         if (item.burst_type != axi_pkg::e_FIXED) begin
+            if (aligned) begin
+               addr = addr + Number_Bytes;
+               if (item.burst_type == axi_pkg::e_WRAP) begin
+                  // WRAP mode is always aligned
+                  if (addr >= Upper_Wrap_Boundary) begin
+                     addr = Lower_Wrap_Boundary;
+                  end
+               end
+            end else begin
+               addr    = addr + Number_Bytes;
+               aligned = 1'b1;
+           end
+         end // (item.burst_type != axi_pkg::e_FIXED)        
+*/
+          end // (item_needs_init == 1)
+       
+       
+      if (item != null) begin
+      
+          if ((Burst_Length_Bytes - n) < Number_Bytes) begin
+             iNumber_Bytes = Burst_Length_Bytes - n;
+          end else begin
+             iNumber_Bytes = Number_Bytes;
+          end
+
+          if (aligned) begin
              Lower_Byte_Lane = 0;
              Upper_Byte_Lane = Lower_Byte_Lane + iNumber_Bytes - 1;
           end else begin
              Lower_Byte_Lane = addr - Aligned_Address;
              Upper_Byte_Lane = Aligned_Address + iNumber_Bytes - 1;
           end
-
-          s.wvalid = 1'b1;
+          `uvm_info(this.get_type_name(), $sformatf("0000 - Lower_Byte_Lane: %0d; Uper_Byte_Lane: %0d; dataoffset:%0d, n:%0d, iNumber_Bytes:%0d; Aligned_Addr:0x%0x, addr:0x%0x; aligned:%b, item_needs_init:%0d", Lower_Byte_Lane, Upper_Byte_Lane, dataoffset, n, iNumber_Bytes, Aligned_Address, addr, aligned, item_needs_init), UVM_INFO)
+      
+          s.wvalid = item.valid[validcntr++]; // 1'b1;
           s.wstrb  = 'h0;
           s.wdata  = 'h0;
-        for (int j=Lower_Byte_Lane;j<=Upper_Byte_Lane;j++) begin
-          s.wdata[j*8+:8] = item.data[n++];
-          s.wstrb[j]      = 1'b1;
+          s.wlast  = 1'b0;
+        
+          dataoffset=n;
+          `uvm_info(this.get_type_name(), $sformatf("AAAA - Lower_Byte_Lane: %0d; Uper_Byte_Lane: %0d; dataoffset:%0d, n:%0d, iNumber_Bytes:%0d; Aligned_Addr:0x%0x, addr:0x%0x; aligned:%b, item_needs_init:%0d", Lower_Byte_Lane, Upper_Byte_Lane, dataoffset, n, iNumber_Bytes, Aligned_Address, addr, aligned, item_needs_init), UVM_INFO)
+          for (int j=Lower_Byte_Lane;j<=Upper_Byte_Lane;j++) begin
+             s.wdata[j*8+:8] = item.data[dataoffset++];
+             s.wstrb[j]      = 1'b1;
 
-          if (n>=Burst_Length_Bytes) break;
-       end
-        if (n>=Burst_Length_Bytes) begin
-           s.wlast=1'b1;//item.wlast[i];
-        end else begin
-           s.wlast=1'b0;
-        end
-        vif.write_w(.s(s),.waitforwready(1));
-         
-          // Increment address if necessary
-          if (item.burst_type != axi_pkg::e_FIXED) begin
-             if (aligned) begin
-                addr = addr + Number_Bytes;
-                if (item.burst_type == axi_pkg::e_WRAP) begin
-                   // WRAP mode is always aligned
-                  if (addr >= Upper_Wrap_Boundary) begin
-                      addr = Lower_Wrap_Boundary;
-                  end
-                end
-             end else begin
-                addr    = addr + Number_Bytes;
-                aligned = 1'b1;
+             if (dataoffset>=Burst_Length_Bytes) begin
+                s.wlast=1'b1;
+                break;
              end
-          end // (item.burst_type != axi_pkg::e_FIXED)
-      end // for (n...)
-      driver_writeresponse_mbx.put(item);
-      item = null;  
-      driver_writedata_mbx.try_get(item);
+          end // for
+         `uvm_info(this.get_type_name(), $sformatf("BBBB- Lower_Byte_Lane: %0d; Uper_Byte_Lane: %0d; dataoffset:%0d n:%0d", Lower_Byte_Lane, Upper_Byte_Lane, dataoffset, n), UVM_INFO)
+
+          vif.write_w(.s(s),.waitforwready(0));
+
+      //end // for (n...)
+      
+//      `uvm_info(this.get_type_name(), $sformatf("n:%0d, dataoffset=%0d, Burst_length_Bytes: %0d", n, dataoffset, Burst_Length_Bytes), UVM_INFO)
+      end // (item != null) 
+    end
+      
       if (item == null) begin
+
          s.wvalid = 1'b0;
          s.wlast  = 1'b0;
          s.wdata  = 'h0;
  //      s.wid    = 'h0; AXI3 only
          s.wstrb  = 'h0;
-         vif.write_w(.s(s),.waitforwready(1));
+        
+         vif.wait_for_clks(.cnt(1));
+         vif.write_w(.s(s),.waitforwready(0));
+    //  end else begin
+     //    item_needs_init=1;
       end
      
-    end // while
   end // forever
 endtask : driver_write_data    
     

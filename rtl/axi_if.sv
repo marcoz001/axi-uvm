@@ -305,7 +305,7 @@ endtask : write_aw
     
 task write_w(axi_seq_item_w_vector_s  s, bit waitforwready=0);
 
-   wait_for_clks(.cnt(1));
+   //wait_for_clks(.cnt(1));
    if (waitforwready == 1'b1) begin
       while (wready != 1'b1) begin
          wait_for_clks(.cnt(1));

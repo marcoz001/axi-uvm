@@ -61,7 +61,7 @@ task axi_seq::body;
   
   use_response_handler(1); // Enable Response Handler
   
-  xfers_to_send=2;
+  xfers_to_send=20;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());
@@ -70,8 +70,8 @@ task axi_seq::body;
                                     burst_size == e_4BYTES;
                                     burst_type == e_INCR;
                                     addr       <  'h4;
-                                    len        >  'h0;
-                                    len        <  'h10;}
+                                    len        >  'h10;
+                                    len        <  'h20;}
                                    ) else begin
          `uvm_error(this.get_type_name(),
                     $sformatf("Unable to randomize %s",  item.get_full_name()));
