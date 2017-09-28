@@ -56,7 +56,7 @@ task axi_responder_seq::body;
     // set up toggle pattern in responder
        item.toggle_pattern = 32'h5A30_C123;
        item.toggle_pattern = 32'hFFFF_FFFF;
-       item.toggle_pattern = 32'h5555_5555;
+       item.toggle_pattern = 32'hFFFF_FFFF;
 //       item.toggle_pattern = 32'h0000_0001;
 
   item.cmd            = e_SETAWREADYTOGGLEPATTERN;

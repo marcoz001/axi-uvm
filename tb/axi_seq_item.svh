@@ -57,7 +57,7 @@ class axi_seq_item extends uvm_sequence_item;
 
     rand  cmd_t        cmd; // read or write
 
-  rand   logic [31:0] toggle_pattern;
+  rand   logic [31:0] toggle_pattern = 32'hFFFF_FFFF;
 
 
   rand int number_bytes;
