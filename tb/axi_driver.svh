@@ -70,7 +70,14 @@ class axi_driver extends uvm_driver #(axi_seq_item);
    // If multiple write transfers are queued,
    // this allows easily testing back to back or pausing between write address transfers.
   int min_clks_between_aw_transfers=0;
-  int max_clks_between_aw_transfers=10;
+  int max_clks_between_aw_transfers=0;
+
+   // If multiple write transfers are queued,
+   // this allows easily testing back to back or pausing between write address transfers.
+  int min_clks_between_w_transfers=0;
+  int max_clks_between_w_transfers=5;
+
+
 
 endclass : axi_driver
 
@@ -163,10 +170,19 @@ task axi_driver::responder_run_phase;
 
 endtask : responder_run_phase
 
-
+/*
+   driver_write_address - driver write address phase
+   1. wait for TLM item to get queued
+   2. initialize variables
+   3. write out
+   4. if ready and valid, wait X (x>=0 clks), then check for any more queued items
+   5. if avail, then fetch and goto step 2.
+   6. if no items to be drivein on next clk, the drive all write address signals low
+      and goto step 1.
+*/
 task axi_driver::driver_write_address;
 
-  axi_seq_item item;
+  axi_seq_item item=null;
   axi_seq_item_aw_vector_s v;
 
   int validcntr=0;
@@ -179,73 +195,86 @@ task axi_driver::driver_write_address;
   int maxval;
   int wait_clks_before_next_aw;
 
+  int item_needs_init=1;
+
   forever begin
 
     if (item == null) begin
        driver_writeaddress_mbx.get(item);
-       axi_seq_item::aw_from_class(.t(item), .v(v));
-       v.awlen  = item.calculate_beats(.addr(item.addr),
-                                       .number_bytes(item.number_bytes),
-                                       .burst_length(item.len));
-
-       v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
-                                                 .number_bytes(4));
-       validcntr=0;
-       validcntr_max=item.valid.size()-1; // don't go past end
+       item_needs_init=1;
     end
 
-    if (item != null) begin
-       vif.wait_for_clks(.cnt(1));
+    vif.wait_for_clks(.cnt(1));
 
-       ivalid=item.valid[validcntr];
+      // if done with this xfer (write address is only one clock, done with valid & ready
        if (vif.get_awready_awvalid == 1'b1) begin
-         driver_writedata_mbx.put(item);
-         item=null;
-         validcntr=0;
-         ivalid=0;
-         v.awaddr = 'h0;
-         v.awid='h0;
-         v.awsize='h0;
-         v.awburst = 'h0;
+          driver_writedata_mbx.put(item);
+          item=null;
 
-         minval=min_clks_between_aw_transfers;
-         maxval=max_clks_between_aw_transfers;
-         wait_clks_before_next_aw=$urandom_range(maxval,minval);
+          minval=min_clks_between_aw_transfers;
+          maxval=max_clks_between_aw_transfers;
+          wait_clks_before_next_aw=$urandom_range(maxval,minval);
 
-         if (wait_clks_before_next_aw==0) begin
-            driver_writeaddress_mbx.try_get(item);
-            if (item!=null) begin
-               axi_seq_item::aw_from_class(.t(item), .v(v));
-               v.awlen  = item.calculate_beats(.addr(v.awaddr),
-                                               .number_bytes(4),
-                                               .burst_length(item.len));
+          // Check if delay wanted
+          if (wait_clks_before_next_aw==0) begin
+             // if not, check if there's another item
+             driver_writeaddress_mbx.try_get(item);
+             if (item!=null) begin
+                item_needs_init=1;
+             end
+          end
+       end
+       // Initialize values
+       if (item_needs_init==1) begin
+          axi_seq_item::aw_from_class(.t(item), .v(v));
+          v.awlen  = item.calculate_beats(.addr(item.addr),
+                                          .number_bytes(item.number_bytes),
+                                          .burst_length(item.len));
 
-               v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
-                                                         .number_bytes(4));
+          v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
+                                                    .number_bytes(4));
+          validcntr=0;
+          validcntr_max=item.valid.size()-1; // don't go past end
+          item_needs_init=0;
+       end
 
+        // Update values <- No need in write address (only one clk per)
 
-               ivalid=item.valid[validcntr];
-               validcntr_max=item.valid.size()-1; // don't go past end
-
-            end
-         end else begin
-           vif.write_aw(.s(v), .valid(1'b0));
-           vif.wait_for_clks(.cnt(wait_clks_before_next_aw-1)); // -1 because another wait
+       // Write out
+       if (item != null) begin
+          vif.write_aw(.s(v), .valid(1'b1));
+          if (wait_clks_before_next_aw > 0) begin
+             vif.wait_for_clks(.cnt(wait_clks_before_next_aw-1)); // -1 because another wait
                                                                 // at beginning of loop
-         end
-      end
+          end
+       end   // if (item != null)
+
+    // No item for next clock, so close out bus
+    if (item == null) begin
+         v.awaddr  = 'h0;
+         v.awid    = 'h0;
+         v.awsize  = 'h0;
+         v.awburst = 'h0;
+         vif.write_aw(.s(v), .valid(1'b0));
+         vif.wait_for_clks(.cnt(1));
     end
 
-    vif.write_aw(.s(v), .valid(ivalid));
-    validcntr++;
-    if (validcntr > validcntr_max) begin
-      validcntr=0;
-    end
-
-  end  // forever
+    end // forever
 
 endtask : driver_write_address
 
+/*
+   driver_write_data - driver write data phase
+   1. wait for TLM item to get queued
+   2. initialize variables
+   3. loop
+   4.    update variables when wready & wvalid (slave has received current beat)
+   5.    write out
+   6. if wlast and ready and valid, wait X (x>=0 clks), then check for any more queued items
+   7. if avail, then fetch and goto step 2.
+   8. if no items to be drivein on next clk, the drive all write data signals low
+      and goto step 1.
+*/
 task axi_driver::driver_write_data;
   axi_seq_item item=null;
   axi_seq_item_w_vector_s s;
@@ -270,6 +299,10 @@ task axi_driver::driver_write_data;
   int dataoffset=0;
   int item_needs_init;
 
+  int minval;
+  int maxval;
+  int wait_clks_before_next_w;
+
   forever begin
 
     if (item == null) begin
@@ -277,110 +310,111 @@ task axi_driver::driver_write_data;
        item_needs_init=1;
     end
 
-    if (item != null) begin
+    vif.wait_for_clks(.cnt(1));
 
-      vif.wait_for_clks(.cnt(1));
+    // defaults. not needed but  I think is cleaner in sim
+    s.wvalid = 'b0;
+    s.wdata  = 'hfeed_beef;
+    s.wstrb  = 'h0;
+    s.wlast  = 1'b0;
 
+    // Check if done with this transfer
+    if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
+       n =  dataoffset;
+       aligned = 1;
 
-       // defaults. not needed but  I think is cleaner in sim
-       s.wvalid = 'b0;
-       s.wdata  = 'hfeed_beef;
-       s.wstrb  = 'h0;
-       s.wlast  = 1'b0;
+       if (n>=Burst_Length_Bytes) begin
+          driver_writeresponse_mbx.put(item);
+          item = null;
+          n=0;
+          dataoffset=0;
 
-       if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
-          n =  dataoffset;
-         //if (aligned == 0)
-            aligned = 1;
+          minval=min_clks_between_w_transfers;
+          maxval=max_clks_between_w_transfers;
+          wait_clks_before_next_w=$urandom_range(maxval,minval);
 
-          if (n>=Burst_Length_Bytes) begin
-             driver_writeresponse_mbx.put(item);
-             item = null;
+          // Check if delay wanted
+          if (wait_clks_before_next_w==0) begin
+             // if not, check if there's another item
              driver_writedata_mbx.try_get(item);
-             n=0;
-             dataoffset=0;
+
              if (item != null) begin
                 item_needs_init=1;
              end
           end
-       end  // (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1)
+       end
+    end  // (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1)
 
-          if (item_needs_init == 1) begin
-             addr           = item.addr;
-             Start_Address  = item.addr;
-             Number_Bytes   = item.number_bytes;
-             Burst_Length_Bytes   = item.len;
-             Data_Bus_Bytes    = 4; // @Todo: parameter? fetch from cfg_db?
-             Mode              = item.burst_type;
-             Aligned_Address   = (int'(addr/Number_Bytes) * Number_Bytes);
-             aligned           = (Aligned_Address == addr);
-             dtsize            = Number_Bytes * Burst_Length_Bytes;
-             validcntr         = 0;
-             if (item.burst_type == axi_pkg::e_WRAP) begin
-                Lower_Wrap_Boundary = (int'(addr/dtsize) * dtsize);
-                Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
-             end else begin
-                Lower_Wrap_Boundary = 'h0;
-                Upper_Wrap_Boundary = -1;
-             end
+    // Initialize values
+    if (item_needs_init == 1) begin
+       addr           = item.addr;
+       Start_Address  = item.addr;
+       Number_Bytes   = item.number_bytes;
+       Burst_Length_Bytes   = item.len;
+       Data_Bus_Bytes    = 4; // @Todo: parameter? fetch from cfg_db?
+       Mode              = item.burst_type;
+       Aligned_Address   = (int'(addr/Number_Bytes) * Number_Bytes);
+       aligned           = (Aligned_Address == addr);
+       dtsize            = Number_Bytes * Burst_Length_Bytes;
+       validcntr         = 0;
+       if (item.burst_type == axi_pkg::e_WRAP) begin
+          Lower_Wrap_Boundary = (int'(addr/dtsize) * dtsize);
+          Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
+       end else begin
+          Lower_Wrap_Boundary = 'h0;
+          Upper_Wrap_Boundary = -1;
+       end
+       item_needs_init=0;
+    end // (item_needs_init == 1)
 
-             item_needs_init=0;
-
-          end // (item_needs_init == 1)
-
-
-      if (item != null) begin
-
-          if ((Burst_Length_Bytes - n) < Number_Bytes) begin
-             iNumber_Bytes = Burst_Length_Bytes - n;
-          end else begin
-             iNumber_Bytes = Number_Bytes;
+    // Update values
+    if (item != null) begin
+       if ((Burst_Length_Bytes - n) < Number_Bytes) begin
+          iNumber_Bytes = Burst_Length_Bytes - n;
+       end else begin
+          iNumber_Bytes = Number_Bytes;
+       end
+       if (aligned) begin
+          Lower_Byte_Lane = 0;
+          Upper_Byte_Lane = Lower_Byte_Lane + iNumber_Bytes - 1;
+       end else begin
+          Lower_Byte_Lane = addr - Aligned_Address;
+          Upper_Byte_Lane = Aligned_Address + iNumber_Bytes - 1;
+       end
+       s.wvalid = item.valid[validcntr++]; // 1'b1;
+       s.wstrb  = 'h0;
+       s.wdata  = 'h0;
+       s.wlast  = 1'b0;
+       dataoffset=n;
+       for (int j=Lower_Byte_Lane;j<=Upper_Byte_Lane;j++) begin
+          s.wdata[j*8+:8] = item.data[dataoffset++];
+          s.wstrb[j]      = 1'b1;
+          if (dataoffset>=Burst_Length_Bytes) begin
+             s.wlast=1'b1;
+             break;
           end
+       end // for
 
-          if (aligned) begin
-             Lower_Byte_Lane = 0;
-             Upper_Byte_Lane = Lower_Byte_Lane + iNumber_Bytes - 1;
-          end else begin
-             Lower_Byte_Lane = addr - Aligned_Address;
-             Upper_Byte_Lane = Aligned_Address + iNumber_Bytes - 1;
-          end
+       // Write out
+       vif.write_w(.s(s),.waitforwready(0));
+    end // (item != null)
 
-          s.wvalid = item.valid[validcntr++]; // 1'b1;
-          s.wstrb  = 'h0;
-          s.wdata  = 'h0;
-          s.wlast  = 1'b0;
+    // No item for next clock, so close out bus
+    if (item == null) begin
+       s.wvalid = 1'b0;
+       s.wlast  = 1'b0;
+       s.wdata  = 'h0;
+ //    s.wid    = 'h0; AXI3 only
+       s.wstrb  = 'h0;
 
-          dataoffset=n;
+       vif.write_w(.s(s),.waitforwready(0));
 
-          for (int j=Lower_Byte_Lane;j<=Upper_Byte_Lane;j++) begin
-             s.wdata[j*8+:8] = item.data[dataoffset++];
-             s.wstrb[j]      = 1'b1;
-
-             if (dataoffset>=Burst_Length_Bytes) begin
-                s.wlast=1'b1;
-                break;
-             end
-          end // for
-
-
-          vif.write_w(.s(s),.waitforwready(0));
-
-      end // (item != null)
-    end
-
-      if (item == null) begin
-
-         s.wvalid = 1'b0;
-         s.wlast  = 1'b0;
-         s.wdata  = 'h0;
- //      s.wid    = 'h0; AXI3 only
-         s.wstrb  = 'h0;
-
-         vif.wait_for_clks(.cnt(1));
-         vif.write_w(.s(s),.waitforwready(0));
-
-      end
-
+       if (wait_clks_before_next_w > 0) begin
+          vif.wait_for_clks(.cnt(wait_clks_before_next_w-1));
+                                        // -1 because another wait
+                                        // at beginning of loop
+       end
+    end // if (item == null
   end // forever
 endtask : driver_write_data
 
