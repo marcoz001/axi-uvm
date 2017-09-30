@@ -45,7 +45,7 @@ class axi_seq_item extends uvm_sequence_item;
     //rand  burst_type_t burst_type;
          logic [7:0] awlen;      // calculated later using the addr and len properties.
     rand logic [2:0] burst_size; // Burst size
-    rand logic [1:0] burst_type;
+  rand logic [1:0] burst_type;
 
           logic [0:0]  lock   = 'h0;
           logic [3:0]  cache  = 'h0;
@@ -275,12 +275,12 @@ function void axi_seq_item::post_randomize;
 
   j=valid.size();
   for (int i=0;i<j;i++) begin
-    valid[i] = $random;
+    valid[i] = 1'b1; // $random;
   end
 
-  valid[0] = 1'b1;
-  valid[1] = 1'b1;
-  valid[2] = 1'b0;
+//  valid[0] = 1'b1;
+//  valid[1] = 1'b1;
+//  valid[2] = 1'b0;
 
 
   data[len-1] = 'hFE; // specific value to eaily identify last byte

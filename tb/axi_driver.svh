@@ -75,7 +75,7 @@ class axi_driver extends uvm_driver #(axi_seq_item);
    // If multiple write transfers are queued,
    // this allows easily testing back to back or pausing between write address transfers.
   int min_clks_between_w_transfers=0;
-  int max_clks_between_w_transfers=5;
+  int max_clks_between_w_transfers=0;
 
 
 
@@ -185,9 +185,9 @@ task axi_driver::driver_write_address;
   axi_seq_item item=null;
   axi_seq_item_aw_vector_s v;
 
-  int validcntr=0;
-  int validcntr_max;
-  bit ivalid;
+//  int validcntr=0;
+//  int validcntr_max;
+//  bit ivalid;
 
    bit [63:0] aligned_addr;
 
@@ -233,8 +233,8 @@ task axi_driver::driver_write_address;
 
           v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
                                                     .number_bytes(4));
-          validcntr=0;
-          validcntr_max=item.valid.size()-1; // don't go past end
+  //        validcntr=0;
+  //        validcntr_max=item.valid.size()-1; // don't go past end
           item_needs_init=0;
        end
 
@@ -295,7 +295,8 @@ task axi_driver::driver_write_data;
   bit [63:0] addr;
   int        dtsize;
   int n=0;
-  int        validcntr;
+  int validcntr;
+  int validcntr_max;
   int dataoffset=0;
   int item_needs_init;
 
@@ -321,7 +322,22 @@ task axi_driver::driver_write_data;
     // Check if done with this transfer
     if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
        n =  dataoffset;
-       aligned = 1;
+       //aligned = 1;
+
+       if (Mode != axi_pkg::e_FIXED) begin
+         if (aligned) begin
+          addr = Aligned_Address + Number_Bytes;
+          if (Mode == axi_pkg::e_WRAP) begin
+            // WRAP mode is always aligned
+            if (addr >= Upper_Wrap_Boundary) begin
+              addr = Lower_Wrap_Boundary;
+            end
+          end
+        end else begin // (if aligned)
+          addr    = Aligned_Address + Number_Bytes;
+          aligned = 1'b1;
+        end
+      end // (Mode)
 
        if (n>=Burst_Length_Bytes) begin
           driver_writeresponse_mbx.put(item);
@@ -349,14 +365,15 @@ task axi_driver::driver_write_data;
     if (item_needs_init == 1) begin
        addr           = item.addr;
        Start_Address  = item.addr;
-       Number_Bytes   = item.number_bytes;
+       Number_Bytes   = item.number_bytes; // Partial or Full transfers.
        Burst_Length_Bytes   = item.len;
        Data_Bus_Bytes    = 4; // @Todo: parameter? fetch from cfg_db?
        Mode              = item.burst_type;
        Aligned_Address   = (int'(addr/Number_Bytes) * Number_Bytes);
        aligned           = (Aligned_Address == addr);
-       dtsize            = Number_Bytes * Burst_Length_Bytes;
+       dtsize            = Number_Bytes * 16; // 16 beats/AXI3 burst urst_Length_Bytes;
        validcntr         = 0;
+       validcntr_max     = item.valid.size()-1; // don't go past end
        if (item.burst_type == axi_pkg::e_WRAP) begin
           Lower_Wrap_Boundary = (int'(addr/dtsize) * dtsize);
           Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
@@ -369,24 +386,35 @@ task axi_driver::driver_write_data;
 
     // Update values
     if (item != null) begin
-       if ((Burst_Length_Bytes - n) < Number_Bytes) begin
-          iNumber_Bytes = Burst_Length_Bytes - n;
-       end else begin
+//       if ((Burst_Length_Bytes - n) < Number_Bytes) begin
+//          iNumber_Bytes = Burst_Length_Bytes - n;
+//       end else begin
           iNumber_Bytes = Number_Bytes;
-       end
+//       end
+
+      Aligned_Address   = (int'(addr/iNumber_Bytes) * iNumber_Bytes);
+
+       Lower_Byte_Lane   = addr - (int'(addr/Data_Bus_Bytes)) * Data_Bus_Bytes;
+       // Adjust Lower_Byte_lane up if unaligned.
+ //      Lower_Byte_Lane  += (addr - Aligned_Address);
        if (aligned) begin
-          Lower_Byte_Lane = 0;
           Upper_Byte_Lane = Lower_Byte_Lane + iNumber_Bytes - 1;
        end else begin
-          Lower_Byte_Lane = addr - Aligned_Address;
-          Upper_Byte_Lane = Aligned_Address + iNumber_Bytes - 1;
+         Upper_Byte_Lane = Aligned_Address + iNumber_Bytes - 1
+                           - (int'(addr/Data_Bus_Bytes)) * Data_Bus_Bytes;
+       end
+
+      `uvm_info("INFO", $sformatf("Lower_Byte_Lane: %0d  Upper_Byte_lane: %0d    addr:0x%0x, aligned-addr: 0x%0x  Data_Bus_Bytes:%0d  Number_Bytes: %0d  aligned: %b",  Lower_Byte_Lane, Upper_Byte_Lane, addr, Aligned_Address, Data_Bus_Bytes, iNumber_Bytes, aligned), UVM_INFO)
+
+       if (validcntr >=  validcntr_max) begin
+         validcntr=0;
        end
        s.wvalid = item.valid[validcntr++]; // 1'b1;
        s.wstrb  = 'h0;
        s.wdata  = 'h0;
        s.wlast  = 1'b0;
        dataoffset=n;
-       for (int j=Lower_Byte_Lane;j<=Upper_Byte_Lane;j++) begin
+      for (int j=Lower_Byte_Lane;j<=Upper_Byte_Lane;j++) begin
           s.wdata[j*8+:8] = item.data[dataoffset++];
           s.wstrb[j]      = 1'b1;
           if (dataoffset>=Burst_Length_Bytes) begin
@@ -397,6 +425,8 @@ task axi_driver::driver_write_data;
 
        // Write out
        vif.write_w(.s(s),.waitforwready(0));
+
+
     end // (item != null)
 
     // No item for next clock, so close out bus
