@@ -56,6 +56,7 @@ class axi_if_abstract extends uvm_object;
     extern virtual task set_bready_toggle_mask(bit [31:0] mask);
     extern virtual task clr_bready_toggle_mask();
     extern virtual task wait_for_not_in_reset;
+
     extern virtual task wait_for_wready();
     extern virtual task wait_for_bvalid();
 
@@ -72,10 +73,11 @@ class axi_if_abstract extends uvm_object;
     extern virtual function bit get_awready;
 
 
-      extern virtual function bit get_wready_wvalid;
+    extern virtual function bit get_wready_wvalid;
     extern virtual function bit get_wready;
     extern virtual function bit get_wvalid;
 
+    extern virtual function bit get_bready_bvalid;
     extern virtual function bit get_bvalid;
     extern virtual function bit get_bready;
 
@@ -249,6 +251,11 @@ function bit axi_if_abstract::get_wvalid();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_wvalid() not defined.")
 endfunction : get_wvalid
+
+function bit axi_if_abstract::get_bready_bvalid();
+   `uvm_error(this.get_type_name(),
+              "WARNING. Virtual function get_bready_bvalid() not defined.")
+endfunction : get_bready_bvalid
 
 
 function bit axi_if_abstract::get_bready();

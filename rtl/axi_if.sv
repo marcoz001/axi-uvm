@@ -321,11 +321,11 @@ endtask : write_w
 
 task write_b(axi_seq_item_b_vector_s s, bit valid=1'b1);
   //$display("%t write_b(bid=%d, bresp=%d",$time, s.bid, s.bresp);
-  wait_for_clks(.cnt(1));
+  //wait_for_clks(.cnt(1));
   ibvalid <= valid;
   ibid    <= s.bid;
   ibresp  <= s.bresp;
-
+/*
    // only wait for bready if we're asserting bvalid.
   if (valid == 1'b1) begin
      while (bready != 1'b1) begin
@@ -333,7 +333,7 @@ task write_b(axi_seq_item_b_vector_s s, bit valid=1'b1);
            wait_for_clks(.cnt(1));
      end
   end
-
+  */
   //$display("%t write_b: done", $time);
 
 endtask : write_b
@@ -536,6 +536,12 @@ endfunction : get_wready
 function bit get_wvalid;
   return wvalid;
 endfunction : get_wvalid
+
+
+function bit get_bready_bvalid;
+  return bready & bvalid;
+endfunction : get_bready_bvalid;
+
 
 function bit get_bready;
   return bready;

@@ -72,10 +72,18 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   int min_clks_between_aw_transfers=0;
   int max_clks_between_aw_transfers=0;
 
-   // If multiple write transfers are queued,
-   // this allows easily testing back to back or pausing between write address transfers.
   int min_clks_between_w_transfers=0;
   int max_clks_between_w_transfers=0;
+
+  int min_clks_between_b_transfers=0;
+  int max_clks_between_b_transfers=0;
+
+  // AXI spec, A3.2.2,  states once valid is asserted,it must stay asserted until
+    // ready asserts.  These varibles let us toggle valid to beat on the ready/valid
+    // logic
+    bit axi_incompatible_awready_toggling_mode=0;
+    bit axi_incompatible_wready_toggling_mode=1;
+    bit axi_incompatible_bready_toggling_mode=0;
 
 
 
@@ -185,10 +193,6 @@ task axi_driver::driver_write_address;
   axi_seq_item item=null;
   axi_seq_item_aw_vector_s v;
 
-//  int validcntr=0;
-//  int validcntr_max;
-//  bit ivalid;
-
    bit [63:0] aligned_addr;
 
   int minval;
@@ -233,8 +237,6 @@ task axi_driver::driver_write_address;
 
           v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
                                                     .number_bytes(4));
-  //        validcntr=0;
-  //        validcntr_max=item.valid.size()-1; // don't go past end
           item_needs_init=0;
        end
 
@@ -279,26 +281,11 @@ task axi_driver::driver_write_data;
   axi_seq_item item=null;
   axi_seq_item_w_vector_s s;
 
-  bit [63:0] Start_Address;
-  bit [63:0] Aligned_Address;
-  bit        aligned;
-  int        Number_Bytes;
-  int        iNumber_Bytes;
-  int        Burst_Length_Bytes;
-  int        Data_Bus_Bytes;
+  bit iaxi_incompatible_wready_toggling_mode;
 
-  bit [63:0] Lower_Wrap_Boundary;
-  bit [63:0] Upper_Wrap_Boundary;
-  int        Lower_Byte_Lane;
-  int        Upper_Byte_Lane;
-  bit  [1:0] Mode;
-  bit [63:0] addr;
-  int        dtsize;
+
   int n=0;
-  int validcntr;
-  int validcntr_max;
-  int dataoffset=0;
-  int item_needs_init;
+
 
   int minval;
   int maxval;
@@ -308,8 +295,12 @@ task axi_driver::driver_write_data;
 
     if (item == null) begin
        driver_writedata_mbx.get(item);
-       item_needs_init=1;
+      item.initialized=0; // guarantee this is cleared
     end
+
+    // Look at this only one per loop, so there's no race condition of it
+    // changing mid-loop.
+    iaxi_incompatible_wready_toggling_mode = axi_incompatible_wready_toggling_mode;
 
     vif.wait_for_clks(.cnt(1));
 
@@ -321,29 +312,17 @@ task axi_driver::driver_write_data;
 
     // Check if done with this transfer
     if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
-       n =  dataoffset;
-       //aligned = 1;
+       n =  item.dataoffset;
+      if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
+         item.validcntr++;
+      end
 
-       if (Mode != axi_pkg::e_FIXED) begin
-         if (aligned) begin
-          addr = Aligned_Address + Number_Bytes;
-          if (Mode == axi_pkg::e_WRAP) begin
-            // WRAP mode is always aligned
-            if (addr >= Upper_Wrap_Boundary) begin
-              addr = Lower_Wrap_Boundary;
-            end
-          end
-        end else begin // (if aligned)
-          addr    = Aligned_Address + Number_Bytes;
-          aligned = 1'b1;
-        end
-      end // (Mode)
+      item.update_address();
 
-       if (n>=Burst_Length_Bytes) begin
+      if (n>=item.Burst_Length_Bytes) begin
           driver_writeresponse_mbx.put(item);
           item = null;
           n=0;
-          dataoffset=0;
 
           minval=min_clks_between_w_transfers;
           maxval=max_clks_between_w_transfers;
@@ -355,69 +334,45 @@ task axi_driver::driver_write_data;
              driver_writedata_mbx.try_get(item);
 
              if (item != null) begin
-                item_needs_init=1;
+                item.initialized=0;
              end
           end
        end
     end  // (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1)
 
-    // Initialize values
-    if (item_needs_init == 1) begin
-       addr           = item.addr;
-       Start_Address  = item.addr;
-       Number_Bytes   = item.number_bytes; // Partial or Full transfers.
-       Burst_Length_Bytes   = item.len;
-       Data_Bus_Bytes    = 4; // @Todo: parameter? fetch from cfg_db?
-       Mode              = item.burst_type;
-       Aligned_Address   = (int'(addr/Number_Bytes) * Number_Bytes);
-       aligned           = (Aligned_Address == addr);
-       dtsize            = Number_Bytes * 16; // 16 beats/AXI3 burst urst_Length_Bytes;
-       validcntr         = 0;
-       validcntr_max     = item.valid.size()-1; // don't go past end
-       if (item.burst_type == axi_pkg::e_WRAP) begin
-          Lower_Wrap_Boundary = (int'(addr/dtsize) * dtsize);
-          Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
-       end else begin
-          Lower_Wrap_Boundary = 'h0;
-          Upper_Wrap_Boundary = -1;
-       end
-       item_needs_init=0;
-    end // (item_needs_init == 1)
+    if (item != null && item.initialized == 0) begin
+      item.initialize();
+    end // (initialized == 0)
 
     // Update values
     if (item != null) begin
-//       if ((Burst_Length_Bytes - n) < Number_Bytes) begin
-//          iNumber_Bytes = Burst_Length_Bytes - n;
-//       end else begin
-          iNumber_Bytes = Number_Bytes;
-//       end
+       item.update();
 
-      Aligned_Address   = (int'(addr/iNumber_Bytes) * iNumber_Bytes);
+      if (item.validcntr >=  item.validcntr_max) begin
+         item.validcntr=0;
+       end
 
-       Lower_Byte_Lane   = addr - (int'(addr/Data_Bus_Bytes)) * Data_Bus_Bytes;
-       // Adjust Lower_Byte_lane up if unaligned.
- //      Lower_Byte_Lane  += (addr - Aligned_Address);
-       if (aligned) begin
-          Upper_Byte_Lane = Lower_Byte_Lane + iNumber_Bytes - 1;
+       //
+       // if invalid-toggling-mode is enabled, then allow deasserting valid
+       // before ready asserts.
+       // Default is to stay asserted, and only allow deasssertion after ready asserts.
+       if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
+          if (vif.get_wvalid() == 1'b0) begin
+             item.validcntr++;
+          end
        end else begin
-         Upper_Byte_Lane = Aligned_Address + iNumber_Bytes - 1
-                           - (int'(addr/Data_Bus_Bytes)) * Data_Bus_Bytes;
+             item.validcntr++;
        end
 
-      `uvm_info("INFO", $sformatf("Lower_Byte_Lane: %0d  Upper_Byte_lane: %0d    addr:0x%0x, aligned-addr: 0x%0x  Data_Bus_Bytes:%0d  Number_Bytes: %0d  aligned: %b",  Lower_Byte_Lane, Upper_Byte_Lane, addr, Aligned_Address, Data_Bus_Bytes, iNumber_Bytes, aligned), UVM_INFO)
-
-       if (validcntr >=  validcntr_max) begin
-         validcntr=0;
-       end
-       s.wvalid = item.valid[validcntr++]; // 1'b1;
+       s.wvalid = item.valid[item.validcntr]; // 1'b1;
        s.wstrb  = 'h0;
        s.wdata  = 'h0;
        s.wlast  = 1'b0;
-       dataoffset=n;
-      for (int j=Lower_Byte_Lane;j<=Upper_Byte_Lane;j++) begin
-          s.wdata[j*8+:8] = item.data[dataoffset++];
+       item.dataoffset=n;
+      for (int j=item.Lower_Byte_Lane;j<=item.Upper_Byte_Lane;j++) begin
+        s.wdata[j*8+:8] = item.data[item.dataoffset++];
           s.wstrb[j]      = 1'b1;
-          if (dataoffset>=Burst_Length_Bytes) begin
+        if (item.dataoffset>=item.Burst_Length_Bytes) begin
              s.wlast=1'b1;
              break;
           end
@@ -544,6 +499,78 @@ task axi_driver::responder_write_data;
   end
 endtask : responder_write_data
 
+
+task axi_driver::responder_write_response;
+  axi_seq_item item=null;
+  axi_seq_item_b_vector_s s;
+
+
+   bit [63:0] aligned_addr;
+
+  int minval;
+  int maxval;
+  int wait_clks_before_next_b;
+
+  int item_needs_init=1;
+
+  forever begin
+
+    if (item == null) begin
+       responder_writeresponse_mbx.get(item);
+       item_needs_init=1;
+    end
+
+    vif.wait_for_clks(.cnt(1));
+
+      // if done with this xfer (write address is only one clock, done with valid & ready
+      if (vif.get_bready_bvalid == 1'b1) begin
+      //    driver_writedata_mbx.put(item);
+          item=null;
+
+          minval=min_clks_between_b_transfers;
+          maxval=max_clks_between_b_transfers;
+          wait_clks_before_next_b=$urandom_range(maxval,minval);
+
+          // Check if delay wanted
+        if (wait_clks_before_next_b==0) begin
+             // if not, check if there's another item
+             driver_writeresponse_mbx.try_get(item);
+             if (item!=null) begin
+                item_needs_init=1;
+             end
+          end
+       end
+
+       // Initialize values
+       if (item_needs_init==1) begin
+          item_needs_init=0;
+       end
+
+        // Update values <- No need in write address (only one clk per)
+
+       // Write out
+       if (item != null) begin
+          s.bid   = 'h3;
+          s.bresp = 'h1;
+          vif.write_b(.s(s), .valid(1'b1));
+         if (wait_clks_before_next_b > 0) begin
+            vif.wait_for_clks(.cnt(wait_clks_before_next_b-1)); // -1 because another wait
+                                                                // at beginning of loop
+          end
+       end   // if (item != null)
+
+    // No item for next clock, so close out bus
+    if (item == null) begin
+          s.bid   = 'h0;
+          s.bresp = 'h0;
+      vif.write_b(.s(s), .valid(1'b0));
+          vif.wait_for_clks(.cnt(1));
+    end
+
+    end // forever
+
+    endtask : responder_write_response
+    /*
 task axi_driver::responder_write_response;
 
   axi_seq_item item;
@@ -569,3 +596,4 @@ task axi_driver::responder_write_response;
   end  //forever
 
 endtask : responder_write_response
+*/

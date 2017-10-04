@@ -39,7 +39,7 @@ typedef enum int {e_WRITE=0,
                   e_READ=1,
                   e_SETAWREADYTOGGLEPATTERN=2,
                   e_SET_MIN_CLKS_BETWEEN_AW_TRANSFERS=3, // Minimum pause between aw xfers
-                  e_SET_MAX_CLKS_BETWEEN_AW_TRANSFERS=4  // maximum pause between aw xfers
+                  e_SET_MAX_CLKS_BETWEEN_W_TRANSFERS=4  // maximum pause between aw xfers
 
                  /*
                  e_WRITEADDRESS,

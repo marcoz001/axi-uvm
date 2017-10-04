@@ -61,7 +61,7 @@ task axi_seq::body;
 
   use_response_handler(1); // Enable Response Handler
 
-  xfers_to_send=1;
+  xfers_to_send=3;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());

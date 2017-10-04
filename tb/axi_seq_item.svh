@@ -61,6 +61,41 @@ class axi_seq_item extends uvm_sequence_item;
 
 
   rand int number_bytes;
+
+  // These variables below are used by anything operating on the
+  // bus itself that needs to calculate addresses and wstrbs
+  // IE: drivers and monitors
+  // Putting this logic here guarantees the logic is with the data
+  // The downside is it enlarges the sequence item. ;(
+  // Could/Should(?) put it in axi_pkg or axi_uvm_pkg?
+  // if in axi_pkg the logic could be  synthesizable functions
+  // and then a non-UVM BFM could easily be created
+
+  bit [63:0] Start_Address;
+  bit [63:0] Aligned_Address;
+  bit        aligned;
+  int        Number_Bytes;
+  int        iNumber_Bytes;
+  int        Burst_Length_Bytes;
+  int        Data_Bus_Bytes;
+
+  bit [63:0] Lower_Wrap_Boundary;
+  bit [63:0] Upper_Wrap_Boundary;
+  int        Lower_Byte_Lane;
+  int        Upper_Byte_Lane;
+  bit  [1:0] Mode;
+ // bit [63:0] addr;
+  int        dtsize;
+  int n=0;
+  int validcntr;
+  int validcntr_max;
+  int dataoffset=0;
+  int initialized=0;
+
+
+
+
+
 /*
   constraint easier_testing {len >= 'h10;
                              len < 60;
@@ -107,6 +142,11 @@ class axi_seq_item extends uvm_sequence_item;
       ref   bit        new_wstrb [],
       ref   bit [7:0]  new_data [],
       output int       new_beat_cnt);
+
+      extern function void update_address();
+        extern function void initialize();
+          extern function void update();  // update_address vs update ?
+
 
     extern static function void   aw_from_class(
       ref    axi_seq_item             t,
@@ -275,12 +315,12 @@ function void axi_seq_item::post_randomize;
 
   j=valid.size();
   for (int i=0;i<j;i++) begin
-    valid[i] = 1'b1; // $random;
+    valid[i] = $random;
   end
 
-//  valid[0] = 1'b1;
-//  valid[1] = 1'b1;
-//  valid[2] = 1'b0;
+  valid[0] = 1'b1;
+  valid[1] = 1'b1;
+  valid[2] = 1'b0;
 
 
   data[len-1] = 'hFE; // specific value to eaily identify last byte
@@ -289,6 +329,66 @@ function void axi_seq_item::post_randomize;
   //  `uvm_error(this.get_type_name, "Unable to randomize valid");
   //end
 endfunction : post_randomize
+
+
+
+function void axi_seq_item::update_address;
+  if (Mode != axi_pkg::e_FIXED) begin
+     if (aligned) begin
+        addr = Aligned_Address + Number_Bytes;
+        if (Mode == axi_pkg::e_WRAP) begin
+           // WRAP mode is always aligned
+           if (addr >= Upper_Wrap_Boundary) begin
+              addr = Lower_Wrap_Boundary;
+           end
+        end
+     end else begin // (if aligned)
+          addr    = Aligned_Address + Number_Bytes;
+          aligned = 1'b1;
+     end // (if aligned)
+  end // (Mode)
+endfunction : update_address
+
+function void axi_seq_item::initialize;
+//    addr           = item.addr;
+    Start_Address     = addr;
+    Number_Bytes      = number_bytes; // Partial or Full transfers.
+    Burst_Length_Bytes = len;
+    Data_Bus_Bytes    = 4; // @Todo: parameter? fetch from cfg_db?
+    Mode              = burst_type;
+    Aligned_Address   = (int'(addr/Number_Bytes) * Number_Bytes);
+    aligned           = (Aligned_Address == addr);
+    dtsize            = Number_Bytes * 16; // 16 beats/AXI3 burst urst_Length_Bytes;
+    validcntr         = 0;
+    validcntr_max     = valid.size()-1; // don't go past end
+    if (burst_type == axi_pkg::e_WRAP) begin
+       Lower_Wrap_Boundary = (int'(addr/dtsize) * dtsize);
+       Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
+    end else begin
+       Lower_Wrap_Boundary = 'h0;
+       Upper_Wrap_Boundary = -1;
+    end
+    initialized=1;
+endfunction : initialize
+
+function void axi_seq_item::update;
+    iNumber_Bytes = Number_Bytes;
+    Aligned_Address   = (int'(addr/iNumber_Bytes) * iNumber_Bytes);
+
+    Lower_Byte_Lane   = addr - (int'(addr/Data_Bus_Bytes)) * Data_Bus_Bytes;
+    // Adjust Lower_Byte_lane up if unaligned.
+    if (aligned) begin
+       Upper_Byte_Lane = Lower_Byte_Lane + iNumber_Bytes - 1;
+    end else begin
+       Upper_Byte_Lane = Aligned_Address + iNumber_Bytes - 1
+                         - (int'(addr/Data_Bus_Bytes)) * Data_Bus_Bytes;
+    end
+
+      `uvm_info("INFO", $sformatf("Lower_Byte_Lane: %0d  Upper_Byte_lane: %0d    addr:0x%0x, aligned-addr: 0x%0x  Data_Bus_Bytes:%0d  Number_Bytes: %0d  aligned: %b",  Lower_Byte_Lane, Upper_Byte_Lane, addr, Aligned_Address, Data_Bus_Bytes, iNumber_Bytes, aligned), UVM_INFO)
+
+
+endfunction : update
+
 
 function bit [63:0] axi_seq_item::calculate_aligned_address(
   input bit [63:0] addr,
