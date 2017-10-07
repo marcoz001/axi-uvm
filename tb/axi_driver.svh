@@ -232,7 +232,7 @@ task axi_driver::driver_write_address;
        if (item_needs_init==1) begin
           axi_seq_item::aw_from_class(.t(item), .v(v));
           v.awlen  = item.calculate_beats(.addr(item.addr),
-                                          .number_bytes(item.number_bytes),
+                                          .number_bytes(2**item.burst_size), //item.number_bytes
                                           .burst_length(item.len));
 
           v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
@@ -295,7 +295,7 @@ task axi_driver::driver_write_data;
 
     if (item == null) begin
        driver_writedata_mbx.get(item);
-      item.initialized=0; // guarantee this is cleared
+      item.initialize();
     end
 
     // Look at this only one per loop, so there's no race condition of it
@@ -312,17 +312,16 @@ task axi_driver::driver_write_data;
 
     // Check if done with this transfer
     if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
-       n =  item.dataoffset;
+      item.dataoffset = n;
       if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
          item.validcntr++;
       end
 
       item.update_address();
 
-      if (n>=item.Burst_Length_Bytes) begin
+      if (item.dataoffset>=item.Burst_Length_Bytes) begin //F
           driver_writeresponse_mbx.put(item);
           item = null;
-          n=0;
 
           minval=min_clks_between_w_transfers;
           maxval=max_clks_between_w_transfers;
@@ -334,19 +333,15 @@ task axi_driver::driver_write_data;
              driver_writedata_mbx.try_get(item);
 
              if (item != null) begin
-                item.initialized=0;
+               item.initialize();
              end
           end
        end
     end  // (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1)
 
-    if (item != null && item.initialized == 0) begin
-      item.initialize();
-    end // (initialized == 0)
 
     // Update values
     if (item != null) begin
-       item.update();
 
       if (item.validcntr >=  item.validcntr_max) begin
          item.validcntr=0;
@@ -368,11 +363,11 @@ task axi_driver::driver_write_data;
        s.wstrb  = 'h0;
        s.wdata  = 'h0;
        s.wlast  = 1'b0;
-       item.dataoffset=n;
+       n=item.dataoffset;
       for (int j=item.Lower_Byte_Lane;j<=item.Upper_Byte_Lane;j++) begin
-        s.wdata[j*8+:8] = item.data[item.dataoffset++];
+        s.wdata[j*8+:8] = item.data[n++];
           s.wstrb[j]      = 1'b1;
-        if (item.dataoffset>=item.Burst_Length_Bytes) begin
+        if (n>=item.Burst_Length_Bytes) begin
              s.wlast=1'b1;
              break;
           end

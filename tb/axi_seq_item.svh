@@ -60,7 +60,7 @@ class axi_seq_item extends uvm_sequence_item;
   rand   logic [31:0] toggle_pattern = 32'hFFFF_FFFF;
 
 
-  rand int number_bytes;
+ // rand int number_bytes;
 
   // These variables below are used by anything operating on the
   // bus itself that needs to calculate addresses and wstrbs
@@ -101,7 +101,8 @@ class axi_seq_item extends uvm_sequence_item;
                              len < 60;
                              (len % 4) == 0;}
  */
-  constraint number_bytes_c {number_bytes == 4;}
+  //constraint number_bytes_c {number_bytes == 2;}
+  //constraint burst_size_c {burst_size == axi_pkg::e_2BYTES;}
 
 
     constraint max_len {len > 0;
@@ -199,6 +200,24 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s BurstType = 0x%0x ",   s, burst_type);
     $sformat(s, "%s BID = 0x%0x",   s, bid);
     $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
+
+
+
+  $sformat(s, "%s Start_Address = 0x%0x ", s, Start_Address);
+  $sformat(s, "%s Aligned_Address = 0x%0x ", s, Aligned_Address);
+  $sformat(s, "%s aligned = %0d ", s, aligned);
+  $sformat(s, "%s Number_Bytes = %0d ", s, Number_Bytes);
+  $sformat(s, "%s iNumber_Bytes = %0d ", s, iNumber_Bytes);
+  $sformat(s, "%s Burst_Length_Bytes = %0d ", s, Burst_Length_Bytes);
+  $sformat(s, "%s Data_Bus_Bytes = %0d ", s, Data_Bus_Bytes);
+
+  $sformat(s, "%s Lower_Wrap_Boundary = 0x%0x ", s, Lower_Wrap_Boundary);
+  $sformat(s, "%s Upper_Wrap_Boundary = 0x%0x ", s, Upper_Wrap_Boundary);
+  $sformat(s, "%s Lower_Byte_Lane = %0d ", s, Lower_Byte_Lane);
+  $sformat(s, "%s Upper_Byte_Lane = %0d ", s, Upper_Byte_Lane);
+  $sformat(s, "%s Mode = %0d ", s, Mode);
+ // bit [63:0] addr;
+  $sformat(s, "%s dtsize = %0d ", s, dtsize);
 
 /*
 assert (len == data.size()) else begin
@@ -347,12 +366,14 @@ function void axi_seq_item::update_address;
           aligned = 1'b1;
      end // (if aligned)
   end // (Mode)
+
+  update();
 endfunction : update_address
 
 function void axi_seq_item::initialize;
 //    addr           = item.addr;
     Start_Address     = addr;
-    Number_Bytes      = number_bytes; // Partial or Full transfers.
+    Number_Bytes      = 2**int'(burst_size); // number_bytes; // Partial or Full transfers.
     Burst_Length_Bytes = len;
     Data_Bus_Bytes    = 4; // @Todo: parameter? fetch from cfg_db?
     Mode              = burst_type;
@@ -369,6 +390,9 @@ function void axi_seq_item::initialize;
        Upper_Wrap_Boundary = -1;
     end
     initialized=1;
+    dataoffset=0;
+
+  update();
 endfunction : initialize
 
 function void axi_seq_item::update;

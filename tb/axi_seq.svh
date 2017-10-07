@@ -41,7 +41,7 @@ endclass : axi_seq
 // This response_handler function is enabled to keep the sequence response FIFO empty
 function void axi_seq::response_handler(uvm_sequence_item response);
    xfers_done++;
-   `uvm_info(this.get_type_name(), $sformatf("SEQ_response_handler xfers_done=%d.   Item: %s",xfers_done, response.convert2string()), UVM_INFO)
+  `uvm_info(this.get_type_name(), $sformatf("SEQ_response_handler xfers_done=%0d.   Item: %s",xfers_done, response.convert2string()), UVM_INFO)
 
 endfunction: response_handler
 
@@ -61,13 +61,13 @@ task axi_seq::body;
 
   use_response_handler(1); // Enable Response Handler
 
-  xfers_to_send=3;
+  xfers_to_send=2;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());
      start_item(item);
      assert( item.randomize() with {cmd        == e_WRITE;
-                                    burst_size == e_4BYTES;
+                                    burst_size == e_2BYTES;
                                     burst_type == e_INCR;
                                     addr       ==  'h1;
                                     len        ==  'h10;

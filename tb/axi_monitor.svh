@@ -41,8 +41,10 @@ class axi_monitor extends uvm_monitor;
 
   // will move this out of monitor but for now it's quick and easy experimentation
   axi_seq_item_w_vector_s  w_q[$];
-  axi_seq_item_aw_vector_s aw_q[$];
-  axi_seq_item_b_vector_s  b_q[$];
+  //axi_seq_item_aw_vector_s aw_q[$];
+  //axi_seq_item_b_vector_s  b_q[$];
+  axi_seq_item   aw_q[$];
+
 
   // used to kick off slave seq
   axi_if_abstract     vif;
@@ -118,7 +120,8 @@ task axi_monitor::monitor_write_address();
 
   forever begin
     vif.wait_for_write_address(.s(aw_s));
-    aw_q.push_back(aw_s);
+//    aw_q.push_back(aw_s);
+
     `uvm_info(this.get_type_name(), "got addr", UVM_INFO)
 
 //     if (m_config.drv_type == axi_uvm_pkg::e_RESPONDER) begin
@@ -128,14 +131,17 @@ task axi_monitor::monitor_write_address();
     $cast(item, original_item.clone());
 
     axi_seq_item::aw_to_class(.t(item), .v(aw_s));
-    item.cmd = axi_uvm_pkg::e_WRITE;
+    item.cmd         = axi_uvm_pkg::e_WRITE;
+    item.initialize();
     $cast(item2, item);
 
-     ap.write(item);
+    aw_q.push_back(item2);
 
-     if (m_config.drv_type == e_RESPONDER) begin
-       driver_activity_ap.write(item2);
-     end
+    ap.write(item);
+
+    if (m_config.drv_type == e_RESPONDER) begin
+       driver_activity_ap.write(item);
+    end
 
   end
 endtask : monitor_write_address
@@ -153,28 +159,73 @@ task axi_monitor::monitor_write_data();
   bit [63:0] addr;
 
   forever begin
+                `uvm_info(this.get_type_name(),
+                          "========> wait_for_write_data()",
+                  UVM_INFO)
+
     vif.wait_for_write_data(.s(w_s));
+
+                `uvm_info(this.get_type_name(),
+                          "========> wait_for_write_data() - DONE",
+                  UVM_INFO)
     if (m_config.drv_type == axi_uvm_pkg::e_RESPONDER) begin
 
-      if (aw_q.size() == 0) begin
-         w_q.push_back(w_s);
-      end else begin // if (aw_q.size() == 0)
-        addr=aw_q[0].awaddr;
-        maxoffset=aw_q[0].awlen; //
+      // if no address received, then store data until address arrives.
+      // AXI spec says data can arrive before data, but order must match
+                     `uvm_info(this.get_type_name(),
+                               $sformatf("aw_q.size()=%0d",aw_q.size()),
+                  UVM_INFO)
+      w_q.push_back(w_s);
+
+      if (aw_q.size() != 0) begin
+
+        // if the address is available, then take everything out of the
+        // data queue and put it in the item.
+        // awsize is needed in case this is a partial burst (awsize != databussize)
+        //
+        addr=aw_q[0].addr;
+        offset=0;
+        maxoffset=aw_q[0].len;
+
+         `uvm_info(this.get_type_name(),
+                   $sformatf("aw_q[0]: %s",aw_q[0].convert2string()),
+                  UVM_INFO)
 
          // if anything in data queue, write it out
+         `uvm_info(this.get_type_name(),
+                   $sformatf("w_q.size()=%0d",w_q.size()),
+                  UVM_INFO)
          while (w_q.size() > 0) begin
-            data=w_q.pop_front();
-            for (int i=0;i<4;i++) begin
-               m_memory.write(aw_q[0].awaddr+offset, data[i*8+:8]);
-               offset++;
-            end
-         end
+            `uvm_info(this.get_type_name(),
+                  "========> popping w_s off w_q queue",
+                  UVM_INFO)
+         `uvm_info(this.get_type_name(),
+                   $sformatf("aw_q[0]: %s",aw_q[0].convert2string()),
+                  UVM_INFO)
 
+           w_s=w_q.pop_front();
+            `uvm_info(this.get_type_name(),
+                      $sformatf("Lower_Byte_Lane=%0d, Upper_Byte_Lane=%0d, offset=%0d", aw_q[0].Lower_Byte_Lane, aw_q[0].Upper_Byte_Lane, offset),
+                  UVM_INFO)
+           for (int i=aw_q[0].Lower_Byte_Lane;i<=aw_q[0].Upper_Byte_Lane;i++) begin
+               // wstrb may not be asserted. check
+               if (w_s.wstrb[i]==1'b1) begin
+                  m_memory.write(aw_q[0].addr+offset, w_s.wdata[i*8+:8]);
+               end
+               offset++;
+
+            end
+            aw_q[0].update_address();
+           if (w_s.wlast == 1'b1) begin // @Todo: count, dont rely on wlast
+             aw_q.pop_front();
+           end
+
+         end
+        /*
          // then write new data to memory
-         data=w_s.wdata;
+         data=w_s.data;
          for (int i=0;i<4;i++) begin
-            m_memory.write(aw_q[0].awaddr+offset, data[i*8+:8]);
+            m_memory.write(aw_q[0].addr+offset, data[i*8+:8]);
             offset++;
          end
         `uvm_info(this.get_type_name(),
@@ -186,7 +237,7 @@ task axi_monitor::monitor_write_data();
 
           `uvm_info(this.get_type_name(), "End of pkt. Resetting...", UVM_INFO)
          end
-
+      */
       end
     `uvm_info(this.get_type_name(), "got data", UVM_INFO)
     end //if drv_type
@@ -198,7 +249,7 @@ task axi_monitor::monitor_write_response();
 
   forever begin
     vif.wait_for_write_response(.s(b_s));
-    b_q.push_front(b_s);
+ //   b_q.push_front(b_s);
     `uvm_info(this.get_type_name(), "got response", UVM_INFO)
 
   end
