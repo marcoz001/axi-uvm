@@ -408,7 +408,7 @@ function void axi_seq_item::update;
                          - (int'(addr/Data_Bus_Bytes)) * Data_Bus_Bytes;
     end
 
-      `uvm_info("INFO", $sformatf("Lower_Byte_Lane: %0d  Upper_Byte_lane: %0d    addr:0x%0x, aligned-addr: 0x%0x  Data_Bus_Bytes:%0d  Number_Bytes: %0d  aligned: %b",  Lower_Byte_Lane, Upper_Byte_Lane, addr, Aligned_Address, Data_Bus_Bytes, iNumber_Bytes, aligned), UVM_INFO)
+    //  `uvm_info("INFO", $sformatf("Lower_Byte_Lane: %0d  Upper_Byte_lane: %0d    addr:0x%0x, aligned-addr: 0x%0x  Data_Bus_Bytes:%0d  Number_Bytes: %0d  aligned: %b",  Lower_Byte_Lane, Upper_Byte_Lane, addr, Aligned_Address, Data_Bus_Bytes, iNumber_Bytes, aligned), UVM_INFO)
 
 
 endfunction : update

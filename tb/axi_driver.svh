@@ -82,7 +82,7 @@ class axi_driver extends uvm_driver #(axi_seq_item);
     // ready asserts.  These varibles let us toggle valid to beat on the ready/valid
     // logic
     bit axi_incompatible_awready_toggling_mode=0;
-    bit axi_incompatible_wready_toggling_mode=1;
+    bit axi_incompatible_wready_toggling_mode=0;
     bit axi_incompatible_bready_toggling_mode=0;
 
 
@@ -157,7 +157,7 @@ task axi_driver::responder_run_phase;
   join_none
 
 
-  `uvm_info(this.get_type_name(), "HEY< YOU< responder_run_phase", UVM_INFO)
+//  `uvm_info(this.get_type_name(), "HEY< YOU< responder_run_phase", UVM_INFO)
   //vif.s_awready_toggle_mask(m_config.awready_toggle_mask);
   vif.set_wready_toggle_mask(m_config.wready_toggle_mask);
 
@@ -166,7 +166,7 @@ task axi_driver::responder_run_phase;
 
     item = axi_seq_item::type_id::create("item", this);
     seq_item_port.get(item);
-    `uvm_info(this.get_type_name(), $sformatf("DRVa: %s", item.convert2string()), UVM_INFO)
+  //  `uvm_info(this.get_type_name(), $sformatf("DRVa: %s", item.convert2string()), UVM_INFO)
 
     if (item.cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN) begin
       `uvm_info(this.get_type_name(), $sformatf("Setting awready toggle patter: 0x%0x", item.toggle_pattern), UVM_INFO)
@@ -407,7 +407,7 @@ task axi_driver::driver_write_response;
 
   forever begin
     driver_writeresponse_mbx.get(item);
-    `uvm_info(this.get_type_name(), "HEY, driver_write_response!!!!", UVM_INFO)
+ //   `uvm_info(this.get_type_name(), "HEY, driver_write_response!!!!", UVM_INFO)
   //  vif.wait_for_bvalid();
     vif.read_b(.s(s));
     item.bid   = s.bid;
@@ -415,7 +415,7 @@ task axi_driver::driver_write_response;
  //   `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put()", UVM_INFO)
     seq_item_port.put(item);
   //  `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put() - done", UVM_INFO)
-    `uvm_info(this.get_type_name(), $sformatf("driver_write_response: %s", item.convert2string()), UVM_INFO)
+  //  `uvm_info(this.get_type_name(), $sformatf("driver_write_response: %s", item.convert2string()), UVM_INFO)
 
   end
 endtask : driver_write_response
@@ -430,7 +430,7 @@ task axi_driver::responder_write_address;
 
   forever begin
     responder_writeaddress_mbx.get(item);
-    `uvm_info(this.get_type_name(), "axi_driver::responder_write_address Getting address", UVM_INFO)
+ //   `uvm_info(this.get_type_name(), "axi_driver::responder_write_address Getting address", UVM_INFO)
     vif.read_aw(.s(s));
     axi_seq_item::aw_to_class(.t(item), .v(s));
 
@@ -455,10 +455,10 @@ task axi_driver::responder_write_data;
 
   forever begin
      responder_writedata_mbx.get(item);
-    `uvm_info(this.get_type_name(),
-              $sformatf("axi_driver::responder_write_data - Waiting for data for %s",
-                        item.convert2string()),
-              UVM_INFO)
+ //   `uvm_info(this.get_type_name(),
+ //             $sformatf("axi_driver::responder_write_data - Waiting for data for %s",
+ //                       item.convert2string()),
+ //             UVM_INFO)
 
       i=0;
       while (i<item.len/4) begin
@@ -479,17 +479,17 @@ task axi_driver::responder_write_data;
             .v(s));
 
            i++;
-        `uvm_info(this.get_type_name(),
-                  $sformatf("axi_driver::responder_write_data GOT %d for data for %s", i,
-                        item.convert2string()),
-              UVM_INFO)
+    //    `uvm_info(this.get_type_name(),
+    //              $sformatf("axi_driver::responder_write_data GOT %d for data for %s", i,
+   //                     item.convert2string()),
+    //          UVM_INFO)
       end
 
     end
-        `uvm_info(this.get_type_name(),
-                  $sformatf("axi_driver::responder_write_data responder_writeresponse_mbx.put - %s",
-                        item.convert2string()),
-              UVM_INFO)
+    //    `uvm_info(this.get_type_name(),
+     //            $sformatf("axi_driver::responder_write_data responder_writeresponse_mbx.put - %s",
+   //                     item.convert2string()),
+   //           UVM_INFO)
      responder_writeresponse_mbx.put(item);
   end
 endtask : responder_write_data

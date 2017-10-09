@@ -76,7 +76,7 @@ function void axi_agent::build_phase(uvm_phase phase);
   m_coveragecollector = axi_coveragecollector::type_id::create("m_coveragecollector", this);
 
   if (m_config.drv_type == axi_uvm_pkg::e_RESPONDER) begin
-     m_memory = memory::type_id::create("m_memory", this);
+   //  m_memory = memory::type_id::create("m_memory", this);
      m_monitor.m_memory = m_memory;
   end
 endfunction : build_phase

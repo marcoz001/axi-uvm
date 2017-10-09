@@ -51,7 +51,7 @@ task axi_responder_seq::body;
    item = axi_seq_item::type_id::create("item");
 
 
-  `uvm_info(this.get_type_name(), "YO~! starting responder_seq", UVM_INFO)
+  `uvm_info(this.get_type_name(), "YO~! starting responder_seq", UVM_HIGH)
 
     // set up toggle pattern in responder
        item.toggle_pattern = 32'h5A30_C123;
@@ -75,7 +75,7 @@ task axi_responder_seq::body;
        `uvm_info(this.get_type_name(),
                  $sformatf(" <-HEY0HEY0HEY0 -> %s",
                            drv_item.convert2string()),
-                 UVM_INFO)
+                 UVM_HIGH)
      end
 
 endtask : body

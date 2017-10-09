@@ -37,6 +37,8 @@ class axi_env extends uvm_env;
   axi_agent        m_axidriver_agent;
   axi_agent        m_axiresponder_agent;
 
+  memory           m_memory;
+
   extern function new (string name="axi_env", uvm_component parent=null);
 
   extern function void build_phase              (uvm_phase phase);
@@ -72,6 +74,9 @@ function void axi_env::build_phase (uvm_phase phase);
   m_axiresponder_agent.m_config.awready_toggle_mask = 32'hFFFF_FFFF;
 //  m_axiresponder_agent.m_config.wready_toggle_mask  = 32'hFfFF_FFFF;
 
+  m_memory = memory::type_id::create("m_memory", this);
+  uvm_config_db #(memory)::set(null, "*", "m_memory", m_memory);
+  m_axiresponder_agent.m_memory = m_memory;
 
   // m_wb_agent = wb_agent::type_id::create("m_wb_agent", this);
 endfunction : build_phase

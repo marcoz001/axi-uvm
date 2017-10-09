@@ -14,16 +14,18 @@ function memory::new(string name="memory", uvm_component parent=null);
 endfunction : new
 
 function void memory::write(input bit [63:0] addr, input bit [7:0] data);
-  `uvm_info(this.get_type_name(), $sformatf("mem(0x%0x)=0x%0x", addr, data), UVM_INFO)
+  `uvm_info(this.get_type_name(), $sformatf("mem(0x%0x)=0x%0x", addr, data), UVM_HIGH)
   mem[addr] = data;
 endfunction : write
 
 function bit [7:0] memory::read(input bit [63:0] addr);
-      `uvm_info(this.get_type_name(), $sformatf("read"), UVM_INFO)
 
-  if (mem.exists(addr))
+  if (mem.exists(addr))  begin
+    `uvm_info(this.get_type_name(), $sformatf("read mem(0x%0x)=0x%0x", addr, mem[addr]), UVM_HIGH)
+
     return mem[addr];
-  else
+  end else begin
+    `uvm_error(this.get_type_name(), $sformatf("read unwritten memory address"))
     return 'z;
-
+  end
 endfunction : read
