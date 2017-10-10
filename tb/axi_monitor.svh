@@ -133,7 +133,7 @@ task axi_monitor::monitor_write_address();
     axi_seq_item::aw_to_class(.t(item), .v(aw_s));
     item.cmd         = axi_uvm_pkg::e_WRITE;
    // item.initialize();
-    $cast(item2, item);
+    $cast(item2, item.clone());
 
     aw_q.push_back(item2);
 
