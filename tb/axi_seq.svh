@@ -71,7 +71,7 @@ task axi_seq::body;
 
 
 
-  xfers_to_send=300;
+  xfers_to_send=10;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());
@@ -89,7 +89,7 @@ task axi_seq::body;
      end  //assert
      finish_item(item);
     `uvm_info("DATA", $sformatf("Sending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", item.addr, item.len, item.len, item.burst_size), UVM_INFO)
-     #4us
+     #10us
 
     `uvm_info("...", "Now reading back from memory to verify", UVM_INFO)
     s=$sformatf("Addr[0x%0x/(len:%d)]=", item.Start_Address, item.len);

@@ -135,8 +135,8 @@ interface axi_if #(
   logic [31:0] awready_toggle_pattern;
   bit          awready_toggle_pattern_enable=0;
 
-  logic [31:0]  wready_toggle_mask;
-  bit           wready_toggle_mask_enable=0;
+  logic [31:0]  wready_toggle_pattern;
+  bit           wready_toggle_pattern_enable=0;
 
   logic [31:0]  bready_toggle_mask;
   bit           bready_toggle_mask_enable=0;
@@ -529,6 +529,19 @@ function enable_awready_toggle_pattern(bit [31:0] pattern);
     awready_toggle_pattern_enable=1;
 endfunction : enable_awready_toggle_pattern
 
+function disable_awready_toggle_pattern();
+     awready_toggle_pattern_enable = 0;
+endfunction : disable_awready_toggle_pattern
+
+function enable_wready_toggle_pattern(bit [31:0] pattern);
+    wready_toggle_pattern=pattern;
+    wready_toggle_pattern_enable=1;
+endfunction : enable_wready_toggle_pattern
+
+function disable_wready_toggle_pattern();
+     wready_toggle_pattern_enable = 0;
+endfunction : disable_wready_toggle_pattern
+
 function bit get_wready;
   return wready;
 endfunction : get_wready
@@ -556,6 +569,7 @@ task wait_for_bvalid;
   @(posedge bvalid);
 endtask : wait_for_bvalid
 
+  /*
 task disable_awready_toggle_pattern();
      awready_toggle_pattern_enable =0;
 endtask : disable_awready_toggle_pattern
@@ -569,7 +583,7 @@ endtask : set_wready_toggle_mask
 task clr_wready_toggle_mask();
      wready_toggle_mask_enable =0;
 endtask : clr_wready_toggle_mask
-
+*/
 task set_bready_toggle_mask(bit [31:0] mask);
     bready_toggle_mask=mask;
     bready_toggle_mask_enable=1;
@@ -599,44 +613,14 @@ initial begin
       end
    end
 end
-/*
-  reg wlast_q;
-  // temporary stub to handle bvalid after wlast
-initial begin
-   forever begin
-     @(posedge clk) begin
-       if (reset == 1'b1) begin
-          wlast_q <= 1'b0;
-         ibvalid <= 1'b0;
-         ibid <= 'h0;
-         ibresp <= 'h0;
 
-       end else begin
-         wlast_q <= wlast;
-         if ((wlast == 1'b0) && (wlast_q == 1'b1)) begin
-           ibvalid <= 1'b1;
-          ibid <= 'h3;
-          ibresp <= 'h2;
-
-         end  else if (bready == 1'b1) begin
-             ibvalid <= 1'b0;
-          ibid <= 'h0;
-          ibresp <= 'h0;
-
-         end
-
-       end
-     end
-   end
-end
-*/
 
 initial begin
    forever begin
      @(posedge clk) begin
-        if (wready_toggle_mask_enable == 1'b1) begin
-            wready_toggle_mask[31:0] <= {wready_toggle_mask[30:0], wready_toggle_mask[31]};
-            iwready                 <= wready_toggle_mask[31];
+       if (wready_toggle_pattern_enable == 1'b1) begin
+         wready_toggle_pattern[31:0] <= {wready_toggle_pattern[30:0], wready_toggle_pattern[31]};
+            iwready                 <= wready_toggle_pattern[31];
         end
       end
    end

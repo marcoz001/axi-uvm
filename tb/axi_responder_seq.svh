@@ -48,19 +48,31 @@ task axi_responder_seq::body;
      axi_seq_item drv_item;
      axi_seq_item item;
 
-   item = axi_seq_item::type_id::create("item");
 
 
   `uvm_info(this.get_type_name(), "YO~! starting responder_seq", UVM_HIGH)
 
     // set up toggle pattern in responder
-       item.toggle_pattern = 32'h5A30_C123;
-       item.toggle_pattern = 32'hFFFF_FFFF;
-       item.toggle_pattern = 32'hFFFF_FFFF;
-//       item.toggle_pattern = 32'h0000_0001;
-
-  item.cmd            = e_SETAWREADYTOGGLEPATTERN;
+       item = axi_seq_item::type_id::create("item");
        start_item(item);
+       assert( item.randomize() with {cmd == e_SETAWREADYTOGGLEPATTERN;
+                                  //  toggle_pattern = 32'hFFFF_FFFF;
+                                  //  toggle_pattern = 32'h0000_0001;
+                                     }) else begin
+          `uvm_fatal(this.get_type_name(),
+                     $sformatf("Unable to randomize %s", item.get_type_name()))
+       end
+       finish_item(item);
+
+       item = axi_seq_item::type_id::create("item");
+       start_item(item);
+       assert( item.randomize() with {cmd == e_SETWREADYTOGGLEPATTERN;
+                                  //  toggle_pattern = 32'hFFFF_FFFF;
+                                  //  toggle_pattern = 32'h0000_0001;
+                                     }) else begin
+          `uvm_fatal(this.get_type_name(),
+                     $sformatf("Unable to randomize %s", item.get_type_name()))
+       end
        finish_item(item);
 
 

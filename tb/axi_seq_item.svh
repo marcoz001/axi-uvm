@@ -93,6 +93,8 @@ class axi_seq_item extends uvm_sequence_item;
   int initialized=0;
 
 
+  const int c_AXI3_MAXBEATCNT=16;
+  const int c_AXI4_MAXBEATCNT=256;
 
 
 
@@ -106,7 +108,14 @@ class axi_seq_item extends uvm_sequence_item;
 
 
     constraint max_len {len > 0;
-                        len < 256*128;} // AXI4 is 256-beat burst by 128-byte wide
+                        if          (cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN)
+                           len == 1;
+                        else if (cmd == axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN)
+                           len == 1;
+                        else
+                           len < 256*128;
+
+                       } // AXI4 is 256-beat burst by 128-byte wide
     constraint valid_c { solve len before valid;
                          valid.size() == len*2; }
     constraint data_c {  solve len before data;
@@ -375,7 +384,7 @@ function void axi_seq_item::initialize;
     Start_Address     = addr;
     Number_Bytes      = 2**int'(burst_size); // number_bytes; // Partial or Full transfers.
     Burst_Length_Bytes = len;
-    Data_Bus_Bytes    = 4; // @Todo: parameter? fetch from cfg_db?
+    Data_Bus_Bytes    = 4; // //@Todo: the driver needs to update this.
     Mode              = burst_type;
     Aligned_Address   = (int'(addr/Number_Bytes) * Number_Bytes);
     aligned           = (Aligned_Address == addr);

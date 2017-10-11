@@ -49,10 +49,14 @@ class axi_if_abstract extends uvm_object;
     extern virtual task set_bvalid(bit state);
 
     extern virtual task wait_for_clks(int cnt=1);
-      extern virtual function enable_awready_toggle_pattern(bit [31:0] pattern);
-    extern virtual task disable_awready_toggle_pattern();
-    extern virtual task set_wready_toggle_mask(bit [31:0] mask);
-    extern virtual task clr_wready_toggle_mask();
+
+    extern virtual function enable_awready_toggle_pattern(bit [31:0] pattern);
+    extern virtual function disable_awready_toggle_pattern();
+    extern virtual function enable_wready_toggle_pattern( bit [31:0] pattern);
+    extern virtual function disable_wready_toggle_pattern();
+
+    //extern virtual task set_wready_toggle_mask(bit [31:0] mask);
+    //extern virtual task clr_wready_toggle_mask();
     extern virtual task set_bready_toggle_mask(bit [31:0] mask);
     extern virtual task clr_bready_toggle_mask();
     extern virtual task wait_for_not_in_reset;
@@ -159,16 +163,27 @@ task axi_if_abstract::wait_for_clks(int cnt=1);
              "WARNING. Virtual task wait_for_clks() not defined.")
 endtask : wait_for_clks
 
-      function axi_if_abstract::enable_awready_toggle_pattern(bit [31:0] pattern);
+function axi_if_abstract::enable_awready_toggle_pattern(bit [31:0] pattern);
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual function enable_awready_toggle_pattern() not defined.")
 endfunction : enable_awready_toggle_pattern
 
-task axi_if_abstract::disable_awready_toggle_pattern();
+function axi_if_abstract::disable_awready_toggle_pattern();
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task disable_awready_toggle_pattern() not defined.")
-endtask : disable_awready_toggle_pattern
+endfunction : disable_awready_toggle_pattern
 
+function axi_if_abstract::enable_wready_toggle_pattern(bit [31:0] pattern);
+  `uvm_error(this.get_type_name(),
+             "WARNING. Virtual function enable_wready_toggle_pattern() not defined.")
+endfunction : enable_wready_toggle_pattern
+
+function axi_if_abstract::disable_wready_toggle_pattern();
+  `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task disable_wready_toggle_pattern() not defined.")
+endfunction : disable_wready_toggle_pattern
+
+      /*
 task axi_if_abstract::set_wready_toggle_mask(bit [31:0] mask);
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task set_wready_toggle_mask() not defined.")
@@ -178,7 +193,7 @@ task axi_if_abstract::clr_wready_toggle_mask();
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task clr_wready_toggle_mask() not defined.")
 endtask : clr_wready_toggle_mask
-
+  */
 task axi_if_abstract::set_bready_toggle_mask(bit [31:0] mask);
     `uvm_error(this.get_type_name(),
                "WARNING. Virtual task set_bready_toggle_mask() not defined.")

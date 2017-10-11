@@ -159,7 +159,7 @@ task axi_driver::responder_run_phase;
 
 //  `uvm_info(this.get_type_name(), "HEY< YOU< responder_run_phase", UVM_INFO)
   //vif.s_awready_toggle_mask(m_config.awready_toggle_mask);
-  vif.set_wready_toggle_mask(m_config.wready_toggle_mask);
+  //vif.set_wready_toggle_mask(m_config.wready_toggle_mask);
 
   vif.wait_for_not_in_reset();
   forever begin
@@ -168,13 +168,28 @@ task axi_driver::responder_run_phase;
     seq_item_port.get(item);
   //  `uvm_info(this.get_type_name(), $sformatf("DRVa: %s", item.convert2string()), UVM_INFO)
 
-    if (item.cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN) begin
-      `uvm_info(this.get_type_name(), $sformatf("Setting awready toggle patter: 0x%0x", item.toggle_pattern), UVM_INFO)
-      vif.enable_awready_toggle_pattern(.pattern(item.toggle_pattern));
-    end else begin
-       responder_writeaddress_mbx.put(item);
-    end
-  end
+    case (item.cmd)
+       axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN : begin
+          `uvm_info(this.get_type_name(),
+                    $sformatf("Setting awready toggle patter: 0x%0x", item.toggle_pattern),
+                    UVM_INFO)
+           vif.enable_awready_toggle_pattern(.pattern(item.toggle_pattern));
+       end
+       axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN : begin
+          `uvm_info(this.get_type_name(),
+                    $sformatf("Setting wready toggle patter: 0x%0x", item.toggle_pattern),
+                    UVM_INFO)
+           vif.enable_wready_toggle_pattern(.pattern(item.toggle_pattern));
+       end
+
+
+       default : begin
+           responder_writeaddress_mbx.put(item);
+       end
+    endcase
+
+
+        end // forever
 
 endtask : responder_run_phase
 
@@ -459,7 +474,7 @@ task axi_driver::responder_write_data;
  //             $sformatf("axi_driver::responder_write_data - Waiting for data for %s",
  //                       item.convert2string()),
  //             UVM_INFO)
-
+    /*
       i=0;
       while (i<item.len/4) begin
          vif.wait_for_clks(.cnt(1));
@@ -486,6 +501,7 @@ task axi_driver::responder_write_data;
       end
 
     end
+    */
     //    `uvm_info(this.get_type_name(),
      //            $sformatf("axi_driver::responder_write_data responder_writeresponse_mbx.put - %s",
    //                     item.convert2string()),

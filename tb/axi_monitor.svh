@@ -201,7 +201,6 @@ task axi_monitor::monitor_write_data();
         maxoffset=aw_q[0].len;
 
 
-
          // if anything in data queue, write it out
 
          while (w_q.size() > 0) begin
