@@ -36,6 +36,10 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   mailbox #(axi_seq_item) driver_writedata_mbx     = new(0);
   mailbox #(axi_seq_item) driver_writeresponse_mbx = new(0);
 
+  mailbox #(axi_seq_item) driver_readaddress_mbx  = new(0);
+  mailbox #(axi_seq_item) driver_readdata_mbx     = new(0);
+
+
   // probably unnecessary but
   // having different variables
   // makes it easier for me to follow (less confusing)
@@ -61,6 +65,10 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   extern task          driver_write_data;
   extern task          driver_write_response;
 
+  extern task          driver_read_address;
+  extern task          driver_read_data;
+
+
   extern task          responder_write_address;
   extern task          responder_write_data;
   extern task          responder_write_response;
@@ -85,7 +93,8 @@ class axi_driver extends uvm_driver #(axi_seq_item);
     bit axi_incompatible_wready_toggling_mode=0;
     bit axi_incompatible_bready_toggling_mode=0;
 
-
+   int min_clks_between_ar_transfers=0;
+   int max_clks_between_ar_transfers=0;
 
 endclass : axi_driver
 
@@ -125,14 +134,20 @@ task axi_driver::driver_run_phase;
 
   axi_seq_item item;
 
-  vif.set_awvalid(1'b0);
-  vif.set_wvalid(1'b0);
-  vif.set_bready_toggle_mask(m_config.bready_toggle_mask);
+  //vif.set_awvalid(1'b0);
+  //vif.set_wvalid(1'b0);
+  //vif.set_bready_toggle_mask(m_config.bready_toggle_mask);
+
+
 
   fork
     driver_write_address();
     driver_write_data();
     driver_write_response();
+
+    driver_read_address();
+    driver_read_data();
+
   join_none
 
   forever begin
@@ -140,6 +155,8 @@ task axi_driver::driver_run_phase;
     seq_item_port.get(item);
     if (item.cmd == e_WRITE) begin
       driver_writeaddress_mbx.put(item);
+    end else if (item.cmd == e_READ) begin
+      driver_readaddress_mbx.put(item);
     end
   end  //forever
 endtask : driver_run_phase
@@ -181,6 +198,12 @@ task axi_driver::responder_run_phase;
                     UVM_INFO)
            vif.enable_wready_toggle_pattern(.pattern(item.toggle_pattern));
        end
+       axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN : begin
+          `uvm_info(this.get_type_name(),
+                    $sformatf("Setting arready toggle patter: 0x%0x", item.toggle_pattern),
+                    UVM_INFO)
+           vif.enable_arready_toggle_pattern(.pattern(item.toggle_pattern));
+       end
 
 
        default : begin
@@ -215,6 +238,8 @@ task axi_driver::driver_write_address;
   int wait_clks_before_next_aw;
 
   int item_needs_init=1;
+
+  vif.set_awvalid(1'b0);
 
   forever begin
 
@@ -306,6 +331,7 @@ task axi_driver::driver_write_data;
   int maxval;
   int wait_clks_before_next_w;
 
+  vif.set_wvalid(1'b0);
   forever begin
 
     if (item == null) begin
@@ -420,6 +446,8 @@ task axi_driver::driver_write_response;
   axi_seq_item            item;
   axi_seq_item_b_vector_s s;
 
+  vif.set_bready_toggle_mask(m_config.bready_toggle_mask);
+
   forever begin
     driver_writeresponse_mbx.get(item);
  //   `uvm_info(this.get_type_name(), "HEY, driver_write_response!!!!", UVM_INFO)
@@ -436,6 +464,88 @@ task axi_driver::driver_write_response;
 endtask : driver_write_response
 
 
+
+task axi_driver::driver_read_address;
+
+  axi_seq_item item=null;
+  axi_seq_item_ar_vector_s v;
+
+   bit [63:0] aligned_addr;
+
+  int minval;
+  int maxval;
+  int wait_clks_before_next_ar;
+
+  int item_needs_init=1;
+
+  vif.set_arvalid(1'b0);
+
+  forever begin
+
+    if (item == null) begin
+       driver_readaddress_mbx.get(item);
+       item_needs_init=1;
+    end
+
+    vif.wait_for_clks(.cnt(1));
+
+      // if done with this xfer (write address is only one clock, done with valid & ready
+    if (vif.get_arready_arvalid == 1'b1) begin
+          driver_readdata_mbx.put(item);
+          item=null;
+
+          minval=min_clks_between_ar_transfers;
+          maxval=max_clks_between_ar_transfers;
+          wait_clks_before_next_ar=$urandom_range(maxval,minval);
+
+          // Check if delay wanted
+      if (wait_clks_before_next_ar==0) begin
+             // if not, check if there's another item
+             driver_readaddress_mbx.try_get(item);
+             if (item!=null) begin
+                item_needs_init=1;
+             end
+          end
+       end
+       // Initialize values
+       if (item_needs_init==1) begin
+          axi_seq_item::ar_from_class(.t(item), .v(v));
+          v.arlen  = item.calculate_beats(.addr(item.addr),
+                                          .number_bytes(2**item.burst_size), //item.number_bytes
+                                          .burst_length(item.len));
+
+         v.araddr = item.calculate_aligned_address(.addr(v.araddr),
+                                                    .number_bytes(4));
+          item_needs_init=0;
+       end
+
+        // Update values <- No need in write address (only one clk per)
+
+       // Write out
+       if (item != null) begin
+          vif.write_ar(.s(v), .valid(1'b1));
+         if (wait_clks_before_next_ar > 0) begin
+           vif.wait_for_clks(.cnt(wait_clks_before_next_ar-1)); // -1 because another wait
+                                                                // at beginning of loop
+          end
+       end   // if (item != null)
+
+    // No item for next clock, so close out bus
+    if (item == null) begin
+         v.araddr  = 'h0;
+         v.arid    = 'h0;
+         v.arsize  = 'h0;
+         v.arburst = 'h0;
+         vif.write_ar(.s(v), .valid(1'b0));
+         vif.wait_for_clks(.cnt(1));
+    end
+
+    end // forever
+
+endtask : driver_read_address
+
+task axi_driver::driver_read_data;
+endtask : driver_read_data
 
 task axi_driver::responder_write_address;
 

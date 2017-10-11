@@ -37,10 +37,12 @@ import axi_pkg::*;
 
 typedef enum int {e_WRITE                             = 0,
                   e_READ                              = 1,
-                  e_SETAWREADYTOGGLEPATTERN           = 2,
-                  e_SETWREADYTOGGLEPATTERN            = 3,
-                  e_SET_MIN_CLKS_BETWEEN_AW_TRANSFERS = 4, // Minimum pause between aw xfers
-                  e_SET_MAX_CLKS_BETWEEN_W_TRANSFERS  = 5  // maximum pause between aw xfers
+                  e_SETAWREADYTOGGLEPATTERN,
+                  e_SETWREADYTOGGLEPATTERN,
+                  e_SETARREADYTOGGLEPATTERN,
+
+                  e_SET_MIN_CLKS_BETWEEN_AW_TRANSFERS, // Minimum pause between aw xfers
+                  e_SET_MAX_CLKS_BETWEEN_W_TRANSFERS   // maximum pause between aw xfers
 
                  /*
                  e_WRITEADDRESS,

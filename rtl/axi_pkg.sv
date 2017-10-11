@@ -109,6 +109,45 @@ typedef struct packed {
 localparam int AXI_SEQ_ITEM_B_NUM_BITS = $bits(axi_seq_item_b_vector_s);
 typedef bit[AXI_SEQ_ITEM_B_NUM_BITS-1:0] axi_seq_item_b_vector_t;
 
+// *********************
+// Read channels
+// *********************
+
+typedef struct packed {
+  logic [C_AXI_ID_WIDTH-1:0]	 arid;
+  logic [C_AXI_ADDR_WIDTH-1:0]   araddr;
+  logic                          arvalid;
+  logic                          arready;
+  logic [7:0]                    arlen;
+//  burst_size_t                    awsize;
+//  burst_type_t                    awburst;
+  logic [2:0]  arsize;
+  logic [1:0]  arburst;
+  logic [0:0]                    arlock;
+  logic [3:0]                    arcache;
+  logic [2:0]                    arprot;
+  logic [3:0]                    arqos;
+
+} axi_seq_item_ar_vector_s;
+
+localparam int AXI_SEQ_ITEM_AR_NUM_BITS = $bits(axi_seq_item_ar_vector_s);
+typedef bit[AXI_SEQ_ITEM_AR_NUM_BITS-1:0] axi_seq_item_ar_vector_t;
+
+
+
+typedef struct packed {
+  logic [C_AXI_DATA_WIDTH-1:0]   rdata;
+  //logic [C_AXI_DATA_WIDTH/8-1:0] rstrb;
+  logic                          rlast;
+  logic                          rvalid;
+  logic [C_AXI_ID_WIDTH-1:0]     rid;
+
+} axi_seq_item_r_vector_s;
+
+localparam int AXI_SEQ_ITEM_R_NUM_BITS = $bits(axi_seq_item_r_vector_s);
+typedef bit[AXI_SEQ_ITEM_R_NUM_BITS-1:0] axi_seq_item_r_vector_t;
+
+
 `include "axi_if_abstract.svh"
 
 endpackage : axi_pkg

@@ -76,6 +76,16 @@ task axi_responder_seq::body;
        finish_item(item);
 
 
+       item = axi_seq_item::type_id::create("item");
+       start_item(item);
+       assert( item.randomize() with {cmd == e_SETARREADYTOGGLEPATTERN;
+                                  //  toggle_pattern = 32'hFFFF_FFFF;
+                                  //  toggle_pattern = 32'h0000_0001;
+                                     }) else begin
+          `uvm_fatal(this.get_type_name(),
+                     $sformatf("Unable to randomize %s", item.get_type_name()))
+       end
+       finish_item(item);
 
      forever begin
        // recommended by verilab but doesn't

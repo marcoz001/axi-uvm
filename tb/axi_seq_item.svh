@@ -112,6 +112,8 @@ class axi_seq_item extends uvm_sequence_item;
                            len == 1;
                         else if (cmd == axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN)
                            len == 1;
+                        else if (cmd == axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN)
+                           len == 1;
                         else
                            len < 256*128;
 
@@ -189,6 +191,15 @@ class axi_seq_item extends uvm_sequence_item;
       output  [5:0]     bid,
       output  [1:0]     bresp,
       input axi_seq_item_b_vector_s v);
+
+
+    extern static function void   ar_from_class(
+      ref    axi_seq_item             t,
+      output axi_seq_item_ar_vector_s v);
+
+    extern static function void   ar_to_class(
+      ref    axi_seq_item             t,
+      input  axi_seq_item_ar_vector_s v);
 
 
 endclass : axi_seq_item
@@ -614,3 +625,42 @@ endfunction : b_from_class
      bresp = s.bresp;
 
 endfunction : b_to_class
+
+
+function void axi_seq_item::ar_from_class(
+  ref  axi_seq_item             t,
+  output axi_seq_item_ar_vector_s v);
+
+  axi_seq_item_ar_vector_s s;
+
+     s.arid    = t.id;
+     s.araddr  = t.addr;
+     s.arlen   = t.len;
+     s.arsize  = t.burst_size;
+     s.arburst = t.burst_type;
+     s.arlock  = t.lock;
+     s.arcache = t.cache;
+     s.arprot  = t.prot;
+     s.arqos   = t.qos;
+    v = s;
+endfunction : ar_from_class
+
+ function void axi_seq_item::ar_to_class(
+  ref    axi_seq_item             t,
+  input  axi_seq_item_ar_vector_s v);
+    axi_seq_item_ar_vector_s s;
+    s = v;
+
+   // t = new();
+
+     t.id          = s.arid;
+     t.addr        = s.araddr;
+     t.len         = s.arlen;
+     t.burst_size  = s.arsize;
+     t.burst_type  = s.arburst;
+     t.lock        = s.arlock;
+     t.cache       = s.arcache;
+     t.prot        = s.arprot;
+     t.qos         = s.arqos;
+
+endfunction : ar_to_class

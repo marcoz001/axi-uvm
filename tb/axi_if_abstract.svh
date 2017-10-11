@@ -90,6 +90,21 @@ class axi_if_abstract extends uvm_object;
     extern virtual task wait_for_write_data     (output axi_seq_item_w_vector_s  s);
     extern virtual task wait_for_write_response (output axi_seq_item_b_vector_s  s);
 
+    // Read Channels
+    extern virtual function bit get_arready_arvalid;
+    extern virtual function bit get_arready;
+
+
+    extern virtual function bit get_rready_rvalid;
+    extern virtual function bit get_rready;
+    extern virtual function bit get_rvalid;
+
+    extern virtual task set_arvalid(bit state);
+      extern virtual task     write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
+    //extern virtual task     write_w (axi_seq_item_w_vector_s  s, bit waitforwready=0);
+
+    extern virtual function enable_arready_toggle_pattern(bit [31:0] pattern);
+    extern virtual function disable_arready_toggle_pattern();
 
 
 endclass : axi_if_abstract
@@ -183,17 +198,7 @@ function axi_if_abstract::disable_wready_toggle_pattern();
              "WARNING. Virtual task disable_wready_toggle_pattern() not defined.")
 endfunction : disable_wready_toggle_pattern
 
-      /*
-task axi_if_abstract::set_wready_toggle_mask(bit [31:0] mask);
-  `uvm_error(this.get_type_name(),
-             "WARNING. Virtual task set_wready_toggle_mask() not defined.")
-endtask : set_wready_toggle_mask
 
-task axi_if_abstract::clr_wready_toggle_mask();
-  `uvm_error(this.get_type_name(),
-             "WARNING. Virtual task clr_wready_toggle_mask() not defined.")
-endtask : clr_wready_toggle_mask
-  */
 task axi_if_abstract::set_bready_toggle_mask(bit [31:0] mask);
     `uvm_error(this.get_type_name(),
                "WARNING. Virtual task set_bready_toggle_mask() not defined.")
@@ -310,3 +315,56 @@ task axi_if_abstract::wait_for_write_response(output axi_seq_item_b_vector_s s);
              "WARNING. Virtual task wait_for_write_response() not defined.")
 
 endtask : wait_for_write_response
+
+
+
+// Read Channels
+function bit axi_if_abstract::get_arready_arvalid();
+   `uvm_error(this.get_type_name(),
+              "WARNING. Virtual function get_arready_arvalid() not defined.")
+endfunction : get_arready_arvalid
+
+function bit axi_if_abstract::get_arready();
+   `uvm_error(this.get_type_name(),
+              "WARNING. Virtual function get_arready() not defined.")
+endfunction : get_arready
+
+//task axi_if_abstract::wait_for_rready();
+//  `uvm_error(this.get_type_name(),
+//             "WARNING. Virtual task wait_for_rready() not defined.")
+//endtask : wait_for_rready
+
+function bit axi_if_abstract::get_rready_rvalid();
+   `uvm_error(this.get_type_name(),
+              "WARNING. Virtual function get_rready_rvalid() not defined.")
+endfunction : get_rready_rvalid
+
+function bit axi_if_abstract::get_rready();
+   `uvm_error(this.get_type_name(),
+              "WARNING. Virtual function get_rready() not defined.")
+endfunction : get_rready
+
+function bit axi_if_abstract::get_rvalid();
+   `uvm_error(this.get_type_name(),
+              "WARNING. Virtual function get_rvalid() not defined.")
+endfunction : get_rvalid
+
+task axi_if_abstract::set_arvalid(bit state);
+  `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task set_arvalid() not defined.")
+endtask : set_arvalid
+
+task axi_if_abstract::write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
+  `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task write_ar() not defined.")
+endtask : write_ar
+
+function axi_if_abstract::enable_arready_toggle_pattern(bit [31:0] pattern);
+  `uvm_error(this.get_type_name(),
+             "WARNING. Virtual function enable_arready_toggle_pattern() not defined.")
+endfunction : enable_arready_toggle_pattern
+
+function axi_if_abstract::disable_arready_toggle_pattern();
+  `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task disable_arready_toggle_pattern() not defined.")
+endfunction : disable_arready_toggle_pattern

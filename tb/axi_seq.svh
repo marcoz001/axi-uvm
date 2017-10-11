@@ -55,6 +55,7 @@ endfunction : new
 task axi_seq::body;
      axi_seq_item original_item;
      axi_seq_item item;
+     axi_seq_item cloned_item;
   axi_seq_item rsp;
   int xfers_to_send=0;
   string s;
@@ -71,7 +72,7 @@ task axi_seq::body;
 
 
 
-  xfers_to_send=10;
+  xfers_to_send=1;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());
@@ -87,6 +88,7 @@ task axi_seq::body;
          `uvm_error(this.get_type_name(),
                     $sformatf("Unable to randomize %s",  item.get_full_name()));
      end  //assert
+    $cast(cloned_item, item.clone());
      finish_item(item);
     `uvm_info("DATA", $sformatf("Sending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", item.addr, item.len, item.len, item.burst_size), UVM_INFO)
      #10us
@@ -112,6 +114,13 @@ task axi_seq::body;
     `uvm_info("COMPARE", $sformatf("%s", s), UVM_INFO);
 
 
+    // Now AXI readback
+    `uvm_info("READBACK", "Now READING BACK", UVM_INFO)
+
+    start_item(cloned_item);
+    cloned_item.cmd=e_READ;
+    finish_item(cloned_item);
+     #10us
     `uvm_info("..", "...", UVM_HIGH)
   end  //for
 

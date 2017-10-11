@@ -141,7 +141,8 @@ interface axi_if #(
   logic [31:0]  bready_toggle_mask;
   bit           bready_toggle_mask_enable=0;
 
-
+  logic [31:0]  arready_toggle_pattern;
+  bit           arready_toggle_pattern_enable=0;
 
   assign awid    = iawid;
   assign awaddr  = iawaddr;
@@ -216,11 +217,11 @@ interface axi_if #(
      iarlen   = 'z;
      iarsize  = 'z;
      iarburst = 'z;
-     iarlock  = 'h0;
-     iarcache = 'h0;
-     iarprot  = 'h0;
-     iarqos   = 'h0;
-     iarvalid = 'b0;
+     iarlock  = 'z;
+     iarcache = 'z;
+     iarprot  = 'z;
+     iarqos   = 'z;
+     iarvalid = 'z;
 
      irid     = 'z;
      irresp   = 'z;
@@ -249,13 +250,6 @@ class axi_if_concrete extends axi_if_abstract;
 
 task write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
 
-//  int i='h10;
-//  forever begin
-
-//  reg orig_valid;
-//  wait_for_clks(.cnt(1));
-//  @(posedge clk) begin
-
      iawvalid <= valid;
      iawid    <= s.awid;
      iawaddr  <= s.awaddr;
@@ -268,38 +262,6 @@ task write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
      iawqos   <= s.awqos;
 
 
-    // this works if awready not already asserted
-  //  if (awvalid == 1'b1 && awready == 1'b1) begin
-   //   iawvalid <= 1'b0;
-    //  iawaddr <= 'h0;
-     // return;
-   // end else
-  /// this works if awready already asserted
- //   if (valid == 1'b1 && awready == 1'b1) begin
-  //     return;
-   //  end
-
-//  end
- // end
-//  if (awready != 1'b1) begin
-//    @(posedge awready);
-//  end
-  /*
-      while (awready != 1'b1) begin
-        wait_for_clks(.cnt(1));
-     end
-    */
-/*
-  forever begin
-    @(posedge clk) begin
-//      if (awready == 1'b1 && awvalid == 1'b1) begin
-      if (awready == 1'b1) begin
-iawvalid <= 1'b0;
-        return;
-      end
-    end
-  end
-  */
 endtask : write_aw
 
 
@@ -492,20 +454,16 @@ endtask : set_bvalid
 
 
   // wait for n clock cycles. Default: 1
-  task wait_for_clks(int cnt=1);
+task wait_for_clks(int cnt=1);
     if (cnt==0) return;
 
     repeat (cnt) @(posedge clk);
-  endtask : wait_for_clks
+endtask : wait_for_clks
 
 
 task wait_for_wready;
   while (wready != 1'b1)
     wait_for_clks(.cnt(1));
-
-  //@(posedge clk);
-  //while (wready != 1'b1)
-  //    @(posedge clk);
 
 endtask : wait_for_wready
 
@@ -599,6 +557,61 @@ function void read_b(output axi_seq_item_b_vector_s  s);
   s.bresp = bresp;
 endfunction : read_b
 
+// *************
+// Read Channels
+// *************
+function bit get_arready_arvalid;
+  return arready & arvalid;
+endfunction : get_arready_arvalid;
+
+function bit get_arready;
+  return arready;
+endfunction : get_arready;
+
+function bit get_rready_rvalid;
+  return rvalid & rready;
+endfunction : get_rready_rvalid;
+
+function bit get_rready;
+  return rready;
+endfunction : get_rready
+
+function bit get_rvalid;
+  return rvalid;
+endfunction : get_rvalid
+
+task set_arvalid(bit state);
+  wait_for_clks(.cnt(1));
+  iarvalid <= state;
+endtask : set_arvalid
+
+
+task write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
+
+     iarvalid <= valid;
+     iarid    <= s.arid;
+     iaraddr  <= s.araddr;
+     iarlen   <= s.arlen;
+     iarsize  <= s.arsize;
+     iarburst <= s.arburst;
+     iarlock  <= s.arlock;
+     iarcache <= s.arcache;
+     iarprot  <= s.arprot;
+     iarqos   <= s.arqos;
+
+
+endtask : write_ar
+
+
+function enable_arready_toggle_pattern(bit [31:0] pattern);
+    arready_toggle_pattern=pattern;
+    arready_toggle_pattern_enable=1;
+endfunction : enable_arready_toggle_pattern
+
+function disable_arready_toggle_pattern();
+     arready_toggle_pattern_enable = 0;
+endfunction : disable_arready_toggle_pattern
+
 endclass : axi_if_concrete
 
 
@@ -636,6 +649,22 @@ initial begin
       end
    end
 end
+
+
+initial begin
+   forever begin
+     @(posedge clk) begin
+       if (arready_toggle_pattern_enable == 1'b1) begin
+         arready_toggle_pattern[31:0] <= {arready_toggle_pattern[30:0],
+                                          arready_toggle_pattern[31]};
+
+            iarready                  <= arready_toggle_pattern[31];
+         end
+      end
+   end
+end
+
+
 
   function void use_concrete_class(); //axi_pkg::driver_type_t drv_type);
 
