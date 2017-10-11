@@ -90,14 +90,23 @@ task axi_responder_seq::body;
      forever begin
        // recommended by verilab but doesn't
        // this break the child-doesn't-know-about-parent model?
+
+       // Get from monitor (or wherever)
        p_sequencer.request_fifo.get(drv_item);
+
+              `uvm_info(this.get_type_name(),
+                 $sformatf(" <-HEY0HEY0HEY0 -> %s",
+                           drv_item.convert2string()),
+                 UVM_INFO)
+       // SEnd to responder
 
        start_item(drv_item);
        finish_item(drv_item);
+
        `uvm_info(this.get_type_name(),
-                 $sformatf(" <-HEY0HEY0HEY0 -> %s",
+                 $sformatf(" <-HEY1HEY1HEY1 -> %s",
                            drv_item.convert2string()),
-                 UVM_HIGH)
+                 UVM_INFO)
      end
 
 endtask : body

@@ -39,6 +39,8 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   mailbox #(axi_seq_item) driver_readaddress_mbx  = new(0);
   mailbox #(axi_seq_item) driver_readdata_mbx     = new(0);
 
+  mailbox #(axi_seq_item) responder_readaddress_mbx  = new(0);
+  mailbox #(axi_seq_item) responder_readdata_mbx     = new(0);
 
   // probably unnecessary but
   // having different variables
@@ -58,8 +60,8 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   //extern task          write(ref axi_seq_item item);
 
 
-  extern task          driver_run_phase;
-  extern task          responder_run_phase;
+  //extern task          driver_run_phase;
+ //extern task          responder_run_phase;
 
   extern task          driver_write_address;
   extern task          driver_write_data;
@@ -72,6 +74,9 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   extern task          responder_write_address;
   extern task          responder_write_data;
   extern task          responder_write_response;
+
+  extern task          responder_read_address;
+  extern task          responder_read_data;
 
     reg foo;
 
@@ -122,14 +127,85 @@ endfunction : end_of_elaboration_phase
 
 task axi_driver::run_phase(uvm_phase phase);
 
+
+  axi_seq_item item;
+
   if (m_config.drv_type == e_DRIVER) begin
-     driver_run_phase;
+    fork
+       driver_write_address();
+       driver_write_data();
+       driver_write_response();
+
+       driver_read_address();
+       driver_read_data();
+    join_none
+    //driver_run_phase;
+
   end else if (m_config.drv_type == e_RESPONDER) begin
-     responder_run_phase;
+    fork
+       responder_write_address();
+       responder_write_data();
+       responder_write_response();
+
+       responder_read_data();
+    join_none
+    //responder_run_phase;
   end
+
+
+
+  forever begin
+
+    item = axi_seq_item::type_id::create("item", this);
+    seq_item_port.get(item);
+
+    `uvm_info("axi_driver::run_phase",
+              $sformatf("YO: %s", item.convert2string()),
+              UVM_INFO)
+
+    case (item.cmd)
+      axi_uvm_pkg::e_WRITE : begin
+         driver_writeaddress_mbx.put(item);
+      end
+      axi_uvm_pkg::e_READ  : begin
+         driver_readaddress_mbx.put(item);
+      end
+      axi_uvm_pkg::e_READ_DATA  : begin
+        `uvm_info("e_READ_DATA",
+                  "stuffing item into responder_readdata_mbx.put(item);",
+                  UVM_INFO)
+        responder_readdata_mbx.put(item);
+      end
+
+      axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN : begin
+         `uvm_info(this.get_type_name(),
+                   $sformatf("Setting awready toggle patter: 0x%0x", item.toggle_pattern),
+                   UVM_INFO)
+         vif.enable_awready_toggle_pattern(.pattern(item.toggle_pattern));
+      end
+      axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN : begin
+         `uvm_info(this.get_type_name(),
+                   $sformatf("Setting wready toggle patter: 0x%0x", item.toggle_pattern),
+                   UVM_INFO)
+         vif.enable_wready_toggle_pattern(.pattern(item.toggle_pattern));
+      end
+      axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN : begin
+         `uvm_info(this.get_type_name(),
+                   $sformatf("Setting arready toggle patter: 0x%0x", item.toggle_pattern),
+                   UVM_INFO)
+         vif.enable_arready_toggle_pattern(.pattern(item.toggle_pattern));
+      end
+
+      default : begin
+         responder_writeaddress_mbx.put(item);
+      end
+   endcase
+
+  end // forever
 
 endtask : run_phase
 
+/*
 task axi_driver::driver_run_phase;
 
   axi_seq_item item;
@@ -153,12 +229,14 @@ task axi_driver::driver_run_phase;
   forever begin
     // Using item_done also triggers get_response() in the seq.
     seq_item_port.get(item);
+    `uvm_info("axi_driver::driver_run_phase", $sformatf("YO: %s", item.convert2string()), UVM_INFO)
     if (item.cmd == e_WRITE) begin
       driver_writeaddress_mbx.put(item);
     end else if (item.cmd == e_READ) begin
       driver_readaddress_mbx.put(item);
     end
   end  //forever
+
 endtask : driver_run_phase
 
 task axi_driver::responder_run_phase;
@@ -215,7 +293,7 @@ task axi_driver::responder_run_phase;
         end // forever
 
 endtask : responder_run_phase
-
+*/
 /*
    driver_write_address - driver write address phase
    1. wait for TLM item to get queued
@@ -323,9 +401,7 @@ task axi_driver::driver_write_data;
 
   bit iaxi_incompatible_wready_toggling_mode;
 
-
   int n=0;
-
 
   int minval;
   int maxval;
@@ -536,6 +612,7 @@ task axi_driver::driver_read_address;
          v.arid    = 'h0;
          v.arsize  = 'h0;
          v.arburst = 'h0;
+         v.arlen   = 'h0;
          vif.write_ar(.s(v), .valid(1'b0));
          vif.wait_for_clks(.cnt(1));
     end
@@ -545,6 +622,7 @@ task axi_driver::driver_read_address;
 endtask : driver_read_address
 
 task axi_driver::driver_read_data;
+  `uvm_info("driver_read_data", "YO, got pkt:", UVM_INFO)
 endtask : driver_read_data
 
 task axi_driver::responder_write_address;
@@ -566,6 +644,7 @@ task axi_driver::responder_write_address;
     responder_writedata_mbx.put(item);
   end
 endtask : responder_write_address
+
 
 
 
@@ -690,7 +769,22 @@ task axi_driver::responder_write_response;
 
     end // forever
 
-    endtask : responder_write_response
+endtask : responder_write_response
+
+task axi_driver::responder_read_address;
+endtask : responder_read_address
+
+
+task axi_driver::responder_read_data;
+  axi_seq_item item;
+     forever begin
+       responder_readdata_mbx.get(item);
+       `uvm_info("responder_read_data",
+                 $sformatf("YO, got pkt: %s", item.convert2string()),
+                 UVM_INFO)
+     end
+endtask : responder_read_data
+
     /*
 task axi_driver::responder_write_response;
 

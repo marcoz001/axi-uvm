@@ -62,6 +62,9 @@ class axi_monitor extends uvm_monitor;
   extern task monitor_write_data();
   extern task monitor_write_response();
 
+  extern task monitor_read_address();
+  extern task monitor_read_data();
+
 endclass : axi_monitor
 
 
@@ -247,13 +250,58 @@ task axi_monitor::monitor_write_response();
   end
 endtask : monitor_write_response
 
+task axi_monitor::monitor_read_address();
+  axi_seq_item_ar_vector_s ar_s;
+  axi_seq_item             item;
 
+  if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
+     return;
+  end
+
+  forever begin
+
+    item = axi_seq_item::type_id::create("item");
+    vif.wait_for_read_address(.s(ar_s));
+//    aw_q.push_back(aw_s);
+
+    `uvm_info(this.get_type_name(), "got Read Address", UVM_INFO)
+
+    `uvm_info("AR_TO_CLASS",
+              $sformatf("id:0x%0x  addr:0x%0x len:%d", ar_s.arid, ar_s.araddr, ar_s.arlen),
+              UVM_INFO)
+
+    axi_seq_item::ar_to_class(.t(item), .v(ar_s));
+    item.cmd  = axi_uvm_pkg::e_READ_DATA;
+
+    `uvm_info("AR_TO_CLASS_post", $sformatf("%s", item.convert2string()), UVM_INFO)
+   // item.initialize();
+    //$cast(item2, item.clone());
+
+
+    // Now send seq item containing expected read data to slave responder
+    // If you wanna test data corruption, this seq item is an easy place to do it.
+    if (m_config.drv_type == e_RESPONDER) begin
+       driver_activity_ap.write(item);
+    end  end
+
+
+endtask : monitor_read_address
+
+task axi_monitor::monitor_read_data();
+  if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
+     return;
+  end
+
+endtask : monitor_read_data
 
 task axi_monitor::run_phase(uvm_phase phase);
   fork
     monitor_write_address();
     monitor_write_data();
     monitor_write_response();
+
+    monitor_read_address();
+    monitor_read_data();
 
   join
 endtask : run_phase

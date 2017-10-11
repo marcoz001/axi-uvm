@@ -36,7 +36,8 @@ import uvm_pkg::*;
 import axi_pkg::*;
 
 typedef enum int {e_WRITE                             = 0,
-                  e_READ                              = 1,
+                  e_READ                         = 1,
+                  e_READ_DATA                         = 2,
                   e_SETAWREADYTOGGLEPATTERN,
                   e_SETWREADYTOGGLEPATTERN,
                   e_SETARREADYTOGGLEPATTERN,

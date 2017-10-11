@@ -213,6 +213,7 @@ function string axi_seq_item::convert2string;
     string sdata;
   int j=0;
     $sformat(s, "%s", super.convert2string());
+    $sformat(s, "%s Cmd: %s   ", s, cmd.name);
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
     $sformat(s, "%s ID = 0x%0x",   s, id);
     $sformat(s, "%s Len = 0x%0x  (0x%0x)",   s, len, len/4);
@@ -652,6 +653,8 @@ endfunction : ar_from_class
     s = v;
 
    // t = new();
+
+
 
      t.id          = s.arid;
      t.addr        = s.araddr;

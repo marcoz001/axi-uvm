@@ -603,6 +603,35 @@ task write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
 endtask : write_ar
 
 
+// ********************
+task read_ar(output axi_seq_item_ar_vector_s s);
+
+     s.arvalid = arvalid;
+     s.arid    = arid;
+     s.araddr  = araddr;
+     s.arlen   = arlen;
+     s.arsize  = arsize;
+     s.arburst = arburst;
+     s.arlock  = arlock;
+     s.arcache = arcache;
+     s.arprot  = arprot;
+     s.arqos   = arqos;
+
+endtask : read_ar
+
+task wait_for_read_address(output axi_seq_item_ar_vector_s s);
+    //wait_for_awready_awvalid();
+  forever begin
+    @(posedge clk) begin
+      if (arready == 1'b1 && arvalid== 1'b1) begin
+        read_ar(.s(s));
+        return;
+      end
+    end
+  end
+endtask : wait_for_read_address
+
+
 function enable_arready_toggle_pattern(bit [31:0] pattern);
     arready_toggle_pattern=pattern;
     arready_toggle_pattern_enable=1;

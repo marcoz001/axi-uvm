@@ -106,6 +106,8 @@ class axi_if_abstract extends uvm_object;
     extern virtual function enable_arready_toggle_pattern(bit [31:0] pattern);
     extern virtual function disable_arready_toggle_pattern();
 
+    extern virtual task read_ar                (output axi_seq_item_ar_vector_s s);
+    extern virtual task wait_for_read_address  (output axi_seq_item_ar_vector_s s);
 
 endclass : axi_if_abstract
 
@@ -358,6 +360,18 @@ task axi_if_abstract::write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task write_ar() not defined.")
 endtask : write_ar
+
+task axi_if_abstract::read_ar(output axi_seq_item_ar_vector_s s);
+  `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task read_ar() not defined.")
+endtask : read_ar
+
+task axi_if_abstract::wait_for_read_address(output axi_seq_item_ar_vector_s s);
+    `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task wait_for_read_address() not defined.")
+
+endtask : wait_for_read_address
+
 
 function axi_if_abstract::enable_arready_toggle_pattern(bit [31:0] pattern);
   `uvm_error(this.get_type_name(),
