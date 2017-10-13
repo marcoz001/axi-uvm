@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_if_abstract.svh
-//
-// Purpose:
-//          abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,18 +17,12 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
+/*! abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment */
 class axi_if_abstract extends uvm_object;
   `uvm_object_utils(axi_if_abstract)
 
     extern function new (string name="axi_if_abstract");
 
-/*
-      extern virtual task read(
-        output bit [63:0] addr,
-        output bit [7:0]  data[],
-        output int        len,
-        output bit [7:0]  id);
- */
     extern virtual task wait_for_clks(int cnt=1);
     extern virtual task wait_for_not_in_reset;
 
@@ -108,40 +93,40 @@ function axi_if_abstract::new (string name="axi_if_abstract");
   super.new(name);
 endfunction : new
 
-/*
-task axi_if_abstract::read(
-  output bit [63:0] addr,
-  output bit [7:0]  data[],
-  output int        len,
-  output bit [7:0]  id);
-
-  `uvm_error(this.get_type_name(),
-             "WARNING. Virtual function read() not defined.")
-
-endtask : read
-*/
-
+//! used for waiting
+/*! The testbench side is entirely event driven (or is meant to be).
+ * This function is called to wait for time
+ */
 task axi_if_abstract::wait_for_clks(int cnt=1);
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task wait_for_clks() not defined.")
 endtask : wait_for_clks
 
+//! Wait for reset to deassert
 task axi_if_abstract::wait_for_not_in_reset;
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task wait_for_not_in_reset() not defined.")
 endtask : wait_for_not_in_reset;
 
+//! Wait for both awready awvalid to assert.
+/*! Used to know when the write address has been received and acknowledged by slave
+*/
 task axi_if_abstract::wait_for_awready_awvalid;
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task wait_for_awready_awvalid() not defined.")
 endtask : wait_for_awready_awvalid
 
-
+//! Wait for awvalid to assert.
+/*! Used to know when a valid write address is on the channel.
+*/
 task axi_if_abstract::wait_for_awvalid;
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task wait_for_awvalid() not defined.")
 endtask : wait_for_awvalid
 
+//! Wait for awready to assert.
+/*! Used to know when the slave is ready for write data
+*/
 task axi_if_abstract::wait_for_wready();
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task wait_for_wready() not defined.")

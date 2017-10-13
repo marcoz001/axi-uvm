@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>My Project: axi_if_abstract Class Reference</title>
+<title>AXI muckbucket: axi_if_abstract Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">My Project
+   <div id="projectname">AXI muckbucket
    </div>
   </td>
  </tr>
@@ -110,14 +110,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9ec99974902d3dee6694b6731631e326"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__if__abstract.html#a9ec99974902d3dee6694b6731631e326">uvm_object_utils</a> (<a class="el" href="classaxi__if__abstract.html">axi_if_abstract</a>) new(string name</td></tr>
 <tr class="separator:a9ec99974902d3dee6694b6731631e326"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79c572b96776c9da41b06e86331ed0e6"><td class="memItemLeft" align="right" valign="top">virtual task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__if__abstract.html#a79c572b96776c9da41b06e86331ed0e6">wait_for_clks</a> (int cnt=1)</td></tr>
+<tr class="memdesc:a79c572b96776c9da41b06e86331ed0e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">used for waiting  <a href="#a79c572b96776c9da41b06e86331ed0e6">More...</a><br /></td></tr>
 <tr class="separator:a79c572b96776c9da41b06e86331ed0e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3c1b5d16686699c5916f43aa20ae278"><td class="memItemLeft" align="right" valign="top">virtual task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__if__abstract.html#ad3c1b5d16686699c5916f43aa20ae278">wait_for_not_in_reset</a> ()</td></tr>
+<tr class="memdesc:ad3c1b5d16686699c5916f43aa20ae278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for reset to deassert.  <a href="#ad3c1b5d16686699c5916f43aa20ae278">More...</a><br /></td></tr>
 <tr class="separator:ad3c1b5d16686699c5916f43aa20ae278"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae136ae0143b1a3fccc030fbdb9dd32fa"><td class="memItemLeft" align="right" valign="top">virtual task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__if__abstract.html#ae136ae0143b1a3fccc030fbdb9dd32fa">wait_for_awready_awvalid</a> ()</td></tr>
+<tr class="memdesc:ae136ae0143b1a3fccc030fbdb9dd32fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for both awready awvalid to assert.  <a href="#ae136ae0143b1a3fccc030fbdb9dd32fa">More...</a><br /></td></tr>
 <tr class="separator:ae136ae0143b1a3fccc030fbdb9dd32fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac91fb21011e5b40e3d25aeea49284220"><td class="memItemLeft" align="right" valign="top">virtual task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__if__abstract.html#ac91fb21011e5b40e3d25aeea49284220">wait_for_awvalid</a> ()</td></tr>
+<tr class="memdesc:ac91fb21011e5b40e3d25aeea49284220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for awvalid to assert.  <a href="#ac91fb21011e5b40e3d25aeea49284220">More...</a><br /></td></tr>
 <tr class="separator:ac91fb21011e5b40e3d25aeea49284220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee8a696dbe605ca57a204f691e3b99db"><td class="memItemLeft" align="right" valign="top">virtual task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__if__abstract.html#aee8a696dbe605ca57a204f691e3b99db">wait_for_wready</a> ()</td></tr>
+<tr class="memdesc:aee8a696dbe605ca57a204f691e3b99db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for awready to assert.  <a href="#aee8a696dbe605ca57a204f691e3b99db">More...</a><br /></td></tr>
 <tr class="separator:aee8a696dbe605ca57a204f691e3b99db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82d26646215b46420b0cfd2ab10127d4"><td class="memItemLeft" align="right" valign="top">virtual task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__if__abstract.html#a82d26646215b46420b0cfd2ab10127d4">wait_for_bvalid</a> ()</td></tr>
 <tr class="separator:a82d26646215b46420b0cfd2ab10127d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,7 +222,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad130abfc6e8d93adaee3dccd736fcc73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A test class </p>
+<div class="textblock"><p>abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ad060e311f4e2236d5124c5af22634236"></a>
 <div class="memitem">
@@ -1134,6 +1139,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Wait for both awready awvalid to assert. </p>
+<p>Used to know when the write address has been received and acknowledged by slave </p>
+
 </div>
 </div>
 <a class="anchor" id="ac91fb21011e5b40e3d25aeea49284220"></a>
@@ -1156,6 +1164,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Wait for awvalid to assert. </p>
+<p>Used to know when a valid write address is on the channel. </p>
 
 </div>
 </div>
@@ -1204,6 +1215,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>used for waiting </p>
+<p>The testbench side is entirely event driven (or is meant to be). This function is called to wait for time </p>
+
 </div>
 </div>
 <a class="anchor" id="ad3c1b5d16686699c5916f43aa20ae278"></a>
@@ -1226,6 +1240,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Wait for reset to deassert. </p>
 
 </div>
 </div>
@@ -1297,6 +1313,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Wait for awready to assert. </p>
+<p>Used to know when the slave is ready for write data </p>
 
 </div>
 </div>
