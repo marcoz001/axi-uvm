@@ -137,7 +137,7 @@ typedef bit[AXI_SEQ_ITEM_AR_NUM_BITS-1:0] axi_seq_item_ar_vector_t;
 
 typedef struct packed {
   logic [C_AXI_DATA_WIDTH-1:0]   rdata;
-  //logic [C_AXI_DATA_WIDTH/8-1:0] rstrb;
+  logic [1:0]                    rresp;
   logic                          rlast;
   logic                          rvalid;
   logic [C_AXI_ID_WIDTH-1:0]     rid;

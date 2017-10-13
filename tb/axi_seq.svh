@@ -64,7 +64,7 @@ task axi_seq::body;
   xfers_done=0;
   original_item=axi_seq_item::type_id::create("original_item");
 
-  use_response_handler(1); // Enable Response Handler
+  //use_response_handler(1); // Enable Response Handler
 
   if (!uvm_config_db #(memory)::get(null, "", "m_memory", m_memory)) begin
     `uvm_fatal(this.get_type_name, "Unable to fetch m_memory from config db. Using defaults")
@@ -76,8 +76,9 @@ task axi_seq::body;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());
-     start_item(item);
-     assert( item.randomize() with {cmd        == e_WRITE;
+
+         start_item(item);
+         assert( item.randomize() with {cmd        == e_WRITE;
                                     burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
                                     burst_type == e_INCR;
                                     addr       ==  'h1000;
@@ -87,10 +88,12 @@ task axi_seq::body;
                                    ) else begin
          `uvm_error(this.get_type_name(),
                     $sformatf("Unable to randomize %s",  item.get_full_name()));
-     end  //assert
-    $cast(cloned_item, item.clone());
-     finish_item(item);
+         end  //assert
+         $cast(cloned_item, item.clone());
+
+         finish_item(item);
     `uvm_info("DATA", $sformatf("Sending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", item.addr, item.len, item.len, item.burst_size), UVM_INFO)
+       get_response(item);
      #10us
 
     `uvm_info("...", "Now reading back from memory to verify", UVM_INFO)
@@ -117,14 +120,20 @@ task axi_seq::body;
     // Now AXI readback
     `uvm_info("READBACK", "Now READING BACK", UVM_INFO)
 
-    start_item(cloned_item);
     cloned_item.cmd=e_READ;
+    start_item(cloned_item);
     finish_item(cloned_item);
+    get_response(cloned_item);   //response_handler above deals with this
+    `uvm_info(this.get_type_name(),
+              $sformatf("GOT RESPONSE. item=%s", cloned_item.convert2string()),
+              UVM_INFO)
+
      #10us
     `uvm_info("..", "...", UVM_HIGH)
+
   end  //for
 
-  wait (xfers_to_send == xfers_done);
+ // wait (xfers_done >= xfers_to_send);
   `uvm_info(this.get_type_name(), "SEQ ALL DONE", UVM_INFO)
 
 endtask : body

@@ -115,8 +115,10 @@ class axi_if_abstract extends uvm_object;
 
     extern virtual task read_ar                (output axi_seq_item_ar_vector_s s);
     extern virtual task wait_for_read_address  (output axi_seq_item_ar_vector_s s);
+    extern virtual task wait_for_read_data     (output axi_seq_item_r_vector_s  s);
 
-      extern virtual task     write_r(axi_seq_item_r_vector_s  s, bit waitforrready=0);
+    extern virtual task write_r(axi_seq_item_r_vector_s  s, bit waitforrready=0);
+    extern virtual task read_r(output axi_seq_item_r_vector_s  s);
 
 endclass : axi_if_abstract
 
@@ -391,11 +393,21 @@ task axi_if_abstract::wait_for_read_address(output axi_seq_item_ar_vector_s s);
 
 endtask : wait_for_read_address
 
-        task axi_if_abstract::write_r(axi_seq_item_r_vector_s  s, bit waitforrready=0);
+task axi_if_abstract::wait_for_read_data(output axi_seq_item_r_vector_s s);
+    `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task wait_for_read_address() not defined.")
+
+endtask : wait_for_read_data
+
+task axi_if_abstract::write_r(axi_seq_item_r_vector_s  s, bit waitforrready=0);
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual task write_r() not defined.")
 endtask : write_r
 
+task axi_if_abstract::read_r(output axi_seq_item_r_vector_s  s);
+    `uvm_error(this.get_type_name(),
+             "WARNING. Virtual task read_r() not defined.")
+endtask : read_r
 
 
 function axi_if_abstract::enable_arready_toggle_pattern(bit [31:0] pattern);

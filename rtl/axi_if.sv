@@ -651,6 +651,17 @@ endtask : read_ar
 endtask : write_r
 
 
+task read_r(output axi_seq_item_r_vector_s  s);
+
+    s.rvalid = rvalid;
+    s.rdata  = rdata;
+    s.rlast  = rlast;
+    s.rid    = rid;
+    s.rresp  = rresp;
+
+endtask : read_r
+
+
 task wait_for_read_address(output axi_seq_item_ar_vector_s s);
     //wait_for_awready_awvalid();
   forever begin
@@ -662,6 +673,18 @@ task wait_for_read_address(output axi_seq_item_ar_vector_s s);
     end
   end
 endtask : wait_for_read_address
+
+task wait_for_read_data(output axi_seq_item_r_vector_s s);
+
+  forever begin
+    @(posedge clk) begin
+      if (rready == 1'b1 && rvalid== 1'b1) begin
+        read_r(.s(s));
+        return;
+      end
+    end
+  end
+endtask : wait_for_read_data
 
 
 function enable_arready_toggle_pattern(bit [31:0] pattern);

@@ -21,11 +21,13 @@ endfunction : write
 function bit [7:0] memory::read(input bit [63:0] addr);
 
   if (mem.exists(addr))  begin
-    `uvm_info(this.get_type_name(), $sformatf("read mem(0x%0x)=0x%0x", addr, mem[addr]), UVM_HIGH)
+    `uvm_info(this.get_type_name(), $sformatf("read mem(0x%0x)=0x%0x", addr, mem[addr]), UVM_INFO)
 
     return mem[addr];
   end else begin
-    `uvm_error(this.get_type_name(), $sformatf("read unwritten memory address [0x%0x]", addr))
+    `uvm_info(this.get_type_name(),
+              $sformatf("read unwritten memory address [0x%0x]", addr),
+              UVM_HIGH)
     return 'z;
   end
 endfunction : read

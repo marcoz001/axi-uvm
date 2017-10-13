@@ -215,95 +215,7 @@ task axi_driver::run_phase(uvm_phase phase);
 
 endtask : run_phase
 
-/*
-task axi_driver::driver_run_phase;
 
-  axi_seq_item item;
-
-  //vif.set_awvalid(1'b0);
-  //vif.set_wvalid(1'b0);
-  //vif.set_bready_toggle_mask(m_config.bready_toggle_mask);
-
-
-
-  fork
-    driver_write_address();
-    driver_write_data();
-    driver_write_response();
-
-    driver_read_address();
-    driver_read_data();
-
-  join_none
-
-  forever begin
-    // Using item_done also triggers get_response() in the seq.
-    seq_item_port.get(item);
-    `uvm_info("axi_driver::driver_run_phase", $sformatf("YO: %s", item.convert2string()), UVM_INFO)
-    if (item.cmd == e_WRITE) begin
-      driver_writeaddress_mbx.put(item);
-    end else if (item.cmd == e_READ) begin
-      driver_readaddress_mbx.put(item);
-    end
-  end  //forever
-
-endtask : driver_run_phase
-
-task axi_driver::responder_run_phase;
-  axi_seq_item item;
-
-  item = axi_seq_item::type_id::create("item", this);
-
-
-    fork
-    responder_write_address();
-    responder_write_data();
-    responder_write_response();
-  join_none
-
-
-//  `uvm_info(this.get_type_name(), "HEY< YOU< responder_run_phase", UVM_INFO)
-  //vif.s_awready_toggle_mask(m_config.awready_toggle_mask);
-  //vif.set_wready_toggle_mask(m_config.wready_toggle_mask);
-
-  vif.wait_for_not_in_reset();
-  forever begin
-
-    item = axi_seq_item::type_id::create("item", this);
-    seq_item_port.get(item);
-  //  `uvm_info(this.get_type_name(), $sformatf("DRVa: %s", item.convert2string()), UVM_INFO)
-
-    case (item.cmd)
-       axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN : begin
-          `uvm_info(this.get_type_name(),
-                    $sformatf("Setting awready toggle patter: 0x%0x", item.toggle_pattern),
-                    UVM_INFO)
-           vif.enable_awready_toggle_pattern(.pattern(item.toggle_pattern));
-       end
-       axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN : begin
-          `uvm_info(this.get_type_name(),
-                    $sformatf("Setting wready toggle patter: 0x%0x", item.toggle_pattern),
-                    UVM_INFO)
-           vif.enable_wready_toggle_pattern(.pattern(item.toggle_pattern));
-       end
-       axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN : begin
-          `uvm_info(this.get_type_name(),
-                    $sformatf("Setting arready toggle patter: 0x%0x", item.toggle_pattern),
-                    UVM_INFO)
-           vif.enable_arready_toggle_pattern(.pattern(item.toggle_pattern));
-       end
-
-
-       default : begin
-           responder_writeaddress_mbx.put(item);
-       end
-    endcase
-
-
-        end // forever
-
-endtask : responder_run_phase
-*/
 /*
    driver_write_address - driver write address phase
    1. wait for TLM item to get queued
@@ -634,8 +546,36 @@ task axi_driver::driver_read_address;
 endtask : driver_read_address
 
 task axi_driver::driver_read_data;
+
+  axi_seq_item_r_vector_s  r_s;
+  axi_seq_item item;
+
   vif.enable_rready_toggle_pattern(.pattern(m_config.rready_toggle_pattern));
-  `uvm_info("driver_read_data", "YO, got pkt:", UVM_INFO)
+
+  driver_readdata_mbx.get(item);
+  item.data=new[item.len];
+  item.dataoffset=0;
+
+  forever begin
+    vif.wait_for_read_data(.s(r_s));
+
+    `uvm_info(this.get_type_name(),$sformatf("r_s.data: 0x%0x   LowerLane:%0d   Upperlane:%0d", r_s.rdata,item.Lower_Byte_Lane,item.Upper_Byte_Lane),
+              UVM_INFO)
+
+    for (int z=item.Lower_Byte_Lane;z<item.Upper_Byte_Lane;z++) begin
+      item.data[item.dataoffset++] = r_s.rdata[z];
+    end
+    item.update_address();
+    // `uvm_info("driver_read_data", "YO, got beat:", UVM_INFO)
+    if (r_s.rlast == 1'b1) begin
+     // `uvm_info("driver_read_data", "YO, got rlast:", UVM_INFO)
+      seq_item_port.put(item);
+    end
+  end   //forever
+
+//end
+
+
 endtask : driver_read_data
 
 task axi_driver::responder_write_address;
@@ -808,6 +748,8 @@ task axi_driver::responder_read_data;
       //item.len=item.len*4;
       //item.Burst_Length_Bytes=item.Burst_Length_Bytes*4;
       item.initialize();
+
+      item.dataoffset=0;
     end
 
     // Look at this only one per loop, so there's no race condition of it
@@ -822,7 +764,7 @@ task axi_driver::responder_read_data;
     s.rid    = 'h0;
     // s.rstrb  = 'h0;
     s.rlast  = 1'b0;
-   // `uvm_info("READ_DATA", $sformatf("item: %s", item.convert2string()), UVM_INFO)
+    `uvm_info("READ_DATA", $sformatf("item: %s", item.convert2string()), UVM_INFO)
     // Check if done with this transfer
     if (vif.get_rready()==1'b1 && vif.get_rvalid() == 1'b1) begin
       item.dataoffset = n;
@@ -912,30 +854,3 @@ task axi_driver::responder_read_data;
   end // forever
 endtask : responder_read_data
 
-    /*
-task axi_driver::responder_write_response;
-
-  axi_seq_item item;
-  axi_seq_item_b_vector_s s;
-
-  forever begin
-     responder_writeresponse_mbx.get(item);
-
-    while (item != null) begin
-      s.bid   = 'h3;
-      s.bresp = 'h1;
-      vif.write_b(.s(s), .valid(1'b1));
-
-      item = null;
-      responder_writeresponse_mbx.try_get(item);
-
-      if (item == null) begin
-        s.bid = 'h0;
-        s.bresp = 'h0;
-        vif.write_b(.s(s), .valid(1'b0));
-      end
-    end // while
-  end  //forever
-
-endtask : responder_write_response
-*/

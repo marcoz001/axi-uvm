@@ -286,7 +286,9 @@ task axi_monitor::monitor_read_address();
     // If you wanna test data corruption, this seq item is an easy place to do it.
     if (m_config.drv_type == e_RESPONDER) begin
        driver_activity_ap.write(item);
-    end  end
+    end
+
+  end
 
 
 endtask : monitor_read_address
