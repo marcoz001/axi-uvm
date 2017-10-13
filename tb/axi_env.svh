@@ -59,7 +59,7 @@ function void axi_env::build_phase (uvm_phase phase);
   m_axidriver_agent.m_config.m_active            = UVM_ACTIVE;
   m_axidriver_agent.m_config.drv_type            = e_DRIVER;
   m_axidriver_agent.m_config.bready_toggle_mask  = 32'h0000_0001;
-
+  m_axidriver_agent.m_config.rready_toggle_pattern  = 32'h0000_0001;
 
   m_axiresponder_agent = axi_agent::type_id::create("m_axiresponder_agent", this);
   m_axiresponder_agent.m_config = axi_agent_config::type_id::create("m_axiresponder_agent.m_config", this);
@@ -77,6 +77,7 @@ function void axi_env::build_phase (uvm_phase phase);
   m_memory = memory::type_id::create("m_memory", this);
   uvm_config_db #(memory)::set(null, "*", "m_memory", m_memory);
   m_axiresponder_agent.m_memory = m_memory;
+  m_axidriver_agent.m_memory    = m_memory;
 
   // m_wb_agent = wb_agent::type_id::create("m_wb_agent", this);
 endfunction : build_phase

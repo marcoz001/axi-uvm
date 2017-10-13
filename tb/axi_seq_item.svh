@@ -115,7 +115,11 @@ class axi_seq_item extends uvm_sequence_item;
                         else if (cmd == axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN)
                            len == 1;
                         else
-                           len < 256*128;
+                          len < //(burst_size**2) * 16;
+                          ((burst_size**2) * 16)-(addr-int'(addr/(burst_size**2))*(burst_size**2));
+                        // 16 for everything except AXI4 incr.
+                        //@Todo: take into account non-aligned addr
+                           //len < 256*128;
 
                        } // AXI4 is 256-beat burst by 128-byte wide
     constraint valid_c { solve len before valid;
@@ -462,6 +466,8 @@ function int axi_seq_item::calculate_beats(
 
   aligned_addr=calculate_aligned_address(.addr(addr),
                                          .number_bytes(number_bytes));
+
+  `uvm_info(this.get_type_name(), $sformatf("addr:0x%0x  aligned-addr: 0x%0x   burst_length: %0d    number_byte: %0d", addr, aligned_addr, burst_length, number_bytes), UVM_INFO)
 
         // address - starting address
         // burst_length - total length of burst (in bytes)

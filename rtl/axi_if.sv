@@ -144,6 +144,9 @@ interface axi_if #(
   logic [31:0]  arready_toggle_pattern;
   bit           arready_toggle_pattern_enable=0;
 
+  logic [31:0]  rready_toggle_pattern;
+  bit           rready_toggle_pattern_enable=0;
+
   assign awid    = iawid;
   assign awaddr  = iawaddr;
   assign awvalid = iawvalid;
@@ -228,7 +231,7 @@ interface axi_if #(
      irvalid  = 'z;
      irdata   = 'z;
      irlast   = 'z;
-     irready  = 'b0;
+     irready  = 'z;
 
   end
 
@@ -585,6 +588,16 @@ task set_arvalid(bit state);
   iarvalid <= state;
 endtask : set_arvalid
 
+task set_rready(bit state);
+  wait_for_clks(.cnt(1));
+    irready <= state;
+endtask : set_rready
+
+task set_rvalid(bit state);
+  wait_for_clks(.cnt(1));
+  irvalid <= state;
+endtask : set_rvalid
+
 
 task write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
 
@@ -619,6 +632,25 @@ task read_ar(output axi_seq_item_ar_vector_s s);
 
 endtask : read_ar
 
+
+  task write_r(axi_seq_item_r_vector_s  s, bit waitforrready=0);
+
+   //wait_for_clks(.cnt(1));
+  if (waitforrready == 1'b1) begin
+    while (rready != 1'b1) begin
+         wait_for_clks(.cnt(1));
+      end
+   end
+
+    irvalid <= s.rvalid;
+    irdata  <= s.rdata;
+    //irstrb  <= s.rstrb;
+    irlast  <= s.rlast;
+    irid     <= s.rid;
+
+endtask : write_r
+
+
 task wait_for_read_address(output axi_seq_item_ar_vector_s s);
     //wait_for_awready_awvalid();
   forever begin
@@ -640,6 +672,15 @@ endfunction : enable_arready_toggle_pattern
 function disable_arready_toggle_pattern();
      arready_toggle_pattern_enable = 0;
 endfunction : disable_arready_toggle_pattern
+
+function enable_rready_toggle_pattern(bit [31:0] pattern);
+    rready_toggle_pattern=pattern;
+    rready_toggle_pattern_enable=1;
+endfunction : enable_rready_toggle_pattern
+
+function disable_rready_toggle_pattern();
+     rready_toggle_pattern_enable = 0;
+endfunction : disable_rready_toggle_pattern
 
 endclass : axi_if_concrete
 
@@ -693,6 +734,18 @@ initial begin
    end
 end
 
+initial begin
+   forever begin
+     @(posedge clk) begin
+       if (rready_toggle_pattern_enable == 1'b1) begin
+         rready_toggle_pattern[31:0] <= {rready_toggle_pattern[30:0],
+                                          rready_toggle_pattern[31]};
+
+            irready                  <= rready_toggle_pattern[31];
+         end
+      end
+   end
+end
 
 
   function void use_concrete_class(); //axi_pkg::driver_type_t drv_type);

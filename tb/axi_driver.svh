@@ -31,6 +31,7 @@ class axi_driver extends uvm_driver #(axi_seq_item);
 
   axi_if_abstract vif;
   axi_agent_config    m_config;
+  memory              m_memory;
 
   mailbox #(axi_seq_item) driver_writeaddress_mbx  = new(0);  //unbounded mailboxes
   mailbox #(axi_seq_item) driver_writedata_mbx     = new(0);
@@ -98,8 +99,15 @@ class axi_driver extends uvm_driver #(axi_seq_item);
     bit axi_incompatible_wready_toggling_mode=0;
     bit axi_incompatible_bready_toggling_mode=0;
 
+
+
    int min_clks_between_ar_transfers=0;
    int max_clks_between_ar_transfers=0;
+
+   int min_clks_between_r_transfers=0;
+   int max_clks_between_r_transfers=0;
+
+   bit axi_incompatible_rready_toggling_mode=0;
 
 endclass : axi_driver
 
@@ -129,6 +137,7 @@ task axi_driver::run_phase(uvm_phase phase);
 
 
   axi_seq_item item;
+  axi_seq_item cloned_item;
 
   if (m_config.drv_type == e_DRIVER) begin
     fork
@@ -156,8 +165,9 @@ task axi_driver::run_phase(uvm_phase phase);
 
   forever begin
 
-    item = axi_seq_item::type_id::create("item", this);
+    //item = axi_seq_item::type_id::create("item", this);
     seq_item_port.get(item);
+    $cast(cloned_item, item.clone());
 
     `uvm_info("axi_driver::run_phase",
               $sformatf("YO: %s", item.convert2string()),
@@ -165,10 +175,10 @@ task axi_driver::run_phase(uvm_phase phase);
 
     case (item.cmd)
       axi_uvm_pkg::e_WRITE : begin
-         driver_writeaddress_mbx.put(item);
+        driver_writeaddress_mbx.put(item);
       end
       axi_uvm_pkg::e_READ  : begin
-         driver_readaddress_mbx.put(item);
+        driver_readaddress_mbx.put(item);
       end
       axi_uvm_pkg::e_READ_DATA  : begin
         `uvm_info("e_READ_DATA",
@@ -197,7 +207,7 @@ task axi_driver::run_phase(uvm_phase phase);
       end
 
       default : begin
-         responder_writeaddress_mbx.put(item);
+        responder_writeaddress_mbx.put(item);
       end
    endcase
 
@@ -352,6 +362,8 @@ task axi_driver::driver_write_address;
           v.awlen  = item.calculate_beats(.addr(item.addr),
                                           .number_bytes(2**item.burst_size), //item.number_bytes
                                           .burst_length(item.len));
+
+         `uvm_info("====> v.awlen <====", $sformatf("v.awlen == %d", v.awlen), UVM_INFO)
 
           v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
                                                     .number_bytes(4));
@@ -622,6 +634,7 @@ task axi_driver::driver_read_address;
 endtask : driver_read_address
 
 task axi_driver::driver_read_data;
+  vif.enable_rready_toggle_pattern(.pattern(m_config.rready_toggle_pattern));
   `uvm_info("driver_read_data", "YO, got pkt:", UVM_INFO)
 endtask : driver_read_data
 
@@ -776,13 +789,127 @@ endtask : responder_read_address
 
 
 task axi_driver::responder_read_data;
-  axi_seq_item item;
-     forever begin
+  axi_seq_item item=null;
+  axi_seq_item_r_vector_s s;
+
+  bit iaxi_incompatible_rready_toggling_mode;
+
+  int n=0;
+
+  int minval;
+  int maxval;
+  int wait_clks_before_next_r;
+
+  vif.set_rvalid(1'b0);
+  forever begin
+
+    if (item == null) begin
        responder_readdata_mbx.get(item);
-       `uvm_info("responder_read_data",
-                 $sformatf("YO, got pkt: %s", item.convert2string()),
-                 UVM_INFO)
-     end
+      //item.len=item.len*4;
+      //item.Burst_Length_Bytes=item.Burst_Length_Bytes*4;
+      item.initialize();
+    end
+
+    // Look at this only one per loop, so there's no race condition of it
+    // changing mid-loop.
+    iaxi_incompatible_rready_toggling_mode = axi_incompatible_rready_toggling_mode;
+
+    vif.wait_for_clks(.cnt(1));
+
+    // defaults. not needed but  I think is cleaner in sim
+    s.rvalid = 'b0;
+    s.rdata  = 'hfeed_beef;
+    s.rid    = 'h0;
+    // s.rstrb  = 'h0;
+    s.rlast  = 1'b0;
+   // `uvm_info("READ_DATA", $sformatf("item: %s", item.convert2string()), UVM_INFO)
+    // Check if done with this transfer
+    if (vif.get_rready()==1'b1 && vif.get_rvalid() == 1'b1) begin
+      item.dataoffset = n;
+      if (iaxi_incompatible_rready_toggling_mode == 1'b0) begin
+         item.validcntr++;
+      end
+
+      item.update_address();
+
+      if (item.dataoffset>=item.Burst_Length_Bytes) begin //F
+          // driver_writeresponse_mbx.put(item);
+          item = null;
+
+          minval=min_clks_between_r_transfers;
+          maxval=max_clks_between_r_transfers;
+          wait_clks_before_next_r=$urandom_range(maxval,minval);
+
+          // Check if delay wanted
+        if (wait_clks_before_next_r==0) begin
+             // if not, check if there's another item
+             responder_readdata_mbx.try_get(item);
+
+             if (item != null) begin
+               item.Burst_Length_Bytes=item.Burst_Length_Bytes*4;
+               item.initialize();
+             end
+          end
+       end
+    end  // (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1)
+
+
+    // Update values
+    if (item != null) begin
+
+      if (item.validcntr >=  item.validcntr_max) begin
+         item.validcntr=0;
+       end
+
+       //
+       // if invalid-toggling-mode is enabled, then allow deasserting valid
+       // before ready asserts.
+       // Default is to stay asserted, and only allow deasssertion after ready asserts.
+      if (iaxi_incompatible_rready_toggling_mode == 1'b0) begin
+        if (vif.get_rvalid() == 1'b0) begin
+             item.validcntr++;
+          end
+       end else begin
+             item.validcntr++;
+       end
+
+       s.rvalid = 1'b1;// item.valid[item.validcntr]; // 1'b1;
+       //s.rstrb  = 'h0;
+       s.rdata  = 'h0;
+       s.rlast  = 1'b0;
+       n=item.dataoffset;
+      for (int j=item.Lower_Byte_Lane;j<=item.Upper_Byte_Lane;j++) begin
+        s.rdata[j*8+:8] = item.data[n++];
+          //s.rstrb[j]      = 1'b1;
+        if (n>=item.Burst_Length_Bytes) begin
+             s.rlast=1'b1;
+             break;
+          end
+       end // for
+
+       // Write out
+      vif.write_r(.s(s),.waitforrready(0));
+
+
+    end // (item != null)
+
+    // No item for next clock, so close out bus
+    if (item == null) begin
+       s.rvalid = 1'b0;
+       s.rlast  = 1'b0;
+       s.rdata  = 'h0;
+ //    s.wid    = 'h0; AXI3 only
+       // s.rstrb  = 'h0;
+
+      vif.write_r(.s(s),.waitforrready(0));
+
+      if (wait_clks_before_next_r > 0) begin
+        vif.wait_for_clks(.cnt(wait_clks_before_next_r-1));
+                                        // -1 because another wait
+                                        // at beginning of loop
+       end
+    end // if (item == null
+  end // forever
 endtask : responder_read_data
 
     /*

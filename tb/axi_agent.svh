@@ -68,8 +68,10 @@ function void axi_agent::build_phase(uvm_phase phase);
      m_seqr    = axi_sequencer::type_id::create("m_seqr", this);
 
      m_driver.m_config = m_config;
+//     m_driver.m_memory = m_memory;
 
   end
+     m_driver.m_memory = m_memory;
 
   m_monitor = axi_monitor::type_id::create("m_monitor", this);
   m_monitor.m_config=m_config;

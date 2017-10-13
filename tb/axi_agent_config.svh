@@ -38,6 +38,8 @@ class axi_agent_config extends uvm_object;
   rand bit[31:0]  wready_toggle_mask;
   rand bit[31:0]  bready_toggle_mask;
 
+  rand bit[31:0]  rready_toggle_pattern;
+
   extern function new (string name="axi_agent_config");
 
 endclass : axi_agent_config

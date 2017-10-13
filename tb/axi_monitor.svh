@@ -186,7 +186,6 @@ task axi_monitor::monitor_write_data();
         // data queue and put it in the item.
         // awsize is needed in case this is a partial burst (awsize != databussize)
         //
-//        addr=aw_q[0].addr;
         if (aw_q[0].initialized != 1'b1) begin
           for (int j=0;j<4;j++)  begin
             if (w_s.wstrb[j] == 1'b1) begin
@@ -202,7 +201,6 @@ task axi_monitor::monitor_write_data();
 
         end
         maxoffset=aw_q[0].len;
-
 
          // if anything in data queue, write it out
 
@@ -229,7 +227,7 @@ task axi_monitor::monitor_write_data();
          end
 
       end
-  //  `uvm_info(this.get_type_name(), "got data", UVM_INFO)
+
 
   end  // forever
 endtask : monitor_write_data
@@ -272,6 +270,12 @@ task axi_monitor::monitor_read_address();
 
     axi_seq_item::ar_to_class(.t(item), .v(ar_s));
     item.cmd  = axi_uvm_pkg::e_READ_DATA;
+    item.len=(ar_s.arlen+1)*4;
+    item.data=new[item.len];
+    for (int z=0;z<item.len;z++) begin
+      item.data[z]=m_memory.read(ar_s.araddr+z);
+    end
+
 
     `uvm_info("AR_TO_CLASS_post", $sformatf("%s", item.convert2string()), UVM_INFO)
    // item.initialize();

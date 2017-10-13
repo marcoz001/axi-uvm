@@ -80,7 +80,7 @@ task axi_seq::body;
      assert( item.randomize() with {cmd        == e_WRITE;
                                     burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
                                     burst_type == e_INCR;
-                                    addr       <  'h1000;
+                                    addr       ==  'h1000;
                                     //len        ==  'h10;
                                     len        >  'h0;
                                     len        <=  'h40;}
