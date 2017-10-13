@@ -72,7 +72,7 @@ task axi_seq::body;
 
 
 
-  xfers_to_send=1;
+  xfers_to_send=10;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());
@@ -81,7 +81,8 @@ task axi_seq::body;
          assert( item.randomize() with {cmd        == e_WRITE;
                                     burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
                                     burst_type == e_INCR;
-                                    addr       ==  'h1000;
+                                    //addr       ==  'h1000;
+                                        addr < 'h5;
                                     //len        ==  'h10;
                                     len        >  'h0;
                                     len        <=  'h40;}
@@ -94,7 +95,7 @@ task axi_seq::body;
          finish_item(item);
     `uvm_info("DATA", $sformatf("Sending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", item.addr, item.len, item.len, item.burst_size), UVM_INFO)
        get_response(item);
-     #10us
+     #5us
 
     `uvm_info("...", "Now reading back from memory to verify", UVM_INFO)
     s=$sformatf("Addr[0x%0x/(len:%d)]=", item.Start_Address, item.len);
@@ -128,7 +129,7 @@ task axi_seq::body;
               $sformatf("GOT RESPONSE. item=%s", cloned_item.convert2string()),
               UVM_INFO)
 
-     #10us
+     #5us
     `uvm_info("..", "...", UVM_HIGH)
 
   end  //for

@@ -156,6 +156,7 @@ task axi_driver::run_phase(uvm_phase phase);
        responder_write_data();
        responder_write_response();
 
+       responder_read_address();
        responder_read_data();
     join_none
     //responder_run_phase;
@@ -548,28 +549,40 @@ endtask : driver_read_address
 task axi_driver::driver_read_data;
 
   axi_seq_item_r_vector_s  r_s;
-  axi_seq_item item;
+  axi_seq_item item=null;
 
   vif.enable_rready_toggle_pattern(.pattern(m_config.rready_toggle_pattern));
 
+  forever begin
+
+    if (item == null) begin
   driver_readdata_mbx.get(item);
+  item.initialize();
   item.data=new[item.len];
   item.dataoffset=0;
+  `uvm_info(this.get_type_name(), $sformatf("%s", item.convert2string()), UVM_INFO)
+    end
 
-  forever begin
+
+ // forever begin
     vif.wait_for_read_data(.s(r_s));
 
-    `uvm_info(this.get_type_name(),$sformatf("r_s.data: 0x%0x   LowerLane:%0d   Upperlane:%0d", r_s.rdata,item.Lower_Byte_Lane,item.Upper_Byte_Lane),
-              UVM_INFO)
+  //  `uvm_info(this.get_type_name(),$sformatf("r_s.data: 0x%0x   LowerLane:%0d   Upperlane:%0d   dataoffset=%0d", r_s.rdata,item.Lower_Byte_Lane,item.Upper_Byte_Lane, item.dataoffset),
+  //            UVM_INFO)
 
     for (int z=item.Lower_Byte_Lane;z<item.Upper_Byte_Lane;z++) begin
-      item.data[item.dataoffset++] = r_s.rdata[z];
+      item.data[item.dataoffset++] = r_s.rdata[z*8+:8];
+   //   `uvm_info("DATAOFFSET",
+   //             $sformatf("data: 0x%0x -- item:0x%0x", r_s.rdata[z*8+:8], item.data[item.dataoffset-1]),
+   //             UVM_INFO)
+
     end
     item.update_address();
     // `uvm_info("driver_read_data", "YO, got beat:", UVM_INFO)
     if (r_s.rlast == 1'b1) begin
      // `uvm_info("driver_read_data", "YO, got rlast:", UVM_INFO)
       seq_item_port.put(item);
+      item=null;
     end
   end   //forever
 
@@ -764,7 +777,7 @@ task axi_driver::responder_read_data;
     s.rid    = 'h0;
     // s.rstrb  = 'h0;
     s.rlast  = 1'b0;
-    `uvm_info("READ_DATA", $sformatf("item: %s", item.convert2string()), UVM_INFO)
+    //`uvm_info("READ_DATA", $sformatf("item: %s", item.convert2string()), UVM_INFO)
     // Check if done with this transfer
     if (vif.get_rready()==1'b1 && vif.get_rvalid() == 1'b1) begin
       item.dataoffset = n;
