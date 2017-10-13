@@ -247,9 +247,249 @@ interface axi_if #(
 class axi_if_concrete extends axi_if_abstract;
   `uvm_object_utils(axi_if_concrete)
 
-  function new (string name="axi_if_concrete");
+function new (string name="axi_if_concrete");
     super.new(name);
-  endfunction : new
+endfunction : new
+
+// wait for n clock cycles. Default: 1
+task wait_for_clks(int cnt=1);
+    if (cnt==0) return;
+
+    repeat (cnt) @(posedge clk);
+endtask : wait_for_clks
+
+task wait_for_not_in_reset;
+    wait (reset == 1'b0);
+endtask : wait_for_not_in_reset;
+
+task wait_for_awready_awvalid;
+
+  if (awready == 1'b1 && awvalid == 1'b1)
+    return;
+  else  if (awvalid == 1'b1)
+    @(posedge awready);
+  else  if (awready == 1'b1)
+    @(posedge awvalid);
+  else
+    @(posedge awvalid or posedge awready)  wait_for_awready_awvalid();
+
+endtask : wait_for_awready_awvalid
+
+task wait_for_awvalid;
+  @(posedge awvalid);
+endtask : wait_for_awvalid;
+
+task wait_for_wready;
+  while (wready != 1'b1)
+    wait_for_clks(.cnt(1));
+endtask : wait_for_wready
+
+task wait_for_bvalid;
+  @(posedge bvalid);
+endtask : wait_for_bvalid
+
+task wait_for_write_address(output axi_seq_item_aw_vector_s s);
+    //wait_for_awready_awvalid();
+  forever begin
+    @(posedge clk) begin
+      if (awready == 1'b1 && awvalid== 1'b1) begin
+        read_aw(.s(s));
+        return;
+      end
+    end
+  end
+endtask : wait_for_write_address
+
+task wait_for_write_data(output axi_seq_item_w_vector_s s);
+
+  forever begin
+    @(posedge clk) begin
+      if (wready == 1'b1 && wvalid== 1'b1) begin
+        read_w(.s(s));
+        return;
+      end
+    end
+  end
+endtask : wait_for_write_data
+
+task wait_for_write_response(output axi_seq_item_b_vector_s s);
+
+  forever begin
+    @(posedge clk) begin
+      if (bready == 1'b1 && bvalid== 1'b1) begin
+        read_b(.s(s));
+        return;
+      end
+    end
+  end
+endtask : wait_for_write_response
+
+task wait_for_read_address(output axi_seq_item_ar_vector_s s);
+    //wait_for_awready_awvalid();
+  forever begin
+    @(posedge clk) begin
+      if (arready == 1'b1 && arvalid== 1'b1) begin
+        read_ar(.s(s));
+        return;
+      end
+    end
+  end
+endtask : wait_for_read_address
+
+task wait_for_read_data(output axi_seq_item_r_vector_s s);
+
+  forever begin
+    @(posedge clk) begin
+      if (rready == 1'b1 && rvalid== 1'b1) begin
+        read_r(.s(s));
+        return;
+      end
+    end
+  end
+endtask : wait_for_read_data
+
+function bit get_awready_awvalid;
+  return awready & awvalid;
+endfunction : get_awready_awvalid;
+
+function bit get_awready;
+  return awready;
+endfunction : get_awready;
+
+function bit get_wready_wvalid;
+  return wvalid & wready;
+endfunction : get_wready_wvalid;
+
+function bit get_wvalid;
+  return wvalid;
+endfunction : get_wvalid
+
+function bit get_wready;
+  return wready;
+endfunction : get_wready
+
+function bit get_bready_bvalid;
+  return bready & bvalid;
+endfunction : get_bready_bvalid;
+
+function bit get_bvalid;
+  return bvalid;
+endfunction : get_bvalid
+
+function bit get_bready;
+  return bready;
+endfunction : get_bready
+
+function bit get_arready_arvalid;
+  return arready & arvalid;
+endfunction : get_arready_arvalid;
+
+function bit get_arready;
+  return arready;
+endfunction : get_arready;
+
+function bit get_rready_rvalid;
+  return rvalid & rready;
+endfunction : get_rready_rvalid;
+
+function bit get_rvalid;
+  return rvalid;
+endfunction : get_rvalid
+
+function bit get_rready;
+  return rready;
+endfunction : get_rready
+
+task set_awvalid(bit state);
+  wait_for_clks(.cnt(1));
+  iawvalid <= state;
+endtask : set_awvalid
+
+task set_awready(bit state);
+    wait_for_clks(.cnt(1));
+    iawready <= state;
+endtask : set_awready
+
+task set_wvalid(bit state);
+  wait_for_clks(.cnt(1));
+  iwvalid <= state;
+endtask : set_wvalid
+
+task set_wready(bit state);
+  wait_for_clks(.cnt(1));
+    iwready <= state;
+endtask : set_wready
+
+task set_bvalid(bit state);
+  wait_for_clks(.cnt(1));
+  ibvalid <= state;
+endtask : set_bvalid
+
+task set_bready(bit state);
+  wait_for_clks(.cnt(1));
+    ibready <= state;
+endtask : set_bready
+
+task set_arvalid(bit state);
+  wait_for_clks(.cnt(1));
+  iarvalid <= state;
+endtask : set_arvalid
+
+task set_rvalid(bit state);
+  wait_for_clks(.cnt(1));
+  irvalid <= state;
+endtask : set_rvalid
+
+task set_rready(bit state);
+  wait_for_clks(.cnt(1));
+    irready <= state;
+endtask : set_rready
+
+function enable_awready_toggle_pattern(bit [31:0] pattern);
+    awready_toggle_pattern=pattern;
+    awready_toggle_pattern_enable=1;
+endfunction : enable_awready_toggle_pattern
+
+function disable_awready_toggle_pattern();
+     awready_toggle_pattern_enable = 0;
+endfunction : disable_awready_toggle_pattern
+
+function enable_wready_toggle_pattern(bit [31:0] pattern);
+    wready_toggle_pattern=pattern;
+    wready_toggle_pattern_enable=1;
+endfunction : enable_wready_toggle_pattern
+
+function disable_wready_toggle_pattern();
+     wready_toggle_pattern_enable = 0;
+endfunction : disable_wready_toggle_pattern
+
+task set_bready_toggle_mask(bit [31:0] mask);
+    bready_toggle_mask=mask;
+    bready_toggle_mask_enable=1;
+endtask : set_bready_toggle_mask
+
+task clr_bready_toggle_mask();
+     bready_toggle_mask_enable =0;
+endtask : clr_bready_toggle_mask
+
+function enable_arready_toggle_pattern(bit [31:0] pattern);
+    arready_toggle_pattern=pattern;
+    arready_toggle_pattern_enable=1;
+endfunction : enable_arready_toggle_pattern
+
+function disable_arready_toggle_pattern();
+     arready_toggle_pattern_enable = 0;
+endfunction : disable_arready_toggle_pattern
+
+function enable_rready_toggle_pattern(bit [31:0] pattern);
+    rready_toggle_pattern=pattern;
+    rready_toggle_pattern_enable=1;
+endfunction : enable_rready_toggle_pattern
+
+function disable_rready_toggle_pattern();
+     rready_toggle_pattern_enable = 0;
+endfunction : disable_rready_toggle_pattern
+
 
 task write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
 
@@ -338,69 +578,21 @@ endtask : write_b
 
 endtask : read_w
 
-
-  task wait_for_not_in_reset;
-    wait (reset == 1'b0);
-  endtask : wait_for_not_in_reset;
-
-task wait_for_awvalid;
-  @(posedge awvalid);
-endtask : wait_for_awvalid;
+function void read_b(output axi_seq_item_b_vector_s  s);
+  s.bid   = bid;
+  s.bresp = bresp;
+endfunction : read_b
 
 
-task wait_for_write_address(output axi_seq_item_aw_vector_s s);
-    //wait_for_awready_awvalid();
-  forever begin
-    @(posedge clk) begin
-      if (awready == 1'b1 && awvalid== 1'b1) begin
-        read_aw(.s(s));
-        return;
-      end
-    end
-  end
-endtask : wait_for_write_address
-
-task wait_for_write_data(output axi_seq_item_w_vector_s s);
-
-  forever begin
-    @(posedge clk) begin
-      if (wready == 1'b1 && wvalid== 1'b1) begin
-        read_w(.s(s));
-        return;
-      end
-    end
-  end
-endtask : wait_for_write_data
-
-task wait_for_write_response(output axi_seq_item_b_vector_s s);
-
-  forever begin
-    @(posedge clk) begin
-      if (bready == 1'b1 && bvalid== 1'b1) begin
-        read_b(.s(s));
-        return;
-      end
-    end
-  end
-endtask : wait_for_write_response
+// *****************************
+// *****************************
 
 
 
-task wait_for_awready_awvalid;
-
-  if (awready == 1'b1 && awvalid == 1'b1)
-    return;
-  else  if (awvalid == 1'b1)
-    @(posedge awready);
-  else  if (awready == 1'b1)
-    @(posedge awvalid);
-  else
-    @(posedge awvalid or posedge awready)  wait_for_awready_awvalid();
-
-endtask : wait_for_awready_awvalid
 
   // @Todo: dynamic arrays (data[]) obviously don't work on a real Veloce
   // but for the sake of simplicity
+/*
 task read(output bit [63:0] addr, output bit [7:0] data[], output int len, output bit [7:0] id);
 //      $display("YO, axi_if.read");
    // @(posedge clk);
@@ -424,111 +616,7 @@ task read(output bit [63:0] addr, output bit [7:0] data[], output int len, outpu
     //  iarready <= 1'b0;
 
 endtask : read
-
-task set_awready(bit state);
-    wait_for_clks(.cnt(1));
-    iawready <= state;
-endtask : set_awready
-
-task set_awvalid(bit state);
-  wait_for_clks(.cnt(1));
-  iawvalid <= state;
-endtask : set_awvalid
-
-task set_wready(bit state);
-  wait_for_clks(.cnt(1));
-    iwready <= state;
-endtask : set_wready
-
-task set_wvalid(bit state);
-  wait_for_clks(.cnt(1));
-  iwvalid <= state;
-endtask : set_wvalid
-
-task set_bready(bit state);
-  wait_for_clks(.cnt(1));
-    ibready <= state;
-endtask : set_bready
-
-task set_bvalid(bit state);
-  wait_for_clks(.cnt(1));
-  ibvalid <= state;
-endtask : set_bvalid
-
-
-  // wait for n clock cycles. Default: 1
-task wait_for_clks(int cnt=1);
-    if (cnt==0) return;
-
-    repeat (cnt) @(posedge clk);
-endtask : wait_for_clks
-
-
-task wait_for_wready;
-  while (wready != 1'b1)
-    wait_for_clks(.cnt(1));
-
-endtask : wait_for_wready
-
-
-function bit get_awready_awvalid;
-  return awready & awvalid;
-endfunction : get_awready_awvalid;
-
-function bit get_awready;
-  return awready;
-endfunction : get_awready;
-
-
-
-function bit get_wready_wvalid;
-  return wvalid & wready;
-endfunction : get_wready_wvalid;
-
-function enable_awready_toggle_pattern(bit [31:0] pattern);
-    awready_toggle_pattern=pattern;
-    awready_toggle_pattern_enable=1;
-endfunction : enable_awready_toggle_pattern
-
-function disable_awready_toggle_pattern();
-     awready_toggle_pattern_enable = 0;
-endfunction : disable_awready_toggle_pattern
-
-function enable_wready_toggle_pattern(bit [31:0] pattern);
-    wready_toggle_pattern=pattern;
-    wready_toggle_pattern_enable=1;
-endfunction : enable_wready_toggle_pattern
-
-function disable_wready_toggle_pattern();
-     wready_toggle_pattern_enable = 0;
-endfunction : disable_wready_toggle_pattern
-
-function bit get_wready;
-  return wready;
-endfunction : get_wready
-
-function bit get_wvalid;
-  return wvalid;
-endfunction : get_wvalid
-
-
-function bit get_bready_bvalid;
-  return bready & bvalid;
-endfunction : get_bready_bvalid;
-
-
-function bit get_bready;
-  return bready;
-endfunction : get_bready
-
-function bit get_bvalid;
-  return bvalid;
-endfunction : get_bvalid
-
-
-task wait_for_bvalid;
-  @(posedge bvalid);
-endtask : wait_for_bvalid
+ */
 
   /*
 task disable_awready_toggle_pattern();
@@ -545,58 +633,10 @@ task clr_wready_toggle_mask();
      wready_toggle_mask_enable =0;
 endtask : clr_wready_toggle_mask
 */
-task set_bready_toggle_mask(bit [31:0] mask);
-    bready_toggle_mask=mask;
-    bready_toggle_mask_enable=1;
-endtask : set_bready_toggle_mask
-
-
-task clr_bready_toggle_mask();
-     bready_toggle_mask_enable =0;
-endtask : clr_bready_toggle_mask
-
-function void read_b(output axi_seq_item_b_vector_s  s);
-  s.bid   = bid;
-  s.bresp = bresp;
-endfunction : read_b
 
 // *************
 // Read Channels
 // *************
-function bit get_arready_arvalid;
-  return arready & arvalid;
-endfunction : get_arready_arvalid;
-
-function bit get_arready;
-  return arready;
-endfunction : get_arready;
-
-function bit get_rready_rvalid;
-  return rvalid & rready;
-endfunction : get_rready_rvalid;
-
-function bit get_rready;
-  return rready;
-endfunction : get_rready
-
-function bit get_rvalid;
-  return rvalid;
-endfunction : get_rvalid
-
-task set_arvalid(bit state);
-  wait_for_clks(.cnt(1));
-  iarvalid <= state;
-endtask : set_arvalid
-
-task set_rready(bit state);
-  wait_for_clks(.cnt(1));
-    irready <= state;
-endtask : set_rready
-
-task set_rvalid(bit state);
-  wait_for_clks(.cnt(1));
-  irvalid <= state;
-endtask : set_rvalid
 
 
 task write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
@@ -615,25 +655,7 @@ task write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
 
 endtask : write_ar
 
-
-// ********************
-task read_ar(output axi_seq_item_ar_vector_s s);
-
-     s.arvalid = arvalid;
-     s.arid    = arid;
-     s.araddr  = araddr;
-     s.arlen   = arlen;
-     s.arsize  = arsize;
-     s.arburst = arburst;
-     s.arlock  = arlock;
-     s.arcache = arcache;
-     s.arprot  = arprot;
-     s.arqos   = arqos;
-
-endtask : read_ar
-
-
-  task write_r(axi_seq_item_r_vector_s  s, bit waitforrready=0);
+task write_r(axi_seq_item_r_vector_s  s, bit waitforrready=0);
 
    //wait_for_clks(.cnt(1));
   if (waitforrready == 1'b1) begin
@@ -651,6 +673,21 @@ endtask : read_ar
 endtask : write_r
 
 
+task read_ar(output axi_seq_item_ar_vector_s s);
+
+     s.arvalid = arvalid;
+     s.arid    = arid;
+     s.araddr  = araddr;
+     s.arlen   = arlen;
+     s.arsize  = arsize;
+     s.arburst = arburst;
+     s.arlock  = arlock;
+     s.arcache = arcache;
+     s.arprot  = arprot;
+     s.arqos   = arqos;
+
+endtask : read_ar
+
 task read_r(output axi_seq_item_r_vector_s  s);
 
     s.rvalid = rvalid;
@@ -660,50 +697,6 @@ task read_r(output axi_seq_item_r_vector_s  s);
     s.rresp  = rresp;
 
 endtask : read_r
-
-
-task wait_for_read_address(output axi_seq_item_ar_vector_s s);
-    //wait_for_awready_awvalid();
-  forever begin
-    @(posedge clk) begin
-      if (arready == 1'b1 && arvalid== 1'b1) begin
-        read_ar(.s(s));
-        return;
-      end
-    end
-  end
-endtask : wait_for_read_address
-
-task wait_for_read_data(output axi_seq_item_r_vector_s s);
-
-  forever begin
-    @(posedge clk) begin
-      if (rready == 1'b1 && rvalid== 1'b1) begin
-        read_r(.s(s));
-        return;
-      end
-    end
-  end
-endtask : wait_for_read_data
-
-
-function enable_arready_toggle_pattern(bit [31:0] pattern);
-    arready_toggle_pattern=pattern;
-    arready_toggle_pattern_enable=1;
-endfunction : enable_arready_toggle_pattern
-
-function disable_arready_toggle_pattern();
-     arready_toggle_pattern_enable = 0;
-endfunction : disable_arready_toggle_pattern
-
-function enable_rready_toggle_pattern(bit [31:0] pattern);
-    rready_toggle_pattern=pattern;
-    rready_toggle_pattern_enable=1;
-endfunction : enable_rready_toggle_pattern
-
-function disable_rready_toggle_pattern();
-     rready_toggle_pattern_enable = 0;
-endfunction : disable_rready_toggle_pattern
 
 endclass : axi_if_concrete
 
