@@ -1,0 +1,7 @@
+<map id="axi_monitor" name="axi_monitor">
+<area shape="rect" id="node3" href="$classaxi__if__abstract.html" title="axi_if_abstract" alt="" coords="127,81,234,108"/>
+<area shape="rect" id="node7" href="$classaxi__agent__config.html" title="axi_agent_config" alt="" coords="258,81,378,108"/>
+<area shape="rect" id="node5" href="$classmemory.html" title="memory" alt="" coords="402,81,471,108"/>
+<area shape="rect" id="node8" href="$structpacked.html" title="packed" alt="" coords="495,81,559,108"/>
+<area shape="rect" id="node9" href="$classaxi__seq__item.html" title="axi_seq_item" alt="" coords="583,81,682,108"/>
+</map>
