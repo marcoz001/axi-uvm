@@ -34,9 +34,7 @@ class axi_agent_config extends uvm_object;
 
   // Use toggle patterns. The interface can directly handle all the ready* toggling
   // without requiring the driver.
-  rand bit[31:0] awready_toggle_mask;
-  rand bit[31:0]  wready_toggle_mask;
-  rand bit[31:0]  bready_toggle_mask;
+  rand bit[31:0]  bready_toggle_pattern;
 
   rand bit[31:0]  rready_toggle_pattern;
 

@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="node2" href="$classaxi__agent__config.html" title="axi_agent_config" alt="" coords="143,5,263,32"/>
 <area shape="rect" id="node3" href="$classaxi__env__config.html" title="axi_env_config" alt="" coords="148,56,257,83"/>
-<area shape="rect" id="node4" href="$classaxi__if__abstract.html" title="axi_if_abstract" alt="" coords="149,107,256,133"/>
+<area shape="rect" id="node4" href="$classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="149,107,256,133"/>
 </map>

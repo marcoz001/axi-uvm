@@ -416,7 +416,7 @@ task axi_driver::driver_write_data;
        end // for
 
        // Write out
-       vif.write_w(.s(s),.waitforwready(0));
+       vif.write_w(.s(s));
 
 
     end // (item != null)
@@ -429,7 +429,7 @@ task axi_driver::driver_write_data;
  //    s.wid    = 'h0; AXI3 only
        s.wstrb  = 'h0;
 
-       vif.write_w(.s(s),.waitforwready(0));
+       vif.write_w(.s(s));
 
        if (wait_clks_before_next_w > 0) begin
           vif.wait_for_clks(.cnt(wait_clks_before_next_w-1));
@@ -447,7 +447,7 @@ task axi_driver::driver_write_response;
   axi_seq_item            item;
   axi_seq_item_b_vector_s s;
 
-  vif.set_bready_toggle_mask(m_config.bready_toggle_mask);
+  vif.enable_bready_toggle_pattern(m_config.bready_toggle_pattern);
 
   forever begin
     driver_writeresponse_mbx.get(item);
@@ -843,7 +843,7 @@ task axi_driver::responder_read_data;
        end // for
 
        // Write out
-      vif.write_r(.s(s),.waitforrready(0));
+      vif.write_r(.s(s));
 
 
     end // (item != null)
@@ -856,7 +856,7 @@ task axi_driver::responder_read_data;
  //    s.wid    = 'h0; AXI3 only
        // s.rstrb  = 'h0;
 
-      vif.write_r(.s(s),.waitforrready(0));
+      vif.write_r(.s(s));
 
       if (wait_clks_before_next_r > 0) begin
         vif.wait_for_clks(.cnt(wait_clks_before_next_r-1));

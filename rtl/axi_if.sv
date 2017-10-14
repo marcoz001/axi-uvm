@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_if.svh
-//
-// Purpose:
-//          bindable interface for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,7 +17,12 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
-
+//! bindable interface for AXI UVM environment
+/*! This interface contains all functions and tasks for the testbench
+ * to communicate with the DUT.  They are meant to be called using the
+ * embedded class axi_if_concrete, which extends axi_if_abstract.
+  @see axi_if_abstract.sv
+*/
 interface axi_if #(
                       parameter C_AXI_ID_WIDTH   = 6,
                       parameter C_AXI_ADDR_WIDTH = 32,
@@ -138,8 +134,8 @@ interface axi_if #(
   logic [31:0]  wready_toggle_pattern;
   bit           wready_toggle_pattern_enable=0;
 
-  logic [31:0]  bready_toggle_mask;
-  bit           bready_toggle_mask_enable=0;
+  logic [31:0]  bready_toggle_pattern;
+  bit           bready_toggle_pattern_enable=0;
 
   logic [31:0]  arready_toggle_pattern;
   bit           arready_toggle_pattern_enable=0;
@@ -445,53 +441,53 @@ task set_rready(bit state);
     irready <= state;
 endtask : set_rready
 
-function enable_awready_toggle_pattern(bit [31:0] pattern);
+function void enable_awready_toggle_pattern(bit [31:0] pattern);
     awready_toggle_pattern=pattern;
     awready_toggle_pattern_enable=1;
 endfunction : enable_awready_toggle_pattern
 
-function disable_awready_toggle_pattern();
+function void disable_awready_toggle_pattern();
      awready_toggle_pattern_enable = 0;
 endfunction : disable_awready_toggle_pattern
 
-function enable_wready_toggle_pattern(bit [31:0] pattern);
+function void enable_wready_toggle_pattern(bit [31:0] pattern);
     wready_toggle_pattern=pattern;
     wready_toggle_pattern_enable=1;
 endfunction : enable_wready_toggle_pattern
 
-function disable_wready_toggle_pattern();
+function void disable_wready_toggle_pattern();
      wready_toggle_pattern_enable = 0;
 endfunction : disable_wready_toggle_pattern
 
-task set_bready_toggle_mask(bit [31:0] mask);
-    bready_toggle_mask=mask;
-    bready_toggle_mask_enable=1;
-endtask : set_bready_toggle_mask
+function void enable_bready_toggle_pattern(bit [31:0] pattern);
+    bready_toggle_pattern=pattern;
+    bready_toggle_pattern_enable=1;
+endfunction : enable_bready_toggle_pattern
 
-task clr_bready_toggle_mask();
-     bready_toggle_mask_enable =0;
-endtask : clr_bready_toggle_mask
+function void disable_bready_toggle_pattern();
+     bready_toggle_pattern_enable = 0;
+endfunction : disable_bready_toggle_pattern
 
-function enable_arready_toggle_pattern(bit [31:0] pattern);
+function void enable_arready_toggle_pattern(bit [31:0] pattern);
     arready_toggle_pattern=pattern;
     arready_toggle_pattern_enable=1;
 endfunction : enable_arready_toggle_pattern
 
-function disable_arready_toggle_pattern();
+function void disable_arready_toggle_pattern();
      arready_toggle_pattern_enable = 0;
 endfunction : disable_arready_toggle_pattern
 
-function enable_rready_toggle_pattern(bit [31:0] pattern);
+function void enable_rready_toggle_pattern(bit [31:0] pattern);
     rready_toggle_pattern=pattern;
     rready_toggle_pattern_enable=1;
 endfunction : enable_rready_toggle_pattern
 
-function disable_rready_toggle_pattern();
+function void disable_rready_toggle_pattern();
      rready_toggle_pattern_enable = 0;
 endfunction : disable_rready_toggle_pattern
 
 
-task write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
+function void write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
 
      iawvalid <= valid;
      iawid    <= s.awid;
@@ -505,51 +501,27 @@ task write_aw(axi_seq_item_aw_vector_s s, bit valid=1'b1);
      iawqos   <= s.awqos;
 
 
-endtask : write_aw
+endfunction : write_aw
 
 
-task write_w(axi_seq_item_w_vector_s  s, bit waitforwready=0);
-
-   //wait_for_clks(.cnt(1));
-   if (waitforwready == 1'b1) begin
-      while (wready != 1'b1) begin
-         wait_for_clks(.cnt(1));
-      end
-   end
+function void write_w(axi_seq_item_w_vector_s  s);
 
     iwvalid <= s.wvalid;
     iwdata  <= s.wdata;
     iwstrb  <= s.wstrb;
     iwlast  <= s.wlast;
 
-endtask : write_w
+endfunction : write_w
 
-task write_b(axi_seq_item_b_vector_s s, bit valid=1'b1);
-  //$display("%t write_b(bid=%d, bresp=%d",$time, s.bid, s.bresp);
-  //wait_for_clks(.cnt(1));
+function void write_b(axi_seq_item_b_vector_s s, bit valid=1'b1);
+
   ibvalid <= valid;
   ibid    <= s.bid;
   ibresp  <= s.bresp;
-/*
-   // only wait for bready if we're asserting bvalid.
-  if (valid == 1'b1) begin
-     while (bready != 1'b1) begin
-    //   $display("%t: write_b...waiting for bready", $time);
-           wait_for_clks(.cnt(1));
-     end
-  end
-  */
-  //$display("%t write_b: done", $time);
 
-endtask : write_b
+endfunction : write_b
 
-  // ********************
-  task read_aw(output axi_seq_item_aw_vector_s s);
-
-
-
-
-   // $display("YO, axi_if.write_aw");
+function void read_aw(output axi_seq_item_aw_vector_s s);
 
      s.awvalid = awvalid;
      s.awid    = awid;
@@ -562,21 +534,17 @@ endtask : write_b
      s.awprot  = awprot;
      s.awqos   = awqos;
 
+endfunction : read_aw
 
-  endtask : read_aw
 
-
-  // ********************
-  task read_w(output axi_seq_item_w_vector_s  s);
-
+function void read_w(output axi_seq_item_w_vector_s  s);
 
     s.wvalid = wvalid;
-
     s.wdata = wdata;
     s.wstrb = wstrb;
     s.wlast = wlast;
 
-endtask : read_w
+endfunction : read_w
 
 function void read_b(output axi_seq_item_b_vector_s  s);
   s.bid   = bid;
@@ -584,62 +552,7 @@ function void read_b(output axi_seq_item_b_vector_s  s);
 endfunction : read_b
 
 
-// *****************************
-// *****************************
-
-
-
-
-  // @Todo: dynamic arrays (data[]) obviously don't work on a real Veloce
-  // but for the sake of simplicity
-/*
-task read(output bit [63:0] addr, output bit [7:0] data[], output int len, output bit [7:0] id);
-//      $display("YO, axi_if.read");
-   // @(posedge clk);
-
-    id   = awid;
-    addr = awaddr;
-    data = new[4];
-    data[3]=8'hde;
-    data[2]=8'had;
-    data[1]=8'hbe;
-    data[0]=8'hef;
-    len=4;
-
-    //data = 'h0; // awdata;
-    //  iarready <= 1'b1;
-    //  iaraddr  <= addr;
-
-    //  iarid    <= id;
-
-    //@(posedge clk);
-    //  iarready <= 1'b0;
-
-endtask : read
- */
-
-  /*
-task disable_awready_toggle_pattern();
-     awready_toggle_pattern_enable =0;
-endtask : disable_awready_toggle_pattern
-
-task set_wready_toggle_mask(bit [31:0] mask);
-    wready_toggle_mask=mask;
-    wready_toggle_mask_enable=1;
-endtask : set_wready_toggle_mask
-
-
-task clr_wready_toggle_mask();
-     wready_toggle_mask_enable =0;
-endtask : clr_wready_toggle_mask
-*/
-
-// *************
-// Read Channels
-// *************
-
-
-task write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
+function void write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
 
      iarvalid <= valid;
      iarid    <= s.arid;
@@ -653,16 +566,9 @@ task write_ar(axi_seq_item_ar_vector_s s, bit valid=1'b1);
      iarqos   <= s.arqos;
 
 
-endtask : write_ar
+endfunction : write_ar
 
-task write_r(axi_seq_item_r_vector_s  s, bit waitforrready=0);
-
-   //wait_for_clks(.cnt(1));
-  if (waitforrready == 1'b1) begin
-    while (rready != 1'b1) begin
-         wait_for_clks(.cnt(1));
-      end
-   end
+function void write_r(axi_seq_item_r_vector_s  s);
 
     irvalid <= s.rvalid;
     irdata  <= s.rdata;
@@ -670,10 +576,10 @@ task write_r(axi_seq_item_r_vector_s  s, bit waitforrready=0);
     irlast  <= s.rlast;
     irid     <= s.rid;
 
-endtask : write_r
+endfunction : write_r
 
 
-task read_ar(output axi_seq_item_ar_vector_s s);
+function void read_ar(output axi_seq_item_ar_vector_s s);
 
      s.arvalid = arvalid;
      s.arid    = arid;
@@ -686,9 +592,9 @@ task read_ar(output axi_seq_item_ar_vector_s s);
      s.arprot  = arprot;
      s.arqos   = arqos;
 
-endtask : read_ar
+endfunction : read_ar
 
-task read_r(output axi_seq_item_r_vector_s  s);
+function void read_r(output axi_seq_item_r_vector_s  s);
 
     s.rvalid = rvalid;
     s.rdata  = rdata;
@@ -696,7 +602,7 @@ task read_r(output axi_seq_item_r_vector_s  s);
     s.rid    = rid;
     s.rresp  = rresp;
 
-endtask : read_r
+endfunction : read_r
 
 endclass : axi_if_concrete
 
@@ -728,13 +634,14 @@ end
 initial begin
    forever begin
      @(posedge clk) begin
-         if (bready_toggle_mask_enable == 1'b1) begin
-            bready_toggle_mask[31:0] <= {bready_toggle_mask[30:0], bready_toggle_mask[31]};
-            ibready                  <= bready_toggle_mask[31];
-         end
+       if (bready_toggle_pattern_enable == 1'b1) begin
+         bready_toggle_pattern[31:0] <= {bready_toggle_pattern[30:0], bready_toggle_pattern[31]};
+            ibready                 <= bready_toggle_pattern[31];
+        end
       end
    end
 end
+
 
 
 initial begin

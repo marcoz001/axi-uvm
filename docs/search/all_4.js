@@ -26,9 +26,10 @@ var searchData=
   ['e_5fslverr',['e_SLVERR',['../axi__pkg_8sv.html#ac8b0f779dd7c96753c4355a5c86e0f9da1fe56b6c3532c9dbf95cd6ceb8e6b280',1,'axi_pkg.sv']]],
   ['e_5fwrap',['e_WRAP',['../axi__pkg_8sv.html#ac948ddb69d517d21ce13ec363f10b95bac6caff421238a869ca419bbd19325b8c',1,'axi_pkg.sv']]],
   ['e_5fwrite',['e_WRITE',['../axi__uvm__pkg_8sv.html#a00d51b3cb2e1fa09bdba2968e0cf7ac7ace2e65e53ce6e3353bf0f1528ce9e41c',1,'axi_uvm_pkg.sv']]],
-  ['enable_5farready_5ftoggle_5fpattern',['enable_arready_toggle_pattern',['../classaxi__if__abstract.html#a3233c0c208a9e173dca5ada3de9326cb',1,'axi_if_abstract']]],
-  ['enable_5fawready_5ftoggle_5fpattern',['enable_awready_toggle_pattern',['../classaxi__if__abstract.html#a7d203fd5b5f62478df404d4841350487',1,'axi_if_abstract']]],
-  ['enable_5frready_5ftoggle_5fpattern',['enable_rready_toggle_pattern',['../classaxi__if__abstract.html#ac09285c62504c339d6e5297496df3e85',1,'axi_if_abstract']]],
-  ['enable_5fwready_5ftoggle_5fpattern',['enable_wready_toggle_pattern',['../classaxi__if__abstract.html#a667ff699840d83ee3b8690e32fcfb9d2',1,'axi_if_abstract']]],
+  ['enable_5farready_5ftoggle_5fpattern',['enable_arready_toggle_pattern',['../classaxi__if__abstract.html#afa10aa32bec5fbb33aa738f3b0ff537b',1,'axi_if_abstract']]],
+  ['enable_5fawready_5ftoggle_5fpattern',['enable_awready_toggle_pattern',['../classaxi__if__abstract.html#a212599a3c3966eb90b92be7156d962b6',1,'axi_if_abstract']]],
+  ['enable_5fbready_5ftoggle_5fpattern',['enable_bready_toggle_pattern',['../classaxi__if__abstract.html#a58321c98b31d03eabd6f8a650b42df71',1,'axi_if_abstract']]],
+  ['enable_5frready_5ftoggle_5fpattern',['enable_rready_toggle_pattern',['../classaxi__if__abstract.html#a359fdef8640289215e0632908e438da2',1,'axi_if_abstract']]],
+  ['enable_5fwready_5ftoggle_5fpattern',['enable_wready_toggle_pattern',['../classaxi__if__abstract.html#a0ddd563ee3a778a436f9818378980927',1,'axi_if_abstract']]],
   ['end_5fof_5felaboration_5fphase',['end_of_elaboration_phase',['../classaxi__driver.html#a26e92a49a5d04b62a5d3b71a13136493',1,'axi_driver::end_of_elaboration_phase()'],['../classaxi__master__driver.html#a8a507f05a1b27aec489692516d63213f',1,'axi_master_driver::end_of_elaboration_phase()']]]
 ];
