@@ -588,7 +588,5 @@ endfunction : read_r
 
 
       /*
-      1. Double check all params are actually used and needed.
-      2. convert tasks to functions to match others (consistency.)
       3. what does disabling toggle patterns do?
       */
