@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -88,9 +89,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga163c715a11b6c292bb2aa6a7601c53eb"><td class="memTemplItemLeft" align="right" valign="top">interface&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SVinterface.html#ga163c715a11b6c292bb2aa6a7601c53eb">axi_if</a> (input wire clk, input wire reset, inout wire awready, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a150391b59e1b2851c89272c84ed02077">C_AXI_ID_WIDTH</a>-1:0 &gt; awid, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; awaddr, inout wire&lt; 7:0 &gt; awlen, inout wire&lt; 2:0 &gt; awsize, inout wire&lt; 1:0 &gt; awburst, inout wire&lt; 0:0 &gt; awlock, inout wire&lt; 3:0 &gt; awcache, inout wire&lt; 2:0 &gt; awprot, inout wire&lt; 3:0 &gt; awqos, inout wire awvalid, inout wire wready, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a>-1:0 &gt; wdata, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a>/8-1:0 &gt; wstrb, inout wire wlast, inout wire wvalid, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a150391b59e1b2851c89272c84ed02077">C_AXI_ID_WIDTH</a>-1:0 &gt; bid, inout wire&lt; 1:0 &gt; bresp, inout wire bvalid, inout wire bready, inout wire arready, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a150391b59e1b2851c89272c84ed02077">C_AXI_ID_WIDTH</a>-1:0 &gt; arid, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; araddr, inout wire&lt; 7:0 &gt; arlen, inout wire&lt; 2:0 &gt; arsize, inout wire&lt; 1:0 &gt; arburst, inout wire&lt; 0:0 &gt; arlock, inout wire&lt; 3:0 &gt; arcache, inout wire&lt; 2:0 &gt; arprot, inout wire&lt; 3:0 &gt; arqos, inout wire arvalid, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a150391b59e1b2851c89272c84ed02077">C_AXI_ID_WIDTH</a>-1:0 &gt; rid, inout wire&lt; 1:0 &gt; rresp, inout wire rvalid, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a>-1:0 &gt; rdata, inout wire rlast, inout wire rready)</td></tr>
 <tr class="memdesc:ga163c715a11b6c292bb2aa6a7601c53eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">bindable interface for AXI UVM environment  <a href="#ga163c715a11b6c292bb2aa6a7601c53eb">More...</a><br /></td></tr>
 <tr class="separator:ga163c715a11b6c292bb2aa6a7601c53eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaece462adc4f43a668e275a01ce3bd898"><td class="memTemplParams" colspan="2">template&lt;parameter C_AXI_ADDR_WIDTH = 32, parameter C_AXI_DATA_WIDTH = 32&gt; </td></tr>
-<tr class="memitem:gaece462adc4f43a668e275a01ce3bd898"><td class="memTemplItemLeft" align="right" valign="top">interface&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SVinterface.html#gaece462adc4f43a668e275a01ce3bd898">wb_if</a> (input wire clk, input wire reset, inout wire cyc, inout wire stb, inout wire we, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; addr, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a>-1:0 &gt; indata, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a>/8-1:0 &gt; sel, inout wire ack, inout wire stall, inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a>-1:0 &gt; outdata, inout wire err)</td></tr>
-<tr class="separator:gaece462adc4f43a668e275a01ce3bd898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -344,94 +342,6 @@ template&lt;parameter C_AXI_ID_WIDTH = 6, parameter C_AXI_ADDR_WIDTH = 32, param
 
 <p>bindable interface for AXI UVM environment </p>
 <p>This interface contains all functions and tasks for the testbench to communicate with the DUT. They are meant to be called using the embedded class axi_if_concrete, which extends <a class="el" href="classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ...">axi_if_abstract</a>. </p><dl class="section see"><dt>See also</dt><dd>axi_if_abstract.sv </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaece462adc4f43a668e275a01ce3bd898"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;parameter C_AXI_ADDR_WIDTH = 32, parameter C_AXI_DATA_WIDTH = 32&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">interface wb_if </td>
-          <td>(</td>
-          <td class="paramtype">input wire&#160;</td>
-          <td class="paramname"><em>clk</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">input wire&#160;</td>
-          <td class="paramname"><em>reset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">inout wire&#160;</td>
-          <td class="paramname"><em>cyc</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">inout wire&#160;</td>
-          <td class="paramname"><em>stb</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">inout wire&#160;</td>
-          <td class="paramname"><em>we</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">inout wire&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
-          <td class="paramname"><em>addr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a>-1:0 &gt;&#160;</td>
-          <td class="paramname"><em>indata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a>/8-1:0 &gt;&#160;</td>
-          <td class="paramname"><em>sel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">inout wire&#160;</td>
-          <td class="paramname"><em>ack</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">inout wire&#160;</td>
-          <td class="paramname"><em>stall</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">inout wire&lt; <a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a>-1:0 &gt;&#160;</td>
-          <td class="paramname"><em>outdata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">inout wire&#160;</td>
-          <td class="paramname"><em>err</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>

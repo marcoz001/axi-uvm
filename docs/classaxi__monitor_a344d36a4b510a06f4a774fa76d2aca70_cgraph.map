@@ -1,0 +1,4 @@
+<map id="axi_monitor::monitor_write_address" name="axi_monitor::monitor_write_address">
+<area shape="rect" id="node2" href="$classaxi__if__abstract.html#a9e019c384309938d98fb93eb9d19ee35" title="Wait for a valid write address to be acknowledged and return it. " alt="" coords="195,5,334,47"/>
+<area shape="rect" id="node3" href="$classaxi__seq__item.html#acc505058d3047915a86c2aeed046bf98" title="axi_seq_item::aw_to\l_class" alt="" coords="193,71,336,112"/>
+</map>

@@ -13,8 +13,6 @@ var searchData=
   ['wait_5ffor_5fwrite_5faddress',['wait_for_write_address',['../classaxi__if__abstract.html#a9e019c384309938d98fb93eb9d19ee35',1,'axi_if_abstract']]],
   ['wait_5ffor_5fwrite_5fdata',['wait_for_write_data',['../classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092',1,'axi_if_abstract']]],
   ['wait_5ffor_5fwrite_5fresponse',['wait_for_write_response',['../classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538',1,'axi_if_abstract']]],
-  ['wb2axi',['wb2axi',['../group__SVmodule.html#gac740915126c4e82851b836fe0bb9efc3',1,'wb2axi.sv']]],
-  ['wb_5fif',['wb_if',['../group__SVinterface.html#gaece462adc4f43a668e275a01ce3bd898',1,'wb_if.sv']]],
   ['wlast_5fc',['wlast_c',['../classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b',1,'axi_seq_item']]],
   ['write',['write',['../classaxi__coveragecollector.html#ad3db357735350aac191dcc3cabbddf23',1,'axi_coveragecollector::write()'],['../classaxi__master__driver.html#adedcb7c658934fc69ecd0377db2c5baf',1,'axi_master_driver::write()'],['../classmemory.html#a9e041180ed26bc52eea610c25d6238ce',1,'memory::write()']]],
   ['write_5far',['write_ar',['../classaxi__if__abstract.html#a75f862f7fca7efb90751aa39479d9d90',1,'axi_if_abstract']]],
