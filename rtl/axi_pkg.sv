@@ -91,17 +91,17 @@ parameter C_AXI_ADDR_WIDTH = 32; /*!< bit width of address bus.
  * Packed structs are emulator friendly
  */
 typedef struct packed {
-  logic [C_AXI_ID_WIDTH-1:0]	 awid;  //*<YOOHOO
-  logic [C_AXI_ADDR_WIDTH-1:0]   awaddr; /*!< an integer value */
-  logic                          awvalid;
-  logic                          awready;
-  logic [7:0]                    awlen;
-  logic [2:0]                    awsize;
-  logic [1:0]                    awburst;
-  logic [0:0]                    awlock;
-  logic [3:0]                    awcache;
-  logic [2:0]                    awprot;
-  logic [3:0]                    awqos;
+  logic [C_AXI_ID_WIDTH-1:0]	 awid;  /*!< Write address ID tag - A matching write response ID, bid, will be expected */
+  logic [C_AXI_ADDR_WIDTH-1:0]   awaddr; /*!< Starting burst address */
+  logic                          awvalid; /*!< Values on write address channel are valid and won't change until awready is recieved */
+  logic                          awready; /*!< Slave is ready to receive write address channel information */
+  logic [7:0]                    awlen;   /*!< Length, in beats/clks, of the matching write data burst */
+  logic [2:0]                    awsize;  /*!< beat size.  How many bytes wide are the beats in the write data transfer */
+  logic [1:0]                    awburst; /*!< address burst mode.  fixed, incrementing, or wrap */
+  logic [0:0]                    awlock; /*!< Used for locked transactions in AXI3 */
+  logic [3:0]                    awcache; /*!< Memory type. See AXI spec Memory Type A4-65 */
+  logic [2:0]                    awprot; /*!< Protected transaction.  AXI4 only */
+  logic [3:0]                    awqos; /*!< Quality of service. AXI4 only */
 
 } axi_seq_item_aw_vector_s;
 
@@ -119,11 +119,11 @@ typedef bit[AXI_SEQ_ITEM_AW_NUM_BITS-1:0] axi_seq_item_aw_vector_t;
  * Packed structs are emulator friendly
  */
 typedef struct packed {
-  logic [C_AXI_DATA_WIDTH-1:0]   wdata;
-  logic [C_AXI_DATA_WIDTH/8-1:0] wstrb;
-  logic                          wlast;
-  logic                          wvalid;
-  logic [C_AXI_ID_WIDTH-1:0]     wid;
+  logic [C_AXI_DATA_WIDTH-1:0]   wdata; /*!< Write Data    */
+  logic [C_AXI_DATA_WIDTH/8-1:0] wstrb;  /*!< Write strobe.  Indicates which byte lanes hold valid data.    */
+  logic                          wlast;/*!<  Write last.  Indicates last beat in a write burst.   */
+  logic                          wvalid;/*!<  Write valid.  Values on write data channel are valid and won't change until wready is recieved   */
+  logic [C_AXI_ID_WIDTH-1:0]     wid;/*!<  Write ID tag.  AXI3 only   */
 
 } axi_seq_item_w_vector_s;
 
@@ -140,8 +140,8 @@ typedef bit[AXI_SEQ_ITEM_W_NUM_BITS-1:0] axi_seq_item_w_vector_t;
  * Packed structs are emulator friendly
  */
 typedef struct packed {
-  logic [C_AXI_ID_WIDTH-1:0]     bid;
-  logic [1:0]                    bresp;
+  logic [C_AXI_ID_WIDTH-1:0]     bid; /*!< Write Response ID tag    */
+  logic [1:0]                    bresp; /*!< Write Response.Indicates status of the write data transaction.    */
 } axi_seq_item_b_vector_s;
 
 localparam int AXI_SEQ_ITEM_B_NUM_BITS = $bits(axi_seq_item_b_vector_s); /*!< Used to calculate the length of the bit vector
@@ -156,18 +156,17 @@ typedef bit[AXI_SEQ_ITEM_B_NUM_BITS-1:0] axi_seq_item_b_vector_t;
  * Packed structs are emulator friendly
  */
 typedef struct packed {
-                                 /*! Read Address ID */
-  logic [C_AXI_ID_WIDTH-1:0]	 arid;
-  logic [C_AXI_ADDR_WIDTH-1:0]   araddr;
-  logic                          arvalid;
-  logic                          arready;
-  logic [7:0]                    arlen;
-  logic [2:0]  arsize;
-  logic [1:0]  arburst;
-  logic [0:0]                    arlock;
-  logic [3:0]                    arcache;
-  logic [2:0]                    arprot;
-  logic [3:0]                    arqos;
+  logic [C_AXI_ID_WIDTH-1:0]	 arid; /*!< Read address ID tag - A matching read data ID, rid, will be expected */
+  logic [C_AXI_ADDR_WIDTH-1:0]   araddr; /*!< Starting burst address */
+  logic                          arvalid;/*!< Values on read address channel are valid and won't change until arready is recieved */
+  logic                          arready;/*!< Slave is ready to receive read address channel information */
+  logic [7:0]                    arlen;/*!< Length, in beats/clks, of the matching read data burst */
+  logic [2:0]  arsize;/*!< beat size.  How many bytes wide are the beats in the write data transfer */
+  logic [1:0]  arburst;/*!< address burst mode.  fixed, incrementing, or wrap */
+  logic [0:0]                    arlock; /*!< Used for locked transactions in AXI3 */
+  logic [3:0]                    arcache;/*!< Memory type. See AXI spec Memory Type A4-65 */
+  logic [2:0]                    arprot;/*!< Protected transaction.  AXI4 only */
+  logic [3:0]                    arqos;/*!< Quality of service. AXI4 only */
 
 } axi_seq_item_ar_vector_s;
 
@@ -184,11 +183,11 @@ typedef bit[AXI_SEQ_ITEM_AR_NUM_BITS-1:0] axi_seq_item_ar_vector_t;
  * Packed structs are emulator friendly
  */
 typedef struct packed {
-  logic [C_AXI_DATA_WIDTH-1:0]   rdata; /*!< an integer value */
-  logic [1:0]                    rresp; /*!< an integer value */
-  logic                          rlast; /*!< an integer value */
-  logic                          rvalid; /*!< an integer value */
-  logic [C_AXI_ID_WIDTH-1:0]     rid; /*!< an integer value */
+  logic [C_AXI_DATA_WIDTH-1:0]   rdata; /*!< Write Data  */
+  logic [1:0]                    rresp; /*!< Read Response.Indicates status of the read data transfer (of the same beat). */
+  logic                          rlast; /*!< Read last.  Indicates last beat in a read burst. */
+  logic                          rvalid; /*!< Write valid.  Values on read data channel are valid and won't change until rready is recieved*/
+  logic [C_AXI_ID_WIDTH-1:0]     rid; /*!< Read ID tag. */
 
 } axi_seq_item_r_vector_s;
 

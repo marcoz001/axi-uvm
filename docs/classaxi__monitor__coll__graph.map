@@ -2,6 +2,6 @@
 <area shape="rect" id="node3" href="$classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="231,56,337,83"/>
 <area shape="rect" id="node7" href="$classaxi__agent__config.html" title="axi_agent_config" alt="" coords="224,107,344,133"/>
 <area shape="rect" id="node5" href="$classmemory.html" title="memory" alt="" coords="249,157,319,184"/>
-<area shape="rect" id="node8" href="$structaxi__seq__item__w__vector__s.html" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="197,208,371,235"/>
+<area shape="rect" id="node8" href="$axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="197,208,371,235"/>
 <area shape="rect" id="node9" href="$classaxi__seq__item.html" title="axi_seq_item" alt="" coords="235,297,333,324"/>
 </map>

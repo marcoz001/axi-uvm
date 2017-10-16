@@ -1,16 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	tb.svh
-//
-// Project:	Pipelined Wishbone to AXI converter - UVM testbench
-//
-// Purpose:
-//          Top Level Testbench
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -30,8 +19,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //
-
-
+/*! \module tb
+ * \brief  Top Level.
+ *
+ * This is a dual-top environment.This is the top level module that instantiates DUT and TB tops.
+ * Here though the DUT is two axi_if interfaces wired together with one configured as master
+ * and the other configured as a slave/responder.
+ */
 module tb;
 
    import params_pkg::*;
@@ -108,6 +102,7 @@ module tb;
   wire                            wb_err;
 
 
+  /*! Driver instantiation */
   axi_if #(.C_AXI_ID_WIDTH   (C_AXI_ID_WIDTH),
               .C_AXI_DATA_WIDTH (C_AXI_DATA_WIDTH),
               .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH)
@@ -156,6 +151,7 @@ module tb;
                .rready(axi_rready)
              );
 
+  /*! Slave/responder instantiation */
     axi_if #(.C_AXI_ID_WIDTH   (C_AXI_ID_WIDTH),
               .C_AXI_DATA_WIDTH (C_AXI_DATA_WIDTH),
               .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH)
@@ -220,13 +216,10 @@ initial begin
 end
 
 initial begin
-  axi_driver_vif.use_concrete_class(); //.drv_type(axi_pkg::e_DRIVER));
-  axi_responder_vif.use_concrete_class(); //.drv_type(axi_pkg::e_RESPONDER));
+  axi_driver_vif.use_concrete_class();
+  axi_responder_vif.use_concrete_class();
 
-  //axi_rd_vif.use_concrete_class();
-  //wb_vif.use_concrete_class();
-
-  run_test("axim2wbsp_base_test");
+  run_test("axi_base_test");
 end
 
 initial begin
@@ -237,7 +230,3 @@ initial begin
 end
 
 endmodule : tb
-
-
-
-

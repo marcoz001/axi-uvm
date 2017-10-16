@@ -570,8 +570,11 @@ task axi_driver::driver_read_data;
   //  `uvm_info(this.get_type_name(),$sformatf("r_s.data: 0x%0x   LowerLane:%0d   Upperlane:%0d   dataoffset=%0d", r_s.rdata,item.Lower_Byte_Lane,item.Upper_Byte_Lane, item.dataoffset),
   //            UVM_INFO)
 
+
     for (int z=item.Lower_Byte_Lane;z<item.Upper_Byte_Lane;z++) begin
-      item.data[item.dataoffset++] = r_s.rdata[z*8+:8];
+      if (item.dataoffset <= item.len) begin
+         item.data[item.dataoffset++] = r_s.rdata[z*8+:8];
+      end
    //   `uvm_info("DATAOFFSET",
    //             $sformatf("data: 0x%0x -- item:0x%0x", r_s.rdata[z*8+:8], item.data[item.dataoffset-1]),
    //             UVM_INFO)

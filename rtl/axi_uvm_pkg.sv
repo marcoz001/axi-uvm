@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_uvm_pkg.sv
-//
-// Purpose:
-//          Systemverilog package for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -27,7 +18,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-
+/*! \package axi_uvm_pkg
+ *  \brief Systemverilog package for AXI UVM environment */
 package axi_uvm_pkg;
 
 import uvm_pkg::*;
@@ -35,29 +27,30 @@ import uvm_pkg::*;
 
 import axi_pkg::*;
 
-typedef enum int {e_WRITE                             = 0,
-                  e_READ                         = 1,
-                  e_READ_DATA                         = 2,
-                  e_SETAWREADYTOGGLEPATTERN,
-                  e_SETWREADYTOGGLEPATTERN,
-                  e_SETARREADYTOGGLEPATTERN,
+/*! \typedef cmd_t */
+/** \brief Command type - what is the purpose of this packet?
+*/
+typedef enum int {e_WRITE                    = 0, /**< AXI Write - Driver handles */
+                  e_READ                     = 1, /**< AXI Read  - Driver handles */
+                  e_READ_DATA                = 2, /**< Read Data - Responder handles */
+                  e_SETAWREADYTOGGLEPATTERN,      /**< Set awready toggle pattern - responder handles */
+                  e_SETWREADYTOGGLEPATTERN,  /**< Set wready toggle pattern - responder handles */
+                  e_SETARREADYTOGGLEPATTERN,  /**< Set bready toggle pattern - driver handles */
 
-                  e_SET_MIN_CLKS_BETWEEN_AW_TRANSFERS, // Minimum pause between aw xfers
-                  e_SET_MAX_CLKS_BETWEEN_W_TRANSFERS   // maximum pause between aw xfers
+                  e_SET_MIN_CLKS_BETWEEN_AW_TRANSFERS, /**< Set minimum pause between aw xfers - Driver uses */
+                  e_SET_MAX_CLKS_BETWEEN_W_TRANSFERS   /**< Set maximum pause between aw xfers - Driver uses */
 
-                 /*
-                 e_WRITEADDRESS,
-                 e_WRITEDATA,
-                 e_WRITERESPONSE,
-                 e_READADDRESS,
-                 e_READDATA,
-                 */
+
                  } cmd_t;
 
-
-//
-
-typedef enum {e_DRIVER, e_RESPONDER} driver_type_t;
+/*! \typedef driver_type_t */
+/** \brief Config variable that tells axi_driver whether it is a master driver or slave driver(responder)
+ *
+ * \todo: Split driver and responder into different components.
+*/
+typedef enum {e_DRIVER,  /**< Agent is a master */
+              e_RESPONDER  /**< Agent is a slave/responder */
+             } driver_type_t;
 
 `include "memory.svh"
 
@@ -78,6 +71,6 @@ typedef enum {e_DRIVER, e_RESPONDER} driver_type_t;
 `include "axi_env.svh"
 
 
-`include "axim2wbsp_base_test.svh"
+`include "axi_base_test.svh"
 
 endpackage : axi_uvm_pkg
