@@ -11,6 +11,7 @@ var searchData=
   ['axi_5fmaster_5fdriver',['axi_master_driver',['../classaxi__master__driver.html',1,'']]],
   ['axi_5fmonitor',['axi_monitor',['../classaxi__monitor.html',1,'']]],
   ['axi_5fresponder_5fseq',['axi_responder_seq',['../classaxi__responder__seq.html',1,'']]],
+  ['axi_5fscoreboard',['axi_scoreboard',['../classaxi__scoreboard.html',1,'']]],
   ['axi_5fseq',['axi_seq',['../classaxi__seq.html',1,'']]],
   ['axi_5fseq_5fitem',['axi_seq_item',['../classaxi__seq__item.html',1,'']]],
   ['axi_5fseq_5fitem_5far_5fvector_5fs',['axi_seq_item_ar_vector_s',['../axi__pkg_8sv.html#structaxi__seq__item__ar__vector__s',1,'']]],

@@ -10,6 +10,7 @@ var searchData=
   ['m_5fmonitor',['m_monitor',['../classaxi__agent.html#ab347099a57dca596edae1aac16f9815a',1,'axi_agent']]],
   ['m_5fresp_5fseq',['m_resp_seq',['../classaxi__base__test.html#a02f6286c2458f4ca58a42b1165fa7d22',1,'axi_base_test']]],
   ['m_5fresponder_5fseqr',['m_responder_seqr',['../classaxi__env.html#a582e64d989640d06e90251b619baed54',1,'axi_env']]],
+  ['m_5fscoreboard',['m_scoreboard',['../classaxi__agent.html#ae9aa1dc6c8716eb880fb427432d23b32',1,'axi_agent']]],
   ['m_5fseq',['m_seq',['../classaxi__base__test.html#a626ddf54e6e32e7bf5b7aee51e4a07ee',1,'axi_base_test']]],
   ['m_5fseqr',['m_seqr',['../classaxi__agent.html#a5944354468812d3e00c06fe26bc1d9bd',1,'axi_agent']]],
   ['max_5fclks_5fbetween_5far_5ftransfers',['max_clks_between_ar_transfers',['../classaxi__driver.html#a650ea4cd670c7d5e3876d6bc1fce7b08',1,'axi_driver']]],

@@ -1,8 +1,7 @@
 var searchData=
 [
+  ['r_5fq',['r_q',['../classaxi__monitor.html#a4cb635f7777cfd0e27e4d4fa634fbfa9',1,'axi_monitor']]],
   ['rdata',['rdata',['../axi__pkg_8sv.html#a95251143daf1829f1de5f56203bfe3c1',1,'axi_seq_item_r_vector_s']]],
-  ['read_5faddress_5fap',['read_address_ap',['../classaxi__monitor.html#a811c6ff6ec85ff49ae40f74c04c6fafc',1,'axi_monitor']]],
-  ['read_5fdata_5fap',['read_data_ap',['../classaxi__monitor.html#ab6e313297d43b6ae5a782f6851401c17',1,'axi_monitor']]],
   ['request_5ffifo',['request_fifo',['../classaxi__sequencer.html#acf09235f2c7b41dd5a579a9d5ba8472c',1,'axi_sequencer']]],
   ['responder_5freadaddress_5fmbx',['responder_readaddress_mbx',['../classaxi__driver.html#a3b592ba192636349de1b1899167b3d6c',1,'axi_driver']]],
   ['responder_5freaddata_5fmbx',['responder_readdata_mbx',['../classaxi__driver.html#a72d9ecf96394054fc6c31cc73aa0f1bf',1,'axi_driver']]],

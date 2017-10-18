@@ -1,12 +1,13 @@
 <map id="axi_env" name="axi_env">
-<area shape="rect" id="node3" href="$classmemory.html" title="memory" alt="" coords="249,116,319,143"/>
-<area shape="rect" id="node5" href="$classaxi__agent.html" title="axi_agent" alt="" coords="824,277,903,304"/>
-<area shape="rect" id="node7" href="$classaxi__driver.html" title="axi_driver" alt="" coords="523,249,601,276"/>
-<area shape="rect" id="node11" href="$classaxi__monitor.html" title="axi_monitor" alt="" coords="517,379,607,405"/>
-<area shape="rect" id="node9" href="$classaxi__agent__config.html" title="axi_agent_config" alt="" coords="224,304,344,331"/>
-<area shape="rect" id="node13" href="$classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="231,409,337,436"/>
-<area shape="rect" id="node14" href="$axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="197,460,371,487"/>
-<area shape="rect" id="node15" href="$classaxi__seq__item.html" title="axi_seq_item" alt="" coords="235,549,333,576"/>
-<area shape="rect" id="node17" href="$classaxi__coveragecollector.html" title="axi_coveragecollector" alt="" coords="488,429,636,456"/>
-<area shape="rect" id="node19" href="$classaxi__sequencer.html" title="axi_sequencer" alt="" coords="509,480,615,507"/>
+<area shape="rect" id="node3" href="$classmemory.html" title="memory" alt="" coords="225,119,295,145"/>
+<area shape="rect" id="node5" href="$classaxi__agent.html" title="axi_agent" alt="" coords="800,272,879,299"/>
+<area shape="rect" id="node7" href="$classaxi__driver.html" title="axi_driver" alt="" coords="499,220,577,247"/>
+<area shape="rect" id="node11" href="$classaxi__monitor.html" title="monitors all 5 channels for activity " alt="" coords="493,367,583,393"/>
+<area shape="rect" id="node9" href="$classaxi__agent__config.html" title="axi_agent_config" alt="" coords="200,275,320,301"/>
+<area shape="rect" id="node13" href="$classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="207,419,313,445"/>
+<area shape="rect" id="node14" href="$axi__pkg_8sv.html#structaxi__seq__item__r__vector__s" title="This packed struct is used to send read data channel information between the DUT and TB..." alt="" coords="177,469,343,496"/>
+<area shape="rect" id="node15" href="$axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="173,520,347,547"/>
+<area shape="rect" id="node16" href="$classaxi__scoreboard.html" title="scoreboard " alt="" coords="483,417,593,444"/>
+<area shape="rect" id="node18" href="$classaxi__coveragecollector.html" title="axi_coveragecollector" alt="" coords="464,468,612,495"/>
+<area shape="rect" id="node19" href="$classaxi__sequencer.html" title="axi_sequencer" alt="" coords="485,519,591,545"/>
 </map>

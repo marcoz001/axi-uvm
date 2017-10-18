@@ -1,3 +1,4 @@
 <map id="axi_monitor::monitor_write_response" name="axi_monitor::monitor_write_response">
-<area shape="rect" id="node2" href="$classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538" title="Wait for a valid write response to be acknowledged and return it. " alt="" coords="193,5,332,47"/>
+<area shape="rect" id="node2" href="$classaxi__seq__item.html#a522f78497a15bfa2875d05601738d3ee" title="axi_seq_item::b_to\l_class" alt="" coords="197,5,329,47"/>
+<area shape="rect" id="node3" href="$classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538" title="Wait for a valid write response to be acknowledged and return it. " alt="" coords="193,71,332,112"/>
 </map>

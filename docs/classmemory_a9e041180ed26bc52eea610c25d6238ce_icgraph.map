@@ -1,4 +1,4 @@
 <map id="memory::write" name="memory::write">
-<area shape="rect" id="node2" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="axi_monitor::monitor\l_write_data" alt="" coords="159,5,299,47"/>
-<area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="axi_monitor::run_phase" alt="" coords="347,13,504,39"/>
+<area shape="rect" id="node2" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="159,5,299,47"/>
+<area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="347,13,504,39"/>
 </map>

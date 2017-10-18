@@ -1,24 +1,24 @@
-This is a Dual-top UVM testbench for the wishbone-to-axi bridge.  
+This is a Dual-top UVM testbench for the wishbone-to-axi bridge.
   * Emulator friendly (TB side is event driven. no @clock)
   * Pipelined AXI driver
   * Polymorphic interface
   * params_pkg.sv contains all dut parameters
   * a master driver - acts as an AXI master
   * a slave driver  - acts as an AXI slave
-    
+
 The environment starts the seq. The test tweaks settings for the sequence or type_overrides to use different sequence
-    
+
 Testplan
     Transfers from single byte up to full width
     Starting address from bus-aligned up every byte to next alignment
   WB: Classic Standard SINGLE WRITE cycle (WB B4 Spec 3.2.3)
-    
+
     Pipelined/outstanding address phases and responses`
-    
-  
-  
+
+
+
 Day 1 - Identify needed files, create stubs. (agents, drivers, monitors, seq[r|item]), etc
-Day 2 - Create interfaces, one for each bus, DUT i/f, instantiate DUT and if/s in testbench, 
+Day 2 - Create interfaces, one for each bus, DUT i/f, instantiate DUT and if/s in testbench,
         Create stub base test, make sure compiles and runs without failing (wont actually do anything)
 Day 3 -  Write stub seq. and stub functions; ( write() and read() )
          Start seq from base test, do simple API calls (write, read), verifies driver, monitors, scoreboard and coverage collector are hooked up.
@@ -27,50 +27,66 @@ Day 3 -  Write stub seq. and stub functions; ( write() and read() )
              NOTE: didn't get scoreboard or covcoll hooked up on day 3.  just monitor detecting bus activity but not sending out port event
 
 Day 4 - Hooked coverage collector up. receives from monitor
-             Trying to use existing wb_bfm (https://github.com/olofk/wb_bfm) but seems to be incomplete. Doesn't compile  
+             Trying to use existing wb_bfm (https://github.com/olofk/wb_bfm) but seems to be incomplete. Doesn't compile
         After digging at it, I've concluded tht trying to modify the olofk code to work as a slave seq will be at least as much work as writing from scratch. ;(
-                                            
+
 Day 5 - slave sequence stubs
-             
-             
-             
-             
+
+
+
+
              polymorphic itnerfaces introduce a dependencyon uvm in the RTL (abstract class of type uvm_object for type overriding.)
-               
+
        scemi pipes aren't supported in edaplayground so no streaming pipes between HDL and HVL
-               
-Good whitepaper on slave sequences: 
+
+Good whitepaper on slave sequences:
 http://www.verilab.com/files/reactive_slaves_presentation.pdf
 http://www.verilab.com/files/litterick_uvm_slaves2_paper.pdf
 
 Parallel/pipelined driver:
 https://www.quora.com/What-is-the-best-way-to-model-an-out-of-order-transaction-driver-in-UVM
-               
-I've seen this approach all over so I'm going with it, since it's likely widely,and easily, understood.               
-               
+
+I've seen this approach all over so I'm going with it, since it's likely widely,and easily, understood.
+
+//    Good article here:
+//https://verificationacademy.com/verification-horizons/june-2013-volume-9-issue-2/Monitors-Monitors-Everywhere-Who-Is-Monitoring-the-Monitors
+
+/*
+Each channel has an analysis port.  If data arrives 1st, it doesn't matter. scoreboard can wait on address before reading data.
+have 5 forever loops just waiting for *valid/ready and appropriate signals.
+// 5 diff seq items? or 1 with 5 different modes/types (cmd_t)?
+
+what about memory?
+1) use write/read API?
+2) make it a subscriber to all those analysis ports?
+
+
+
+*/
+
 Per: https://verificationacademy.com/cookbook/emulation/example
 Clock Synchronization -
-    Note that all tasks in BFMs must start by synchronizing to a clock edge. 
-    This is required by TBX XRTL. 
-          
+    Note that all tasks in BFMs must start by synchronizing to a clock edge.
+    This is required by TBX XRTL.
+
                The tb doesn'tt have timing/clk information so doing things like:
                wait one clk between write address xactions, isn't possible.
                how does the sequence send 'wait-N-clks' to the driver?
-      
+
                  when monitor detects read address,  does it send the read_data sequence items to the responder?
-               
+
                    Does teh scoreboard compare at every clk or at end of xfer?
                    if complete xfer ? <- that should trigger othe error
                      if every clock, then more tlm activity
                        what if extra wlast or rlast?
                          missing wlast or rlast?
-                         How detect? 
+                         How detect?
 // @Todo:   error injection\
 // @Todo:   What if awready never asserted?
 // @Todo:   What if data before address?
-// @Todo:   what if response before data (or addr)?   
+// @Todo:   what if response before data (or addr)?
 // @Todo:   verifiy unaligned xfers
 // @Todo:   narrow xfers
 // @Todo:   write address and write data at same time
-               
+
 //@Todo: deadlock - verify master must not wait for AWREADY to be assertd before driving WVALID (AXI spec - A3.3.1  (pg. A3-42)

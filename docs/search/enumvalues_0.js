@@ -25,5 +25,7 @@ var searchData=
   ['e_5fsetwreadytogglepattern',['e_SETWREADYTOGGLEPATTERN',['../axi__uvm__pkg_8sv.html#a00d51b3cb2e1fa09bdba2968e0cf7ac7a6a5535597fc2b48f59612facdfdbb159',1,'axi_uvm_pkg.sv']]],
   ['e_5fslverr',['e_SLVERR',['../axi__pkg_8sv.html#ac8b0f779dd7c96753c4355a5c86e0f9da1fe56b6c3532c9dbf95cd6ceb8e6b280',1,'axi_pkg.sv']]],
   ['e_5fwrap',['e_WRAP',['../axi__pkg_8sv.html#ac948ddb69d517d21ce13ec363f10b95bac6caff421238a869ca419bbd19325b8c',1,'axi_pkg.sv']]],
-  ['e_5fwrite',['e_WRITE',['../axi__uvm__pkg_8sv.html#a00d51b3cb2e1fa09bdba2968e0cf7ac7ace2e65e53ce6e3353bf0f1528ce9e41c',1,'axi_uvm_pkg.sv']]]
+  ['e_5fwrite',['e_WRITE',['../axi__uvm__pkg_8sv.html#a00d51b3cb2e1fa09bdba2968e0cf7ac7ace2e65e53ce6e3353bf0f1528ce9e41c',1,'axi_uvm_pkg.sv']]],
+  ['e_5fwrite_5fdata',['e_WRITE_DATA',['../axi__uvm__pkg_8sv.html#a00d51b3cb2e1fa09bdba2968e0cf7ac7a029adc7518e110bcf18b2ee9ac675729',1,'axi_uvm_pkg.sv']]],
+  ['e_5fwrite_5fresponse',['e_WRITE_RESPONSE',['../axi__uvm__pkg_8sv.html#a00d51b3cb2e1fa09bdba2968e0cf7ac7ababe4cb328ef76b5a95cccf946a7f05c',1,'axi_uvm_pkg.sv']]]
 ];

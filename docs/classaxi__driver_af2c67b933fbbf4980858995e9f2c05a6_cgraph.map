@@ -1,5 +1,5 @@
 <map id="axi_driver::driver_read_address" name="axi_driver::driver_read_address">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#a2718ea6ff7551a92fdbc6ff92d80bb14" title="axi_seq_item::ar_from\l_class" alt="" coords="176,5,327,47"/>
-<area shape="rect" id="node3" href="$classaxi__seq__item.html#ab6adbb6fbe04ecca377377187aff2738" title="axi_seq_item::calculate\l_aligned_address" alt="" coords="379,93,537,135"/>
-<area shape="rect" id="node4" href="$classaxi__seq__item.html#ae8e05cac654df340a4a48461bfcf7010" title="axi_seq_item::calculate\l_beats" alt="" coords="172,123,331,164"/>
+<area shape="rect" id="node2" href="$classaxi__seq__item.html#a2718ea6ff7551a92fdbc6ff92d80bb14" title="axi_seq_item::ar_from\l_class" alt="" coords="172,5,323,47"/>
+<area shape="rect" id="node3" href="$classaxi__seq__item.html#ab6adbb6fbe04ecca377377187aff2738" title="axi_seq_item::calculate\l_aligned_address" alt="" coords="577,5,736,47"/>
+<area shape="rect" id="node4" href="$classaxi__seq__item.html#ae8e05cac654df340a4a48461bfcf7010" title="axi_seq_item::calculate\l_beats" alt="" coords="371,35,529,76"/>
 </map>
