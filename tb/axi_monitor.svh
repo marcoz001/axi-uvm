@@ -197,6 +197,7 @@ task axi_monitor::monitor_write_data();
         $cast(cloned_item, item.clone());
         cloned_item.cmd=e_WRITE_DATA;
         cloned_item.initialize();
+        cloned_item.dataoffset=0;
 
         //
         cloned_item.wstrb = new[cloned_item.len];
@@ -229,6 +230,7 @@ task axi_monitor::monitor_write_data();
        cloned_item.update_address();
        if (w_s.wlast == 1'b1) begin // @Todo: count, dont rely on wlast?
           ap.write(cloned_item);
+         item=null;
        end
     end // while
     end// if

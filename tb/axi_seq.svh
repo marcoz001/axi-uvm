@@ -72,7 +72,7 @@ task axi_seq::body;
 
 
 
-  xfers_to_send=1;
+  xfers_to_send=100;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());
@@ -80,13 +80,18 @@ task axi_seq::body;
          start_item(item);
          assert( item.randomize() with {cmd        == e_WRITE;
                                     burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
+                                     //   burst_size inside {e_4BYTES};
                                     burst_type == e_INCR;
                                     //addr       ==  'h1000;
                                         addr < 'h4;
                                     //len        ==  'h10;
                                     len        >  'h0;
                                       //  len == 1;
-                                    len        <=  'h3C;}
+                                    len        <=  'h3C;
+
+                                     //   addr == 'h2;
+                                     //   len == 'h1;
+                                       }
                                    ) else begin
          `uvm_error(this.get_type_name(),
                     $sformatf("Unable to randomize %s",  item.get_full_name()));
@@ -94,7 +99,7 @@ task axi_seq::body;
          $cast(cloned_item, item.clone());
 
          finish_item(item);
-    `uvm_info("DATA", $sformatf("Sending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", item.addr, item.len, item.len, item.burst_size), UVM_INFO)
+    `uvm_info("DATA", $sformatf("\n\nSending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", item.addr, item.len, item.len, item.burst_size), UVM_INFO)
        get_response(item);
      #5us
 

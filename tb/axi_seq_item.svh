@@ -467,14 +467,19 @@ function int axi_seq_item::calculate_beats(
   aligned_addr=calculate_aligned_address(.addr(addr),
                                          .number_bytes(number_bytes));
 
-  `uvm_info(this.get_type_name(), $sformatf("addr:0x%0x  aligned-addr: 0x%0x   burst_length: %0d    number_byte: %0d", addr, aligned_addr, burst_length, number_bytes), UVM_INFO)
 
         // address - starting address
         // burst_length - total length of burst (in bytes)
         // data_bus_bytes - width of data bus (in bytes)
         // number_bytes - number of bytes per beat (must be consistent throughout burst)
         //              - this matches data_bus_bytes unless doing a partial transfer
-  beats = ((addr-aligned_addr)+burst_length)/number_bytes;
+  beats = $ceil(real'(real'((addr-aligned_addr)+burst_length)/real'(number_bytes)));
+  // \todo: something easily synthesizable might be nice insttead of $ceil()
+
+  `uvm_info("CALCULATE BEATS", $sformatf("addr:0x%0x  aligned-addr: 0x%0x   burst_length: %0d    number_bytes: %0d beats [((0x%0x-0x%0x)+%0d)/%0d]=0x%0x", addr, aligned_addr, burst_length, number_bytes, addr, aligned_addr, burst_length,number_bytes,beats), UVM_INFO)
+
+
+
   return beats;
 endfunction : calculate_beats
 
@@ -537,18 +542,18 @@ endfunction : update_wstrb
   output axi_seq_item_aw_vector_s v);
 
   axi_seq_item_aw_vector_s s;
-   int addr_offset_from_alignment=0;
+  // int addr_offset_from_alignment=0;
 
      s.awid    = t.id;
     // s.awaddr  = t.addr;
    s.awaddr = calculate_aligned_address(.addr(t.addr),
                                         .number_bytes(2**t.burst_size));
    // must take into account address misalignment when calculating beat cnt
-   addr_offset_from_alignment=t.addr-s.awaddr;
+  // addr_offset_from_alignment=t.addr-s.awaddr;
    //s.awlen   = ((t.len)/(2**s.awsize))-1; //t.len;
    s.awlen  = calculate_beats(.addr  (t.addr),
                               .number_bytes (2**t.burst_size),
-                              .burst_length (len+addr_offset_from_alignment));
+                              .burst_length (len));
    s.awlen = s.awlen-1;
      s.awsize  = t.burst_size;
      s.awburst = t.burst_type;
@@ -650,7 +655,7 @@ function void axi_seq_item::ar_from_class(
   output axi_seq_item_ar_vector_s v);
 
   axi_seq_item_ar_vector_s s;
-  int addr_offset_from_alignment;
+  //int addr_offset_from_alignment;
 
      s.arid    = t.id;
      //s.araddr  = t.addr;
@@ -660,11 +665,11 @@ function void axi_seq_item::ar_from_class(
                                         .number_bytes(2**t.burst_size));
    //s.awlen   = ((t.len)/(2**s.awsize))-1; //t.len;
 
-  addr_offset_from_alignment=t.addr-s.araddr;
+  //addr_offset_from_alignment=t.addr-s.araddr;
 
    s.arlen  = calculate_beats(.addr  (t.addr),
                               .number_bytes (2**t.burst_size),
-                              .burst_length (len+addr_offset_from_alignment));
+                              .burst_length (len));
    s.arlen = s.arlen-1;
 
   s.arsize  = t.burst_size;
