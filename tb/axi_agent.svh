@@ -35,6 +35,8 @@ class axi_agent extends uvm_agent;
   axi_agent_config    m_config;
   axi_driver          m_driver;
   axi_monitor         m_monitor;
+  axi_scoreboard      m_scoreboard;
+
   axi_sequencer       m_seqr;
   axi_coveragecollector m_coveragecollector;
   memory              m_memory;
@@ -75,6 +77,7 @@ function void axi_agent::build_phase(uvm_phase phase);
 
   m_monitor = axi_monitor::type_id::create("m_monitor", this);
   m_monitor.m_config=m_config;
+  m_scoreboard = axi_scoreboard::type_id::create("m_scoreboard", this);
   m_coveragecollector = axi_coveragecollector::type_id::create("m_coveragecollector", this);
 
   if (m_config.drv_type == axi_uvm_pkg::e_RESPONDER) begin
@@ -91,6 +94,7 @@ function void axi_agent::connect_phase (uvm_phase phase);
   end
 
   m_monitor.ap.connect(m_coveragecollector.analysis_export);
+  m_monitor.ap.connect(m_scoreboard.analysis_export);
   m_monitor.ap.connect(ap);
 
   if (m_config.drv_type == e_RESPONDER) begin

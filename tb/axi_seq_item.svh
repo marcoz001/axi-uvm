@@ -116,7 +116,7 @@ class axi_seq_item extends uvm_sequence_item;
                            len == 1;
                         else
                           len < //(burst_size**2) * 16;
-                          ((burst_size**2) * 16)-(addr-int'(addr/(burst_size**2))*(burst_size**2));
+                          ((2**burst_size) * 16)-(addr-int'(addr/(2**burst_size))*(2**burst_size));
                         // 16 for everything except AXI4 incr.
                         //@Todo: take into account non-aligned addr
                            //len < 256*128;
@@ -164,7 +164,7 @@ class axi_seq_item extends uvm_sequence_item;
           extern function void update();  // update_address vs update ?
 
 
-    extern static function void   aw_from_class(
+    extern  function void   aw_from_class(
       ref    axi_seq_item             t,
       output axi_seq_item_aw_vector_s v);
 
@@ -192,12 +192,11 @@ class axi_seq_item extends uvm_sequence_item;
       output axi_seq_item_b_vector_s v);
 
     extern static function void  b_to_class(
-      output  [5:0]     bid,
-      output  [1:0]     bresp,
+      ref   axi_seq_item            t,
       input axi_seq_item_b_vector_s v);
 
 
-    extern static function void   ar_from_class(
+    extern function void   ar_from_class(
       ref    axi_seq_item             t,
       output axi_seq_item_ar_vector_s v);
 
@@ -417,6 +416,7 @@ function void axi_seq_item::initialize;
     initialized=1;
     dataoffset=0;
 
+
   update();
 endfunction : initialize
 
@@ -537,16 +537,27 @@ endfunction : update_wstrb
   output axi_seq_item_aw_vector_s v);
 
   axi_seq_item_aw_vector_s s;
+   int addr_offset_from_alignment=0;
 
      s.awid    = t.id;
-     s.awaddr  = t.addr;
-     s.awlen   = t.len;
+    // s.awaddr  = t.addr;
+   s.awaddr = calculate_aligned_address(.addr(t.addr),
+                                        .number_bytes(2**t.burst_size));
+   // must take into account address misalignment when calculating beat cnt
+   addr_offset_from_alignment=t.addr-s.awaddr;
+   //s.awlen   = ((t.len)/(2**s.awsize))-1; //t.len;
+   s.awlen  = calculate_beats(.addr  (t.addr),
+                              .number_bytes (2**t.burst_size),
+                              .burst_length (len+addr_offset_from_alignment));
+   s.awlen = s.awlen-1;
      s.awsize  = t.burst_size;
      s.awburst = t.burst_type;
      s.awlock  = t.lock;
      s.awcache = t.cache;
      s.awprot  = t.prot;
      s.awqos   = t.qos;
+
+
     v = s;
 endfunction : aw_from_class
 
@@ -560,7 +571,8 @@ endfunction : aw_from_class
 
      t.id          = s.awid;
      t.addr        = s.awaddr;
-     t.len         = s.awlen;
+     //t.len         = s.awlen;  // \todo; use *awsize  here?
+     t.len         = (s.awlen+1)*(2**s.awsize);
      t.burst_size  = s.awsize;
      t.burst_type  = s.awburst;
      t.lock        = s.awlock;
@@ -620,16 +632,15 @@ endfunction : w_to_class
 endfunction : b_from_class
 
  function void axi_seq_item::b_to_class(
-  output  [5:0]     bid,
-  output  [1:0]     bresp,
-  input  axi_seq_item_b_vector_s  v);
+   ref    axi_seq_item t,
+   input  axi_seq_item_b_vector_s  v);
 
     axi_seq_item_b_vector_s s;
 
-    s = v;
+     s = v;
 
-     bid   = s.bid;
-     bresp = s.bresp;
+     t.bid   = s.bid;
+     t.bresp = s.bresp;
 
 endfunction : b_to_class
 
@@ -639,11 +650,24 @@ function void axi_seq_item::ar_from_class(
   output axi_seq_item_ar_vector_s v);
 
   axi_seq_item_ar_vector_s s;
+  int addr_offset_from_alignment;
 
      s.arid    = t.id;
-     s.araddr  = t.addr;
-     s.arlen   = t.len;
-     s.arsize  = t.burst_size;
+     //s.araddr  = t.addr;
+    // s.arlen   = t.len;
+     //s.arlen   = ((t.len)/(2**s.arsize))-1;
+     s.araddr = calculate_aligned_address(.addr(t.addr),
+                                        .number_bytes(2**t.burst_size));
+   //s.awlen   = ((t.len)/(2**s.awsize))-1; //t.len;
+
+  addr_offset_from_alignment=t.addr-s.araddr;
+
+   s.arlen  = calculate_beats(.addr  (t.addr),
+                              .number_bytes (2**t.burst_size),
+                              .burst_length (len+addr_offset_from_alignment));
+   s.arlen = s.arlen-1;
+
+  s.arsize  = t.burst_size;
      s.arburst = t.burst_type;
      s.arlock  = t.lock;
      s.arcache = t.cache;
@@ -664,7 +688,8 @@ endfunction : ar_from_class
 
      t.id          = s.arid;
      t.addr        = s.araddr;
-     t.len         = s.arlen;
+ //    t.len         = s.arlen;
+   t.len         = (s.arlen+1)*(2**s.arsize);
      t.burst_size  = s.arsize;
      t.burst_type  = s.arburst;
      t.lock        = s.arlock;

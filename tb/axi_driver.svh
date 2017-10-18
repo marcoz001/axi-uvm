@@ -172,11 +172,21 @@ task axi_driver::run_phase(uvm_phase phase);
 
     `uvm_info("axi_driver::run_phase",
               $sformatf("YO: %s", item.convert2string()),
-              UVM_INFO)
+              UVM_HIGH)
 
     case (item.cmd)
       axi_uvm_pkg::e_WRITE : begin
-        driver_writeaddress_mbx.put(item);
+        if (m_config.drv_type == e_DRIVER) begin
+           `uvm_info("e_WRITE",
+                     "stuffing item into driver_writeaddress_mbx.put(item);",
+                     UVM_HIGH)
+           driver_writeaddress_mbx.put(item);
+        end else begin
+           `uvm_info("e_WRITE",
+                     "stuffing item into responder_writeaddress_mbx.put(item);",
+                     UVM_HIGH)
+           responder_writeaddress_mbx.put(item);
+        end
       end
       axi_uvm_pkg::e_READ  : begin
         driver_readaddress_mbx.put(item);
@@ -184,26 +194,26 @@ task axi_driver::run_phase(uvm_phase phase);
       axi_uvm_pkg::e_READ_DATA  : begin
         `uvm_info("e_READ_DATA",
                   "stuffing item into responder_readdata_mbx.put(item);",
-                  UVM_INFO)
+                  UVM_HIGH)
         responder_readdata_mbx.put(item);
       end
 
       axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN : begin
          `uvm_info(this.get_type_name(),
                    $sformatf("Setting awready toggle patter: 0x%0x", item.toggle_pattern),
-                   UVM_INFO)
+                   UVM_HIGH)
          vif.enable_awready_toggle_pattern(.pattern(item.toggle_pattern));
       end
       axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN : begin
          `uvm_info(this.get_type_name(),
                    $sformatf("Setting wready toggle patter: 0x%0x", item.toggle_pattern),
-                   UVM_INFO)
+                   UVM_HIGH)
          vif.enable_wready_toggle_pattern(.pattern(item.toggle_pattern));
       end
       axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN : begin
          `uvm_info(this.get_type_name(),
                    $sformatf("Setting arready toggle patter: 0x%0x", item.toggle_pattern),
-                   UVM_INFO)
+                   UVM_HIGH)
          vif.enable_arready_toggle_pattern(.pattern(item.toggle_pattern));
       end
 
@@ -271,15 +281,16 @@ task axi_driver::driver_write_address;
        end
        // Initialize values
        if (item_needs_init==1) begin
-          axi_seq_item::aw_from_class(.t(item), .v(v));
-          v.awlen  = item.calculate_beats(.addr(item.addr),
-                                          .number_bytes(2**item.burst_size), //item.number_bytes
-                                          .burst_length(item.len));
+          item.aw_from_class(.t(item), .v(v));
+        // v.awlen  = item.calculate_beats(.addr(item.addr),
+         //                                  .number_bytes(2**item.burst_size),
+         //                                        .burst_length(item.len));
 
-         `uvm_info("====> v.awlen <====", $sformatf("v.awlen == %d", v.awlen), UVM_INFO)
+   //      v.awlen = v.awlen-1; // value is one less than cnt. IE: awlen=0, then 1 beat
+       // `uvm_info("====> v.awlen <====", $sformatf("v.awlen == %d", v.awlen), UVM_INFO)
 
-          v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
-                                                    .number_bytes(4));
+          //v.awaddr = item.calculate_aligned_address(.addr(v.awaddr),
+          //                                          .number_bytes(4));
           item_needs_init=0;
        end
 
@@ -510,13 +521,15 @@ task axi_driver::driver_read_address;
        end
        // Initialize values
        if (item_needs_init==1) begin
-          axi_seq_item::ar_from_class(.t(item), .v(v));
-          v.arlen  = item.calculate_beats(.addr(item.addr),
-                                          .number_bytes(2**item.burst_size), //item.number_bytes
-                                          .burst_length(item.len));
+          item.ar_from_class(.t(item), .v(v));
+          //v.arlen  = item.calculate_beats(.addr(item.addr),
+         //                                 .number_bytes(2**item.burst_size), //item.number_bytes
+          //                                .burst_length(item.len));
 
-         v.araddr = item.calculate_aligned_address(.addr(v.araddr),
-                                                    .number_bytes(4));
+          //v.arlen = v.arlen-1; // value is one less than cnt. IE: awlen=0, then 1 beat
+
+          //v.araddr = item.calculate_aligned_address(.addr(v.araddr),
+          //                                          .number_bytes(4));
           item_needs_init=0;
        end
 
@@ -602,7 +615,7 @@ task axi_driver::responder_write_address;
 
   forever begin
     responder_writeaddress_mbx.get(item);
- //   `uvm_info(this.get_type_name(), "axi_driver::responder_write_address Getting address", UVM_INFO)
+    `uvm_info(this.get_type_name(), "======>>>> axi_driver::responder_write_address Getting address", UVM_HIGH)
     vif.read_aw(.s(s));
     axi_seq_item::aw_to_class(.t(item), .v(s));
 
@@ -625,45 +638,22 @@ task axi_driver::responder_write_data;
   int          datacnt;
   axi_seq_item_w_vector_s s;
   bit foo;
+  bit wlast;
 
   forever begin
      responder_writedata_mbx.get(item);
- //   `uvm_info(this.get_type_name(),
- //             $sformatf("axi_driver::responder_write_data - Waiting for data for %s",
- //                       item.convert2string()),
- //             UVM_INFO)
-    /*
-      i=0;
-      while (i<item.len/4) begin
-         vif.wait_for_clks(.cnt(1));
-        if (vif.get_wready_wvalid() == 1'b1)  begin
-           vif.read_w(s);
-           axi_seq_item::w_to_class(
-            {item.data[i*4+3],
-             item.data[i*4+2],
-             item.data[i*4+1],
-             item.data[i*4+0]},
-            {item.wstrb[i*4+3],
-             item.wstrb[i*4+2],
-             item.wstrb[i*4+1],
-             item.wstrb[i*4+0]},
-            foo,
-            item.wlast[i],
-            .v(s));
-
-           i++;
-    //    `uvm_info(this.get_type_name(),
-    //              $sformatf("axi_driver::responder_write_data GOT %d for data for %s", i,
-   //                     item.convert2string()),
-    //          UVM_INFO)
-      end
-
+    `uvm_info(this.get_type_name(),
+              $sformatf("axi_driver::responder_write_data - Waiting for data for %s",
+                        item.convert2string()),
+              UVM_HIGH)
+    wlast=1'b0;
+    while (wlast != 1'b1) begin
+      vif.wait_for_clks(.cnt(1));
+      vif.read_w(.s(s));
+      wlast=s.wlast;
     end
-    */
-    //    `uvm_info(this.get_type_name(),
-     //            $sformatf("axi_driver::responder_write_data responder_writeresponse_mbx.put - %s",
-   //                     item.convert2string()),
-   //           UVM_INFO)
+    // \todo: Dont' rely on wlast
+
      responder_writeresponse_mbx.put(item);
   end
 endtask : responder_write_data
@@ -682,10 +672,15 @@ task axi_driver::responder_write_response;
 
   int item_needs_init=1;
 
+  vif.set_bvalid(1'b0);
   forever begin
 
     if (item == null) begin
        responder_writeresponse_mbx.get(item);
+       `uvm_info(this.get_type_name(),
+                 $sformatf("axi_driver::responder_write_response - Waiting for data for %s",
+                        item.convert2string()),
+              UVM_HIGH)
        item_needs_init=1;
     end
 

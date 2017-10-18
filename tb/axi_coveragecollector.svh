@@ -32,7 +32,7 @@ class axi_coveragecollector extends uvm_subscriber #(axi_seq_item);
 
 
   extern function new(string name="axi_coveragecollector", uvm_component parent=null);
-  extern virtual function void write(axi_seq_item t);
+    extern virtual function void write(axi_seq_item t);
 
 endclass : axi_coveragecollector
 

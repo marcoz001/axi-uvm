@@ -33,6 +33,8 @@ import axi_pkg::*;
 typedef enum int {e_WRITE                    = 0, /**< AXI Write - Driver handles */
                   e_READ                     = 1, /**< AXI Read  - Driver handles */
                   e_READ_DATA                = 2, /**< Read Data - Responder handles */
+                  e_WRITE_DATA,
+                  e_WRITE_RESPONSE,
                   e_SETAWREADYTOGGLEPATTERN,      /**< Set awready toggle pattern - responder handles */
                   e_SETWREADYTOGGLEPATTERN,  /**< Set wready toggle pattern - responder handles */
                   e_SETARREADYTOGGLEPATTERN,  /**< Set bready toggle pattern - driver handles */
@@ -63,6 +65,7 @@ typedef enum {e_DRIVER,  /**< Agent is a master */
 
 `include "axi_driver.svh"
 `include "axi_monitor.svh"
+`include "axi_scoreboard.svh"
 `include "axi_coveragecollector.svh"
 
 `include "axi_agent.svh"

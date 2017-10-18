@@ -33,9 +33,16 @@ class axi_scoreboard extends uvm_subscriber #(axi_seq_item);
   extern function void build_phase              (uvm_phase phase);
   extern function void connect_phase            (uvm_phase phase);
   extern task          run_phase                (uvm_phase phase);
+//  extern function void phase_ready_to_end       (uvm_phase phase);
 
   extern virtual function void write                    (axi_seq_item t);
 
+  int write_address_cntr=0;
+  int write_response_cntr=0;
+
+ // bit ok_to_end = 1'b1;
+
+//    event alldone;
 
 endclass : axi_scoreboard
 
@@ -54,7 +61,10 @@ endfunction : connect_phase
 
 
 task axi_scoreboard::run_phase(uvm_phase phase);
-//  axi_seq_item item;
+  //ok_to_end=1'b1;
+ // `uvm_info("SCOREBOaRD", "Setting ok_to_end to 0", UVM_INFO)
+
+  //  axi_seq_item item;
 //  forever begin
 //    ap.get(item);
 //    `uvm_info(this.get_type_name(), $sformatf("Item: %s", item.convert2string()), UVM_INFO)
@@ -62,5 +72,50 @@ task axi_scoreboard::run_phase(uvm_phase phase);
 endtask : run_phase
 
 function void axi_scoreboard::write(axi_seq_item t);
-  `uvm_info(this.get_type_name(), $sformatf("%s", t.convert2string()), UVM_INFO)
+  `uvm_info("SCOREBOARD", $sformatf("%s", t.convert2string()), UVM_INFO)
+
+  case(t.cmd)
+     e_WRITE : begin
+       write_address_cntr++;
+       `uvm_info("SCOREBOARD",
+                 $sformatf("write_address_cntr=%0d", write_address_cntr),
+                 UVM_INFO)
+     end
+     e_WRITE_RESPONSE : begin
+       write_response_cntr++;
+       `uvm_info("SCOREBOARD",
+                 $sformatf("write_response_cntr=%0d", write_response_cntr),
+                 UVM_INFO)
+//       if (write_response_cntr == write_address_cntr) begin
+//          ok_to_end = 1'b0;
+//         ->alldone;
+
+         //      end else begin
+ //        ok_to_end = 1'b0;
+ //      end
+     end
+
+  endcase
+
 endfunction : write
+
+/*
+    function void axi_scoreboard::phase_ready_to_end (uvm_phase phase);
+
+  `uvm_info("SCOREBOARD", "CalLed fuNCTION phase_ready_to_end", UVM_INFO)
+  if (!ok_to_end) begin
+     phase.raise_objection(this);
+     fork
+       @alldone;
+       phase.drop_objection(this);
+     join_none
+ //       wait (ok_to_end === 1'b1);
+  //      phase.drop_objection(this);
+  //   join_none
+  end
+endfunction
+
+    task wait_for_ok_end();
+
+    endtask : wait_for_ok_end
+    */

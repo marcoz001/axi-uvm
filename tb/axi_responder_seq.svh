@@ -97,7 +97,7 @@ task axi_responder_seq::body;
               `uvm_info(this.get_type_name(),
                  $sformatf(" <-HEY0HEY0HEY0 -> %s",
                            drv_item.convert2string()),
-                 UVM_INFO)
+                 UVM_HIGH)
        // SEnd to responder
 
        start_item(drv_item);
@@ -106,7 +106,7 @@ task axi_responder_seq::body;
        `uvm_info(this.get_type_name(),
                  $sformatf(" <-HEY1HEY1HEY1 -> %s",
                            drv_item.convert2string()),
-                 UVM_INFO)
+                 UVM_HIGH)
      end
 
 endtask : body

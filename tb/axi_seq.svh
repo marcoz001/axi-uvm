@@ -43,7 +43,7 @@ endclass : axi_seq
 // This response_handler function is enabled to keep the sequence response FIFO empty
 function void axi_seq::response_handler(uvm_sequence_item response);
    xfers_done++;
-  `uvm_info(this.get_type_name(), $sformatf("SEQ_response_handler xfers_done=%0d.   Item: %s",xfers_done, response.convert2string()), UVM_INFO)
+  `uvm_info(this.get_type_name(), $sformatf("SEQ_response_handler xfers_done=%0d.   Item: %s",xfers_done, response.convert2string()), UVM_HIGH)
 
 endfunction: response_handler
 
@@ -72,7 +72,7 @@ task axi_seq::body;
 
 
 
-  xfers_to_send=10;
+  xfers_to_send=1;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());
@@ -82,10 +82,11 @@ task axi_seq::body;
                                     burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
                                     burst_type == e_INCR;
                                     //addr       ==  'h1000;
-                                        addr < 'h5;
+                                        addr < 'h4;
                                     //len        ==  'h10;
                                     len        >  'h0;
-                                    len        <=  'h40;}
+                                      //  len == 1;
+                                    len        <=  'h3C;}
                                    ) else begin
          `uvm_error(this.get_type_name(),
                     $sformatf("Unable to randomize %s",  item.get_full_name()));
@@ -97,7 +98,7 @@ task axi_seq::body;
        get_response(item);
      #5us
 
-    `uvm_info("...", "Now reading back from memory to verify", UVM_INFO)
+    `uvm_info("...", "Now reading back from memory to verify", UVM_HIGH)
     s=$sformatf("Addr[0x%0x/(len:%d)]=", item.Start_Address, item.len);
 
     for (int z=0;z<item.len;z++) begin
@@ -115,11 +116,11 @@ task axi_seq::body;
 
     end
 
-    `uvm_info("COMPARE", $sformatf("%s", s), UVM_INFO);
+    `uvm_info("COMPARE", $sformatf("%s", s), UVM_HIGH);
 
 
     // Now AXI readback
-    `uvm_info("READBACK", "Now READING BACK", UVM_INFO)
+    `uvm_info("READBACK", "Now READING BACK", UVM_HIGH)
 
     cloned_item.cmd=e_READ;
     start_item(cloned_item);
@@ -127,7 +128,7 @@ task axi_seq::body;
     get_response(cloned_item);   //response_handler above deals with this
     `uvm_info(this.get_type_name(),
               $sformatf("GOT RESPONSE. item=%s", cloned_item.convert2string()),
-              UVM_INFO)
+              UVM_HIGH)
 
      #5us
     `uvm_info("..", "...", UVM_HIGH)
