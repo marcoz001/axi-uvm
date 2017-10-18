@@ -40,7 +40,6 @@ class axi_base_test extends uvm_test;
     m_seq = axi_seq::type_id::create("m_seq");
     m_resp_seq = axi_responder_seq::type_id::create("m_resp_seq");
 
-
   endfunction : build_phase
 
   task run_phase(uvm_phase phase);
@@ -49,12 +48,12 @@ class axi_base_test extends uvm_test;
     //#200
 
     fork
-        m_resp_seq.start(m_env.m_responder_seqr);
-//        m_seq.start(m_env.m_driver_seqr);
+       m_resp_seq.start(m_env.m_responder_seqr);
     join_none
 
-    //#800
+    #800
     //fork
+
       m_seq.start(m_env.m_driver_seqr);
     //join_none
 

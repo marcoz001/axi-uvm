@@ -72,7 +72,7 @@ task axi_scoreboard::run_phase(uvm_phase phase);
 endtask : run_phase
 
 function void axi_scoreboard::write(axi_seq_item t);
-  `uvm_info("SCOREBOARD", $sformatf("%s", t.convert2string()), UVM_INFO)
+  `uvm_info("SCOREBOARD", $sformatf("%s", t.convert2string()), UVM_HIGH)
 
   case(t.cmd)
      e_WRITE : begin

@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_monitor.svh
-//
-// Purpose:
-//          UVM monitor for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,14 +17,6 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
-
-
-
-/*
-\todo: monitor each channel and send whole burst out ap
-       update memory on each beat
-
-*/
 
 /*! \class axi_monitor
  *  \brief monitors all 5 channels for activity
@@ -93,9 +76,9 @@ function void axi_monitor::build_phase (uvm_phase phase);
   //aw_mbx=new();
 
   ap=new("ap", this);
-  if (m_config.drv_type == e_RESPONDER) begin
+  //if (m_config.drv_type == e_RESPONDER) begin
      driver_activity_ap=new("driver_activity_ap", this);
-  end
+  //end
 
   vif=axi_if_abstract::type_id::create("vif", this);
 

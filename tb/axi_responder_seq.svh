@@ -40,13 +40,14 @@ class axi_responder_seq extends axi_seq;
 
 endclass : axi_responder_seq
 
-    function axi_responder_seq::new (string name="axi_responder_seq");
+function axi_responder_seq::new (string name="axi_responder_seq");
   super.new(name);
 endfunction : new
 
 task axi_responder_seq::body;
      axi_seq_item drv_item;
      axi_seq_item item;
+
 
 
 
@@ -64,6 +65,7 @@ task axi_responder_seq::body;
        end
        finish_item(item);
 
+
        item = axi_seq_item::type_id::create("item");
        start_item(item);
        assert( item.randomize() with {cmd == e_SETWREADYTOGGLEPATTERN;
@@ -74,6 +76,7 @@ task axi_responder_seq::body;
                      $sformatf("Unable to randomize %s", item.get_type_name()))
        end
        finish_item(item);
+
 
 
        item = axi_seq_item::type_id::create("item");
@@ -87,12 +90,16 @@ task axi_responder_seq::body;
        end
        finish_item(item);
 
+
      forever begin
        // recommended by verilab but doesn't
        // this break the child-doesn't-know-about-parent model?
 
        // Get from monitor (or wherever)
+         `uvm_info(this.get_type_name, "DEBUG 4", UVM_INFO)
        p_sequencer.request_fifo.get(drv_item);
+       `uvm_info(this.get_type_name, "DEBUG 5", UVM_INFO)
+
 
               `uvm_info(this.get_type_name(),
                  $sformatf(" <-HEY0HEY0HEY0 -> %s",
@@ -102,6 +109,7 @@ task axi_responder_seq::body;
 
        start_item(drv_item);
        finish_item(drv_item);
+       `uvm_info(this.get_type_name, "DEBUG 6", UVM_INFO)
 
        `uvm_info(this.get_type_name(),
                  $sformatf(" <-HEY1HEY1HEY1 -> %s",

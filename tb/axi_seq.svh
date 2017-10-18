@@ -72,11 +72,11 @@ task axi_seq::body;
 
 
 
-  xfers_to_send=100;
+  xfers_to_send=1;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());
-
+    `uvm_info(this.get_type_name, "DEBUG 1", UVM_INFO)
          start_item(item);
          assert( item.randomize() with {cmd        == e_WRITE;
                                     burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
@@ -99,11 +99,13 @@ task axi_seq::body;
          $cast(cloned_item, item.clone());
 
          finish_item(item);
-    `uvm_info("DATA", $sformatf("\n\nSending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", item.addr, item.len, item.len, item.burst_size), UVM_INFO)
+    `uvm_info(this.get_type_name, "DEBUG 2", UVM_INFO)
+    `uvm_info("DATA", $sformatf("Sending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", item.addr, item.len, item.len, item.burst_size), UVM_HIGH)
        get_response(item);
+    `uvm_info(this.get_type_name, "DEBUG 3", UVM_INFO)
      #5us
 
-    `uvm_info("...", "Now reading back from memory to verify", UVM_HIGH)
+    `uvm_info("...", "Now reading back from memory to verify", UVM_LOW)
     s=$sformatf("Addr[0x%0x/(len:%d)]=", item.Start_Address, item.len);
 
     for (int z=0;z<item.len;z++) begin
@@ -121,6 +123,7 @@ task axi_seq::body;
 
     end
 
+/*
     `uvm_info("COMPARE", $sformatf("%s", s), UVM_HIGH);
 
 
@@ -137,7 +140,7 @@ task axi_seq::body;
 
      #5us
     `uvm_info("..", "...", UVM_HIGH)
-
+*/
   end  //for
 
  // wait (xfers_done >= xfers_to_send);

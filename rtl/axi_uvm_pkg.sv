@@ -64,6 +64,7 @@ typedef enum {e_DRIVER,  /**< Agent is a master */
 `include "axi_responder_seq.svh"
 
 `include "axi_driver.svh"
+`include "axi_responder.svh"
 `include "axi_monitor.svh"
 `include "axi_scoreboard.svh"
 `include "axi_coveragecollector.svh"
