@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_agent_config.svh
-//
-// Purpose:
-//          UVM agent configuration object for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,18 +17,30 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
+/*! \class axi_agent_config
+ *  \brief Configuration object for an axi_agent.
+ *
+ * Contains all the information needed for an agent to:
+ * - Be active (drive signals) or passive (just listen like a monitor)
+ * - Enable driver and sequencer
+ * - Enable a master driver or slave driver (responder)
+ * - Enable coverage collector
+ * - Enable scoreboard
+ */
 class axi_agent_config extends uvm_object;
   `uvm_object_utils(axi_agent_config)
 
   //defaults
-  uvm_active_passive_enum m_active       = UVM_PASSIVE;
-  driver_type_t           drv_type       = e_DRIVER;
+  uvm_active_passive_enum m_active       = UVM_PASSIVE; /*!< Active or passive */
+  driver_type_t           drv_type       = e_DRIVER; /*<! Driver or responder */
 
-  bit                     has_scoreboard = 1'b1;
-  bit                     has_coverage   = 1'b1;
+  bit                     has_scoreboard = 1'b1; /*<! Enable scoreboard? */
+  bit                     has_coverage   = 1'b1; /*<! Turn on coverage collection? */
 
   // Use toggle patterns. The interface can directly handle all the ready* toggling
   // without requiring the driver.
+  // Keep it to where in the future the responder sequences could do this by
+  // directly toggling the *ready signals
   rand bit[31:0]  bready_toggle_pattern;
   rand bit[31:0]  rready_toggle_pattern;
 
@@ -45,6 +48,9 @@ class axi_agent_config extends uvm_object;
 
 endclass : axi_agent_config
 
+/*! \brief Constructor
+ *
+ * Doesn't actually do anything except call parent constructor */
 function axi_agent_config::new (string name="axi_agent_config");
   super.new(name);
 endfunction : new

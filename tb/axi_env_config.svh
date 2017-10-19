@@ -26,6 +26,11 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
+/*! \class axi_env_config
+ *  \brief Configuration object for axi_env
+ *
+ * Currently does nothing.
+ */
 class axi_env_config extends uvm_object;
   `uvm_object_utils(axi_env_config)
 
@@ -33,6 +38,9 @@ class axi_env_config extends uvm_object;
 
 endclass : axi_env_config
 
+/*! \brief Constructor
+ *
+ * Doesn't actually do anything except call parent constructor */
 function axi_env_config::new (string name="axi_env_config");
   super.new(name);
 endfunction : new

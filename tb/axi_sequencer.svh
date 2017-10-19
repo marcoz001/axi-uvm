@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_sequencer.svh
-//
-// Purpose:
-//          UVM sequencer for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,6 +17,12 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
+/*! \class axi_sequencer
+ *  \brief Normal sequencer with an extra analysis fifo and export
+ *
+ * Allows the monitor and responder to create a slave sequence where
+ * we drive the slave/responder outputs.
+ */
 class axi_sequencer extends uvm_sequencer #(axi_seq_item);
   `uvm_component_utils(axi_sequencer)
 
@@ -39,17 +36,21 @@ class axi_sequencer extends uvm_sequencer #(axi_seq_item);
 
 endclass : axi_sequencer
 
-
+/*! \brief Constructor
+ *
+ * Doesn't actually do anything except call parent constructor */
 function axi_sequencer::new(string name, uvm_component parent);
    super.new(name, parent);
 endfunction : new
 
+/*! \brief Creates the analysis export and analysis fifo */
 function void axi_sequencer::build_phase(uvm_phase phase);
     super.build_phase(phase);
     request_fifo = new("request_fifo", this);
     request_export =  new("request_export", this);
 endfunction : build_phase
 
+/*! \brief Connects the analysis export and fifo  */
 function void axi_sequencer::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
   request_export.connect(request_fifo.analysis_export);

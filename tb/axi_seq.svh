@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_seq.svh
-//
-// Purpose:
-//          UVM sequence for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,6 +17,11 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
+/*! \class axi_seq
+ *  \brief Writes to memory over AXI, backdoor readback, then AXI readback
+ *
+ *  miscompares are flagged.
+ */
 class axi_seq extends uvm_sequence #(axi_seq_item);
 
     `uvm_object_utils(axi_seq)
@@ -47,11 +43,23 @@ function void axi_seq::response_handler(uvm_sequence_item response);
 
 endfunction: response_handler
 
-
+/*! \brief Constructor
+ *
+ * Doesn't actually do anything except call parent constructor
+ */
 function axi_seq::new (string name="axi_seq");
   super.new(name);
 endfunction : new
 
+/*! \brief Does all the work.
+ *
+ * -# Creates constrained random AXI write packet
+ * -# Sends it
+ * -# Backdoor read of memory to verify correctly written
+ * -# Creates constrained random AXI read packet with same len and address as write packet
+ * -# Sends it
+ * -# Verifies read back data with written data.
+ */
 task axi_seq::body;
 
   axi_seq_item write_item;

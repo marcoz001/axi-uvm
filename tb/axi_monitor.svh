@@ -130,16 +130,7 @@ task axi_monitor::monitor_write_address();
   end  // forever
 endtask : monitor_write_address
 
-    /*
-    write to address in aw_q[0] + offset
-    offset is inc'd each write.  once offset=awlen, then pop addr and reset offset
-    if addr comes in while some data already in fifo?
 
-    can we just packet everything between wlast pulses as a packet? and just ship out
-    to the analysis port/
-    writing to the agent's memory requires an address
-    // AXI spec says data can arrive before data, but order must match
-    */
 /*! \brief monitors Write Data channel
  *
  * and sends out TLM pkt.

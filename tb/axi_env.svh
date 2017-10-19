@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_env.svh
-//
-// Purpose:
-//          UVM env for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,6 +17,10 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
+/*! \class axi_env
+ *  \brief Creates two active AXI agents, one master and one slave/responder, plus a memory
+ *
+ */
 class axi_env extends uvm_env;
   `uvm_component_utils(axi_env)
 
@@ -46,10 +41,14 @@ class axi_env extends uvm_env;
 
 endclass : axi_env
 
+/*! \brief Constructor
+ *
+ * Doesn't actually do anything except call parent constructor */
 function axi_env::new (string name="axi_env", uvm_component parent=null);
   super.new(name, parent);
 endfunction : new
 
+/*! \brief Creates the two AXI agents and the memory */
 function void axi_env::build_phase (uvm_phase phase);
   super.build_phase(phase);
 
@@ -79,12 +78,12 @@ function void axi_env::build_phase (uvm_phase phase);
   m_axiresponder_agent.m_memory = m_memory;
   m_axidriver_agent.m_memory    = m_memory;
 
-  // m_wb_agent = wb_agent::type_id::create("m_wb_agent", this);
 endfunction : build_phase
-
+/*! \brief Sets sequencer pointers/handles
+ *
+ */
 function void axi_env::connect_phase (uvm_phase phase);
   super.connect_phase(phase);
-
 
   m_driver_seqr    = m_axidriver_agent.m_seqr;
   m_responder_seqr = m_axiresponder_agent.m_seqr;

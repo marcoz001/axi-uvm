@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_driver.svh
-//
-// Purpose:
-//          UVM driver for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,33 +17,15 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
-class axi_driver_pre extends uvm_driver #(axi_seq_item);
-  `uvm_component_utils(axi_driver_pre)
-
-    axi_if_abstract vif;
-  axi_agent_config    m_config;
-  memory              m_memory;
-
-
-  extern function new (string name="axi_driver_pre", uvm_component parent=null);
-
-endclass : axi_driver_pre
-
-function axi_driver_pre::new (
-  string        name   = "axi_driver_pre",
-  uvm_component parent = null);
-
-  super.new(name, parent);
-endfunction : new
-
-
-
-class axi_driver extends axi_driver_pre;
+/*! \class axi_driver
+ *  \brief Logic to act as an AXI master for all 5 channels
+ */
+class axi_driver extends uvm_driver #(axi_seq_item);
   `uvm_component_utils(axi_driver)
 
- // axi_if_abstract vif;
- // axi_agent_config    m_config;
- // memory              m_memory;
+  axi_if_abstract vif;
+  axi_agent_config    m_config;
+  memory              m_memory;
 
   mailbox #(axi_seq_item) writeaddress_mbx  = new(0);  //unbounded mailboxes
   mailbox #(axi_seq_item) writedata_mbx     = new(0);
@@ -65,7 +38,6 @@ class axi_driver extends axi_driver_pre;
 
   extern function void build_phase              (uvm_phase phase);
   extern function void connect_phase            (uvm_phase phase);
-  extern function void end_of_elaboration_phase (uvm_phase phase);
   extern task          run_phase                (uvm_phase phase);
 
   extern task          write_address;
@@ -87,57 +59,62 @@ class axi_driver extends axi_driver_pre;
   int max_clks_between_b_transfers=0;
 
   // AXI spec, A3.2.2,  states once valid is asserted,it must stay asserted until
-    // ready asserts.  These varibles let us toggle valid to beat on the ready/valid
-    // logic
-    bit axi_incompatible_awready_toggling_mode=0;
-    bit axi_incompatible_wready_toggling_mode=0;
-    bit axi_incompatible_bready_toggling_mode=0;
+  // ready asserts.  These varibles let us toggle valid to beat on the ready/valid
+  // logic
+  bit axi_incompatible_awready_toggling_mode=0;
+  bit axi_incompatible_wready_toggling_mode=0;
+  bit axi_incompatible_bready_toggling_mode=0;
 
+  int min_clks_between_ar_transfers=0;
+  int max_clks_between_ar_transfers=0;
 
+  int min_clks_between_r_transfers=0;
+  int max_clks_between_r_transfers=0;
 
-   int min_clks_between_ar_transfers=0;
-   int max_clks_between_ar_transfers=0;
-
-   int min_clks_between_r_transfers=0;
-   int max_clks_between_r_transfers=0;
-
-   bit axi_incompatible_rready_toggling_mode=0;
+  bit axi_incompatible_rready_toggling_mode=0;
 
 endclass : axi_driver
 
-function axi_driver::new (
-  string        name   = "axi_driver",
-  uvm_component parent = null);
-
+/*! \brief Constructor
+ *
+ * Doesn't actually do anything except call parent constructor */
+function axi_driver::new (string name = "axi_driver", uvm_component parent = null);
   super.new(name, parent);
 endfunction : new
 
+/*! \brief Creates the virtual interface */
 function void axi_driver::build_phase (uvm_phase phase);
   super.build_phase(phase);
 
   vif = axi_if_abstract::type_id::create("vif", this);
-
 endfunction : build_phase
 
+/*! \brief
+ *
+ * Nothing to connect so doesn't actually do anything except call parent connect phase */
 function void axi_driver::connect_phase (uvm_phase phase);
   super.connect_phase(phase);
 endfunction : connect_phase
 
-function void axi_driver::end_of_elaboration_phase (uvm_phase phase);
-  super.end_of_elaboration_phase(phase);
-endfunction : end_of_elaboration_phase
 
+/*! \brief Launches channel driver threads and then acts as a dispatcher
+ *
+ * After launching 5 different threads (one for each channel), this task
+ * acts as a dispatcher.  It waits for TLM packets and then stuffs them
+ * into the appropriate thread's mailbox.   IE: If it's an AXI write packet
+ * then it puts the packet into the write_address's mailbox so it can handle it.
+ * It the waits for the next TLM packet.
+ * NOTE: it does not wait for the other thread to finish processing the packet,
+ * it just puts it in the mailbox and then immediately waits for the next packet.
+*/
 task axi_driver::run_phase(uvm_phase phase);
 
-
   axi_seq_item item;
-  axi_seq_item cloned_item;
 
     fork
        write_address();
        write_data();
        write_response();
-
        read_address();
        read_data();
     join_none
@@ -146,11 +123,10 @@ task axi_driver::run_phase(uvm_phase phase);
   forever begin
 
     seq_item_port.get(item);
-    $cast(cloned_item, item.clone());
 
-    `uvm_info("axi_driver::run_phase",
-              $sformatf("YO: %s", item.convert2string()),
-              UVM_INFO)
+    `uvm_info(this.get_type_name(),
+              $sformatf("Item: %s", item.convert2string()),
+              UVM_HIGH)
 
     case (item.cmd)
       axi_uvm_pkg::e_WRITE : begin
@@ -167,15 +143,16 @@ task axi_driver::run_phase(uvm_phase phase);
 endtask : run_phase
 
 
-/*
-   write_address - driver write address phase
-   1. wait for TLM item to get queued
-   2. initialize variables
-   3. write out
-   4. if ready and valid, wait X (x>=0 clks), then check for any more queued items
-   5. if avail, then fetch and goto step 2.
-   6. if no items to be drivein on next clk, the drive all write address signals low
-      and goto step 1.
+/*! \brief Write Address channel thread
+ *
+ * -#  Deassert awvalid
+ * -#  Wait for TLM item in mailbox
+ * -#  Initialize variables
+ * -#  Write out
+ * -#  if ready and valid, wait X clocks where x>=0, then check for any more queued items
+ * -#  if avail, then fetch and goto 'Initialize variables' step.
+ * -#  if no items to be driven on next clk,  drive all write address signals low
+ *     and goto 'Wait for TLM item in mailbox' step.
 */
 task axi_driver::write_address;
 
@@ -254,17 +231,18 @@ task axi_driver::write_address;
 
 endtask : write_address
 
-/*
-   write_data - driver write data phase
-   1. wait for TLM item to get queued
-   2. initialize variables
-   3. loop
-   4.    update variables when wready & wvalid (slave has received current beat)
-   5.    write out
-   6. if wlast and ready and valid, wait X (x>=0 clks), then check for any more queued items
-   7. if avail, then fetch and goto step 2.
-   8. if no items to be drivein on next clk, the drive all write data signals low
-      and goto step 1.
+/*! \brief Write Data channel thread
+ *
+ * -# Deassert wvalid
+ * -# wait for TLM item to get queued
+ * -# initialize variables
+ * -# loop
+ * -#    update variables when wready & wvalid (slave has received current beat)
+ * -#    write out
+ * -#    if wlast and ready and valid, wait X clocks where x>=0, then check for any more queued items
+ * -#    if avail, then fetch and goto 'Initialize variables' step.
+ * -#    if no items to be driven on next clk, the drive all write data signals low
+         and goto 'Wait for TLM item to get queued' step.
 */
 task axi_driver::write_data;
   axi_seq_item item=null;
@@ -390,7 +368,13 @@ task axi_driver::write_data;
 endtask : write_data
 
 
-
+/*! \brief Write Response channel thread
+ *
+ *  Wait for write response (bvalid and bready)
+ *  Convert to TLM itemand send back to sequence
+ * \todo: this task needs to be cleaned up.  it doesn't actually wait for response
+ *
+*/
 task axi_driver::write_response;
 
   axi_seq_item            item;
@@ -400,21 +384,29 @@ task axi_driver::write_response;
 
   forever begin
     writeresponse_mbx.get(item);
- //   `uvm_info(this.get_type_name(), "HEY, write_response!!!!", UVM_INFO)
+    // vif.wait_for_write_response(.s(b_s));
   //  vif.wait_for_bvalid();
     vif.read_b(.s(s));
     item.bid   = s.bid;
     item.bresp = s.bresp;
- //   `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put()", UVM_INFO)
     seq_item_port.put(item);
-  //  `uvm_info(this.get_type_name(), "HEY, HEY, waiting on seq_item_port.put() - done", UVM_INFO)
-  //  `uvm_info(this.get_type_name(), $sformatf("write_response: %s", item.convert2string()), UVM_INFO)
+
 
   end
 endtask : write_response
 
 
-
+/*! \brief Read Address channel thread
+ *
+ * -#  Deassert arvalid
+ * -#  Wait for TLM item in mailbox
+ * -#  Initialize variables
+ * -#  Write out
+ * -#  if ready and valid, wait X clocks where x>=0, then check for any more queued items
+ * -#  if avail, then fetch and goto 'Initialize variables' step.
+ * -#  if no items to be driven on next clk,  drive all read address signals low
+ *     and goto 'Wait for TLM item in mailbox' step.
+*/
 task axi_driver::read_address;
 
   axi_seq_item item=null;
@@ -458,17 +450,8 @@ task axi_driver::read_address;
           end
        end
        // Initialize values
-       if (item_needs_init==1) begin
+       if (item != null && item_needs_init==1) begin
           item.ar_from_class(.t(item), .v(v));
-          //v.arlen  = item.calculate_beats(.addr(item.addr),
-         //                                 .number_bytes(2**item.burst_size), //item.number_bytes
-          //                                .burst_length(item.len));
-
-          //v.arlen = v.arlen-1; // value is one less than cnt. IE: awlen=0, then 1 beat
-
-          //v.araddr = item.calculate_aligned_address(.addr(v.araddr),
-          //                                          .number_bytes(4));
-          item_needs_init=0;
        end
 
         // Update values <- No need in write address (only one clk per)
@@ -497,6 +480,19 @@ task axi_driver::read_address;
 
 endtask : read_address
 
+
+/*! \brief monitors Read Data channel and sends out TLM pkt
+ *
+ * This task should match the corresponding on in axi_monitor but
+ * it doesn't yet
+ * \todo: match read_data task in axi_monitor
+ * Instead it waits for a pkt in its mailbox.  This packet will come
+ * from read_address once it has put the address out on the bus.
+ * The just continually waits for a valid and ready beat on the channel
+ * and stores it in that packet it got from read address.
+ * When rlast received, send out analysis port and goes back to
+ * waiting for next pkt from read address.
+*/
 task axi_driver::read_data;
 
   axi_seq_item_r_vector_s  r_s;
@@ -507,15 +503,13 @@ task axi_driver::read_data;
   forever begin
 
     if (item == null) begin
-  readdata_mbx.get(item);
-  item.initialize();
-  item.data=new[item.len];
-  item.dataoffset=0;
+       readdata_mbx.get(item);
+       item.initialize();
+       item.data=new[item.len];
+       item.dataoffset=0;
       `uvm_info(this.get_type_name(), $sformatf("%s", item.convert2string()), UVM_HIGH)
     end
 
-
- // forever begin
     vif.wait_for_read_data(.s(r_s));
 
     `uvm_info(this.get_type_name(),$sformatf("r_s.data: 0x%0x   LowerLane:%0d   Upperlane:%0d   dataoffset=%0d", r_s.rdata,item.Lower_Byte_Lane,item.Upper_Byte_Lane, item.dataoffset),
@@ -526,22 +520,14 @@ task axi_driver::read_data;
       if (item.dataoffset < item.len) begin
          item.data[item.dataoffset++] = r_s.rdata[z*8+:8];
       end
-    //  `uvm_info("DATAOFFSET",
-     //           $sformatf("data: 0x%0x -- item:0x%0x -- offset:%0d", r_s.rdata[z*8+:8], item.data[item.dataoffset-1], item.dataoffset-1),
-      //          UVM_INFO)
-
     end
     item.update_address();
-    // `uvm_info("read_data", "YO, got beat:", UVM_INFO)
+
     if (r_s.rlast == 1'b1) begin
-     // `uvm_info("read_data", "YO, got rlast:", UVM_INFO)
       seq_item_port.put(item);
       item=null;
     end
   end   //forever
-
-//end
-
 
 endtask : read_data
 

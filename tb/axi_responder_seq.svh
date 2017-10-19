@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_responder_seq.svh
-//
-// Purpose:
-//          UVM responder sequence for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,6 +17,9 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
+/*! \class axi_responder_seq
+ *  \brief Setups up responder *ready toggle patterns, then receives TLM packet from monitor and sends to responder.
+ */
 class axi_responder_seq extends axi_seq;
 
   `uvm_object_utils(axi_responder_seq)
@@ -40,16 +34,28 @@ class axi_responder_seq extends axi_seq;
 
 endclass : axi_responder_seq
 
+/*! \brief Constructor
+ *
+ * Doesn't actually do anything except call parent constructor */
 function axi_responder_seq::new (string name="axi_responder_seq");
   super.new(name);
 endfunction : new
 
+/*! \brief Does all the work.
+ *
+ * -# Creates constrained random awready toggle pattern
+ * -# Sends it
+ * -# Creates constrained random wready toggle pattern
+ * -# Sends it
+ * -# Creates constrained random arready toggle pattern
+ * -# Sends it
+ * -# In a forever loop,
+ *       waits for TLM packets from monitor
+ *       sends them on to responder
+ */
 task axi_responder_seq::body;
      axi_seq_item drv_item;
      axi_seq_item item;
-
-
-
 
   `uvm_info(this.get_type_name(), "YO~! starting responder_seq", UVM_HIGH)
 
@@ -96,9 +102,8 @@ task axi_responder_seq::body;
        // this break the child-doesn't-know-about-parent model?
 
        // Get from monitor (or wherever)
-         `uvm_info(this.get_type_name, "DEBUG 4", UVM_INFO)
+
        p_sequencer.request_fifo.get(drv_item);
-       `uvm_info(this.get_type_name, "DEBUG 5", UVM_INFO)
 
 
               `uvm_info(this.get_type_name(),
@@ -109,7 +114,6 @@ task axi_responder_seq::body;
 
        start_item(drv_item);
        finish_item(drv_item);
-       `uvm_info(this.get_type_name, "DEBUG 6", UVM_INFO)
 
        `uvm_info(this.get_type_name(),
                  $sformatf(" <-HEY1HEY1HEY1 -> %s",

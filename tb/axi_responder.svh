@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_responder.svh
-//
-// Purpose:
-//          UVM driver for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,6 +17,9 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
+/*! \class axi_responder
+ *  \brief Logic to act as an AXI slave (responder) for all 5 channels
+ */
 class axi_responder extends uvm_driver #(axi_seq_item);
   `uvm_component_utils(axi_responder)
 
@@ -48,7 +42,6 @@ class axi_responder extends uvm_driver #(axi_seq_item);
 
   extern function void build_phase              (uvm_phase phase);
   extern function void connect_phase            (uvm_phase phase);
-  extern function void end_of_elaboration_phase (uvm_phase phase);
   extern task          run_phase                (uvm_phase phase);
 
   extern task          write_address;
@@ -82,89 +75,74 @@ class axi_responder extends uvm_driver #(axi_seq_item);
 
 endclass : axi_responder
 
-function axi_responder::new (
-  string        name   = "axi_responder",
-  uvm_component parent = null);
-
+/*! \brief Constructor
+ *
+ * Doesn't actually do anything except call parent constructor */
+function axi_responder::new (string name = "axi_responder", uvm_component parent = null);
   super.new(name, parent);
 endfunction : new
 
+/*! \brief Creates the virtual interface */
 function void axi_responder::build_phase (uvm_phase phase);
   super.build_phase(phase);
 
   vif = axi_if_abstract::type_id::create("vif", this);
-
 endfunction : build_phase
 
+/*! \brief
+ *
+ * Nothing to connect so doesn't actually do anything except call parent connect phase */
 function void axi_responder::connect_phase (uvm_phase phase);
   super.connect_phase(phase);
 endfunction : connect_phase
 
-function void axi_responder::end_of_elaboration_phase (uvm_phase phase);
-  super.end_of_elaboration_phase(phase);
-endfunction : end_of_elaboration_phase
-
+/*! \brief Launches channel responder threads and then acts as a dispatcher
+ *
+ * After launching 5 different threads (one for each channel), this task
+ * acts as a dispatcher.  It waits for TLM packets and then stuffs them
+ * into the appropriate thread's mailbox.   IE: If it's an AXI write packet
+ * then it puts the packet into the write_address's mailbox so it can handle it.
+ * It the waits for the next TLM packet.
+ * NOTE: it does not wait for the other thread to finish processing the packet,
+ * it just puts it in the mailbox and then immediately waits for the next packet.
+*/
 task axi_responder::run_phase(uvm_phase phase);
 
-
   axi_seq_item item;
-  axi_seq_item cloned_item;
 
   fork
     write_address();
     write_data();
     write_response();
-
     read_address();
     read_data();
   join_none
 
-
-
-
   forever begin
 
-    //item = axi_seq_item::type_id::create("item", this);
     seq_item_port.get(item);
-    $cast(cloned_item, item.clone());
 
-    `uvm_info("axi_responder::run_phase",
+    `uvm_info(this.get_type_name(),
               $sformatf("Item: %s", item.convert2string()),
               UVM_INFO)
 
     case (item.cmd)
 
       axi_uvm_pkg::e_WRITE : begin
-           `uvm_info("e_WRITE",
-                     "stuffing item into writeaddress_mbx.put(item);",
-                     UVM_HIGH)
            writeaddress_mbx.put(item);
-
       end
 
       axi_uvm_pkg::e_READ_DATA  : begin
-        `uvm_info("e_READ_DATA",
-                  "stuffing item into readdata_mbx.put(item);",
-                  UVM_HIGH)
         readdata_mbx.put(item);
       end
 
       axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN : begin
-         `uvm_info(this.get_type_name(),
-                   $sformatf("Setting awready toggle patter: 0x%0x", item.toggle_pattern),
-                   UVM_HIGH)
          vif.enable_awready_toggle_pattern(.pattern(item.toggle_pattern));
       end
       axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN : begin
-         `uvm_info(this.get_type_name(),
-                   $sformatf("Setting wready toggle patter: 0x%0x", item.toggle_pattern),
-                   UVM_HIGH)
          vif.enable_wready_toggle_pattern(.pattern(item.toggle_pattern));
       end
       axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN : begin
-         `uvm_info(this.get_type_name(),
-                   $sformatf("Setting arready toggle patter: 0x%0x", item.toggle_pattern),
-                   UVM_HIGH)
          vif.enable_arready_toggle_pattern(.pattern(item.toggle_pattern));
       end
    endcase
@@ -173,7 +151,14 @@ task axi_responder::run_phase(uvm_phase phase);
 
 endtask : run_phase
 
-
+/*! \brief Write Address channel thread
+ *
+ *  Actually does almost nothing.  The monitor handles taking AXI write data and storing
+ *  it into memory and loadable logic in the axi_if handles awready.
+ *  This task is basically part of a chain that guarantees that a write response
+ *  won't be sent back before both write address and write data have been received.
+ *  \todo: clean up this task. Destroy that chain.
+ */
 task axi_responder::write_address;
 
   axi_seq_item             item;
@@ -182,13 +167,13 @@ task axi_responder::write_address;
 
   forever begin
     writeaddress_mbx.get(item);
-    `uvm_info(this.get_type_name(), "======>>>> axi_responder::write_address Getting address", UVM_HIGH)
-    vif.read_aw(.s(s));
-    axi_seq_item::aw_to_class(.t(item), .v(s));
+    //`uvm_info(this.get_type_name(), "======>>>> axi_responder::write_address Getting address", UVM_HIGH)
+    //vif.read_aw(.s(s));
+    //axi_seq_item::aw_to_class(.t(item), .v(s));
 
-    item.data=new[item.len];
-    item.wlast=new[item.len];
-    item.wstrb=new[item.len];
+    //item.data=new[item.len];
+    //item.wlast=new[item.len];
+    //item.wstrb=new[item.len];
 
     writedata_mbx.put(item);
   end
@@ -196,7 +181,14 @@ endtask : write_address
 
 
 
-
+/*! \brief Write Data channel thread
+ *
+ *  Actually does almost nothing.  The monitor handles taking AXI write data and storing
+ *  it into memory and loadable logic in the axi_if handles awready.
+ *  This task is basically part of a chain that guarantees that a write response
+ *  won't be sent back before both write address and write data have been received.
+ *  \todo: clean up this task. Destroy that chain.
+ */
 task axi_responder::write_data;
 
   int          i;
@@ -225,7 +217,18 @@ task axi_responder::write_data;
   end
 endtask : write_data
 
-
+/*! \brief Write Response channel thread
+ *
+ * -#  Deassert bvalid
+ * -#  Wait for TLM item in mailbox
+ * -#  Initialize variables
+ * -#  Write out
+ * -#  if ready and valid, wait X clocks where x>=0, then check for any more queued items
+ * -#  if avail, then fetch and goto 'Initialize variables' step.
+ * -#  if no items to be driven on next clk,  drive all write response signals low
+ *     and goto 'Wait for TLM item in mailbox' step.
+ * \\todo: response values are hardcoded.   Get from response seq?
+*/
 task axi_responder::write_response;
   axi_seq_item item=null;
   axi_seq_item_b_vector_s s;
@@ -302,10 +305,24 @@ task axi_responder::write_response;
 
 endtask : write_response
 
+/*! \brief Read Address channel thread
+ *
+ *  Does nothing.  The monitor handles taking AXI read data transfers and
+ * creating a read data packet that gets sent to the read data channel thread.
+ */
 task axi_responder::read_address;
 endtask : read_address
 
-
+/*! \brief Read Data channel thread
+ *
+ * -# Deassert rvalid
+ * -# wait for tlm packet (responder packet from axi_monitor)
+ * -# loop through data
+ * -# if ready and valid, wait X clocks where x>=0, then check for any more queued items
+ * -# if avail, then fetch and goto 'Loop through data' step.
+ * -# if no items to be driven on next clk,  drive all read data signals low
+ *    and goto 'Wait for TLM item in mailbox' step.
+*/
 task axi_responder::read_data;
   axi_seq_item item=null;
   axi_seq_item_r_vector_s s;
@@ -323,8 +340,6 @@ task axi_responder::read_data;
 
     if (item == null) begin
        readdata_mbx.get(item);
-      //item.len=item.len*4;
-      //item.Burst_Length_Bytes=item.Burst_Length_Bytes*4;
       item.initialize();
 
       item.dataoffset=0;
@@ -342,7 +357,7 @@ task axi_responder::read_data;
     s.rid    = 'h0;
     // s.rstrb  = 'h0;
     s.rlast  = 1'b0;
-    //`uvm_info("READ_DATA", $sformatf("item: %s", item.convert2string()), UVM_INFO)
+
     // Check if done with this transfer
     if (vif.get_rready()==1'b1 && vif.get_rvalid() == 1'b1) begin
       item.dataoffset = n;

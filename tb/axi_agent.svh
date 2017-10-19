@@ -1,14 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_agent.sv
-//
-// Purpose:
-//          UVM agent for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
 // Copyright (C) 2017, Matt Dew
 //
 // This program is free software (firmware): you can redistribute it and/or
@@ -26,11 +17,21 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
+/*! \class axi_agent
+ *  \brief Encapsulates driver, monitor, coverage collector, a local memory
+ *
+ * A configuration object, axi_agent_config contains all the information needed
+ * by this agent to:
+ * - Be active (drive signals) or passive (just listen like a monitor)
+ * - Enable driver and sequencer
+ * - Enable a master driver or slave driver (responder)
+ * - Enable coverage collector
+ * - Enable scoreboard
+ */
 class axi_agent extends uvm_agent;
   `uvm_component_utils(axi_agent)
 
   uvm_analysis_port #(axi_seq_item) ap;
-
 
   axi_agent_config    m_config;
   axi_driver          m_driver;
@@ -40,7 +41,7 @@ class axi_agent extends uvm_agent;
 
   axi_sequencer       m_seqr;
   axi_coveragecollector m_coveragecollector;
-  memory              m_memory;
+  memory              m_memory;  /*!< Local memory pointer.  Can point to global if desired */
 
   extern function new (string name="axi_agent", uvm_component parent=null);
   extern function void build_phase              (uvm_phase phase);
@@ -48,10 +49,18 @@ class axi_agent extends uvm_agent;
 
 endclass : axi_agent
 
+/*! \brief Constructor
+ *
+ * Doesn't actually do anything except call parent constructor */
 function axi_agent::new (string name="axi_agent", uvm_component parent=null);
   super.new(name, parent);
 endfunction : new
 
+/*! \brief Create sub-components as configured
+ *
+ * Look for a config object,if one isn't found in the uvm_config_db then create one
+ * and use its defauls for configuring.
+ */
 function void axi_agent::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
@@ -79,9 +88,6 @@ function void axi_agent::build_phase(uvm_phase phase);
   end
      m_seqr    = axi_sequencer::type_id::create("m_seqr", this);
 
-//     m_driver.m_memory = m_memory;
-
- // end
 
   m_monitor = axi_monitor::type_id::create("m_monitor", this);
   m_monitor.m_config=m_config;
@@ -117,10 +123,5 @@ function void axi_agent::connect_phase (uvm_phase phase);
   end
 
   m_monitor.ap.connect(ap);
-
-//  if (m_config.drv_type == e_RESPONDER) begin
-//    m_monitor.driver_activity_ap.connect(m_seqr.request_export);
-//  end
-
 
 endfunction : connect_phase
