@@ -518,17 +518,17 @@ task axi_driver::read_data;
  // forever begin
     vif.wait_for_read_data(.s(r_s));
 
-  //  `uvm_info(this.get_type_name(),$sformatf("r_s.data: 0x%0x   LowerLane:%0d   Upperlane:%0d   dataoffset=%0d", r_s.rdata,item.Lower_Byte_Lane,item.Upper_Byte_Lane, item.dataoffset),
-  //            UVM_INFO)
+    `uvm_info(this.get_type_name(),$sformatf("r_s.data: 0x%0x   LowerLane:%0d   Upperlane:%0d   dataoffset=%0d", r_s.rdata,item.Lower_Byte_Lane,item.Upper_Byte_Lane, item.dataoffset),
+             UVM_HIGH)
 
 
-    for (int z=item.Lower_Byte_Lane;z<item.Upper_Byte_Lane;z++) begin
-      if (item.dataoffset <= item.len) begin
+    for (int z=item.Lower_Byte_Lane;z<=item.Upper_Byte_Lane;z++) begin
+      if (item.dataoffset < item.len) begin
          item.data[item.dataoffset++] = r_s.rdata[z*8+:8];
       end
-   //   `uvm_info("DATAOFFSET",
-   //             $sformatf("data: 0x%0x -- item:0x%0x", r_s.rdata[z*8+:8], item.data[item.dataoffset-1]),
-   //             UVM_INFO)
+    //  `uvm_info("DATAOFFSET",
+     //           $sformatf("data: 0x%0x -- item:0x%0x -- offset:%0d", r_s.rdata[z*8+:8], item.data[item.dataoffset-1], item.dataoffset-1),
+      //          UVM_INFO)
 
     end
     item.update_address();

@@ -133,7 +133,7 @@ task axi_responder::run_phase(uvm_phase phase);
               UVM_INFO)
 
     case (item.cmd)
-      /*
+
       axi_uvm_pkg::e_WRITE : begin
            `uvm_info("e_WRITE",
                      "stuffing item into writeaddress_mbx.put(item);",
@@ -148,7 +148,7 @@ task axi_responder::run_phase(uvm_phase phase);
                   UVM_HIGH)
         readdata_mbx.put(item);
       end
-      */
+
       axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN : begin
          `uvm_info(this.get_type_name(),
                    $sformatf("Setting awready toggle patter: 0x%0x", item.toggle_pattern),
@@ -167,10 +167,6 @@ task axi_responder::run_phase(uvm_phase phase);
                    UVM_HIGH)
          vif.enable_arready_toggle_pattern(.pattern(item.toggle_pattern));
       end
-
-     // default : begin
-       // writeaddress_mbx.put(item);
-    // end
    endcase
 
   end // forever

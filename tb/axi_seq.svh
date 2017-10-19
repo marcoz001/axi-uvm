@@ -72,7 +72,7 @@ task axi_seq::body;
 
 
 
-  xfers_to_send=1;
+  xfers_to_send=100;
 
   for (int i=0;i<xfers_to_send;i++) begin
      $cast(item, original_item.clone());
@@ -123,24 +123,42 @@ task axi_seq::body;
 
     end
 
-/*
+
     `uvm_info("COMPARE", $sformatf("%s", s), UVM_HIGH);
 
 
     // Now AXI readback
-    `uvm_info("READBACK", "Now READING BACK", UVM_HIGH)
+    `uvm_info("READBACK", "Now READING BACK", UVM_INFO)
 
     cloned_item.cmd=e_READ;
+    // Clear out data just to be sure what is returned is theactual AXI readback data
+    cloned_item.data=new[1];
+    cloned_item.data[0]='h5A;
+
+  //  `uvm_info(this.get_type_name(), "DEBUG 1", UVM_INFO)
     start_item(cloned_item);
+ //   `uvm_info(this.get_type_name(), "DEBUG 2", UVM_INFO)
     finish_item(cloned_item);
+ //   `uvm_info(this.get_type_name(), "DEBUG 3", UVM_INFO)
     get_response(cloned_item);   //response_handler above deals with this
+ //   `uvm_info(this.get_type_name(), "DEBUG 4", UVM_INFO)
     `uvm_info(this.get_type_name(),
               $sformatf("GOT RESPONSE. item=%s", cloned_item.convert2string()),
-              UVM_HIGH)
+              UVM_INFO)
+
+    `uvm_info("...", "Now comparing AXI readback to AXI write data", UVM_INFO)
+    for (int z=0;z<item.len;z++) begin
+      assert (item.data[z] == cloned_item.data[z]) else begin
+        `uvm_warning("MISCOMPARE",
+                     $sformatf("Expected(Written) Data: 0x%0x  Actual(Readback) Data: 0x%0x",
+                               item.data[z],cloned_item.data[z]))
+      end
+
+    end
 
      #5us
     `uvm_info("..", "...", UVM_HIGH)
-*/
+
   end  //for
 
  // wait (xfers_done >= xfers_to_send);

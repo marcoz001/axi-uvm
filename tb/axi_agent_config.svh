@@ -29,8 +29,12 @@
 class axi_agent_config extends uvm_object;
   `uvm_object_utils(axi_agent_config)
 
-  uvm_active_passive_enum m_active    = UVM_PASSIVE;
-  driver_type_t           drv_type;
+  //defaults
+  uvm_active_passive_enum m_active       = UVM_PASSIVE;
+  driver_type_t           drv_type       = e_DRIVER;
+
+  bit                     has_scoreboard = 1'b1;
+  bit                     has_coverage   = 1'b1;
 
   // Use toggle patterns. The interface can directly handle all the ready* toggling
   // without requiring the driver.
