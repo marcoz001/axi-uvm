@@ -53,16 +53,15 @@ function axi_seq::new (string name="axi_seq");
 endfunction : new
 
 task axi_seq::body;
-     axi_seq_item original_item;
-     axi_seq_item item;
-     axi_seq_item cloned_item;
-  axi_seq_item rsp;
+
+  axi_seq_item write_item;
+  axi_seq_item read_item;
+
   int xfers_to_send=0;
   string s;
   bit [7:0] read_data;
 
   xfers_done=0;
-  original_item=axi_seq_item::type_id::create("original_item");
 
   //use_response_handler(1); // Enable Response Handler
 
@@ -75,43 +74,36 @@ task axi_seq::body;
   xfers_to_send=100;
 
   for (int i=0;i<xfers_to_send;i++) begin
-     $cast(item, original_item.clone());
-    `uvm_info(this.get_type_name, "DEBUG 1", UVM_INFO)
-         start_item(item);
-         assert( item.randomize() with {cmd        == e_WRITE;
-                                    burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
-                                     //   burst_size inside {e_4BYTES};
-                                    burst_type == e_INCR;
-                                    //addr       ==  'h1000;
-                                        addr < 'h4;
-                                    //len        ==  'h10;
-                                    len        >  'h0;
-                                      //  len == 1;
-                                    len        <=  'h3C;
+     write_item=axi_seq_item::type_id::create("write_item");
+     read_item=axi_seq_item::type_id::create("read_item");
 
-                                     //   addr == 'h2;
-                                     //   len == 'h1;
-                                       }
+
+    start_item(write_item);
+    assert( write_item.randomize() with {cmd        ==     e_WRITE;
+                                         burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
+                                         burst_type ==     e_INCR;
+                                         addr       <      'h4;
+                                         len        >      'h0;
+                                         len        <=     'h3C;
+                                        }
                                    ) else begin
          `uvm_error(this.get_type_name(),
-                    $sformatf("Unable to randomize %s",  item.get_full_name()));
+                    $sformatf("Unable to randomize %s",  write_item.get_full_name()));
          end  //assert
-         $cast(cloned_item, item.clone());
 
-         finish_item(item);
-    `uvm_info(this.get_type_name, "DEBUG 2", UVM_INFO)
-    `uvm_info("DATA", $sformatf("Sending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", item.addr, item.len, item.len, item.burst_size), UVM_HIGH)
-       get_response(item);
-    `uvm_info(this.get_type_name, "DEBUG 3", UVM_INFO)
-     #5us
+
+    finish_item(write_item);
+    `uvm_info("DATA", $sformatf("Sending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", write_item.addr, write_item.len, write_item.len, write_item.burst_size), UVM_HIGH)
+    get_response(write_item);
+
 
     `uvm_info("...", "Now reading back from memory to verify", UVM_LOW)
-    s=$sformatf("Addr[0x%0x/(len:%d)]=", item.Start_Address, item.len);
+    s=$sformatf("Addr[0x%0x/(len:%d)]=", write_item.Start_Address, write_item.len);
 
-    for (int z=0;z<item.len;z++) begin
-      read_data=m_memory.read(item.Start_Address+z);
+    for (int z=0;z<write_item.len;z++) begin
+      read_data=m_memory.read(write_item.Start_Address+z);
       s=$sformatf("%s 0x%0x", s, read_data);
-      if (z<item.len-1) begin
+      if (z<write_item.len-1) begin
          assert (int'(read_data) == z) else begin
            `uvm_error("miscompare", $sformatf("expected: 0x%0x   actual:0x%0x", z, read_data))
          end
@@ -130,38 +122,43 @@ task axi_seq::body;
     // Now AXI readback
     `uvm_info("READBACK", "Now READING BACK", UVM_INFO)
 
-    cloned_item.cmd=e_READ;
-    // Clear out data just to be sure what is returned is theactual AXI readback data
-    cloned_item.data=new[1];
-    cloned_item.data[0]='h5A;
 
-  //  `uvm_info(this.get_type_name(), "DEBUG 1", UVM_INFO)
-    start_item(cloned_item);
- //   `uvm_info(this.get_type_name(), "DEBUG 2", UVM_INFO)
-    finish_item(cloned_item);
- //   `uvm_info(this.get_type_name(), "DEBUG 3", UVM_INFO)
-    get_response(cloned_item);   //response_handler above deals with this
- //   `uvm_info(this.get_type_name(), "DEBUG 4", UVM_INFO)
+    start_item(read_item);
+    assert( read_item.randomize() with {cmd        ==     e_READ;
+                                         burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
+                                         burst_type ==     write_item.burst_type;
+                                         addr       ==     write_item.Start_Address;
+                                        len        ==     write_item.len;}
+                                                                          ) else begin
+         `uvm_error(this.get_type_name(),
+                    $sformatf("Unable to randomize %s",  read_item.get_full_name()));
+         end  //assert
+
+
+    finish_item(read_item);
+
+    get_response(read_item);   //response_handler above deals with this
+
     `uvm_info(this.get_type_name(),
-              $sformatf("GOT RESPONSE. item=%s", cloned_item.convert2string()),
+              $sformatf("GOT RESPONSE. item=%s", read_item.convert2string()),
               UVM_INFO)
 
     `uvm_info("...", "Now comparing AXI readback to AXI write data", UVM_INFO)
-    for (int z=0;z<item.len;z++) begin
-      assert (item.data[z] == cloned_item.data[z]) else begin
+    for (int z=0;z<write_item.len;z++) begin
+      assert (write_item.data[z] == read_item.data[z]) else begin
         `uvm_warning("MISCOMPARE",
                      $sformatf("Expected(Written) Data: 0x%0x  Actual(Readback) Data: 0x%0x",
-                               item.data[z],cloned_item.data[z]))
+                               write_item.data[z],read_item.data[z]))
       end
 
     end
 
-     #5us
+
     `uvm_info("..", "...", UVM_HIGH)
 
   end  //for
 
- // wait (xfers_done >= xfers_to_send);
+
   `uvm_info(this.get_type_name(), "SEQ ALL DONE", UVM_INFO)
 
 endtask : body
