@@ -1,10 +1,10 @@
 <map id="axi_seq_item::update_address" name="axi_seq_item::update_address">
-<area shape="rect" id="node2" href="$classaxi__driver.html#a42c6a27933a6f54f1222f7ec323f861a" title="axi_driver::driver\l_read_data" alt="" coords="217,5,335,47"/>
-<area shape="rect" id="node4" href="$classaxi__driver.html#a14a3e1a2e59b9cdf5c163abfa42c1725" title="axi_driver::driver\l_write_data" alt="" coords="217,71,335,112"/>
-<area shape="rect" id="node5" href="$classaxi__monitor.html#a22e36c827d9bcde956cc502ab4d1bb8d" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="206,201,346,243"/>
-<area shape="rect" id="node7" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="206,267,346,308"/>
-<area shape="rect" id="node8" href="$classaxi__driver.html#af27c90a4e3b345997882a7c42dcc4eda" title="axi_driver::responder\l_read_data" alt="" coords="205,136,347,177"/>
-<area shape="rect" id="node9" href="$classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b" title="axi_seq_item::wlast_c" alt="" coords="200,333,352,359"/>
-<area shape="rect" id="node3" href="$classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="axi_driver::run_phase" alt="" coords="405,78,552,105"/>
-<area shape="rect" id="node6" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="400,241,557,267"/>
+<area shape="rect" id="node2" href="$classaxi__monitor.html#a22e36c827d9bcde956cc502ab4d1bb8d" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="214,5,354,47"/>
+<area shape="rect" id="node4" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="214,71,354,112"/>
+<area shape="rect" id="node5" href="$classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="axi_responder::read_data" alt="" coords="200,137,368,163"/>
+<area shape="rect" id="node7" href="$classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e" title="axi_driver::read_data" alt="" coords="213,187,355,214"/>
+<area shape="rect" id="node8" href="$classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b" title="axi_seq_item::wlast_c" alt="" coords="208,238,360,265"/>
+<area shape="rect" id="node9" href="$classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="axi_driver::write_data" alt="" coords="211,289,357,315"/>
+<area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="416,46,573,73"/>
+<area shape="rect" id="node6" href="$classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="axi_responder::run\l_phase" alt="" coords="430,129,559,171"/>
 </map>

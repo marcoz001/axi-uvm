@@ -103,16 +103,18 @@ Collaboration diagram for axi_agent:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__agent__coll__graph.png" border="0" usemap="#axi__agent_coll__map" alt="Collaboration graph"/></div>
 <map name="axi__agent_coll__map" id="axi__agent_coll__map">
-<area shape="rect" id="node3" href="classmemory.html" title="memory" alt="" coords="225,92,295,119"/>
-<area shape="rect" id="node5" href="classaxi__driver.html" title="axi_driver" alt="" coords="499,195,577,221"/>
-<area shape="rect" id="node9" href="classaxi__monitor.html" title="monitors all 5 channels for activity " alt="" coords="493,340,583,367"/>
-<area shape="rect" id="node7" href="classaxi__agent__config.html" title="axi_agent_config" alt="" coords="200,268,320,295"/>
-<area shape="rect" id="node11" href="classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="207,379,313,405"/>
-<area shape="rect" id="node12" href="axi__pkg_8sv.html#structaxi__seq__item__r__vector__s" title="This packed struct is used to send read data channel information between the DUT and TB..." alt="" coords="177,328,343,355"/>
-<area shape="rect" id="node13" href="axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="173,480,347,507"/>
-<area shape="rect" id="node14" href="classaxi__scoreboard.html" title="scoreboard " alt="" coords="483,404,593,431"/>
-<area shape="rect" id="node16" href="classaxi__coveragecollector.html" title="axi_coveragecollector" alt="" coords="464,483,612,509"/>
-<area shape="rect" id="node17" href="classaxi__sequencer.html" title="axi_sequencer" alt="" coords="485,589,591,616"/>
+<area shape="rect" id="node3" href="classaxi__responder.html" title="axi_responder" alt="" coords="484,312,587,339"/>
+<area shape="rect" id="node10" href="classaxi__driver__pre.html" title="axi_driver_pre" alt="" coords="484,197,587,224"/>
+<area shape="rect" id="node5" href="classmemory.html" title="memory" alt="" coords="225,113,295,140"/>
+<area shape="rect" id="node11" href="classaxi__monitor.html" title="monitors all 5 channels for activity " alt="" coords="491,463,580,489"/>
+<area shape="rect" id="node7" href="classaxi__agent__config.html" title="axi_agent_config" alt="" coords="200,383,320,409"/>
+<area shape="rect" id="node13" href="classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="207,444,313,471"/>
+<area shape="rect" id="node9" href="classaxi__driver.html" title="axi_driver" alt="" coords="759,233,837,260"/>
+<area shape="rect" id="node14" href="axi__pkg_8sv.html#structaxi__seq__item__r__vector__s" title="This packed struct is used to send read data channel information between the DUT and TB..." alt="" coords="177,505,343,532"/>
+<area shape="rect" id="node15" href="axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="173,556,347,583"/>
+<area shape="rect" id="node16" href="classaxi__scoreboard.html" title="scoreboard " alt="" coords="743,496,853,523"/>
+<area shape="rect" id="node18" href="classaxi__coveragecollector.html" title="axi_coveragecollector" alt="" coords="724,547,872,573"/>
+<area shape="rect" id="node19" href="classaxi__sequencer.html" title="axi_sequencer" alt="" coords="745,597,851,624"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -133,6 +135,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:adb3187bc0e91db087427cab4d4936899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0f38ae35ed9d4b1e6c5913397cb4c05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classaxi__driver.html">axi_driver</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__agent.html#aa0f38ae35ed9d4b1e6c5913397cb4c05">m_driver</a></td></tr>
 <tr class="separator:aa0f38ae35ed9d4b1e6c5913397cb4c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0379528db12987846a0e574293b6b30e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classaxi__responder.html">axi_responder</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__agent.html#a0379528db12987846a0e574293b6b30e">m_responder</a></td></tr>
+<tr class="separator:a0379528db12987846a0e574293b6b30e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab347099a57dca596edae1aac16f9815a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classaxi__monitor.html">axi_monitor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__agent.html#ab347099a57dca596edae1aac16f9815a">m_monitor</a></td></tr>
 <tr class="separator:ab347099a57dca596edae1aac16f9815a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9aa1dc6c8716eb880fb427432d23b32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classaxi__scoreboard.html">axi_scoreboard</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__agent.html#ae9aa1dc6c8716eb880fb427432d23b32">m_scoreboard</a></td></tr>
@@ -162,9 +166,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00054">54</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00055">55</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
 
-<p>References <a class="el" href="axi__agent__config_8svh_source.html#l00033">axi_agent_config::drv_type</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00054">e_RESPONDER</a>, <a class="el" href="axi__driver_8svh_source.html#l00033">axi_driver::m_config</a>, <a class="el" href="axi__agent_8svh_source.html#l00035">m_config</a>, <a class="el" href="axi__monitor_8svh_source.html#l00067">axi_monitor::m_config</a>, <a class="el" href="axi__agent_8svh_source.html#l00041">m_coveragecollector</a>, <a class="el" href="axi__agent_8svh_source.html#l00036">m_driver</a>, <a class="el" href="axi__driver_8svh_source.html#l00034">axi_driver::m_memory</a>, <a class="el" href="axi__agent_8svh_source.html#l00042">m_memory</a>, <a class="el" href="axi__monitor_8svh_source.html#l00068">axi_monitor::m_memory</a>, <a class="el" href="axi__agent_8svh_source.html#l00037">m_monitor</a>, <a class="el" href="axi__agent_8svh_source.html#l00038">m_scoreboard</a>, and <a class="el" href="axi__agent_8svh_source.html#l00040">m_seqr</a>.</p>
+<p>References <a class="el" href="axi__agent__config_8svh_source.html#l00034">axi_agent_config::drv_type</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00053">e_DRIVER</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00037">axi_agent_config::has_coverage</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00036">axi_agent_config::has_scoreboard</a>, <a class="el" href="axi__driver_8svh_source.html#l00033">axi_driver_pre::m_config</a>, <a class="el" href="axi__responder_8svh_source.html#l00033">axi_responder::m_config</a>, <a class="el" href="axi__agent_8svh_source.html#l00035">m_config</a>, <a class="el" href="axi__monitor_8svh_source.html#l00050">axi_monitor::m_config</a>, <a class="el" href="axi__agent_8svh_source.html#l00042">m_coveragecollector</a>, <a class="el" href="axi__agent_8svh_source.html#l00036">m_driver</a>, <a class="el" href="axi__responder_8svh_source.html#l00034">axi_responder::m_memory</a>, <a class="el" href="axi__driver_8svh_source.html#l00034">axi_driver_pre::m_memory</a>, <a class="el" href="axi__agent_8svh_source.html#l00043">m_memory</a>, <a class="el" href="axi__monitor_8svh_source.html#l00051">axi_monitor::m_memory</a>, <a class="el" href="axi__agent_8svh_source.html#l00038">m_monitor</a>, <a class="el" href="axi__agent_8svh_source.html#l00037">m_responder</a>, <a class="el" href="axi__agent_8svh_source.html#l00039">m_scoreboard</a>, and <a class="el" href="axi__agent_8svh_source.html#l00041">m_seqr</a>.</p>
 
 </div>
 </div>
@@ -182,9 +186,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00089">89</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00098">98</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
 
-<p>References <a class="el" href="axi__monitor_8svh_source.html#l00055">axi_monitor::driver_activity_ap</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00033">axi_agent_config::drv_type</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00054">e_RESPONDER</a>, <a class="el" href="axi__agent_8svh_source.html#l00035">m_config</a>, <a class="el" href="axi__agent_8svh_source.html#l00041">m_coveragecollector</a>, <a class="el" href="axi__agent_8svh_source.html#l00036">m_driver</a>, <a class="el" href="axi__agent_8svh_source.html#l00037">m_monitor</a>, <a class="el" href="axi__agent_8svh_source.html#l00038">m_scoreboard</a>, and <a class="el" href="axi__agent_8svh_source.html#l00040">m_seqr</a>.</p>
+<p>References <a class="el" href="axi__monitor_8svh_source.html#l00038">axi_monitor::driver_activity_ap</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00034">axi_agent_config::drv_type</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00053">e_DRIVER</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00037">axi_agent_config::has_coverage</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00036">axi_agent_config::has_scoreboard</a>, <a class="el" href="axi__agent_8svh_source.html#l00035">m_config</a>, <a class="el" href="axi__agent_8svh_source.html#l00042">m_coveragecollector</a>, <a class="el" href="axi__agent_8svh_source.html#l00036">m_driver</a>, <a class="el" href="axi__agent_8svh_source.html#l00038">m_monitor</a>, <a class="el" href="axi__agent_8svh_source.html#l00037">m_responder</a>, <a class="el" href="axi__agent_8svh_source.html#l00039">m_scoreboard</a>, and <a class="el" href="axi__agent_8svh_source.html#l00041">m_seqr</a>.</p>
 
 </div>
 </div>
@@ -212,7 +216,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00050">50</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00051">51</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
 
 </div>
 </div>
@@ -245,7 +249,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00035">35</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00053">axi_env::build_phase()</a>, <a class="el" href="axi__agent_8svh_source.html#l00054">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00089">connect_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00053">axi_env::build_phase()</a>, <a class="el" href="axi__agent_8svh_source.html#l00055">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00098">connect_phase()</a>.</p>
 
 </div>
 </div>
@@ -259,9 +263,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00041">41</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00042">42</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00054">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00089">connect_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00055">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00098">connect_phase()</a>.</p>
 
 </div>
 </div>
@@ -277,7 +281,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00036">36</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00054">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00089">connect_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00055">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00098">connect_phase()</a>.</p>
 
 </div>
 </div>
@@ -291,9 +295,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00042">42</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00043">43</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00053">axi_env::build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00054">build_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00053">axi_env::build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00055">build_phase()</a>.</p>
 
 </div>
 </div>
@@ -307,9 +311,25 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00038">38</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00055">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00098">connect_phase()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0379528db12987846a0e574293b6b30e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classaxi__responder.html">axi_responder</a> axi_agent::m_responder</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00037">37</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00054">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00089">connect_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00055">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00098">connect_phase()</a>.</p>
 
 </div>
 </div>
@@ -323,9 +343,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00038">38</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00039">39</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00054">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00089">connect_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00055">build_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00098">connect_phase()</a>.</p>
 
 </div>
 </div>
@@ -339,9 +359,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00040">40</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__agent_8svh_source.html#l00041">41</a> of file <a class="el" href="axi__agent_8svh_source.html">axi_agent.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00054">build_phase()</a>, <a class="el" href="axi__env_8svh_source.html#l00085">axi_env::connect_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00089">connect_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00055">build_phase()</a>, <a class="el" href="axi__env_8svh_source.html#l00085">axi_env::connect_phase()</a>, and <a class="el" href="axi__agent_8svh_source.html#l00098">connect_phase()</a>.</p>
 
 </div>
 </div>

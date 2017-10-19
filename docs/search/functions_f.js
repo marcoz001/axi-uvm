@@ -15,10 +15,13 @@ var searchData=
   ['wait_5ffor_5fwrite_5fresponse',['wait_for_write_response',['../classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538',1,'axi_if_abstract']]],
   ['wlast_5fc',['wlast_c',['../classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b',1,'axi_seq_item']]],
   ['write',['write',['../classaxi__coveragecollector.html#ad3db357735350aac191dcc3cabbddf23',1,'axi_coveragecollector::write()'],['../classaxi__master__driver.html#adedcb7c658934fc69ecd0377db2c5baf',1,'axi_master_driver::write()'],['../classaxi__scoreboard.html#ad0b761134c2d154528fc04a145695b5f',1,'axi_scoreboard::write()'],['../classmemory.html#a9e041180ed26bc52eea610c25d6238ce',1,'memory::write()']]],
+  ['write_5faddress',['write_address',['../classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03',1,'axi_driver::write_address()'],['../classaxi__responder.html#a40c2090c7f4e386461faceb42937241d',1,'axi_responder::write_address()']]],
   ['write_5far',['write_ar',['../classaxi__if__abstract.html#a75f862f7fca7efb90751aa39479d9d90',1,'axi_if_abstract']]],
   ['write_5faw',['write_aw',['../classaxi__if__abstract.html#a7e36789c321a0c85c24472b30e935a73',1,'axi_if_abstract']]],
   ['write_5fb',['write_b',['../classaxi__if__abstract.html#ae7c847dd3b462ab7179a3ef675854345',1,'axi_if_abstract']]],
+  ['write_5fdata',['write_data',['../classaxi__driver.html#a415576ba733708ac11b31726bbd31cff',1,'axi_driver::write_data()'],['../classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c',1,'axi_responder::write_data()']]],
   ['write_5fr',['write_r',['../classaxi__if__abstract.html#a4f5d4c671f5f12e9f262ed27053941d9',1,'axi_if_abstract']]],
+  ['write_5fresponse',['write_response',['../classaxi__driver.html#aa16a6b3196df0a50381d7dc7361de329',1,'axi_driver::write_response()'],['../classaxi__responder.html#ad6540250bab8663a8723afa67dc222b9',1,'axi_responder::write_response()']]],
   ['write_5fw',['write_w',['../classaxi__if__abstract.html#ac189704968e2ee86d85e6a4d9e983f0e',1,'axi_if_abstract']]],
   ['wstrb_5fc',['wstrb_c',['../classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec',1,'axi_seq_item']]]
 ];

@@ -14,17 +14,7 @@ var searchData=
   ['do_5fcopy',['do_copy',['../classaxi__seq__item.html#a7ebdae66f8fcaf0ef01077a86de34bb5',1,'axi_seq_item']]],
   ['do_5fprint',['do_print',['../classaxi__seq__item.html#abe28396093aa00b187a5211862b07888',1,'axi_seq_item']]],
   ['driver_5factivity_5fap',['driver_activity_ap',['../classaxi__monitor.html#ad221ada88970cbfcc956744c45aa6acd',1,'axi_monitor']]],
-  ['driver_5fread_5faddress',['driver_read_address',['../classaxi__driver.html#af2c67b933fbbf4980858995e9f2c05a6',1,'axi_driver']]],
-  ['driver_5fread_5fdata',['driver_read_data',['../classaxi__driver.html#a42c6a27933a6f54f1222f7ec323f861a',1,'axi_driver']]],
-  ['driver_5freadaddress_5fmbx',['driver_readaddress_mbx',['../classaxi__driver.html#a268dec4bfb3fb5ccba06883b92130cf7',1,'axi_driver']]],
-  ['driver_5freaddata_5fmbx',['driver_readdata_mbx',['../classaxi__driver.html#a4cb026ceb1f5d7bc01c808a5d0188849',1,'axi_driver']]],
   ['driver_5ftype_5ft',['driver_type_t',['../axi__uvm__pkg_8sv.html#ad8116d2e0fd01b57b2c352460a75e3c2',1,'axi_uvm_pkg.sv']]],
-  ['driver_5fwrite_5faddress',['driver_write_address',['../classaxi__driver.html#aff5fe54c212d7466f17183fd463712f8',1,'axi_driver']]],
-  ['driver_5fwrite_5fdata',['driver_write_data',['../classaxi__driver.html#a14a3e1a2e59b9cdf5c163abfa42c1725',1,'axi_driver']]],
-  ['driver_5fwrite_5fresponse',['driver_write_response',['../classaxi__driver.html#a7d0f0ed12866aa0a271eddec4a803985',1,'axi_driver']]],
-  ['driver_5fwriteaddress_5fmbx',['driver_writeaddress_mbx',['../classaxi__driver.html#a8772ec5b3e68e21c4196a1f76f32fc20',1,'axi_driver']]],
-  ['driver_5fwritedata_5fmbx',['driver_writedata_mbx',['../classaxi__driver.html#a539c5c9db2aa25b1c3eafa7b94fa353b',1,'axi_driver']]],
-  ['driver_5fwriteresponse_5fmbx',['driver_writeresponse_mbx',['../classaxi__driver.html#ab2d3f64cdaaeba07ed71cfcce10f6e29',1,'axi_driver']]],
   ['drv_5ftype',['drv_type',['../classaxi__agent__config.html#ac6dca74e341352b849c8fb8e5c103789',1,'axi_agent_config']]],
   ['dtsize',['dtsize',['../classaxi__seq__item.html#a54a1fe851241ea43ab14f03186acdd64',1,'axi_seq_item']]]
 ];

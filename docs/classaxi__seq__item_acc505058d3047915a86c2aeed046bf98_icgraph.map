@@ -1,7 +1,7 @@
 <map id="axi_seq_item::aw_to_class" name="axi_seq_item::aw_to_class">
 <area shape="rect" id="node2" href="$classaxi__monitor.html#a344d36a4b510a06f4a774fa76d2aca70" title="monitors Write Address channel " alt="" coords="202,5,342,47"/>
-<area shape="rect" id="node4" href="$classaxi__driver.html#a4c3a69e0d141f7b5a434a11399d3c5d8" title="axi_driver::responder\l_write_address" alt="" coords="201,71,343,112"/>
-<area shape="rect" id="node6" href="$classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b" title="axi_seq_item::wlast_c" alt="" coords="196,137,348,163"/>
+<area shape="rect" id="node4" href="$classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b" title="axi_seq_item::wlast_c" alt="" coords="196,71,348,98"/>
+<area shape="rect" id="node5" href="$classaxi__responder.html#a40c2090c7f4e386461faceb42937241d" title="axi_responder::write\l_address" alt="" coords="203,123,341,164"/>
 <area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="396,13,553,39"/>
-<area shape="rect" id="node5" href="$classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="axi_driver::run_phase" alt="" coords="401,78,548,105"/>
+<area shape="rect" id="node6" href="$classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="axi_responder::run\l_phase" alt="" coords="410,123,539,164"/>
 </map>

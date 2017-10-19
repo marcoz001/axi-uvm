@@ -1,10 +1,9 @@
 <map id="axi_seq_item::calculate_aligned_address" name="axi_seq_item::calculate_aligned_address">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#a2718ea6ff7551a92fdbc6ff92d80bb14" title="axi_seq_item::ar_from\l_class" alt="" coords="422,224,573,265"/>
-<area shape="rect" id="node5" href="$classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b" title="axi_seq_item::wlast_c" alt="" coords="624,122,776,149"/>
-<area shape="rect" id="node6" href="$classaxi__seq__item.html#aada0d930cd4e6040a7584e068e01dc94" title="axi_seq_item::aw_from\l_class" alt="" coords="419,5,576,47"/>
-<area shape="rect" id="node8" href="$classaxi__seq__item.html#ae8e05cac654df340a4a48461bfcf7010" title="axi_seq_item::calculate\l_beats" alt="" coords="212,45,371,87"/>
-<area shape="rect" id="node9" href="$classaxi__seq__item.html#a74f94b33eafbe2a8d4493c538b2e406b" title="axi_seq_item::update\l_wstrb" alt="" coords="218,111,365,152"/>
-<area shape="rect" id="node3" href="$classaxi__driver.html#af2c67b933fbbf4980858995e9f2c05a6" title="axi_driver::driver\l_read_address" alt="" coords="641,199,759,240"/>
-<area shape="rect" id="node4" href="$classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="axi_driver::run_phase" alt="" coords="824,122,971,149"/>
-<area shape="rect" id="node7" href="$classaxi__driver.html#aff5fe54c212d7466f17183fd463712f8" title="axi_driver::driver\l_write_address" alt="" coords="641,31,759,72"/>
+<area shape="rect" id="node2" href="$classaxi__seq__item.html#a2718ea6ff7551a92fdbc6ff92d80bb14" title="axi_seq_item::ar_from\l_class" alt="" coords="422,5,573,47"/>
+<area shape="rect" id="node4" href="$classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b" title="axi_seq_item::wlast_c" alt="" coords="631,122,783,149"/>
+<area shape="rect" id="node5" href="$classaxi__seq__item.html#aada0d930cd4e6040a7584e068e01dc94" title="axi_seq_item::aw_from\l_class" alt="" coords="419,224,576,265"/>
+<area shape="rect" id="node7" href="$classaxi__seq__item.html#ae8e05cac654df340a4a48461bfcf7010" title="axi_seq_item::calculate\l_beats" alt="" coords="212,173,371,215"/>
+<area shape="rect" id="node8" href="$classaxi__seq__item.html#a74f94b33eafbe2a8d4493c538b2e406b" title="axi_seq_item::update\l_wstrb" alt="" coords="218,56,365,97"/>
+<area shape="rect" id="node3" href="$classaxi__driver.html#a4edb359e7927c729b939ebd992f83d05" title="axi_driver::read_address" alt="" coords="625,13,789,39"/>
+<area shape="rect" id="node6" href="$classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03" title="axi_driver::write_address" alt="" coords="624,231,791,258"/>
 </map>
