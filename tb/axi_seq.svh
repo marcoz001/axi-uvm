@@ -79,7 +79,7 @@ task axi_seq::body;
 
 
 
-  xfers_to_send=100;
+  xfers_to_send=1;
 
   for (int i=0;i<xfers_to_send;i++) begin
      write_item=axi_seq_item::type_id::create("write_item");

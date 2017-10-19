@@ -18,7 +18,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 /*! \class axi_responder_seq
- *  \brief Setups up responder *ready toggle patterns, then receives TLM packet from monitor and sends to responder.
+ *  \brief Forever running sequence that setups up responder *ready toggle patterns, then receives TLM packet from monitor and sends to responder.
  */
 class axi_responder_seq extends axi_seq;
 

@@ -26,6 +26,11 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
+/*! \class axi_seq_item
+ *  \brief contains all data and functions related to axi and usage
+ *
+ * In addition to variables like addr,len, id, this alsocontains functions that could be moved into axi_uvm_pkg to save object space. Things like calculating aligned_address from address.
+ */
 class axi_seq_item extends uvm_sequence_item;
   `uvm_object_utils(axi_seq_item)
 
@@ -96,27 +101,16 @@ class axi_seq_item extends uvm_sequence_item;
   const int c_AXI3_MAXBEATCNT=16;
   const int c_AXI4_MAXBEATCNT=256;
 
-
-
-/*
-  constraint easier_testing {len >= 'h10;
-                             len < 60;
-                             (len % 4) == 0;}
- */
-  //constraint number_bytes_c {number_bytes == 2;}
-  //constraint burst_size_c {burst_size == axi_pkg::e_2BYTES;}
-
-
-    constraint max_len {len > 0;
-                        if          (cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN)
-                           len == 1;
-                        else if (cmd == axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN)
-                           len == 1;
-                        else if (cmd == axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN)
-                           len == 1;
-                        else
-                          len < //(burst_size**2) * 16;
-                          ((2**burst_size) * 16)-(addr-int'(addr/(2**burst_size))*(2**burst_size));
+  constraint max_len {len > 0;
+                      if          (cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN)
+                         len == 1;
+                      else if (cmd == axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN)
+                         len == 1;
+                      else if (cmd == axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN)
+                         len == 1;
+                      else
+                        len <
+                        ((2**burst_size) * 16)-(addr-int'(addr/(2**burst_size))*(2**burst_size));
                         // 16 for everything except AXI4 incr.
                         //@Todo: take into account non-aligned addr
                            //len < 256*128;
@@ -132,6 +126,7 @@ class axi_seq_item extends uvm_sequence_item;
                         wlast.size() == len/4;
                        } //only the last bit is set, do that in post-randomize
 
+    // UVM sequence item functions
     extern function        new        (string name="axi_seq_item");
     extern function string convert2string;
     extern function void   do_copy    (uvm_object rhs);
@@ -140,6 +135,7 @@ class axi_seq_item extends uvm_sequence_item;
 
     extern function void   post_randomize;
 
+    // Custom functions
     extern function bit [63:0] calculate_aligned_address(
      input bit [63:0] addr,
      input int        number_bytes);
@@ -149,19 +145,10 @@ class axi_seq_item extends uvm_sequence_item;
       input int        number_bytes,
       input int        burst_length);
 
-    extern function void update_wstrb(
-      input bit [63:0] addr,
-      input bit        wstrb [],
-      const ref bit [7:0]  data [],
-      input int        number_bytes,
-      input int        burst_length,
-      ref   bit        new_wstrb [],
-      ref   bit [7:0]  new_data [],
-      output int       new_beat_cnt);
 
-      extern function void update_address();
-        extern function void initialize();
-          extern function void update();  // update_address vs update ?
+    extern function void update_address();
+    extern function void initialize();
+    extern function void update();  // update_address vs update ?
 
 
     extern  function void   aw_from_class(
@@ -204,17 +191,22 @@ class axi_seq_item extends uvm_sequence_item;
       ref    axi_seq_item             t,
       input  axi_seq_item_ar_vector_s v);
 
-
 endclass : axi_seq_item
 
+/*! \brief Constructor
+ *
+ * Doesn't actually do anything except call parent constructor */
 function axi_seq_item::new (string name="axi_seq_item");
   super.new(name);
 endfunction : new
 
+/*! \brief Convert item's variable into one printable string.
+ *
+ */
 function string axi_seq_item::convert2string;
     string s;
     string sdata;
-  int j=0;
+    int j=0;
     $sformat(s, "%s", super.convert2string());
     $sformat(s, "%s Cmd: %s   ", s, cmd.name);
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
@@ -225,38 +217,33 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s BID = 0x%0x",   s, bid);
     $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
 
+    $sformat(s, "%s Start_Address = 0x%0x ", s, Start_Address);
+    $sformat(s, "%s Aligned_Address = 0x%0x ", s, Aligned_Address);
+    $sformat(s, "%s aligned = %0d ", s, aligned);
+    $sformat(s, "%s Number_Bytes = %0d ", s, Number_Bytes);
+    $sformat(s, "%s iNumber_Bytes = %0d ", s, iNumber_Bytes);
+    $sformat(s, "%s Burst_Length_Bytes = %0d ", s, Burst_Length_Bytes);
+    $sformat(s, "%s Data_Bus_Bytes = %0d ", s, Data_Bus_Bytes);
 
+    $sformat(s, "%s Lower_Wrap_Boundary = 0x%0x ", s, Lower_Wrap_Boundary);
+    $sformat(s, "%s Upper_Wrap_Boundary = 0x%0x ", s, Upper_Wrap_Boundary);
+    $sformat(s, "%s Lower_Byte_Lane = %0d ", s, Lower_Byte_Lane);
+    $sformat(s, "%s Upper_Byte_Lane = %0d ", s, Upper_Byte_Lane);
+    $sformat(s, "%s Mode = %0d ", s, Mode);
+    $sformat(s, "%s dtsize = %0d ", s, dtsize);
 
-  $sformat(s, "%s Start_Address = 0x%0x ", s, Start_Address);
-  $sformat(s, "%s Aligned_Address = 0x%0x ", s, Aligned_Address);
-  $sformat(s, "%s aligned = %0d ", s, aligned);
-  $sformat(s, "%s Number_Bytes = %0d ", s, Number_Bytes);
-  $sformat(s, "%s iNumber_Bytes = %0d ", s, iNumber_Bytes);
-  $sformat(s, "%s Burst_Length_Bytes = %0d ", s, Burst_Length_Bytes);
-  $sformat(s, "%s Data_Bus_Bytes = %0d ", s, Data_Bus_Bytes);
-
-  $sformat(s, "%s Lower_Wrap_Boundary = 0x%0x ", s, Lower_Wrap_Boundary);
-  $sformat(s, "%s Upper_Wrap_Boundary = 0x%0x ", s, Upper_Wrap_Boundary);
-  $sformat(s, "%s Lower_Byte_Lane = %0d ", s, Lower_Byte_Lane);
-  $sformat(s, "%s Upper_Byte_Lane = %0d ", s, Upper_Byte_Lane);
-  $sformat(s, "%s Mode = %0d ", s, Mode);
- // bit [63:0] addr;
-  $sformat(s, "%s dtsize = %0d ", s, dtsize);
-
-/*
-assert (len == data.size()) else begin
-    `uvm_error(this.get_type_name(), $sformatf("member 'len [%d]' does not match data.size() [%d]", len, data.size()))
-  end
-*/
-  j=data.size();
-  for (int i =0; i< j; i++) begin
-      $sformat(sdata, "%s 0x%02x ", sdata, data[i]);
+    j=data.size();
+    for (int i =0; i< j; i++) begin
+       $sformat(sdata, "%s 0x%02x ", sdata, data[i]);
     end
-  $sformat(s, "%s Data: %s", s, sdata);
+    $sformat(s, "%s Data: %s", s, sdata);
 
     return s;
 endfunction : convert2string
 
+/*! \brief Deep copy
+ *
+ * Deep copy everything */
 function void axi_seq_item::do_copy(uvm_object rhs);
     int i;
     int j;
@@ -264,9 +251,9 @@ function void axi_seq_item::do_copy(uvm_object rhs);
     $cast(_rhs, rhs);
     super.do_copy(rhs);
 
-    addr  = _rhs.addr;
-    id    = _rhs.id;
-    len   = _rhs.len;
+    addr       = _rhs.addr;
+    id         = _rhs.id;
+    len        = _rhs.len;
 
     burst_size = _rhs.burst_size;
     burst_type = _rhs.burst_type;
@@ -279,40 +266,24 @@ function void axi_seq_item::do_copy(uvm_object rhs);
     bresp      = _rhs.bresp;
 
     cmd        = _rhs.cmd;
-/*
-    j=_rhs.data.size();
-    data  = new[j];
-    for (int i=0;i<j;i++) begin
-      data[i]  = _rhs.data[i];
-    end
-  */
-  data=new[_rhs.data.size()](_rhs.data);
 
-    j=_rhs.wstrb.size();
-    wstrb  = new[j];
-    for (int i=0;i<j;i++) begin
-      wstrb[i]  = _rhs.wstrb[i];
-    end
-
-    j=_rhs.valid.size();
-    valid  = new[j];
-    for (int i=0;i<j;i++) begin
-      valid[i]  = _rhs.valid[i];
-    end
-
-    j=_rhs.wlast.size();
-    wlast  = new[j];
-    for (int i=0;i<j;i++) begin
-      wlast[i] = _rhs.wlast[i];
-    end
-
+    data       = new[_rhs.data.size()](_rhs.data);
+    wstrb      = new[_rhs.wstrb.size()](_rhs.wstrb);
+    valid      = new[_rhs.valid.size()](_rhs.valid);
+    wlast      = new[_rhs.wlast.size()](_rhs.wlast);
 
 endfunction : do_copy
 
+/*! \brief Deep compare
+ *
+ * Compare everything
+ * \todo:  This function needs some attention.
+ */
 function bit axi_seq_item::do_compare(uvm_object rhs, uvm_comparer comparer);
   axi_seq_item _rhs;
   bit comp=1;
 
+  return 0; // this function needs love, fail until love received.
   if(!$cast(_rhs, rhs)) begin
     return 0;
   end
@@ -328,12 +299,21 @@ function bit axi_seq_item::do_compare(uvm_object rhs, uvm_comparer comparer);
          );
 endfunction : do_compare
 
+/*! \brief  prints out immediate object, but no parents' stuff.
+ *
+ */
 function void axi_seq_item::do_print(uvm_printer printer);
   printer.m_string = convert2string();
 endfunction : do_print
 
+/*! \brief Tweak things after randomization
+ *
+ * Currenly being used to reset the data[] to incrementing pattern
+ * ending with 'FE. This is for easier debugging.
+ * More love coming.
+*/
 function void axi_seq_item::post_randomize;
-          int j;
+  int j;
 
   super.post_randomize;
 //  data=new[len];
@@ -374,7 +354,12 @@ function void axi_seq_item::post_randomize;
 endfunction : post_randomize
 
 
-
+/*! \brief Update AXI item's address
+ *
+ * Updates address after every beat.
+ * Address changes depending on if it's a partial transfer,
+ * width of bus, fixed vs incrementing vs wrapped.
+ */
 function void axi_seq_item::update_address;
   if (Mode != axi_pkg::e_FIXED) begin
      if (aligned) begin
@@ -394,6 +379,11 @@ function void axi_seq_item::update_address;
   update();
 endfunction : update_address
 
+/*! \brief Initialize all variables after item creation, whether random or manually set.
+ *
+ * All variables that rely on those initial settings but are otherwise static
+ * are set/updated in this function. This function is meant to be called once per burst.
+ */
 function void axi_seq_item::initialize;
 //    addr           = item.addr;
     Start_Address     = addr;
@@ -420,6 +410,12 @@ function void axi_seq_item::initialize;
   update();
 endfunction : initialize
 
+
+/*! \brief Update the aligned address and used byte lanes on each beat.
+ *
+ * Aligned address and used byte lanes change per beat. That is handled
+ * in this function.This function is meant to be called every beat.
+ */
 function void axi_seq_item::update;
     iNumber_Bytes = Number_Bytes;
     Aligned_Address   = (int'(addr/iNumber_Bytes) * iNumber_Bytes);
@@ -438,7 +434,11 @@ function void axi_seq_item::update;
 
 endfunction : update
 
-
+/*! \brief Calculate aligned address from current address.
+ *
+ * Used to guarantee transfers are aligned on the bus for
+ * most efficient bus usage
+ */
 function bit [63:0] axi_seq_item::calculate_aligned_address(
   input bit [63:0] addr,
   input int number_bytes);
@@ -456,6 +456,12 @@ function bit [63:0] axi_seq_item::calculate_aligned_address(
 
 endfunction : calculate_aligned_address
 
+/*! \brief Calculate number of beats/clks in this burst.
+ *
+ * If the transfer is too large, this function will return a bogus result
+ * The caller is responsible for insuring safety.
+ * \todo: check if size (length + address-misalignment) is too large
+ */
 function int axi_seq_item::calculate_beats(
     input bit [63:0] addr,
     input int number_bytes,
@@ -478,105 +484,57 @@ function int axi_seq_item::calculate_beats(
 
   `uvm_info("CALCULATE BEATS", $sformatf("addr:0x%0x  aligned-addr: 0x%0x   burst_length: %0d    number_bytes: %0d beats [((0x%0x-0x%0x)+%0d)/%0d]=0x%0x", addr, aligned_addr, burst_length, number_bytes, addr, aligned_addr, burst_length,number_bytes,beats), UVM_HIGH)
 
-
-
   return beats;
 endfunction : calculate_beats
 
-      // update wstrb[] array account for aligned_address.
-      // basically, if address isn't aligned, then
-      // shift wstrb by (addr-aligned_addr) and insert
-      // 0's so those addresses aren't written.
-      // Also adjust for partial tranfer if applicable.
-function void axi_seq_item::update_wstrb(
-        input bit [63:0] addr,
-        input bit        wstrb [],
-        const ref bit [7:0] data [],
-        input int number_bytes,
-        input int burst_length,
-        ref   bit       new_wstrb [],
-        ref   bit [7:0] new_data [],
-        output int      new_beat_cnt);
-
-        bit [63:0] aligned_addr ;
-
-       real z;
-        //bit new_wstrb[];
-        int wstrb_size;
-
-        int alignment_offset;
-
-        aligned_addr=calculate_aligned_address(.addr(addr),
-                                         .number_bytes(number_bytes));
-
-        alignment_offset = addr-aligned_addr;
-        wstrb_size       = wstrb.size();
-
-        new_wstrb = new[alignment_offset+wstrb_size];
-        new_data  = new[alignment_offset+wstrb_size];
-
-        for (int i=0;i<alignment_offset;i++) begin
-           new_wstrb[i] = 1'b0;
-           new_data[i]  = 7'h00;
-        end
-
-        for (int i=0, j=alignment_offset; i<wstrb_size; i++,j++) begin
-            new_wstrb[j] = wstrb[i];
-            new_data[j]  = data[i];
-        end
-
-  // round up beatcnt
-  z = real'(((real'(alignment_offset+burst_length))/real'(number_bytes)));
-  if (int'(z) == z) begin
-     new_beat_cnt = z;
-  end else begin
-     new_beat_cnt = z+1;
-  end
-
-  `uvm_info(this.get_type_name(), $sformatf("XXXXXXXXXXXX alignment_offset: %d; burst_length: %d; new_length:%d; z:%f; new_beat_cnt: %d", alignment_offset, burst_length, new_data.size(), z, new_beat_cnt), UVM_INFO)
-
-endfunction : update_wstrb
-
- function void axi_seq_item::aw_from_class(
+/*! \brief Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s
+ *
+ * This funcion returns a ready-to-be used struct so awlen and awaddr are calcuated
+ * in this function.
+ * @param t an axi_seq_item
+ * @return v a packed struct of type axi_seq_item_aw_vector_s
+ */
+function void axi_seq_item::aw_from_class(
   ref  axi_seq_item             t,
   output axi_seq_item_aw_vector_s v);
 
   axi_seq_item_aw_vector_s s;
-  // int addr_offset_from_alignment=0;
 
-     s.awid    = t.id;
-    // s.awaddr  = t.addr;
-   s.awaddr = calculate_aligned_address(.addr(t.addr),
+   s.awid    = t.id;
+   s.awaddr  = calculate_aligned_address(.addr(t.addr),
                                         .number_bytes(2**t.burst_size));
-   // must take into account address misalignment when calculating beat cnt
-  // addr_offset_from_alignment=t.addr-s.awaddr;
-   //s.awlen   = ((t.len)/(2**s.awsize))-1; //t.len;
-   s.awlen  = calculate_beats(.addr  (t.addr),
-                              .number_bytes (2**t.burst_size),
-                              .burst_length (len));
-   s.awlen = s.awlen-1;
-     s.awsize  = t.burst_size;
-     s.awburst = t.burst_type;
-     s.awlock  = t.lock;
-     s.awcache = t.cache;
-     s.awprot  = t.prot;
-     s.awqos   = t.qos;
 
+   s.awlen   = calculate_beats(.addr  (t.addr),
+                               .number_bytes (2**t.burst_size),
+                               .burst_length (len));
+   s.awlen   = s.awlen-1;
+   s.awsize  = t.burst_size;
+   s.awburst = t.burst_type;
+   s.awlock  = t.lock;
+   s.awcache = t.cache;
+   s.awprot  = t.prot;
+   s.awqos   = t.qos;
 
     v = s;
 endfunction : aw_from_class
 
- function void axi_seq_item::aw_to_class(
+/*! \brief Pull values out of a axi_seq_item_aw_vector_s and stuffs them into an axi_seq_item
+ *
+ * t.len is converted from awlen into a byte len. It uses burst_size (bytes per beat) * beats_per_burst to give a maximum byte length.
+ * @return t an axi_seq_item
+ * @param v a packed struct of type axi_seq_item_aw_vector_s
+ */
+function void axi_seq_item::aw_to_class(
   ref    axi_seq_item             t,
   input  axi_seq_item_aw_vector_s v);
     axi_seq_item_aw_vector_s s;
     s = v;
 
+// \todo: should we detect if t==null and do something?
    // t = new();
 
      t.id          = s.awid;
      t.addr        = s.awaddr;
-     //t.len         = s.awlen;  // \todo; use *awsize  here?
      t.len         = (s.awlen+1)*(2**s.awsize);
      t.burst_size  = s.awsize;
      t.burst_type  = s.awburst;
@@ -588,7 +546,16 @@ endfunction : aw_from_class
 endfunction : aw_to_class
 
 
- function void axi_seq_item::w_from_class(
+/*! \brief take values from write data channel and stuff into a axi_seq_item_w_vector_s
+ *
+ * \todo: this funct isn't from a class so rename.
+ * @param wdata  - Write data value
+ * @param wstrb  - Write strobe
+ * @param wvalid - Write Valid
+ * @param wlast  - wlast (last beat of write burst)
+ * @return v      - a packed struct.
+ */
+function void axi_seq_item::w_from_class(
   input  [31:0]                  wdata,
   input  [3:0]                   wstrb,
   input                          wvalid,
@@ -605,7 +572,16 @@ endfunction : aw_to_class
   v = s;
 endfunction : w_from_class
 
- function void axi_seq_item::w_to_class(
+/*! \brief take values from a axi_seq_item_w_vector_s
+ *
+ * \todo: this funct isn't from a class so rename.
+ * @return wdata  - Write data value
+ * @return wstrb  - Write strobe
+ * @return wvalid - Write Valid
+ * @return wlast  - wlast (last beat of write burst)
+ * @param v      - a packed struct.
+ */
+function void axi_seq_item::w_to_class(
   output  [31:0]                  wdata,
   output  [3:0]                   wstrb,
   output                          wvalid,
@@ -623,7 +599,13 @@ endfunction : w_from_class
 
 endfunction : w_to_class
 
- function void axi_seq_item::b_from_class(
+/*! \brief take values from write response channel and stuff into a axi_seq_item_b_vector_s
+ *
+ * @param bid - Write Response ID tag
+ * @param bresp - Write Response
+ * @return v - packed struct of type axi_seq_item_b_vector_s
+ */
+function void axi_seq_item::b_from_class(
   input  [5:0]     bid,
   input  [1:0]     bresp,
   output axi_seq_item_b_vector_s v);
@@ -636,7 +618,12 @@ endfunction : w_to_class
   v = s;
 endfunction : b_from_class
 
- function void axi_seq_item::b_to_class(
+/*! \brief return values from a axi_seq_item_b_vector_s and return an axi_seq_item
+ *
+ * @param v - packed struct of type axi_seq_item_b_vector_s
+ * @return t - an axi_seq_item
+ */
+function void axi_seq_item::b_to_class(
    ref    axi_seq_item t,
    input  axi_seq_item_b_vector_s  v);
 
@@ -649,52 +636,56 @@ endfunction : b_from_class
 
 endfunction : b_to_class
 
-
+/*! \brief take values from an axi_seq_item and stuff into a axi_seq_item_ar_vector_s
+ *
+ * This funcion returns a ready-to-be used struct so arlen and araddr are calcuated
+ * in this function.
+ *
+ * @param t - The axi_seq_item is passed by reference
+ * @return v - packed struct of type axi_seq_item_ar_vector_s
+ */
 function void axi_seq_item::ar_from_class(
   ref  axi_seq_item             t,
   output axi_seq_item_ar_vector_s v);
 
   axi_seq_item_ar_vector_s s;
-  //int addr_offset_from_alignment;
 
-     s.arid    = t.id;
-     //s.araddr  = t.addr;
-    // s.arlen   = t.len;
-     //s.arlen   = ((t.len)/(2**s.arsize))-1;
-     s.araddr = calculate_aligned_address(.addr(t.addr),
+  s.arid    = t.id;
+  s.araddr  = calculate_aligned_address(.addr(t.addr),
                                         .number_bytes(2**t.burst_size));
-   //s.awlen   = ((t.len)/(2**s.awsize))-1; //t.len;
-
-  //addr_offset_from_alignment=t.addr-s.araddr;
-
-   s.arlen  = calculate_beats(.addr  (t.addr),
+  s.arlen   = calculate_beats(.addr  (t.addr),
                               .number_bytes (2**t.burst_size),
                               .burst_length (len));
-   s.arlen = s.arlen-1;
+  s.arlen   = s.arlen-1;
 
   s.arsize  = t.burst_size;
-     s.arburst = t.burst_type;
-     s.arlock  = t.lock;
-     s.arcache = t.cache;
-     s.arprot  = t.prot;
-     s.arqos   = t.qos;
-    v = s;
+  s.arburst = t.burst_type;
+  s.arlock  = t.lock;
+  s.arcache = t.cache;
+  s.arprot  = t.prot;
+  s.arqos   = t.qos;
+
+  v = s;
 endfunction : ar_from_class
 
- function void axi_seq_item::ar_to_class(
+/*! \brief Pull values out of a axi_seq_item_ar_vector_s and stuffs them into an axi_seq_item
+ *
+ * t.len is converted from arlen into a byte len. It uses burst_size (bytes per beat) * beats_per_burst to give a maximum byte length.
+ * @param t - an axi_seq_item
+ * @return v - a packed struct of type axi_seq_item_ar_vector_s
+ */
+function void axi_seq_item::ar_to_class(
   ref    axi_seq_item             t,
   input  axi_seq_item_ar_vector_s v);
     axi_seq_item_ar_vector_s s;
     s = v;
 
+    // \todo: should we detect if t==null and do something?
    // t = new();
-
-
 
      t.id          = s.arid;
      t.addr        = s.araddr;
- //    t.len         = s.arlen;
-   t.len         = (s.arlen+1)*(2**s.arsize);
+     t.len         = (s.arlen+1)*(2**s.arsize);
      t.burst_size  = s.arsize;
      t.burst_type  = s.arburst;
      t.lock        = s.arlock;
