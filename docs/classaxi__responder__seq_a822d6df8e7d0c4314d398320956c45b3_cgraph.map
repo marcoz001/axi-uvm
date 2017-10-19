@@ -1,3 +1,3 @@
 <map id="axi_responder_seq::body" name="axi_responder_seq::body">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="axi_seq_item::convert2string" alt="" coords="220,5,409,32"/>
+<area shape="rect" id="node2" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="220,5,409,32"/>
 </map>

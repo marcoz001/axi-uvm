@@ -1,4 +1,4 @@
 <map id="axi_seq_item::ar_from_class" name="axi_seq_item::ar_from_class">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#ab6adbb6fbe04ecca377377187aff2738" title="axi_seq_item::calculate\l_aligned_address" alt="" coords="411,5,569,47"/>
-<area shape="rect" id="node3" href="$classaxi__seq__item.html#ae8e05cac654df340a4a48461bfcf7010" title="axi_seq_item::calculate\l_beats" alt="" coords="204,35,363,76"/>
+<area shape="rect" id="node2" href="$classaxi__seq__item.html#ab6adbb6fbe04ecca377377187aff2738" title="Calculate aligned address from current address. " alt="" coords="411,5,569,47"/>
+<area shape="rect" id="node3" href="$classaxi__seq__item.html#ae8e05cac654df340a4a48461bfcf7010" title="Calculate number of beats/clks in this burst. " alt="" coords="204,35,363,76"/>
 </map>

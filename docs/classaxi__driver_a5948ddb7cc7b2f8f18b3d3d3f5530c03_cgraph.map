@@ -1,6 +1,6 @@
 <map id="axi_driver::write_address" name="axi_driver::write_address">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#aada0d930cd4e6040a7584e068e01dc94" title="axi_seq_item::aw_from\l_class" alt="" coords="236,5,393,47"/>
-<area shape="rect" id="node5" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="axi_seq_item::convert2string" alt="" coords="220,71,409,98"/>
-<area shape="rect" id="node3" href="$classaxi__seq__item.html#ab6adbb6fbe04ecca377377187aff2738" title="axi_seq_item::calculate\l_aligned_address" alt="" coords="664,5,823,47"/>
-<area shape="rect" id="node4" href="$classaxi__seq__item.html#ae8e05cac654df340a4a48461bfcf7010" title="axi_seq_item::calculate\l_beats" alt="" coords="457,35,616,76"/>
+<area shape="rect" id="node2" href="$classaxi__seq__item.html#aada0d930cd4e6040a7584e068e01dc94" title="Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s. " alt="" coords="236,5,393,47"/>
+<area shape="rect" id="node5" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="220,71,409,98"/>
+<area shape="rect" id="node3" href="$classaxi__seq__item.html#ab6adbb6fbe04ecca377377187aff2738" title="Calculate aligned address from current address. " alt="" coords="664,5,823,47"/>
+<area shape="rect" id="node4" href="$classaxi__seq__item.html#ae8e05cac654df340a4a48461bfcf7010" title="Calculate number of beats/clks in this burst. " alt="" coords="457,35,616,76"/>
 </map>

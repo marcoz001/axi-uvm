@@ -1,7 +1,7 @@
 <map id="axi_seq_item::update" name="axi_seq_item::update">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="axi_seq_item::initialize" alt="" coords="200,198,355,225"/>
+<area shape="rect" id="node2" href="$classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="200,198,355,225"/>
 <area shape="rect" id="node11" href="$classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b" title="axi_seq_item::wlast_c" alt="" coords="411,354,563,381"/>
-<area shape="rect" id="node13" href="$classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="axi_seq_item::update\l_address" alt="" coords="204,249,351,291"/>
+<area shape="rect" id="node13" href="$classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="204,249,351,291"/>
 <area shape="rect" id="node3" href="$classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="417,5,557,47"/>
 <area shape="rect" id="node5" href="$classaxi__monitor.html#a22e36c827d9bcde956cc502ab4d1bb8d" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="417,71,557,112"/>
 <area shape="rect" id="node6" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="417,136,557,177"/>

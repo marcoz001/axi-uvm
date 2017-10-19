@@ -1,3 +1,3 @@
 <map id="axi_seq" name="axi_seq">
-<area shape="rect" id="node3" href="$classaxi__responder__seq.html" title="Setups up responder *ready toggle patterns, then receives TLM packet from monitor and sends to respon..." alt="" coords="23,169,154,196"/>
+<area shape="rect" id="node3" href="$classaxi__responder__seq.html" title="Forever running sequence that setups up responder *ready toggle patterns, then receives TLM packet fr..." alt="" coords="23,169,154,196"/>
 </map>
