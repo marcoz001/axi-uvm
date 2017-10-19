@@ -7,7 +7,7 @@
 <area shape="rect" id="node3" href="$classaxi__seq__item.html#a1d06d75ca9c9cb40f3eeccd495e37ad5" title="axi_seq_item::ar_to\l_class" alt="" coords="425,188,561,229"/>
 <area shape="rect" id="node4" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="axi_seq_item::convert2string" alt="" coords="399,137,588,163"/>
 <area shape="rect" id="node5" href="$classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="axi_seq_item::initialize" alt="" coords="416,437,571,463"/>
-<area shape="rect" id="node7" href="$classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="memory::read" alt="" coords="442,254,545,281"/>
+<area shape="rect" id="node7" href="$classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="442,254,545,281"/>
 <area shape="rect" id="node8" href="$classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="424,305,563,347"/>
 <area shape="rect" id="node6" href="$classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="axi_seq_item::update" alt="" coords="636,466,783,493"/>
 <area shape="rect" id="node10" href="$classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="axi_seq_item::update\l_address" alt="" coords="420,488,567,529"/>
@@ -15,7 +15,7 @@
 <area shape="rect" id="node13" href="$classaxi__seq__item.html#acc505058d3047915a86c2aeed046bf98" title="axi_seq_item::aw_to\l_class" alt="" coords="422,71,565,112"/>
 <area shape="rect" id="node14" href="$classaxi__if__abstract.html#a9e019c384309938d98fb93eb9d19ee35" title="Wait for a valid write address to be acknowledged and return it. " alt="" coords="424,5,563,47"/>
 <area shape="rect" id="node16" href="$classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="424,605,563,647"/>
-<area shape="rect" id="node17" href="$classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="memory::write" alt="" coords="441,554,546,581"/>
+<area shape="rect" id="node17" href="$classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="441,554,546,581"/>
 <area shape="rect" id="node19" href="$classaxi__seq__item.html#a522f78497a15bfa2875d05601738d3ee" title="axi_seq_item::b_to\l_class" alt="" coords="427,736,559,777"/>
 <area shape="rect" id="node20" href="$classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538" title="Wait for a valid write response to be acknowledged and return it. " alt="" coords="424,671,563,712"/>
 </map>

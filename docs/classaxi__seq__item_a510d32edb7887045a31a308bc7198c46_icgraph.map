@@ -1,19 +1,18 @@
 <map id="axi_seq_item::convert2string" name="axi_seq_item::convert2string">
-<area shape="rect" id="node2" href="$classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="axi_seq::body" alt="" coords="277,5,379,32"/>
-<area shape="rect" id="node3" href="$classaxi__responder__seq.html#a822d6df8e7d0c4314d398320956c45b3" title="axi_responder_seq::body" alt="" coords="245,56,411,83"/>
-<area shape="rect" id="node4" href="$classaxi__seq__item.html#abe28396093aa00b187a5211862b07888" title="axi_seq_item::do_print" alt="" coords="251,107,405,133"/>
+<area shape="rect" id="node2" href="$classaxi__responder__seq.html#a822d6df8e7d0c4314d398320956c45b3" title="Does all the work. " alt="" coords="245,5,411,32"/>
+<area shape="rect" id="node3" href="$classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="277,56,379,83"/>
+<area shape="rect" id="node4" href="$classaxi__seq__item.html#abe28396093aa00b187a5211862b07888" title="axi_seq_item::do_print" alt="" coords="251,157,405,184"/>
 <area shape="rect" id="node5" href="$classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b" title="axi_seq_item::wlast_c" alt="" coords="464,132,616,159"/>
-<area shape="rect" id="node6" href="$classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="258,209,398,250"/>
-<area shape="rect" id="node8" href="$classaxi__monitor.html#a344d36a4b510a06f4a774fa76d2aca70" title="monitors Write Address channel " alt="" coords="258,274,398,315"/>
-<area shape="rect" id="node9" href="$classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e" title="axi_driver::read_data" alt="" coords="257,340,399,367"/>
-<area shape="rect" id="node10" href="$classaxi__master__driver.html#a0ec9403e8e58775670668bce2fb3385a" title="axi_master_driver::\lrun_phase" alt="" coords="261,391,395,433"/>
-<area shape="rect" id="node11" href="$classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="axi_responder::run\l_phase" alt="" coords="475,719,605,761"/>
-<area shape="rect" id="node12" href="$classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="axi_driver::run_phase" alt="" coords="255,508,401,535"/>
-<area shape="rect" id="node13" href="$classaxi__coveragecollector.html#ad3db357735350aac191dcc3cabbddf23" title="axi_coveragecollector\l::write" alt="" coords="254,559,402,601"/>
-<area shape="rect" id="node14" href="$classaxi__scoreboard.html#ad0b761134c2d154528fc04a145695b5f" title="axi_scoreboard::write" alt="" coords="255,625,401,652"/>
-<area shape="rect" id="node15" href="$classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03" title="axi_driver::write_address" alt="" coords="245,676,411,703"/>
-<area shape="rect" id="node16" href="$classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c" title="axi_responder::write_data" alt="" coords="243,727,413,753"/>
-<area shape="rect" id="node17" href="$classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="axi_driver::write_data" alt="" coords="255,777,401,804"/>
-<area shape="rect" id="node18" href="$classaxi__responder.html#ad6540250bab8663a8723afa67dc222b9" title="axi_responder::write\l_response" alt="" coords="259,829,397,870"/>
+<area shape="rect" id="node6" href="$classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="258,274,398,315"/>
+<area shape="rect" id="node8" href="$classaxi__monitor.html#a344d36a4b510a06f4a774fa76d2aca70" title="monitors Write Address channel " alt="" coords="258,209,398,250"/>
+<area shape="rect" id="node9" href="$classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e" title="monitors Read Data channel and sends out TLM pkt " alt="" coords="257,609,399,636"/>
+<area shape="rect" id="node10" href="$classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="467,416,613,443"/>
+<area shape="rect" id="node11" href="$classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="475,719,605,761"/>
+<area shape="rect" id="node12" href="$classaxi__coveragecollector.html#ad3db357735350aac191dcc3cabbddf23" title="currently does nothing. " alt="" coords="254,493,402,534"/>
+<area shape="rect" id="node13" href="$classaxi__scoreboard.html#ad0b761134c2d154528fc04a145695b5f" title="Updates counters. " alt="" coords="255,559,401,585"/>
+<area shape="rect" id="node14" href="$classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03" title="Write Address channel thread. " alt="" coords="245,391,411,417"/>
+<area shape="rect" id="node15" href="$classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="Write Data channel thread. " alt="" coords="255,441,401,468"/>
+<area shape="rect" id="node16" href="$classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c" title="Write Data channel thread. " alt="" coords="243,777,413,804"/>
+<area shape="rect" id="node17" href="$classaxi__responder.html#ad6540250bab8663a8723afa67dc222b9" title="Write Response channel thread. " alt="" coords="259,661,397,702"/>
 <area shape="rect" id="node7" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="461,249,619,276"/>
 </map>

@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classaxi__seq.html" title="axi_seq" alt="" coords="164,5,231,32"/>
-<area shape="rect" id="node3" href="$classaxi__responder__seq.html" title="axi_responder_seq" alt="" coords="279,5,409,32"/>
+<area shape="rect" id="node2" href="$classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="164,5,231,32"/>
+<area shape="rect" id="node3" href="$classaxi__responder__seq.html" title="Setups up responder *ready toggle patterns, then receives TLM packet from monitor and sends to respon..." alt="" coords="279,5,409,32"/>
 </map>

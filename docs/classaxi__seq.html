@@ -93,12 +93,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">axi_seq Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Writes to memory over AXI, backdoor readback, then AXI readback.  
+ <a href="classaxi__seq.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for axi_seq:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__seq__inherit__graph.png" border="0" usemap="#axi__seq_inherit__map" alt="Inheritance graph"/></div>
 <map name="axi__seq_inherit__map" id="axi__seq_inherit__map">
-<area shape="rect" id="node3" href="classaxi__responder__seq.html" title="axi_responder_seq" alt="" coords="23,169,154,196"/>
+<area shape="rect" id="node3" href="classaxi__responder__seq.html" title="Setups up responder *ready toggle patterns, then receives TLM packet from monitor and sends to respon..." alt="" coords="23,169,154,196"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -106,7 +109,7 @@ Collaboration diagram for axi_seq:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__seq__coll__graph.png" border="0" usemap="#axi__seq_coll__map" alt="Collaboration graph"/></div>
 <map name="axi__seq_coll__map" id="axi__seq_coll__map">
-<area shape="rect" id="node3" href="classmemory.html" title="memory" alt="" coords="197,89,266,115"/>
+<area shape="rect" id="node3" href="classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="197,89,266,115"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -115,8 +118,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aea9fb74b90844dd22dd86402e94e2a9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#aea9fb74b90844dd22dd86402e94e2a9e">uvm_object_utils</a> (<a class="el" href="classaxi__seq.html">axi_seq</a>) int xfers_done=0</td></tr>
 <tr class="separator:aea9fb74b90844dd22dd86402e94e2a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e3a9642246211575719fb840e1e9343"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a9e3a9642246211575719fb840e1e9343">new</a> (string name=&quot;axi_seq&quot;)</td></tr>
+<tr class="memdesc:a9e3a9642246211575719fb840e1e9343"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9e3a9642246211575719fb840e1e9343">More...</a><br /></td></tr>
 <tr class="separator:a9e3a9642246211575719fb840e1e9343"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11904d8b48c4cabb8eb8b84dc9e52d48"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48">body</a> ()</td></tr>
+<tr class="memdesc:a11904d8b48c4cabb8eb8b84dc9e52d48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does all the work.  <a href="#a11904d8b48c4cabb8eb8b84dc9e52d48">More...</a><br /></td></tr>
 <tr class="separator:a11904d8b48c4cabb8eb8b84dc9e52d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8514cd0265ee9d53f6df519050e412a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a8514cd0265ee9d53f6df519050e412a9">response_handler</a> (uvm_sequence_item response)</td></tr>
 <tr class="separator:a8514cd0265ee9d53f6df519050e412a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,8 +132,10 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a9e081ffeeb0b6ee993973c75439b5614"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00029">29</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<div class="textblock"><p>Writes to memory over AXI, backdoor readback, then AXI readback. </p>
+<p>miscompares are flagged. </p>
+
+<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00025">25</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a11904d8b48c4cabb8eb8b84dc9e52d48"></a>
 <div class="memitem">
@@ -143,9 +150,19 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00055">55</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Does all the work. </p>
+<ol type="1">
+<li>Creates constrained random AXI write packet</li>
+<li>Sends it</li>
+<li>Backdoor read of memory to verify correctly written</li>
+<li>Creates constrained random AXI read packet with same len and address as write packet</li>
+<li>Sends it</li>
+<li>Verifies read back data with written data. </li>
+</ol>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00030">axi_seq_item::addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00047">axi_seq_item::burst_size</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00048">axi_seq_item::burst_type</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00214">axi_seq_item::convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00040">axi_seq_item::data</a>, <a class="el" href="axi__pkg_8sv_source.html#l00034">e_1BYTE</a>, <a class="el" href="axi__pkg_8sv_source.html#l00035">e_2BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00036">e_4BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00048">e_INCR</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00034">e_READ</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00033">e_WRITE</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00043">axi_seq_item::len</a>, <a class="el" href="axi__seq_8svh_source.html#l00035">m_memory</a>, <a class="el" href="memory_8svh_source.html#l00021">memory::read()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00074">axi_seq_item::Start_Address</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00063">63</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00030">axi_seq_item::addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00047">axi_seq_item::burst_size</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00048">axi_seq_item::burst_type</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00214">axi_seq_item::convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00040">axi_seq_item::data</a>, <a class="el" href="axi__pkg_8sv_source.html#l00034">e_1BYTE</a>, <a class="el" href="axi__pkg_8sv_source.html#l00035">e_2BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00036">e_4BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00048">e_INCR</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00034">e_READ</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00033">e_WRITE</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00043">axi_seq_item::len</a>, <a class="el" href="axi__seq_8svh_source.html#l00031">m_memory</a>, <a class="el" href="memory_8svh_source.html#l00054">memory::read()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00074">axi_seq_item::Start_Address</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -153,7 +170,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="classaxi__seq_a11904d8b48c4cabb8eb8b84dc9e52d48_cgraph.png" border="0" usemap="#classaxi__seq_a11904d8b48c4cabb8eb8b84dc9e52d48_cgraph" alt=""/></div>
 <map name="classaxi__seq_a11904d8b48c4cabb8eb8b84dc9e52d48_cgraph" id="classaxi__seq_a11904d8b48c4cabb8eb8b84dc9e52d48_cgraph">
 <area shape="rect" id="node2" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="axi_seq_item::convert2string" alt="" coords="156,5,345,32"/>
-<area shape="rect" id="node3" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="memory::read" alt="" coords="199,56,302,83"/>
+<area shape="rect" id="node3" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="199,56,302,83"/>
 </map>
 </div>
 </p>
@@ -174,7 +191,10 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00051">51</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Constructor. </p>
+<p>Doesn't actually do anything except call parent constructor </p>
+
+<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00050">50</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
 
 </div>
 </div>
@@ -192,7 +212,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00044">44</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00040">40</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
 
 </div>
 </div>
@@ -231,9 +251,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00035">35</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00031">31</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00055">body()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00063">body()</a>.</p>
 
 </div>
 </div>

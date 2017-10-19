@@ -1,4 +1,4 @@
 <map id="axi_responder_seq" name="axi_responder_seq">
-<area shape="rect" id="node2" href="$classaxi__seq.html" title="axi_seq" alt="" coords="102,185,169,212"/>
-<area shape="rect" id="node4" href="$classmemory.html" title="memory" alt="" coords="197,89,266,115"/>
+<area shape="rect" id="node2" href="$classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="102,185,169,212"/>
+<area shape="rect" id="node4" href="$classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="197,89,266,115"/>
 </map>

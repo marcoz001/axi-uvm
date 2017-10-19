@@ -1,12 +1,11 @@
 <map id="axi_responder::run_phase" name="axi_responder::run_phase">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="axi_seq_item::convert2string" alt="" coords="401,104,591,131"/>
-<area shape="rect" id="node3" href="$classaxi__responder.html#ac2bfb80d5d72e298202f4f31f0a2db72" title="axi_responder::read\l_address" alt="" coords="200,38,336,79"/>
-<area shape="rect" id="node4" href="$classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="axi_responder::read_data" alt="" coords="184,221,352,248"/>
-<area shape="rect" id="node8" href="$classaxi__responder.html#a40c2090c7f4e386461faceb42937241d" title="axi_responder::write\l_address" alt="" coords="199,275,337,317"/>
-<area shape="rect" id="node10" href="$classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c" title="axi_responder::write_data" alt="" coords="183,104,353,131"/>
-<area shape="rect" id="node11" href="$classaxi__responder.html#ad6540250bab8663a8723afa67dc222b9" title="axi_responder::write\l_response" alt="" coords="199,155,337,197"/>
-<area shape="rect" id="node5" href="$classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="axi_seq_item::initialize" alt="" coords="419,163,573,189"/>
-<area shape="rect" id="node7" href="$classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="axi_seq_item::update\l_address" alt="" coords="423,214,569,255"/>
-<area shape="rect" id="node6" href="$classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="axi_seq_item::update" alt="" coords="639,192,785,219"/>
-<area shape="rect" id="node9" href="$classaxi__seq__item.html#acc505058d3047915a86c2aeed046bf98" title="axi_seq_item::aw_to\l_class" alt="" coords="425,279,567,321"/>
+<area shape="rect" id="node2" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="axi_seq_item::convert2string" alt="" coords="401,283,591,309"/>
+<area shape="rect" id="node3" href="$classaxi__responder.html#ac2bfb80d5d72e298202f4f31f0a2db72" title="Read Address channel thread. " alt="" coords="200,86,336,127"/>
+<area shape="rect" id="node4" href="$classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="184,35,352,61"/>
+<area shape="rect" id="node8" href="$classaxi__responder.html#a40c2090c7f4e386461faceb42937241d" title="Write Address channel thread. " alt="" coords="199,217,337,258"/>
+<area shape="rect" id="node9" href="$classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c" title="Write Data channel thread. " alt="" coords="183,283,353,309"/>
+<area shape="rect" id="node10" href="$classaxi__responder.html#ad6540250bab8663a8723afa67dc222b9" title="Write Response channel thread. " alt="" coords="199,151,337,193"/>
+<area shape="rect" id="node5" href="$classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="axi_seq_item::initialize" alt="" coords="419,5,573,32"/>
+<area shape="rect" id="node7" href="$classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="axi_seq_item::update\l_address" alt="" coords="423,57,569,98"/>
+<area shape="rect" id="node6" href="$classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="axi_seq_item::update" alt="" coords="639,35,785,61"/>
 </map>

@@ -82,6 +82,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
+<dt><a class="anchor" id="_todo000003"></a>Member <a class="el" href="classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e">axi_driver::read_data</a>  ()</dt>
+<dd>: match read_data task in <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a> Instead it waits for a pkt in its mailbox. This packet will come from read_address once it has put the address out on the bus. The just continually waits for a valid and ready beat on the channel and stores it in that packet it got from read address. When rlast received, send out analysis port and goes back to waiting for next pkt from read address.  </dd>
+<dt><a class="anchor" id="_todo000002"></a>Member <a class="el" href="classaxi__driver.html#aa16a6b3196df0a50381d7dc7361de329">axi_driver::write_response</a>  ()</dt>
+<dd>: this task needs to be cleaned up. it doesn't actually wait for response </dd>
+<dt><a class="anchor" id="_todo000004"></a>Member <a class="el" href="classaxi__responder.html#a40c2090c7f4e386461faceb42937241d">axi_responder::write_address</a>  ()</dt>
+<dd>: clean up this task. Destroy that chain.  </dd>
+<dt><a class="anchor" id="_todo000005"></a>Member <a class="el" href="classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c">axi_responder::write_data</a>  ()</dt>
+<dd>: clean up this task. Destroy that chain.  </dd>
 <dt><a class="anchor" id="_todo000001"></a>Member <a class="el" href="axi__uvm__pkg_8sv.html#ad8116d2e0fd01b57b2c352460a75e3c2">driver_type_t</a>  </dt>
 <dd>: Split driver and responder into different components. </dd>
 </dl>

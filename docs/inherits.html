@@ -94,13 +94,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><table border="0" cellspacing="10" cellpadding="0">
 <tr><td><img src="inherit_graph_0.png" border="0" alt="" usemap="#axi__agent"/>
 <map name="axi__agent" id="axi__agent">
-<area shape="rect" id="node2" href="classaxi__agent.html" title="axi_agent" alt="" coords="140,5,219,32"/>
+<area shape="rect" id="node2" href="classaxi__agent.html" title="Encapsulates driver, monitor, coverage collector, a local memory. " alt="" coords="140,5,219,32"/>
 </map>
 </td></tr>
 <tr><td><img src="inherit_graph_1.png" border="0" alt="" usemap="#axi__agent__config"/>
 <map name="axi__agent__config" id="axi__agent__config">
-<area shape="rect" id="node2" href="classaxi__agent__config.html" title="axi_agent_config" alt="" coords="143,5,263,32"/>
-<area shape="rect" id="node3" href="classaxi__env__config.html" title="axi_env_config" alt="" coords="148,56,257,83"/>
+<area shape="rect" id="node2" href="classaxi__agent__config.html" title="Configuration object for an axi_agent. " alt="" coords="143,5,263,32"/>
+<area shape="rect" id="node3" href="classaxi__env__config.html" title="Configuration object for axi_env. " alt="" coords="148,56,257,83"/>
 <area shape="rect" id="node4" href="classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="149,107,256,133"/>
 </map>
 </td></tr>
@@ -111,21 +111,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </td></tr>
 <tr><td><img src="inherit_graph_3.png" border="0" alt="" usemap="#axi__coveragecollector"/>
 <map name="axi__coveragecollector" id="axi__coveragecollector">
-<area shape="rect" id="node2" href="classaxi__coveragecollector.html" title="axi_coveragecollector" alt="" coords="168,5,316,32"/>
+<area shape="rect" id="node2" href="classaxi__coveragecollector.html" title="Collects coverage. " alt="" coords="168,5,316,32"/>
 <area shape="rect" id="node3" href="classaxi__scoreboard.html" title="scoreboard " alt="" coords="187,56,297,83"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_4.png" border="0" alt="" usemap="#axi__driver__pre"/>
-<map name="axi__driver__pre" id="axi__driver__pre">
-<area shape="rect" id="node2" href="classaxi__driver__pre.html" title="axi_driver_pre" alt="" coords="151,5,254,32"/>
-<area shape="rect" id="node4" href="classaxi__master__driver.html" title="axi_master_driver" alt="" coords="140,56,265,83"/>
-<area shape="rect" id="node5" href="classaxi__responder.html" title="axi_responder" alt="" coords="151,107,254,133"/>
-<area shape="rect" id="node3" href="classaxi__driver.html" title="axi_driver" alt="" coords="313,5,392,32"/>
+<tr><td><img src="inherit_graph_4.png" border="0" alt="" usemap="#axi__driver"/>
+<map name="axi__driver" id="axi__driver">
+<area shape="rect" id="node2" href="classaxi__driver.html" title="Logic to act as an AXI master for all 5 channels. " alt="" coords="152,5,231,32"/>
+<area shape="rect" id="node3" href="classaxi__responder.html" title="Logic to act as an AXI slave (responder) for all 5 channels. " alt="" coords="140,56,243,83"/>
 </map>
 </td></tr>
 <tr><td><img src="inherit_graph_5.png" border="0" alt="" usemap="#axi__env"/>
 <map name="axi__env" id="axi__env">
-<area shape="rect" id="node2" href="classaxi__env.html" title="axi_env" alt="" coords="128,5,195,32"/>
+<area shape="rect" id="node2" href="classaxi__env.html" title="Creates two active AXI agents, one master and one slave/responder, plus a memory. ..." alt="" coords="128,5,195,32"/>
 </map>
 </td></tr>
 <tr><td><img src="inherit_graph_6.png" border="0" alt="" usemap="#axi__monitor"/>
@@ -135,8 +133,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </td></tr>
 <tr><td><img src="inherit_graph_7.png" border="0" alt="" usemap="#axi__seq"/>
 <map name="axi__seq" id="axi__seq">
-<area shape="rect" id="node2" href="classaxi__seq.html" title="axi_seq" alt="" coords="164,5,231,32"/>
-<area shape="rect" id="node3" href="classaxi__responder__seq.html" title="axi_responder_seq" alt="" coords="279,5,409,32"/>
+<area shape="rect" id="node2" href="classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="164,5,231,32"/>
+<area shape="rect" id="node3" href="classaxi__responder__seq.html" title="Setups up responder *ready toggle patterns, then receives TLM packet from monitor and sends to respon..." alt="" coords="279,5,409,32"/>
 </map>
 </td></tr>
 <tr><td><img src="inherit_graph_8.png" border="0" alt="" usemap="#axi__seq__item"/>
@@ -171,12 +169,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </td></tr>
 <tr><td><img src="inherit_graph_14.png" border="0" alt="" usemap="#axi__sequencer"/>
 <map name="axi__sequencer" id="axi__sequencer">
-<area shape="rect" id="node2" href="classaxi__sequencer.html" title="axi_sequencer" alt="" coords="168,5,275,32"/>
+<area shape="rect" id="node2" href="classaxi__sequencer.html" title="Normal sequencer with an extra analysis fifo and export. " alt="" coords="168,5,275,32"/>
 </map>
 </td></tr>
 <tr><td><img src="inherit_graph_15.png" border="0" alt="" usemap="#memory"/>
 <map name="memory" id="memory">
-<area shape="rect" id="node2" href="classmemory.html" title="memory" alt="" coords="172,5,241,32"/>
+<area shape="rect" id="node2" href="classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="172,5,241,32"/>
 </map>
 </td></tr>
 </table>

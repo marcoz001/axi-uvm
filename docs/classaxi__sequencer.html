@@ -93,6 +93,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">axi_sequencer Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Normal sequencer with an extra analysis fifo and export.  
+ <a href="classaxi__sequencer.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for axi_sequencer:</div>
 <div class="dyncontent">
@@ -109,10 +112,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6a8802aca3b8d1ebad03b65a28192007"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__sequencer.html#a6a8802aca3b8d1ebad03b65a28192007">uvm_component_utils</a> (<a class="el" href="classaxi__sequencer.html">axi_sequencer</a>) uvm_analysis_export&lt; <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> &gt; request_export</td></tr>
 <tr class="separator:a6a8802aca3b8d1ebad03b65a28192007"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0f8c5652275be7be8fdbf803ad676e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__sequencer.html#aa0f8c5652275be7be8fdbf803ad676e0">new</a> (string name, uvm_component parent)</td></tr>
+<tr class="memdesc:aa0f8c5652275be7be8fdbf803ad676e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aa0f8c5652275be7be8fdbf803ad676e0">More...</a><br /></td></tr>
 <tr class="separator:aa0f8c5652275be7be8fdbf803ad676e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff1f7cffc9bd91054ec02b906bd2b8e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__sequencer.html#aff1f7cffc9bd91054ec02b906bd2b8e0">build_phase</a> (uvm_phase phase)</td></tr>
+<tr class="memdesc:aff1f7cffc9bd91054ec02b906bd2b8e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the analysis export and analysis fifo.  <a href="#aff1f7cffc9bd91054ec02b906bd2b8e0">More...</a><br /></td></tr>
 <tr class="separator:aff1f7cffc9bd91054ec02b906bd2b8e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76dadc2819374373031afed3451fabcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__sequencer.html#a76dadc2819374373031afed3451fabcc">connect_phase</a> (uvm_phase phase)</td></tr>
+<tr class="memdesc:a76dadc2819374373031afed3451fabcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the analysis export and fifo.  <a href="#a76dadc2819374373031afed3451fabcc">More...</a><br /></td></tr>
 <tr class="separator:a76dadc2819374373031afed3451fabcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -121,8 +127,10 @@ Public Attributes</h2></td></tr>
 <tr class="separator:acf09235f2c7b41dd5a579a9d5ba8472c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="axi__sequencer_8svh_source.html#l00029">29</a> of file <a class="el" href="axi__sequencer_8svh_source.html">axi_sequencer.svh</a>.</p>
+<div class="textblock"><p>Normal sequencer with an extra analysis fifo and export. </p>
+<p>Allows the monitor and responder to create a slave sequence where we drive the slave/responder outputs. </p>
+
+<p>Definition at line <a class="el" href="axi__sequencer_8svh_source.html#l00026">26</a> of file <a class="el" href="axi__sequencer_8svh_source.html">axi_sequencer.svh</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="aff1f7cffc9bd91054ec02b906bd2b8e0"></a>
 <div class="memitem">
@@ -138,9 +146,11 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Creates the analysis export and analysis fifo. </p>
+
 <p>Definition at line <a class="el" href="axi__sequencer_8svh_source.html#l00047">47</a> of file <a class="el" href="axi__sequencer_8svh_source.html">axi_sequencer.svh</a>.</p>
 
-<p>References <a class="el" href="axi__sequencer_8svh_source.html#l00033">request_fifo</a>.</p>
+<p>References <a class="el" href="axi__sequencer_8svh_source.html#l00030">request_fifo</a>.</p>
 
 </div>
 </div>
@@ -158,9 +168,11 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__sequencer_8svh_source.html#l00053">53</a> of file <a class="el" href="axi__sequencer_8svh_source.html">axi_sequencer.svh</a>.</p>
+<p>Connects the analysis export and fifo. </p>
 
-<p>References <a class="el" href="axi__sequencer_8svh_source.html#l00033">request_fifo</a>.</p>
+<p>Definition at line <a class="el" href="axi__sequencer_8svh_source.html#l00054">54</a> of file <a class="el" href="axi__sequencer_8svh_source.html">axi_sequencer.svh</a>.</p>
+
+<p>References <a class="el" href="axi__sequencer_8svh_source.html#l00030">request_fifo</a>.</p>
 
 </div>
 </div>
@@ -188,7 +200,10 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__sequencer_8svh_source.html#l00043">43</a> of file <a class="el" href="axi__sequencer_8svh_source.html">axi_sequencer.svh</a>.</p>
+<p>Constructor. </p>
+<p>Doesn't actually do anything except call parent constructor </p>
+
+<p>Definition at line <a class="el" href="axi__sequencer_8svh_source.html#l00042">42</a> of file <a class="el" href="axi__sequencer_8svh_source.html">axi_sequencer.svh</a>.</p>
 
 </div>
 </div>
@@ -219,9 +234,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__sequencer_8svh_source.html#l00033">33</a> of file <a class="el" href="axi__sequencer_8svh_source.html">axi_sequencer.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__sequencer_8svh_source.html#l00030">30</a> of file <a class="el" href="axi__sequencer_8svh_source.html">axi_sequencer.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__sequencer_8svh_source.html#l00047">build_phase()</a>, and <a class="el" href="axi__sequencer_8svh_source.html#l00053">connect_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__sequencer_8svh_source.html#l00047">build_phase()</a>, and <a class="el" href="axi__sequencer_8svh_source.html#l00054">connect_phase()</a>.</p>
 
 </div>
 </div>

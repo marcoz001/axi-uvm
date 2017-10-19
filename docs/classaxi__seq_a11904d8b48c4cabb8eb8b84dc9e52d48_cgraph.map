@@ -1,4 +1,4 @@
 <map id="axi_seq::body" name="axi_seq::body">
 <area shape="rect" id="node2" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="axi_seq_item::convert2string" alt="" coords="156,5,345,32"/>
-<area shape="rect" id="node3" href="$classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="memory::read" alt="" coords="199,56,302,83"/>
+<area shape="rect" id="node3" href="$classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="199,56,302,83"/>
 </map>

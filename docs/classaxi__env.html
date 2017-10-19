@@ -93,6 +93,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">axi_env Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Creates two active AXI agents, one master and one slave/responder, plus a memory.  
+ <a href="classaxi__env.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for axi_env:</div>
 <div class="dyncontent">
@@ -103,19 +106,18 @@ Collaboration diagram for axi_env:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__env__coll__graph.png" border="0" usemap="#axi__env_coll__map" alt="Collaboration graph"/></div>
 <map name="axi__env_coll__map" id="axi__env_coll__map">
-<area shape="rect" id="node3" href="classmemory.html" title="memory" alt="" coords="225,220,295,247"/>
-<area shape="rect" id="node5" href="classaxi__agent.html" title="axi_agent" alt="" coords="1060,319,1139,345"/>
-<area shape="rect" id="node7" href="classaxi__responder.html" title="axi_responder" alt="" coords="484,443,587,469"/>
-<area shape="rect" id="node12" href="classaxi__driver__pre.html" title="axi_driver_pre" alt="" coords="484,263,587,289"/>
-<area shape="rect" id="node13" href="classaxi__monitor.html" title="monitors all 5 channels for activity " alt="" coords="491,592,580,619"/>
-<area shape="rect" id="node9" href="classaxi__agent__config.html" title="axi_agent_config" alt="" coords="200,512,320,539"/>
-<area shape="rect" id="node15" href="classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="207,633,313,660"/>
-<area shape="rect" id="node11" href="classaxi__driver.html" title="axi_driver" alt="" coords="759,247,837,273"/>
-<area shape="rect" id="node16" href="axi__pkg_8sv.html#structaxi__seq__item__r__vector__s" title="This packed struct is used to send read data channel information between the DUT and TB..." alt="" coords="177,735,343,761"/>
-<area shape="rect" id="node17" href="axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="173,583,347,609"/>
-<area shape="rect" id="node18" href="classaxi__scoreboard.html" title="scoreboard " alt="" coords="743,348,853,375"/>
-<area shape="rect" id="node20" href="classaxi__coveragecollector.html" title="axi_coveragecollector" alt="" coords="724,399,872,425"/>
-<area shape="rect" id="node21" href="classaxi__sequencer.html" title="axi_sequencer" alt="" coords="745,196,851,223"/>
+<area shape="rect" id="node3" href="classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="225,143,295,169"/>
+<area shape="rect" id="node5" href="classaxi__agent.html" title="Encapsulates driver, monitor, coverage collector, a local memory. " alt="" coords="800,291,879,317"/>
+<area shape="rect" id="node7" href="classaxi__responder.html" title="Logic to act as an AXI slave (responder) for all 5 channels. " alt="" coords="487,220,589,247"/>
+<area shape="rect" id="node11" href="classaxi__driver.html" title="Logic to act as an AXI master for all 5 channels. " alt="" coords="499,339,577,365"/>
+<area shape="rect" id="node12" href="classaxi__monitor.html" title="monitors all 5 channels for activity " alt="" coords="493,491,583,517"/>
+<area shape="rect" id="node9" href="classaxi__agent__config.html" title="Configuration object for an axi_agent. " alt="" coords="200,379,320,405"/>
+<area shape="rect" id="node14" href="classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="207,543,313,569"/>
+<area shape="rect" id="node15" href="axi__pkg_8sv.html#structaxi__seq__item__r__vector__s" title="This packed struct is used to send read data channel information between the DUT and TB..." alt="" coords="177,593,343,620"/>
+<area shape="rect" id="node16" href="axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="173,644,347,671"/>
+<area shape="rect" id="node17" href="classaxi__scoreboard.html" title="scoreboard " alt="" coords="483,541,593,568"/>
+<area shape="rect" id="node19" href="classaxi__coveragecollector.html" title="Collects coverage. " alt="" coords="464,592,612,619"/>
+<area shape="rect" id="node20" href="classaxi__sequencer.html" title="Normal sequencer with an extra analysis fifo and export. " alt="" coords="485,643,591,669"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -124,10 +126,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab4aa2865e0d23412a031390037534c81"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__env.html#ab4aa2865e0d23412a031390037534c81">uvm_component_utils</a> (<a class="el" href="classaxi__env.html">axi_env</a>) <a class="el" href="classaxi__agent__config.html">axi_agent_config</a> m_agent_config</td></tr>
 <tr class="separator:ab4aa2865e0d23412a031390037534c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ff0216daf8473ea21dc53fa7153db8b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__env.html#a5ff0216daf8473ea21dc53fa7153db8b">new</a> (string name=&quot;axi_env&quot;, uvm_component parent=null)</td></tr>
+<tr class="memdesc:a5ff0216daf8473ea21dc53fa7153db8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a5ff0216daf8473ea21dc53fa7153db8b">More...</a><br /></td></tr>
 <tr class="separator:a5ff0216daf8473ea21dc53fa7153db8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a520dcd66e11199120bbaf0984fae1743"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__env.html#a520dcd66e11199120bbaf0984fae1743">build_phase</a> (uvm_phase phase)</td></tr>
+<tr class="memdesc:a520dcd66e11199120bbaf0984fae1743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the two AXI agents and the memory.  <a href="#a520dcd66e11199120bbaf0984fae1743">More...</a><br /></td></tr>
 <tr class="separator:a520dcd66e11199120bbaf0984fae1743"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb7e08a4799598998798ed1eeeaec6d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__env.html#acb7e08a4799598998798ed1eeeaec6d1">connect_phase</a> (uvm_phase phase)</td></tr>
+<tr class="memdesc:acb7e08a4799598998798ed1eeeaec6d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets sequencer pointers/handles.  <a href="#acb7e08a4799598998798ed1eeeaec6d1">More...</a><br /></td></tr>
 <tr class="separator:acb7e08a4799598998798ed1eeeaec6d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -144,8 +149,9 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a17d1524bde3172c2fa409ad2736e1a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00029">29</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
+<div class="textblock"><p>Creates two active AXI agents, one master and one slave/responder, plus a memory. </p>
+
+<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00024">24</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a520dcd66e11199120bbaf0984fae1743"></a>
 <div class="memitem">
@@ -161,9 +167,11 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00053">53</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
+<p>Creates the two AXI agents and the memory. </p>
 
-<p>References <a class="el" href="axi__agent__config_8svh_source.html#l00041">axi_agent_config::bready_toggle_pattern</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00034">axi_agent_config::drv_type</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00053">e_DRIVER</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00054">e_RESPONDER</a>, <a class="el" href="axi__env_8svh_source.html#l00037">m_axidriver_agent</a>, <a class="el" href="axi__env_8svh_source.html#l00038">m_axiresponder_agent</a>, <a class="el" href="axi__agent_8svh_source.html#l00035">axi_agent::m_config</a>, <a class="el" href="axi__env_8svh_source.html#l00040">m_memory</a>, <a class="el" href="axi__agent_8svh_source.html#l00043">axi_agent::m_memory</a>, and <a class="el" href="axi__agent__config_8svh_source.html#l00042">axi_agent_config::rready_toggle_pattern</a>.</p>
+<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00052">52</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
+
+<p>References <a class="el" href="axi__agent__config_8svh_source.html#l00044">axi_agent_config::bready_toggle_pattern</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00035">axi_agent_config::drv_type</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00053">e_DRIVER</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00054">e_RESPONDER</a>, <a class="el" href="axi__env_8svh_source.html#l00032">m_axidriver_agent</a>, <a class="el" href="axi__env_8svh_source.html#l00033">m_axiresponder_agent</a>, <a class="el" href="axi__agent_8svh_source.html#l00036">axi_agent::m_config</a>, <a class="el" href="axi__env_8svh_source.html#l00035">m_memory</a>, <a class="el" href="axi__agent_8svh_source.html#l00044">axi_agent::m_memory</a>, and <a class="el" href="axi__agent__config_8svh_source.html#l00045">axi_agent_config::rready_toggle_pattern</a>.</p>
 
 </div>
 </div>
@@ -181,9 +189,11 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Sets sequencer pointers/handles. </p>
+
 <p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00085">85</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
 
-<p>References <a class="el" href="axi__env_8svh_source.html#l00037">m_axidriver_agent</a>, <a class="el" href="axi__env_8svh_source.html#l00038">m_axiresponder_agent</a>, <a class="el" href="axi__env_8svh_source.html#l00034">m_driver_seqr</a>, <a class="el" href="axi__env_8svh_source.html#l00035">m_responder_seqr</a>, and <a class="el" href="axi__agent_8svh_source.html#l00041">axi_agent::m_seqr</a>.</p>
+<p>References <a class="el" href="axi__env_8svh_source.html#l00032">m_axidriver_agent</a>, <a class="el" href="axi__env_8svh_source.html#l00033">m_axiresponder_agent</a>, <a class="el" href="axi__env_8svh_source.html#l00029">m_driver_seqr</a>, <a class="el" href="axi__env_8svh_source.html#l00030">m_responder_seqr</a>, and <a class="el" href="axi__agent_8svh_source.html#l00042">axi_agent::m_seqr</a>.</p>
 
 </div>
 </div>
@@ -211,7 +221,10 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00049">49</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
+<p>Constructor. </p>
+<p>Doesn't actually do anything except call parent constructor </p>
+
+<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00047">47</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
 
 </div>
 </div>
@@ -242,9 +255,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00037">37</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00032">32</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00053">build_phase()</a>, and <a class="el" href="axi__env_8svh_source.html#l00085">connect_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00052">build_phase()</a>, and <a class="el" href="axi__env_8svh_source.html#l00085">connect_phase()</a>.</p>
 
 </div>
 </div>
@@ -258,9 +271,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00038">38</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00033">33</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00053">build_phase()</a>, and <a class="el" href="axi__env_8svh_source.html#l00085">connect_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00052">build_phase()</a>, and <a class="el" href="axi__env_8svh_source.html#l00085">connect_phase()</a>.</p>
 
 </div>
 </div>
@@ -274,7 +287,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00034">34</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00029">29</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
 
 <p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00085">connect_phase()</a>, and <a class="el" href="axi__base__test_8svh_source.html#l00045">axi_base_test::run_phase()</a>.</p>
 
@@ -290,9 +303,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00040">40</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00035">35</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00053">build_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00052">build_phase()</a>.</p>
 
 </div>
 </div>
@@ -306,7 +319,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00035">35</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__env_8svh_source.html#l00030">30</a> of file <a class="el" href="axi__env_8svh_source.html">axi_env.svh</a>.</p>
 
 <p>Referenced by <a class="el" href="axi__env_8svh_source.html#l00085">connect_phase()</a>, and <a class="el" href="axi__base__test_8svh_source.html#l00045">axi_base_test::run_phase()</a>.</p>
 

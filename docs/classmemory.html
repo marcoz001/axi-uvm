@@ -92,6 +92,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">memory Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Extremely simple memory model with just <a class="el" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. ">write()</a> and <a class="el" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. ">read()</a> methods.  
+ <a href="classmemory.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for memory:</div>
 <div class="dyncontent">
@@ -106,15 +109,19 @@ Collaboration diagram for memory:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ace6f1dfa5c936c043d9304ab2cac91fd"><td class="memItemLeft" align="right" valign="top">uvm_component_utils(<a class="el" href="classmemory.html">memory</a>) bit&lt;7&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmemory.html#ace6f1dfa5c936c043d9304ab2cac91fd">new</a> (string name=&quot;memory&quot;, uvm_component parent=null)</td></tr>
+<tr class="memdesc:ace6f1dfa5c936c043d9304ab2cac91fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ace6f1dfa5c936c043d9304ab2cac91fd">More...</a><br /></td></tr>
 <tr class="separator:ace6f1dfa5c936c043d9304ab2cac91fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e041180ed26bc52eea610c25d6238ce"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce">write</a> (input bit&lt; 63:0 &gt; addr, input bit&lt; 7:0 &gt; data)</td></tr>
+<tr class="memdesc:a9e041180ed26bc52eea610c25d6238ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes into memory.  <a href="#a9e041180ed26bc52eea610c25d6238ce">More...</a><br /></td></tr>
 <tr class="separator:a9e041180ed26bc52eea610c25d6238ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecfbebb23ede4d2d19475202305ac554"><td class="memItemLeft" align="right" valign="top">virtual bit&lt; 7:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554">read</a> (input bit&lt; 63:0 &gt; addr)</td></tr>
+<tr class="memdesc:aecfbebb23ede4d2d19475202305ac554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads from memory.  <a href="#aecfbebb23ede4d2d19475202305ac554">More...</a><br /></td></tr>
 <tr class="separator:aecfbebb23ede4d2d19475202305ac554"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="memory_8svh_source.html#l00001">1</a> of file <a class="el" href="memory_8svh_source.html">memory.svh</a>.</p>
+<div class="textblock"><p>Extremely simple memory model with just <a class="el" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. ">write()</a> and <a class="el" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. ">read()</a> methods. </p>
+
+<p>Definition at line <a class="el" href="memory_8svh_source.html#l00024">24</a> of file <a class="el" href="memory_8svh_source.html">memory.svh</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ace6f1dfa5c936c043d9304ab2cac91fd"></a>
 <div class="memitem">
@@ -140,11 +147,14 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="memory_8svh_source.html#l00012">12</a> of file <a class="el" href="memory_8svh_source.html">memory.svh</a>.</p>
+<p>Constructor. </p>
+<p>Doesn't actually do anything except call parent constructor </p>
 
-<p>References <a class="el" href="memory_8svh_source.html#l00012">new()</a>.</p>
+<p>Definition at line <a class="el" href="memory_8svh_source.html#l00038">38</a> of file <a class="el" href="memory_8svh_source.html">memory.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="memory_8svh_source.html#l00012">new()</a>.</p>
+<p>References <a class="el" href="memory_8svh_source.html#l00038">new()</a>.</p>
+
+<p>Referenced by <a class="el" href="memory_8svh_source.html#l00038">new()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -184,16 +194,19 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="memory_8svh_source.html#l00021">21</a> of file <a class="el" href="memory_8svh_source.html">memory.svh</a>.</p>
+<p>Reads from memory. </p>
+<p>uses an associative array. If reading from unwritten address, 'z is returned. </p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00055">axi_seq::body()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00262">axi_monitor::monitor_read_address()</a>.</p>
+<p>Definition at line <a class="el" href="memory_8svh_source.html#l00054">54</a> of file <a class="el" href="memory_8svh_source.html">memory.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00253">axi_monitor::monitor_read_address()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmemory_aecfbebb23ede4d2d19475202305ac554_icgraph.png" border="0" usemap="#classmemory_aecfbebb23ede4d2d19475202305ac554_icgraph" alt=""/></div>
 <map name="classmemory_aecfbebb23ede4d2d19475202305ac554_icgraph" id="classmemory_aecfbebb23ede4d2d19475202305ac554_icgraph">
-<area shape="rect" id="node2" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="axi_seq::body" alt="" coords="175,5,277,32"/>
+<area shape="rect" id="node2" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="175,5,277,32"/>
 <area shape="rect" id="node3" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="156,57,296,98"/>
 <area shape="rect" id="node4" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="344,64,501,91"/>
 </map>
@@ -234,9 +247,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="memory_8svh_source.html#l00016">16</a> of file <a class="el" href="memory_8svh_source.html">memory.svh</a>.</p>
+<p>Writes into memory. </p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00154">axi_monitor::monitor_write_data()</a>.</p>
+<p>Definition at line <a class="el" href="memory_8svh_source.html#l00045">45</a> of file <a class="el" href="memory_8svh_source.html">memory.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>

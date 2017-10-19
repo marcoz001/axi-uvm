@@ -2,6 +2,6 @@
 <area shape="rect" id="node2" href="$classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="axi_seq_item::initialize" alt="" coords="193,5,348,32"/>
 <area shape="rect" id="node4" href="$classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="axi_seq_item::update\l_address" alt="" coords="197,57,344,98"/>
 <area shape="rect" id="node5" href="$classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="201,122,340,163"/>
-<area shape="rect" id="node6" href="$classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="memory::write" alt="" coords="218,188,323,215"/>
+<area shape="rect" id="node6" href="$classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="218,188,323,215"/>
 <area shape="rect" id="node3" href="$classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="axi_seq_item::update" alt="" coords="396,35,543,61"/>
 </map>

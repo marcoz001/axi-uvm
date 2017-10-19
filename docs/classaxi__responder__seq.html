@@ -93,12 +93,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">axi_responder_seq Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Setups up responder *ready toggle patterns, then receives TLM packet from monitor and sends to responder.  
+ <a href="classaxi__responder__seq.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for axi_responder_seq:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder__seq__inherit__graph.png" border="0" usemap="#axi__responder__seq_inherit__map" alt="Inheritance graph"/></div>
 <map name="axi__responder__seq_inherit__map" id="axi__responder__seq_inherit__map">
-<area shape="rect" id="node2" href="classaxi__seq.html" title="axi_seq" alt="" coords="55,95,122,121"/>
+<area shape="rect" id="node2" href="classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="55,95,122,121"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -106,16 +109,18 @@ Collaboration diagram for axi_responder_seq:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder__seq__coll__graph.png" border="0" usemap="#axi__responder__seq_coll__map" alt="Collaboration graph"/></div>
 <map name="axi__responder__seq_coll__map" id="axi__responder__seq_coll__map">
-<area shape="rect" id="node2" href="classaxi__seq.html" title="axi_seq" alt="" coords="102,185,169,212"/>
-<area shape="rect" id="node4" href="classmemory.html" title="memory" alt="" coords="197,89,266,115"/>
+<area shape="rect" id="node2" href="classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="102,185,169,212"/>
+<area shape="rect" id="node4" href="classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="197,89,266,115"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:addce24fca5a2030ca79ace2dcfb9ba62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classaxi__seq.html#aea9fb74b90844dd22dd86402e94e2a9e">uvm_object_utils</a>(<a class="el" href="classaxi__responder__seq.html">axi_responder_seq</a>) uvm_declare_p_sequencer(<a class="el" href="classaxi__sequencer.html">axi_sequencer</a>) logic&lt;7&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder__seq.html#addce24fca5a2030ca79ace2dcfb9ba62">new</a> (string name=&quot;axi_responder_seq&quot;)</td></tr>
+<tr class="memdesc:addce24fca5a2030ca79ace2dcfb9ba62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#addce24fca5a2030ca79ace2dcfb9ba62">More...</a><br /></td></tr>
 <tr class="separator:addce24fca5a2030ca79ace2dcfb9ba62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a822d6df8e7d0c4314d398320956c45b3"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder__seq.html#a822d6df8e7d0c4314d398320956c45b3">body</a> ()</td></tr>
+<tr class="memdesc:a822d6df8e7d0c4314d398320956c45b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does all the work.  <a href="#a822d6df8e7d0c4314d398320956c45b3">More...</a><br /></td></tr>
 <tr class="separator:a822d6df8e7d0c4314d398320956c45b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea9fb74b90844dd22dd86402e94e2a9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#aea9fb74b90844dd22dd86402e94e2a9e">uvm_object_utils</a> (<a class="el" href="classaxi__seq.html">axi_seq</a>) int xfers_done=0</td></tr>
 <tr class="separator:aea9fb74b90844dd22dd86402e94e2a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,8 +133,9 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a9e081ffeeb0b6ee993973c75439b5614"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="axi__responder__seq_8svh_source.html#l00029">29</a> of file <a class="el" href="axi__responder__seq_8svh_source.html">axi_responder_seq.svh</a>.</p>
+<div class="textblock"><p>Setups up responder *ready toggle patterns, then receives TLM packet from monitor and sends to responder. </p>
+
+<p>Definition at line <a class="el" href="axi__responder__seq_8svh_source.html#l00023">23</a> of file <a class="el" href="axi__responder__seq_8svh_source.html">axi_responder_seq.svh</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a822d6df8e7d0c4314d398320956c45b3"></a>
 <div class="memitem">
@@ -144,7 +150,18 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder__seq_8svh_source.html#l00047">47</a> of file <a class="el" href="axi__responder__seq_8svh_source.html">axi_responder_seq.svh</a>.</p>
+<p>Does all the work. </p>
+<ol type="1">
+<li>Creates constrained random awready toggle pattern</li>
+<li>Sends it</li>
+<li>Creates constrained random wready toggle pattern</li>
+<li>Sends it</li>
+<li>Creates constrained random arready toggle pattern</li>
+<li>Sends it</li>
+<li>In a forever loop, waits for TLM packets from monitor sends them on to responder </li>
+</ol>
+
+<p>Definition at line <a class="el" href="axi__responder__seq_8svh_source.html#l00056">56</a> of file <a class="el" href="axi__responder__seq_8svh_source.html">axi_responder_seq.svh</a>.</p>
 
 <p>References <a class="el" href="axi__seq__item_8svh_source.html#l00214">axi_seq_item::convert2string()</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00040">e_SETARREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00038">e_SETAWREADYTOGGLEPATTERN</a>, and <a class="el" href="axi__uvm__pkg_8sv_source.html#l00039">e_SETWREADYTOGGLEPATTERN</a>.</p>
 
@@ -174,11 +191,14 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder__seq_8svh_source.html#l00043">43</a> of file <a class="el" href="axi__responder__seq_8svh_source.html">axi_responder_seq.svh</a>.</p>
+<p>Constructor. </p>
+<p>Doesn't actually do anything except call parent constructor </p>
 
-<p>References <a class="el" href="axi__responder__seq_8svh_source.html#l00043">new()</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder__seq_8svh_source.html#l00040">40</a> of file <a class="el" href="axi__responder__seq_8svh_source.html">axi_responder_seq.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__base__test_8svh_source.html#l00031">axi_base_test::new()</a>, and <a class="el" href="axi__responder__seq_8svh_source.html#l00043">new()</a>.</p>
+<p>References <a class="el" href="axi__responder__seq_8svh_source.html#l00040">new()</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__base__test_8svh_source.html#l00031">axi_base_test::new()</a>, and <a class="el" href="axi__responder__seq_8svh_source.html#l00040">new()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -221,7 +241,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00044">44</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00040">40</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
 
 </div>
 </div>
@@ -268,9 +288,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00035">35</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00031">31</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00055">axi_seq::body()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>.</p>
 
 </div>
 </div>

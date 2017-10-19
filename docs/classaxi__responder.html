@@ -93,6 +93,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">axi_responder Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Logic to act as an AXI slave (responder) for all 5 channels.  
+ <a href="classaxi__responder.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for axi_responder:</div>
 <div class="dyncontent">
@@ -103,8 +106,8 @@ Collaboration diagram for axi_responder:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder__coll__graph.png" border="0" usemap="#axi__responder_coll__map" alt="Collaboration graph"/></div>
 <map name="axi__responder_coll__map" id="axi__responder_coll__map">
-<area shape="rect" id="node3" href="classmemory.html" title="memory" alt="" coords="173,89,242,115"/>
-<area shape="rect" id="node5" href="classaxi__agent__config.html" title="axi_agent_config" alt="" coords="270,89,390,115"/>
+<area shape="rect" id="node3" href="classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="173,89,242,115"/>
+<area shape="rect" id="node5" href="classaxi__agent__config.html" title="Configuration object for an axi_agent. " alt="" coords="270,89,390,115"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -113,24 +116,31 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae7375ae280ef650ea7a42cb092741977"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#ae7375ae280ef650ea7a42cb092741977">uvm_component_utils</a> (<a class="el" href="classaxi__responder.html">axi_responder</a>) <a class="el" href="classaxi__if__abstract.html">axi_if_abstract</a> vif</td></tr>
 <tr class="separator:ae7375ae280ef650ea7a42cb092741977"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada904275ea4c683de5c2fae9f39d4cd4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#ada904275ea4c683de5c2fae9f39d4cd4">new</a> (string name=&quot;axi_responder&quot;, uvm_component parent=null)</td></tr>
+<tr class="memdesc:ada904275ea4c683de5c2fae9f39d4cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ada904275ea4c683de5c2fae9f39d4cd4">More...</a><br /></td></tr>
 <tr class="separator:ada904275ea4c683de5c2fae9f39d4cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2200e436e4d6a1a73eebcc284f64c853"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#a2200e436e4d6a1a73eebcc284f64c853">build_phase</a> (uvm_phase phase)</td></tr>
+<tr class="memdesc:a2200e436e4d6a1a73eebcc284f64c853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the virtual interface.  <a href="#a2200e436e4d6a1a73eebcc284f64c853">More...</a><br /></td></tr>
 <tr class="separator:a2200e436e4d6a1a73eebcc284f64c853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d3514286329a1dd89d9b51ac96cd11c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#a8d3514286329a1dd89d9b51ac96cd11c">connect_phase</a> (uvm_phase phase)</td></tr>
+<tr class="memdesc:a8d3514286329a1dd89d9b51ac96cd11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nothing to connect so doesn't actually do anything except call parent connect phase.  <a href="#a8d3514286329a1dd89d9b51ac96cd11c">More...</a><br /></td></tr>
 <tr class="separator:a8d3514286329a1dd89d9b51ac96cd11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e6edc5f38da7ac313152e5ab41b5418"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#a8e6edc5f38da7ac313152e5ab41b5418">end_of_elaboration_phase</a> (uvm_phase phase)</td></tr>
-<tr class="separator:a8e6edc5f38da7ac313152e5ab41b5418"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cbb78601c4535a0ca361989b7ca2077"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077">run_phase</a> (uvm_phase phase)</td></tr>
+<tr class="memdesc:a1cbb78601c4535a0ca361989b7ca2077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Launches channel responder threads and then acts as a dispatcher.  <a href="#a1cbb78601c4535a0ca361989b7ca2077">More...</a><br /></td></tr>
 <tr class="separator:a1cbb78601c4535a0ca361989b7ca2077"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40c2090c7f4e386461faceb42937241d"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#a40c2090c7f4e386461faceb42937241d">write_address</a> ()</td></tr>
+<tr class="memdesc:a40c2090c7f4e386461faceb42937241d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write Address channel thread.  <a href="#a40c2090c7f4e386461faceb42937241d">More...</a><br /></td></tr>
 <tr class="separator:a40c2090c7f4e386461faceb42937241d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf4ec1b477dcf27b80cc9f8bced9ef9c"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c">write_data</a> ()</td></tr>
+<tr class="memdesc:abf4ec1b477dcf27b80cc9f8bced9ef9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write Data channel thread.  <a href="#abf4ec1b477dcf27b80cc9f8bced9ef9c">More...</a><br /></td></tr>
 <tr class="separator:abf4ec1b477dcf27b80cc9f8bced9ef9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6540250bab8663a8723afa67dc222b9"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#ad6540250bab8663a8723afa67dc222b9">write_response</a> ()</td></tr>
+<tr class="memdesc:ad6540250bab8663a8723afa67dc222b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write Response channel thread.  <a href="#ad6540250bab8663a8723afa67dc222b9">More...</a><br /></td></tr>
 <tr class="separator:ad6540250bab8663a8723afa67dc222b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2bfb80d5d72e298202f4f31f0a2db72"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#ac2bfb80d5d72e298202f4f31f0a2db72">read_address</a> ()</td></tr>
+<tr class="memdesc:ac2bfb80d5d72e298202f4f31f0a2db72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read Address channel thread.  <a href="#ac2bfb80d5d72e298202f4f31f0a2db72">More...</a><br /></td></tr>
 <tr class="separator:ac2bfb80d5d72e298202f4f31f0a2db72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2944f2ebd74a2fbaef300d355ed917e0"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0">read_data</a> ()</td></tr>
+<tr class="memdesc:a2944f2ebd74a2fbaef300d355ed917e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read Data channel thread.  <a href="#a2944f2ebd74a2fbaef300d355ed917e0">More...</a><br /></td></tr>
 <tr class="separator:a2944f2ebd74a2fbaef300d355ed917e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -171,8 +181,9 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a5bce4ca9c7a205d1713587bf3fbe0645"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00029">29</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<div class="textblock"><p>Logic to act as an AXI slave (responder) for all 5 channels. </p>
+
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00023">23</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a2200e436e4d6a1a73eebcc284f64c853"></a>
 <div class="memitem">
@@ -188,7 +199,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00092">92</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Creates the virtual interface. </p>
+
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00086">86</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
 </div>
 </div>
@@ -206,25 +219,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00099">99</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Nothing to connect so doesn't actually do anything except call parent connect phase. </p>
 
-</div>
-</div>
-<a class="anchor" id="a8e6edc5f38da7ac313152e5ab41b5418"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void axi_responder::end_of_elaboration_phase </td>
-          <td>(</td>
-          <td class="paramtype">uvm_phase&#160;</td>
-          <td class="paramname"><em>phase</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00103">103</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00095">95</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
 </div>
 </div>
@@ -252,7 +249,10 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00085">85</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Constructor. </p>
+<p>Doesn't actually do anything except call parent constructor </p>
+
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00081">81</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
 </div>
 </div>
@@ -269,16 +269,19 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00305">305</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Read Address channel thread. </p>
+<p>Does nothing. The monitor handles taking AXI read data transfers and creating a read data packet that gets sent to the read data channel thread. </p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00107">run_phase()</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00313">313</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00109">run_phase()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder_ac2bfb80d5d72e298202f4f31f0a2db72_icgraph.png" border="0" usemap="#classaxi__responder_ac2bfb80d5d72e298202f4f31f0a2db72_icgraph" alt=""/></div>
 <map name="classaxi__responder_ac2bfb80d5d72e298202f4f31f0a2db72_icgraph" id="classaxi__responder_ac2bfb80d5d72e298202f4f31f0a2db72_icgraph">
-<area shape="rect" id="node2" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="axi_responder::run\l_phase" alt="" coords="189,5,319,47"/>
+<area shape="rect" id="node2" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="189,5,319,47"/>
 </map>
 </div>
 </p>
@@ -298,11 +301,21 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00309">309</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Read Data channel thread. </p>
+<ol type="1">
+<li>Deassert rvalid</li>
+<li>wait for tlm packet (responder packet from <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a>)</li>
+<li>loop through data</li>
+<li>if ready and valid, wait X clocks where x&gt;=0, then check for any more queued items</li>
+<li>if avail, then fetch and goto 'Loop through data' step.</li>
+<li>if no items to be driven on next clk, drive all read data signals low and goto 'Wait for TLM item in mailbox' step. </li>
+</ol>
 
-<p>References <a class="el" href="axi__responder_8svh_source.html#l00081">axi_incompatible_rready_toggling_mode</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00079">axi_seq_item::Burst_Length_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00040">axi_seq_item::data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00092">axi_seq_item::dataoffset</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00397">axi_seq_item::initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00084">axi_seq_item::Lower_Byte_Lane</a>, <a class="el" href="axi__responder_8svh_source.html#l00079">max_clks_between_r_transfers</a>, <a class="el" href="axi__responder_8svh_source.html#l00078">min_clks_between_r_transfers</a>, <a class="el" href="axi__pkg_8sv_source.html#l00186">axi_seq_item_r_vector_s::rdata</a>, <a class="el" href="axi__responder_8svh_source.html#l00037">readdata_mbx</a>, <a class="el" href="axi__pkg_8sv_source.html#l00190">axi_seq_item_r_vector_s::rid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00188">axi_seq_item_r_vector_s::rlast</a>, <a class="el" href="axi__pkg_8sv_source.html#l00189">axi_seq_item_r_vector_s::rvalid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00378">axi_seq_item::update_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00085">axi_seq_item::Upper_Byte_Lane</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00090">axi_seq_item::validcntr</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00091">axi_seq_item::validcntr_max</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00326">326</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00107">run_phase()</a>.</p>
+<p>References <a class="el" href="axi__responder_8svh_source.html#l00074">axi_incompatible_rready_toggling_mode</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00079">axi_seq_item::Burst_Length_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00040">axi_seq_item::data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00092">axi_seq_item::dataoffset</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00397">axi_seq_item::initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00084">axi_seq_item::Lower_Byte_Lane</a>, <a class="el" href="axi__responder_8svh_source.html#l00072">max_clks_between_r_transfers</a>, <a class="el" href="axi__responder_8svh_source.html#l00071">min_clks_between_r_transfers</a>, <a class="el" href="axi__pkg_8sv_source.html#l00186">axi_seq_item_r_vector_s::rdata</a>, <a class="el" href="axi__responder_8svh_source.html#l00031">readdata_mbx</a>, <a class="el" href="axi__pkg_8sv_source.html#l00190">axi_seq_item_r_vector_s::rid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00188">axi_seq_item_r_vector_s::rlast</a>, <a class="el" href="axi__pkg_8sv_source.html#l00189">axi_seq_item_r_vector_s::rvalid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00378">axi_seq_item::update_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00085">axi_seq_item::Upper_Byte_Lane</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00090">axi_seq_item::validcntr</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00091">axi_seq_item::validcntr_max</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00109">run_phase()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -321,7 +334,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder_a2944f2ebd74a2fbaef300d355ed917e0_icgraph.png" border="0" usemap="#classaxi__responder_a2944f2ebd74a2fbaef300d355ed917e0_icgraph" alt=""/></div>
 <map name="classaxi__responder_a2944f2ebd74a2fbaef300d355ed917e0_icgraph" id="classaxi__responder_a2944f2ebd74a2fbaef300d355ed917e0_icgraph">
-<area shape="rect" id="node2" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="axi_responder::run\l_phase" alt="" coords="221,5,351,47"/>
+<area shape="rect" id="node2" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="221,5,351,47"/>
 </map>
 </div>
 </p>
@@ -342,25 +355,27 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00107">107</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Launches channel responder threads and then acts as a dispatcher. </p>
+<p>After launching 5 different threads (one for each channel), this task acts as a dispatcher. It waits for TLM packets and then stuffs them into the appropriate thread's mailbox. IE: If it's an AXI write packet then it puts the packet into the write_address's mailbox so it can handle it. It the waits for the next TLM packet. NOTE: it does not wait for the other thread to finish processing the packet, it just puts it in the mailbox and then immediately waits for the next packet. </p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00058">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00214">axi_seq_item::convert2string()</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00035">e_READ_DATA</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00040">e_SETARREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00038">e_SETAWREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00039">e_SETWREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00033">e_WRITE</a>, <a class="el" href="axi__responder_8svh_source.html#l00305">read_address()</a>, <a class="el" href="axi__responder_8svh_source.html#l00309">read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00037">readdata_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00060">axi_seq_item::toggle_pattern</a>, <a class="el" href="axi__responder_8svh_source.html#l00177">write_address()</a>, <a class="el" href="axi__responder_8svh_source.html#l00200">write_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00229">write_response()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00042">writeaddress_mbx</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00109">109</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00058">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00214">axi_seq_item::convert2string()</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00035">e_READ_DATA</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00040">e_SETARREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00038">e_SETAWREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00039">e_SETWREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00033">e_WRITE</a>, <a class="el" href="axi__responder_8svh_source.html#l00313">read_address()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00031">readdata_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00060">axi_seq_item::toggle_pattern</a>, <a class="el" href="axi__responder_8svh_source.html#l00162">write_address()</a>, <a class="el" href="axi__responder_8svh_source.html#l00192">write_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00232">write_response()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00036">writeaddress_mbx</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder_a1cbb78601c4535a0ca361989b7ca2077_cgraph.png" border="0" usemap="#classaxi__responder_a1cbb78601c4535a0ca361989b7ca2077_cgraph" alt=""/></div>
 <map name="classaxi__responder_a1cbb78601c4535a0ca361989b7ca2077_cgraph" id="classaxi__responder_a1cbb78601c4535a0ca361989b7ca2077_cgraph">
-<area shape="rect" id="node2" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="axi_seq_item::convert2string" alt="" coords="401,104,591,131"/>
-<area shape="rect" id="node3" href="classaxi__responder.html#ac2bfb80d5d72e298202f4f31f0a2db72" title="axi_responder::read\l_address" alt="" coords="200,38,336,79"/>
-<area shape="rect" id="node4" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="axi_responder::read_data" alt="" coords="184,221,352,248"/>
-<area shape="rect" id="node8" href="classaxi__responder.html#a40c2090c7f4e386461faceb42937241d" title="axi_responder::write\l_address" alt="" coords="199,275,337,317"/>
-<area shape="rect" id="node10" href="classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c" title="axi_responder::write_data" alt="" coords="183,104,353,131"/>
-<area shape="rect" id="node11" href="classaxi__responder.html#ad6540250bab8663a8723afa67dc222b9" title="axi_responder::write\l_response" alt="" coords="199,155,337,197"/>
-<area shape="rect" id="node5" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="axi_seq_item::initialize" alt="" coords="419,163,573,189"/>
-<area shape="rect" id="node7" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="axi_seq_item::update\l_address" alt="" coords="423,214,569,255"/>
-<area shape="rect" id="node6" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="axi_seq_item::update" alt="" coords="639,192,785,219"/>
-<area shape="rect" id="node9" href="classaxi__seq__item.html#acc505058d3047915a86c2aeed046bf98" title="axi_seq_item::aw_to\l_class" alt="" coords="425,279,567,321"/>
+<area shape="rect" id="node2" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="axi_seq_item::convert2string" alt="" coords="401,283,591,309"/>
+<area shape="rect" id="node3" href="classaxi__responder.html#ac2bfb80d5d72e298202f4f31f0a2db72" title="Read Address channel thread. " alt="" coords="200,86,336,127"/>
+<area shape="rect" id="node4" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="184,35,352,61"/>
+<area shape="rect" id="node8" href="classaxi__responder.html#a40c2090c7f4e386461faceb42937241d" title="Write Address channel thread. " alt="" coords="199,217,337,258"/>
+<area shape="rect" id="node9" href="classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c" title="Write Data channel thread. " alt="" coords="183,283,353,309"/>
+<area shape="rect" id="node10" href="classaxi__responder.html#ad6540250bab8663a8723afa67dc222b9" title="Write Response channel thread. " alt="" coords="199,151,337,193"/>
+<area shape="rect" id="node5" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="axi_seq_item::initialize" alt="" coords="419,5,573,32"/>
+<area shape="rect" id="node7" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="axi_seq_item::update\l_address" alt="" coords="423,57,569,98"/>
+<area shape="rect" id="node6" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="axi_seq_item::update" alt="" coords="639,35,785,61"/>
 </map>
 </div>
 </p>
@@ -396,28 +411,21 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00177">177</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Write Address channel thread. </p>
+<p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00569">axi_seq_item::aw_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00040">axi_seq_item::data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00043">axi_seq_item::len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00042">axi_seq_item::wlast</a>, <a class="el" href="axi__responder_8svh_source.html#l00042">writeaddress_mbx</a>, <a class="el" href="axi__responder_8svh_source.html#l00043">writedata_mbx</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00041">axi_seq_item::wstrb</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00162">162</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00107">run_phase()</a>.</p>
+<p>References <a class="el" href="axi__responder_8svh_source.html#l00036">writeaddress_mbx</a>, and <a class="el" href="axi__responder_8svh_source.html#l00037">writedata_mbx</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classaxi__responder_a40c2090c7f4e386461faceb42937241d_cgraph.png" border="0" usemap="#classaxi__responder_a40c2090c7f4e386461faceb42937241d_cgraph" alt=""/></div>
-<map name="classaxi__responder_a40c2090c7f4e386461faceb42937241d_cgraph" id="classaxi__responder_a40c2090c7f4e386461faceb42937241d_cgraph">
-<area shape="rect" id="node2" href="classaxi__seq__item.html#acc505058d3047915a86c2aeed046bf98" title="axi_seq_item::aw_to\l_class" alt="" coords="192,5,335,47"/>
-</map>
-</div>
-</p>
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00109">run_phase()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder_a40c2090c7f4e386461faceb42937241d_icgraph.png" border="0" usemap="#classaxi__responder_a40c2090c7f4e386461faceb42937241d_icgraph" alt=""/></div>
 <map name="classaxi__responder_a40c2090c7f4e386461faceb42937241d_icgraph" id="classaxi__responder_a40c2090c7f4e386461faceb42937241d_icgraph">
-<area shape="rect" id="node2" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="axi_responder::run\l_phase" alt="" coords="192,5,321,47"/>
+<area shape="rect" id="node2" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="192,5,321,47"/>
 </map>
 </div>
 </p>
@@ -437,11 +445,14 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00200">200</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Write Data channel thread. </p>
+<p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00214">axi_seq_item::convert2string()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00124">axi_seq_item_w_vector_s::wlast</a>, <a class="el" href="axi__responder_8svh_source.html#l00043">writedata_mbx</a>, and <a class="el" href="axi__responder_8svh_source.html#l00044">writeresponse_mbx</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00192">192</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00107">run_phase()</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00214">axi_seq_item::convert2string()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00124">axi_seq_item_w_vector_s::wlast</a>, <a class="el" href="axi__responder_8svh_source.html#l00037">writedata_mbx</a>, and <a class="el" href="axi__responder_8svh_source.html#l00038">writeresponse_mbx</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00109">run_phase()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -458,7 +469,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder_abf4ec1b477dcf27b80cc9f8bced9ef9c_icgraph.png" border="0" usemap="#classaxi__responder_abf4ec1b477dcf27b80cc9f8bced9ef9c_icgraph" alt=""/></div>
 <map name="classaxi__responder_abf4ec1b477dcf27b80cc9f8bced9ef9c_icgraph" id="classaxi__responder_abf4ec1b477dcf27b80cc9f8bced9ef9c_icgraph">
-<area shape="rect" id="node2" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="axi_responder::run\l_phase" alt="" coords="224,5,353,47"/>
+<area shape="rect" id="node2" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="224,5,353,47"/>
 </map>
 </div>
 </p>
@@ -478,11 +489,22 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00229">229</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Write Response channel thread. </p>
+<ol type="1">
+<li>Deassert bvalid</li>
+<li>Wait for TLM item in mailbox</li>
+<li>Initialize variables</li>
+<li>Write out</li>
+<li>if ready and valid, wait X clocks where x&gt;=0, then check for any more queued items</li>
+<li>if avail, then fetch and goto 'Initialize variables' step.</li>
+<li>if no items to be driven on next clk, drive all write response signals low and goto 'Wait for TLM item in mailbox' step. \todo: response values are hardcoded. Get from response seq? </li>
+</ol>
 
-<p>References <a class="el" href="axi__pkg_8sv_source.html#l00143">axi_seq_item_b_vector_s::bid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00144">axi_seq_item_b_vector_s::bresp</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00214">axi_seq_item::convert2string()</a>, <a class="el" href="axi__responder_8svh_source.html#l00064">max_clks_between_b_transfers</a>, <a class="el" href="axi__responder_8svh_source.html#l00063">min_clks_between_b_transfers</a>, and <a class="el" href="axi__responder_8svh_source.html#l00044">writeresponse_mbx</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00232">232</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00107">run_phase()</a>.</p>
+<p>References <a class="el" href="axi__pkg_8sv_source.html#l00143">axi_seq_item_b_vector_s::bid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00144">axi_seq_item_b_vector_s::bresp</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00214">axi_seq_item::convert2string()</a>, <a class="el" href="axi__responder_8svh_source.html#l00057">max_clks_between_b_transfers</a>, <a class="el" href="axi__responder_8svh_source.html#l00056">min_clks_between_b_transfers</a>, and <a class="el" href="axi__responder_8svh_source.html#l00038">writeresponse_mbx</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00109">run_phase()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -499,7 +521,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder_ad6540250bab8663a8723afa67dc222b9_icgraph.png" border="0" usemap="#classaxi__responder_ad6540250bab8663a8723afa67dc222b9_icgraph" alt=""/></div>
 <map name="classaxi__responder_ad6540250bab8663a8723afa67dc222b9_icgraph" id="classaxi__responder_ad6540250bab8663a8723afa67dc222b9_icgraph">
-<area shape="rect" id="node2" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="axi_responder::run\l_phase" alt="" coords="192,5,321,47"/>
+<area shape="rect" id="node2" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="192,5,321,47"/>
 </map>
 </div>
 </p>
@@ -517,7 +539,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00069">69</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00062">62</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
 </div>
 </div>
@@ -531,7 +553,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00071">71</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00064">64</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
 </div>
 </div>
@@ -545,9 +567,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00081">81</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00074">74</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00309">read_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00326">read_data()</a>.</p>
 
 </div>
 </div>
@@ -561,7 +583,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00070">70</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00063">63</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
 </div>
 </div>
@@ -575,9 +597,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00033">33</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00027">27</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00055">axi_agent::build_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00064">axi_agent::build_phase()</a>.</p>
 
 </div>
 </div>
@@ -591,9 +613,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00034">34</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00028">28</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00055">axi_agent::build_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00064">axi_agent::build_phase()</a>.</p>
 
 </div>
 </div>
@@ -607,7 +629,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00076">76</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00069">69</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
 </div>
 </div>
@@ -621,9 +643,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00064">64</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00057">57</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00229">write_response()</a>.</p>
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00232">write_response()</a>.</p>
 
 </div>
 </div>
@@ -637,9 +659,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00079">79</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00072">72</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00309">read_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00326">read_data()</a>.</p>
 
 </div>
 </div>
@@ -653,7 +675,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00075">75</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00068">68</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
 </div>
 </div>
@@ -667,9 +689,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00063">63</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00056">56</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00229">write_response()</a>.</p>
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00232">write_response()</a>.</p>
 
 </div>
 </div>
@@ -683,9 +705,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00078">78</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00071">71</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00309">read_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00326">read_data()</a>.</p>
 
 </div>
 </div>
@@ -699,7 +721,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00036">36</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00030">30</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
 </div>
 </div>
@@ -713,9 +735,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00037">37</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00031">31</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00309">read_data()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00107">run_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00326">read_data()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00109">run_phase()</a>.</p>
 
 </div>
 </div>
@@ -729,9 +751,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00042">42</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00036">36</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00107">run_phase()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00177">write_address()</a>.</p>
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00109">run_phase()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00162">write_address()</a>.</p>
 
 </div>
 </div>
@@ -745,9 +767,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00043">43</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00037">37</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00177">write_address()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00200">write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00162">write_address()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00192">write_data()</a>.</p>
 
 </div>
 </div>
@@ -761,9 +783,9 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00044">44</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00038">38</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00200">write_data()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00229">write_response()</a>.</p>
+<p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00192">write_data()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00232">write_response()</a>.</p>
 
 </div>
 </div>

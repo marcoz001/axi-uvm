@@ -14,7 +14,7 @@ var searchData=
   ['wait_5ffor_5fwrite_5fdata',['wait_for_write_data',['../classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092',1,'axi_if_abstract']]],
   ['wait_5ffor_5fwrite_5fresponse',['wait_for_write_response',['../classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538',1,'axi_if_abstract']]],
   ['wlast_5fc',['wlast_c',['../classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b',1,'axi_seq_item']]],
-  ['write',['write',['../classaxi__coveragecollector.html#ad3db357735350aac191dcc3cabbddf23',1,'axi_coveragecollector::write()'],['../classaxi__master__driver.html#adedcb7c658934fc69ecd0377db2c5baf',1,'axi_master_driver::write()'],['../classaxi__scoreboard.html#ad0b761134c2d154528fc04a145695b5f',1,'axi_scoreboard::write()'],['../classmemory.html#a9e041180ed26bc52eea610c25d6238ce',1,'memory::write()']]],
+  ['write',['write',['../classaxi__coveragecollector.html#ad3db357735350aac191dcc3cabbddf23',1,'axi_coveragecollector::write()'],['../classaxi__scoreboard.html#ad0b761134c2d154528fc04a145695b5f',1,'axi_scoreboard::write()'],['../classmemory.html#a9e041180ed26bc52eea610c25d6238ce',1,'memory::write()']]],
   ['write_5faddress',['write_address',['../classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03',1,'axi_driver::write_address()'],['../classaxi__responder.html#a40c2090c7f4e386461faceb42937241d',1,'axi_responder::write_address()']]],
   ['write_5far',['write_ar',['../classaxi__if__abstract.html#a75f862f7fca7efb90751aa39479d9d90',1,'axi_if_abstract']]],
   ['write_5faw',['write_aw',['../classaxi__if__abstract.html#a7e36789c321a0c85c24472b30e935a73',1,'axi_if_abstract']]],
