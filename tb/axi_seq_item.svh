@@ -49,6 +49,7 @@ class axi_seq_item extends uvm_sequence_item;
     //rand  burst_size_t burst_size; // Burst size
     //rand  burst_type_t burst_type;
          logic [7:0] awlen;      // calculated later using the addr and len properties.
+         logic [7:0] arlen;
     rand logic [2:0] burst_size; // Burst size
   rand logic [1:0] burst_type;
 
@@ -535,6 +536,7 @@ function void axi_seq_item::aw_to_class(
 
      t.id          = s.awid;
      t.addr        = s.awaddr;
+     t.awlen       = s.awlen;
      t.len         = (s.awlen+1)*(2**s.awsize);
      t.burst_size  = s.awsize;
      t.burst_type  = s.awburst;
@@ -685,6 +687,7 @@ function void axi_seq_item::ar_to_class(
 
      t.id          = s.arid;
      t.addr        = s.araddr;
+     t.arlen       = s.arlen;
      t.len         = (s.arlen+1)*(2**s.arsize);
      t.burst_size  = s.arsize;
      t.burst_type  = s.arburst;
