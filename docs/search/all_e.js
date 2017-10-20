@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['sample',['sample',['../classaxi__coveragecollector.html#a93977878c23aef96b88197e8681af9b7',1,'axi_coveragecollector']]],
   ['set_5farvalid',['set_arvalid',['../classaxi__if__abstract.html#aac24a02c292e31a02d5ffe11776c1456',1,'axi_if_abstract']]],
   ['set_5fawready',['set_awready',['../classaxi__if__abstract.html#a0b7d4d682ef94552e34b4462fbb43df5',1,'axi_if_abstract']]],
   ['set_5fawvalid',['set_awvalid',['../classaxi__if__abstract.html#a29b40988f6f7f658cf20716373ac61f0',1,'axi_if_abstract']]],
