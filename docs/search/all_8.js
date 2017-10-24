@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['len',['len',['../classaxi__seq__item.html#a8d1cf31c171378129d7f9f0cc61dc493',1,'axi_seq_item']]],
-  ['lock',['lock',['../classaxi__seq__item.html#a3a28c5c0604b46025b8fabd61d8f9817',1,'axi_seq_item']]],
-  ['lower_5fbyte_5flane',['Lower_Byte_Lane',['../classaxi__seq__item.html#afcd70067b320b6a3e0ad6a358cc21fc2',1,'axi_seq_item']]],
-  ['lower_5fwrap_5fboundary',['Lower_Wrap_Boundary',['../classaxi__seq__item.html#a01a7ef3ab710c0f60bebea4790ed7234',1,'axi_seq_item']]]
+  ['id',['id',['../classaxi__seq__item.html#af8542b4095ec6893811f3e6a8bc095f1',1,'axi_seq_item']]],
+  ['id_5fwidth',['ID_WIDTH',['../classaxi__seq__item.html#aa1bac0b3cd6363905f36cffc73d2216e',1,'axi_seq_item']]],
+  ['initialize',['initialize',['../classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a',1,'axi_seq_item']]],
+  ['initialized',['initialized',['../classaxi__seq__item.html#a71a879cf6ad095998f095b66b142583b',1,'axi_seq_item']]],
+  ['inumber_5fbytes',['iNumber_Bytes',['../classaxi__seq__item.html#a679c8d9075637ee72501be255846c634',1,'axi_seq_item']]],
+  ['interfaces',['Interfaces',['../group__SVinterface.html',1,'']]]
 ];

@@ -151,6 +151,11 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:a61e2725bbc7455ef96bc6422c484179e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__uvm__pkg_8sv.html#a61e2725bbc7455ef96bc6422c484179e">axi_protocol_version_t</a> { <a class="el" href="axi__uvm__pkg_8sv.html#a61e2725bbc7455ef96bc6422c484179eae4b60da8ab9263bf43220d854ca4f083">e_AXI3</a>, 
+<a class="el" href="axi__uvm__pkg_8sv.html#a61e2725bbc7455ef96bc6422c484179eaef6b388d7a7e4a0230aa1f1d88e90e17">e_AXI4</a>
+ }<tr class="memdesc:a61e2725bbc7455ef96bc6422c484179e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 3 or Version 4.  <a href="axi__uvm__pkg_8sv.html#a61e2725bbc7455ef96bc6422c484179e">More...</a><br /></td></tr>
+</td></tr>
+<tr class="separator:a61e2725bbc7455ef96bc6422c484179e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00d51b3cb2e1fa09bdba2968e0cf7ac7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__uvm__pkg_8sv.html#a00d51b3cb2e1fa09bdba2968e0cf7ac7">cmd_t</a> { <br />
 &#160;&#160;<a class="el" href="axi__uvm__pkg_8sv.html#a00d51b3cb2e1fa09bdba2968e0cf7ac7ace2e65e53ce6e3353bf0f1528ce9e41c">e_WRITE</a> = 0, 
 <a class="el" href="axi__uvm__pkg_8sv.html#a00d51b3cb2e1fa09bdba2968e0cf7ac7ab51300cc776c601e1d0ad91600864b65">e_READ</a> = 1, 
@@ -175,6 +180,32 @@ Enumerations</h2></td></tr>
 <tr class="separator:ad8116d2e0fd01b57b2c352460a75e3c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="a61e2725bbc7455ef96bc6422c484179e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="axi__uvm__pkg_8sv.html#a61e2725bbc7455ef96bc6422c484179e">axi_protocol_version_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Version 3 or Version 4. </p>
+<p>A few differences:</p><ul>
+<li>AXI4 has no WID</li>
+<li>if burst_type=e_INCR, then AxLEN can be to 256[2**8], instead of just 16 [2**4] </li>
+</ul>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a61e2725bbc7455ef96bc6422c484179eae4b60da8ab9263bf43220d854ca4f083"></a>e_AXI3&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a61e2725bbc7455ef96bc6422c484179eaef6b388d7a7e4a0230aa1f1d88e90e17"></a>e_AXI4&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00037">37</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a00d51b3cb2e1fa09bdba2968e0cf7ac7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -217,7 +248,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00033">33</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00042">42</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -242,7 +273,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00053">53</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00062">62</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
 
 </div>
 </div>

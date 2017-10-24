@@ -1,5 +1,6 @@
 <map id="rtl/design.sv" name="rtl/design.sv">
-<area shape="rect" id="node2" href="$axi__pkg_8sv.html" title="axi_pkg.sv" alt="" coords="127,80,212,107"/>
-<area shape="rect" id="node5" href="$axi__if_8sv.html" title="axi_if.sv" alt="" coords="31,80,102,107"/>
-<area shape="rect" id="node4" href="$axi__if__abstract_8svh.html" title="axi_if_abstract.svh" alt="" coords="153,155,285,181"/>
+<area shape="rect" id="node2" href="$params__pkg_8sv.html" title="params_pkg.sv" alt="" coords="5,80,116,107"/>
+<area shape="rect" id="node3" href="$axi__pkg_8sv.html" title="axi_pkg.sv" alt="" coords="235,80,321,107"/>
+<area shape="rect" id="node6" href="$axi__if_8sv.html" title="axi_if.sv" alt="" coords="140,80,211,107"/>
+<area shape="rect" id="node5" href="$axi__if__abstract_8svh.html" title="axi_if_abstract.svh" alt="" coords="261,155,393,181"/>
 </map>

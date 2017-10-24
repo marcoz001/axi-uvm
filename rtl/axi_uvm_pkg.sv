@@ -27,6 +27,15 @@ import uvm_pkg::*;
 
 import axi_pkg::*;
 
+/*! \typedef axi_protocol_version_t */
+/** \brief Version 3 or Version 4
+ *
+ * A few differences:
+ * - AXI4 has no WID
+ * - if burst_type=e_INCR, then AxLEN can be to 256[2**8], instead of just 16 [2**4]
+*/
+typedef enum bit {e_AXI3, e_AXI4} axi_protocol_version_t;
+
 /*! \typedef cmd_t */
 /** \brief Command type - what is the purpose of this packet?
 */

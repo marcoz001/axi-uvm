@@ -193,12 +193,14 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a150391b59e1b2851c89272c84ed02077"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a150391b59e1b2851c89272c84ed02077">C_AXI_ID_WIDTH</a> = 6</td></tr>
+<tr class="memitem:a150391b59e1b2851c89272c84ed02077"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a150391b59e1b2851c89272c84ed02077">C_AXI_ID_WIDTH</a> = <a class="el" href="params__pkg_8sv.html#acc3f1524ce307037059dc1777798ee1f">params_pkg::AXI_ID_WIDTH</a></td></tr>
 <tr class="separator:a150391b59e1b2851c89272c84ed02077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3640be56d79c0ba42bea37784ac9ae6d"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a> = 32</td></tr>
+<tr class="memitem:a3640be56d79c0ba42bea37784ac9ae6d"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d">C_AXI_DATA_WIDTH</a> = <a class="el" href="params__pkg_8sv.html#aefb87aba63546102696230c367fae534">params_pkg::AXI_DATA_WIDTH</a></td></tr>
 <tr class="separator:a3640be56d79c0ba42bea37784ac9ae6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3a4347d855f294afac6e48ad076f677"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a> = 32</td></tr>
+<tr class="memitem:ab3a4347d855f294afac6e48ad076f677"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a> = <a class="el" href="params__pkg_8sv.html#a243e565e7e0e8614253648f1c4c47a2a">params_pkg::AXI_ADDR_WIDTH</a></td></tr>
 <tr class="separator:ab3a4347d855f294afac6e48ad076f677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7eed2ef1c0b3f2e73a3ebe25df4b9e6"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#ab7eed2ef1c0b3f2e73a3ebe25df4b9e6">C_AXI_LEN_WIDTH</a> = <a class="el" href="params__pkg_8sv.html#afd06121ba6ea9496041ee05853712a73">params_pkg::AXI_LEN_WIDTH</a></td></tr>
+<tr class="separator:ab7eed2ef1c0b3f2e73a3ebe25df4b9e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3609a21c67a3c1b8ffe65c66bd413bdc"><td class="memItemLeft" align="right" valign="top">localparam int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a3609a21c67a3c1b8ffe65c66bd413bdc">AXI_SEQ_ITEM_AW_NUM_BITS</a> = $bits(<a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__aw__vector__s">axi_seq_item_aw_vector_s</a>)</td></tr>
 <tr class="separator:a3609a21c67a3c1b8ffe65c66bd413bdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abcfb4d0ea71d9d468d8d8ee492acdcc7"><td class="memItemLeft" align="right" valign="top">localparam int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#abcfb4d0ea71d9d468d8d8ee492acdcc7">AXI_SEQ_ITEM_W_NUM_BITS</a> = $bits(<a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__w__vector__s">axi_seq_item_w_vector_s</a>)</td></tr>
@@ -223,7 +225,7 @@ Variables</h2></td></tr>
 <div class="textblock"><p>This packed struct is used to send write address channel information between the DUT and TB. </p>
 <p>Packed structs are emulator friendly </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00093">93</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00105">105</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Class Members</th></tr>
 <tr><td class="fieldtype">
@@ -255,7 +257,7 @@ awid</td>
 <p>Write address ID tag - A matching write response ID, bid, will be expected </p>
 </td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a83a832d7ec311fb5d2544bc96e4d0cb8"></a>logic&lt; 7:0 &gt;</td>
+<a class="anchor" id="a92d3254b64f00ab0c9048b5fe5ebc78e"></a>logic&lt; <a class="el" href="axi__pkg_8sv.html#ab7eed2ef1c0b3f2e73a3ebe25df4b9e6">C_AXI_LEN_WIDTH</a>-1:0 &gt;</td>
 <td class="fieldname">
 awlen</td>
 <td class="fielddoc">
@@ -319,7 +321,7 @@ awvalid</td>
 <div class="textblock"><p>This packed struct is used to send write data channel information between the DUT and TB. </p>
 <p>Packed structs are emulator friendly </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00121">121</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00133">133</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Class Members</th></tr>
 <tr><td class="fieldtype">
@@ -373,7 +375,7 @@ wvalid</td>
 <div class="textblock"><p>This packed struct is used to send write response channel information between the DUT and TB. </p>
 <p>Packed structs are emulator friendly </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00142">142</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00154">154</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Class Members</th></tr>
 <tr><td class="fieldtype">
@@ -406,7 +408,7 @@ bresp</td>
 <div class="textblock"><p>This packed struct is used to send read address channel information between the DUT and TB. </p>
 <p>Packed structs are emulator friendly </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00158">158</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00170">170</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Class Members</th></tr>
 <tr><td class="fieldtype">
@@ -438,7 +440,7 @@ arid</td>
 <p>Read address ID tag - A matching read data ID, rid, will be expected </p>
 </td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a4d2afe78c18622bdf8349957370e1c11"></a>logic&lt; 7:0 &gt;</td>
+<a class="anchor" id="a80bce5e6e44526ab71f77a15fb47e8bd"></a>logic&lt; <a class="el" href="axi__pkg_8sv.html#ab7eed2ef1c0b3f2e73a3ebe25df4b9e6">C_AXI_LEN_WIDTH</a>-1:0 &gt;</td>
 <td class="fieldname">
 arlen</td>
 <td class="fielddoc">
@@ -502,7 +504,7 @@ arvalid</td>
 <div class="textblock"><p>This packed struct is used to send read data channel information between the DUT and TB. </p>
 <p>Packed structs are emulator friendly </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00185">185</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00197">197</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Class Members</th></tr>
 <tr><td class="fieldtype">
@@ -557,7 +559,7 @@ rvalid</td>
 
 <p>Bit vector containing packed read address channel values. </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00177">177</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00189">189</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -573,7 +575,7 @@ rvalid</td>
 
 <p>Bit vector containing packed write address channel values. </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00112">112</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00124">124</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -589,7 +591,7 @@ rvalid</td>
 
 <p>Bit vector containing packed write response channel values. </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00151">151</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00163">163</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -605,7 +607,7 @@ rvalid</td>
 
 <p>Bit vector containing packed read data channel values. </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00198">198</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00210">210</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -621,7 +623,7 @@ rvalid</td>
 
 <p>Bit vector containing packed write data channel values. </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00134">134</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00146">146</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -664,7 +666,7 @@ rvalid</td>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00034">34</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00068">68</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -693,7 +695,7 @@ rvalid</td>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00047">47</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00081">81</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -723,7 +725,7 @@ rvalid</td>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00056">56</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00090">90</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -739,7 +741,7 @@ rvalid</td>
 </div><div class="memdoc">
 <p>Used to calculate the length of the bit vector containing the packed read address struct </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00173">173</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00185">185</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -754,7 +756,7 @@ rvalid</td>
 </div><div class="memdoc">
 <p>Used to calculate the length of the bit vector containing the packed write address struct </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00108">108</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00120">120</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -769,7 +771,7 @@ rvalid</td>
 </div><div class="memdoc">
 <p>Used to calculate the length of the bit vector containing the packed write response struct </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00147">147</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00159">159</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -784,7 +786,7 @@ rvalid</td>
 </div><div class="memdoc">
 <p>Used to calculate the length of the bit vector containing the packed read data struct </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00194">194</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00206">206</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -799,7 +801,7 @@ rvalid</td>
 </div><div class="memdoc">
 <p>Used to calculate the length of the bit vector containing the packed write data struct </p>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00130">130</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00142">142</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -808,7 +810,7 @@ rvalid</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">parameter C_AXI_ADDR_WIDTH = 32</td>
+          <td class="memname">parameter C_AXI_ADDR_WIDTH = <a class="el" href="params__pkg_8sv.html#a243e565e7e0e8614253648f1c4c47a2a">params_pkg::AXI_ADDR_WIDTH</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -817,9 +819,9 @@ rvalid</td>
 <li>64 </li>
 </ul>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00081">81</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00051">51</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00030">axi_if()</a>.</p>
+<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00031">axi_if()</a>.</p>
 
 </div>
 </div>
@@ -828,7 +830,7 @@ rvalid</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">parameter C_AXI_DATA_WIDTH = 32</td>
+          <td class="memname">parameter C_AXI_DATA_WIDTH = <a class="el" href="params__pkg_8sv.html#aefb87aba63546102696230c367fae534">params_pkg::AXI_DATA_WIDTH</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -843,9 +845,9 @@ rvalid</td>
 <li>1024 </li>
 </ul>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00070">70</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00040">40</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00030">axi_if()</a>.</p>
+<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00031">axi_if()</a>.</p>
 
 </div>
 </div>
@@ -854,7 +856,7 @@ rvalid</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">parameter C_AXI_ID_WIDTH = 6</td>
+          <td class="memname">parameter C_AXI_ID_WIDTH = <a class="el" href="params__pkg_8sv.html#acc3f1524ce307037059dc1777798ee1f">params_pkg::AXI_ID_WIDTH</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -866,9 +868,29 @@ rvalid</td>
 <li>rid </li>
 </ul>
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00063">63</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00033">33</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00030">axi_if()</a>.</p>
+<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00031">axi_if()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab7eed2ef1c0b3f2e73a3ebe25df4b9e6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">parameter C_AXI_LEN_WIDTH = <a class="el" href="params__pkg_8sv.html#afd06121ba6ea9496041ee05853712a73">params_pkg::AXI_LEN_WIDTH</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>bit width of awlen and arlen bus. Valid values:</p><ul>
+<li>4 - AXI3</li>
+<li>8 - AXI4 (burst_type=e_INCR) </li>
+</ul>
+
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00057">57</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00031">axi_if()</a>.</p>
 
 </div>
 </div>

@@ -27,6 +27,40 @@ package axi_pkg;
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
+import params_pkg::*;
+
+
+parameter C_AXI_ID_WIDTH = params_pkg::AXI_ID_WIDTH;   /*!< bit width of the ID fields
+                                 * - awid
+                                 * - wid [AXI3]
+                                 * - bid
+                                 * - arid
+                                 * - rid
+                                 */
+parameter C_AXI_DATA_WIDTH = params_pkg::AXI_DATA_WIDTH; /*!< bit width of data bus.
+                                  * Valid values:
+                                  * - 8
+                                  * - 16
+                                  * - 32
+                                  * - 64
+                                  * - 128
+                                  * - 256
+                                  * - 512
+                                  * - 1024
+                                  */
+parameter C_AXI_ADDR_WIDTH = params_pkg::AXI_ADDR_WIDTH; /*!< bit width of address bus.
+                                  * Valid values:
+                                  * - 32
+                                  * - 64
+                                  */
+
+parameter C_AXI_LEN_WIDTH = params_pkg::AXI_LEN_WIDTH; /*!< bit width of awlen and arlen bus.
+                                  * Valid values:
+                                  * - 4 - AXI3
+                                  * - 8 - AXI4 (burst_type=e_INCR)
+                                  */
+
+
 
 /*! \typedef burst_size_t */
 /** \brief Size of beat in bytes. (How many bytes of the data bus are used each beat(clk).
@@ -60,29 +94,7 @@ typedef enum logic [1:0] {e_OKAY    = 2'b00, /**< Normal access success. */
                          } response_type_t;
 
 
-parameter C_AXI_ID_WIDTH = 6;   /*!< bit width of the ID fields
-                                 * - awid
-                                 * - wid [AXI3]
-                                 * - bid
-                                 * - arid
-                                 * - rid
-                                 */
-parameter C_AXI_DATA_WIDTH = 32; /*!< bit width of data bus.
-                                  * Valid values:
-                                  * - 8
-                                  * - 16
-                                  * - 32
-                                  * - 64
-                                  * - 128
-                                  * - 256
-                                  * - 512
-                                  * - 1024
-                                  */
-parameter C_AXI_ADDR_WIDTH = 32; /*!< bit width of address bus.
-                                  * Valid values:
-                                  * - 32
-                                  * - 64
-                                  */
+
 
 
 /*! \struct axi_seq_item_aw_vector_s
@@ -95,7 +107,7 @@ typedef struct packed {
   logic [C_AXI_ADDR_WIDTH-1:0]   awaddr; /*!< Starting burst address */
   logic                          awvalid; /*!< Values on write address channel are valid and won't change until awready is recieved */
   logic                          awready; /*!< Slave is ready to receive write address channel information */
-  logic [7:0]                    awlen;   /*!< Length, in beats/clks, of the matching write data burst */
+  logic [C_AXI_LEN_WIDTH-1:0]    awlen;   /*!< Length, in beats/clks, of the matching write data burst */
   logic [2:0]                    awsize;  /*!< beat size.  How many bytes wide are the beats in the write data transfer */
   logic [1:0]                    awburst; /*!< address burst mode.  fixed, incrementing, or wrap */
   logic [0:0]                    awlock; /*!< Used for locked transactions in AXI3 */
@@ -160,7 +172,7 @@ typedef struct packed {
   logic [C_AXI_ADDR_WIDTH-1:0]   araddr; /*!< Starting burst address */
   logic                          arvalid;/*!< Values on read address channel are valid and won't change until arready is recieved */
   logic                          arready;/*!< Slave is ready to receive read address channel information */
-  logic [7:0]                    arlen;/*!< Length, in beats/clks, of the matching read data burst */
+  logic [C_AXI_LEN_WIDTH-1:0]    arlen;/*!< Length, in beats/clks, of the matching read data burst */
   logic [2:0]  arsize;/*!< beat size.  How many bytes wide are the beats in the write data transfer */
   logic [1:0]  arburst;/*!< address burst mode.  fixed, incrementing, or wrap */
   logic [0:0]                    arlock; /*!< Used for locked transactions in AXI3 */

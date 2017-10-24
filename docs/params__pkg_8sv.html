@@ -89,6 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">params_pkg.sv File Reference</div>  </div>
@@ -99,7 +100,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="params__pkg_8sv__dep__incl.png" border="0" usemap="#tb_2params__pkg_8svdep" alt=""/></div>
 <map name="tb_2params__pkg_8svdep" id="tb_2params__pkg_8svdep">
-<area shape="rect" id="node2" href="testbench_8sv.html" title="tb/testbench.sv" alt="" coords="13,80,125,107"/>
+<area shape="rect" id="node2" href="design_8sv.html" title="rtl/design.sv" alt="" coords="5,80,99,107"/>
+<area shape="rect" id="node3" href="testbench_8sv.html" title="tb/testbench.sv" alt="" coords="123,80,235,107"/>
 </map>
 </div>
 </div>
@@ -111,15 +113,37 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespaceparams__pkg"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters used in the design and testbench are kept here. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ae88772ce07767e107f0966e3f8e6d6e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="params__pkg_8sv.html#ae88772ce07767e107f0966e3f8e6d6e0">_PARAMS_PKG</a></td></tr>
+<tr class="separator:ae88772ce07767e107f0966e3f8e6d6e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:acc3f1524ce307037059dc1777798ee1f"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="params__pkg_8sv.html#acc3f1524ce307037059dc1777798ee1f">AXI_ID_WIDTH</a> = 6</td></tr>
 <tr class="separator:acc3f1524ce307037059dc1777798ee1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a243e565e7e0e8614253648f1c4c47a2a"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="params__pkg_8sv.html#a243e565e7e0e8614253648f1c4c47a2a">AXI_ADDR_WIDTH</a> = 32</td></tr>
 <tr class="separator:a243e565e7e0e8614253648f1c4c47a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefb87aba63546102696230c367fae534"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="params__pkg_8sv.html#aefb87aba63546102696230c367fae534">AXI_DATA_WIDTH</a> = 32</td></tr>
+<tr class="memitem:aefb87aba63546102696230c367fae534"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="params__pkg_8sv.html#aefb87aba63546102696230c367fae534">AXI_DATA_WIDTH</a> = 1024</td></tr>
 <tr class="separator:aefb87aba63546102696230c367fae534"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd06121ba6ea9496041ee05853712a73"><td class="memItemLeft" align="right" valign="top">parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="params__pkg_8sv.html#afd06121ba6ea9496041ee05853712a73">AXI_LEN_WIDTH</a> = 8</td></tr>
+<tr class="separator:afd06121ba6ea9496041ee05853712a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ae88772ce07767e107f0966e3f8e6d6e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _PARAMS_PKG</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="params__pkg_8sv_source.html#l00021">21</a> of file <a class="el" href="params__pkg_8sv_source.html">params_pkg.sv</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="a243e565e7e0e8614253648f1c4c47a2a"></a>
 <div class="memitem">
@@ -131,7 +155,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="params__pkg_8sv_source.html#l00034">34</a> of file <a class="el" href="params__pkg_8sv_source.html">params_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="params__pkg_8sv_source.html#l00037">37</a> of file <a class="el" href="params__pkg_8sv_source.html">params_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -140,12 +164,14 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">parameter AXI_DATA_WIDTH = 32</td>
+          <td class="memname">parameter AXI_DATA_WIDTH = 1024</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="params__pkg_8sv_source.html#l00035">35</a> of file <a class="el" href="params__pkg_8sv_source.html">params_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="params__pkg_8sv_source.html#l00038">38</a> of file <a class="el" href="params__pkg_8sv_source.html">params_pkg.sv</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00399">axi_seq_item::initialize()</a>.</p>
 
 </div>
 </div>
@@ -159,7 +185,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="params__pkg_8sv_source.html#l00033">33</a> of file <a class="el" href="params__pkg_8sv_source.html">params_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="params__pkg_8sv_source.html#l00036">36</a> of file <a class="el" href="params__pkg_8sv_source.html">params_pkg.sv</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afd06121ba6ea9496041ee05853712a73"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">parameter AXI_LEN_WIDTH = 8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="params__pkg_8sv_source.html#l00039">39</a> of file <a class="el" href="params__pkg_8sv_source.html">params_pkg.sv</a>.</p>
 
 </div>
 </div>

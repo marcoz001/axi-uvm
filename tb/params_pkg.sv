@@ -17,7 +17,8 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
-
+`ifndef _PARAMS_PKG
+`define _PARAMS_PKG
 /*! \package params_pkg
  *  \brief Parameters used in the design and testbench are kept here.
  *
@@ -30,9 +31,14 @@
  */
 package params_pkg;
 
+// The obvious question is what to do with multiple instantiations of
+// different sizes?
   parameter AXI_ID_WIDTH   = 6;
   parameter AXI_ADDR_WIDTH = 32;
-  parameter AXI_DATA_WIDTH = 32;
+  parameter AXI_DATA_WIDTH = 1024;
+  parameter AXI_LEN_WIDTH  = 8;
 
 
 endpackage : params_pkg
+
+`endif

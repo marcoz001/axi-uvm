@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['w_5ffrom_5fclass',['w_from_class',['../classaxi__seq__item.html#a74b8fedb10ec67e228b713ea2841d7af',1,'axi_seq_item']]],
-  ['w_5fto_5fclass',['w_to_class',['../classaxi__seq__item.html#a4cdd112f79fc0edebcace54fef3d14b2',1,'axi_seq_item']]],
   ['wait_5ffor_5fawready_5fawvalid',['wait_for_awready_awvalid',['../classaxi__if__abstract.html#ae136ae0143b1a3fccc030fbdb9dd32fa',1,'axi_if_abstract']]],
   ['wait_5ffor_5fawvalid',['wait_for_awvalid',['../classaxi__if__abstract.html#ac91fb21011e5b40e3d25aeea49284220',1,'axi_if_abstract']]],
   ['wait_5ffor_5fbvalid',['wait_for_bvalid',['../classaxi__if__abstract.html#a82d26646215b46420b0cfd2ab10127d4',1,'axi_if_abstract']]],
@@ -13,7 +11,6 @@ var searchData=
   ['wait_5ffor_5fwrite_5faddress',['wait_for_write_address',['../classaxi__if__abstract.html#a9e019c384309938d98fb93eb9d19ee35',1,'axi_if_abstract']]],
   ['wait_5ffor_5fwrite_5fdata',['wait_for_write_data',['../classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092',1,'axi_if_abstract']]],
   ['wait_5ffor_5fwrite_5fresponse',['wait_for_write_response',['../classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538',1,'axi_if_abstract']]],
-  ['wlast_5fc',['wlast_c',['../classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b',1,'axi_seq_item']]],
   ['write',['write',['../classaxi__coveragecollector.html#ad3db357735350aac191dcc3cabbddf23',1,'axi_coveragecollector::write()'],['../classaxi__scoreboard.html#ad0b761134c2d154528fc04a145695b5f',1,'axi_scoreboard::write()'],['../classmemory.html#a9e041180ed26bc52eea610c25d6238ce',1,'memory::write()']]],
   ['write_5faddress',['write_address',['../classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03',1,'axi_driver::write_address()'],['../classaxi__responder.html#a40c2090c7f4e386461faceb42937241d',1,'axi_responder::write_address()']]],
   ['write_5far',['write_ar',['../classaxi__if__abstract.html#a75f862f7fca7efb90751aa39479d9d90',1,'axi_if_abstract']]],

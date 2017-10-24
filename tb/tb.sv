@@ -33,6 +33,7 @@ module tb;
    parameter C_AXI_ID_WIDTH   = params_pkg::AXI_ID_WIDTH;
    parameter C_AXI_ADDR_WIDTH = params_pkg::AXI_ADDR_WIDTH;
    parameter C_AXI_DATA_WIDTH = params_pkg::AXI_DATA_WIDTH;
+   parameter C_AXI_LEN_WIDTH  = params_pkg::AXI_LEN_WIDTH;
 
   `include "uvm_macros.svh"
   import uvm_pkg::*;
@@ -46,7 +47,7 @@ module tb;
   wire                          axi_awready;
   wire [C_AXI_ID_WIDTH-1:0]	    axi_awid;
   wire [C_AXI_ADDR_WIDTH-1:0]   axi_awaddr;
-  wire [7:0]                    axi_awlen;    // Write Burst Length
+  wire [C_AXI_LEN_WIDTH-1:0]    axi_awlen;    // Write Burst Length
   wire [2:0]                    axi_awsize;	  // Write Burst size
   wire [1:0]                    axi_awburst;  // Write Burst type
   wire [0:0]                    axi_awlock;   // Write lock type
@@ -72,7 +73,7 @@ module tb;
   wire                         axi_arready; // Read address ready
   wire [C_AXI_ID_WIDTH-1:0]    axi_arid;    // Read ID
   wire [C_AXI_ADDR_WIDTH-1:0]  axi_araddr;  // Read address
-  wire [7:0]                   axi_arlen;  // Read Burst Length
+  wire [C_AXI_LEN_WIDTH-1:0]   axi_arlen;  // Read Burst Length
   wire [2:0]                   axi_arsize;  // Read Burst size
   wire [1:0]                   axi_arburst; // Read Burst type
   wire [0:0]                   axi_arlock;  // Read lock type
@@ -103,9 +104,10 @@ module tb;
 
 
   /*! Driver instantiation */
-  axi_if #(.C_AXI_ID_WIDTH   (C_AXI_ID_WIDTH),
+  axi_if #(.C_AXI_ID_WIDTH      (C_AXI_ID_WIDTH),
               .C_AXI_DATA_WIDTH (C_AXI_DATA_WIDTH),
-              .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH)
+              .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH),
+              .C_AXI_LEN_WIDTH  (C_AXI_LEN_WIDTH)
           ) axi_driver_vif (.clk   (clk),
                .reset (reset),
                .awready(axi_awready),
@@ -153,8 +155,9 @@ module tb;
 
   /*! Slave/responder instantiation */
     axi_if #(.C_AXI_ID_WIDTH   (C_AXI_ID_WIDTH),
-              .C_AXI_DATA_WIDTH (C_AXI_DATA_WIDTH),
-              .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH)
+             .C_AXI_DATA_WIDTH (C_AXI_DATA_WIDTH),
+             .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH),
+             .C_AXI_LEN_WIDTH  (C_AXI_LEN_WIDTH)
             ) axi_responder_vif (.clk   (clk),
                .reset (reset),
                .awready(axi_awready),

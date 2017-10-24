@@ -81,21 +81,24 @@ task axi_seq::body;
 
   xfers_to_send=1;
 
+
   for (int i=0;i<xfers_to_send;i++) begin
      write_item=axi_seq_item::type_id::create("write_item");
      read_item=axi_seq_item::type_id::create("read_item");
 
 
     start_item(write_item);
-    assert( write_item.randomize() with {cmd        ==     e_WRITE;
-                                         burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
+    assert( write_item.randomize() with {protocol   ==     e_AXI4;
+                                         cmd        ==     e_WRITE;
+                                         //burst_size inside {e_1BYTE,e_2BYTES};
+                                         //burst_size ==     e_128BYTES;
                                          burst_type ==     e_INCR;
                                          addr       <      'h4;
-                                         len        >      'h0;
-                                         len        <=     'h3C;
+                                         //len        >      'h30;
+                                         //len        <=     'h3C;
                                         }
                                    ) else begin
-         `uvm_error(this.get_type_name(),
+         `uvm_fatal(this.get_type_name(),
                     $sformatf("Unable to randomize %s",  write_item.get_full_name()));
          end  //assert
 
@@ -112,8 +115,8 @@ task axi_seq::body;
       read_data=m_memory.read(write_item.Start_Address+z);
       s=$sformatf("%s 0x%0x", s, read_data);
       if (z<write_item.len-1) begin
-         assert (int'(read_data) == z) else begin
-           `uvm_error("miscompare", $sformatf("expected: 0x%0x   actual:0x%0x", z, read_data))
+        assert (read_data == write_item.data[z]) else begin
+          `uvm_error("miscompare", $sformatf("expected: 0x%0x   actual:0x%0x", write_item.data[z], read_data))
          end
       end else begin
         assert (int'(read_data) == 'hFE) else begin
@@ -132,8 +135,10 @@ task axi_seq::body;
 
 
     start_item(read_item);
-    assert( read_item.randomize() with {cmd        ==     e_READ;
-                                         burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
+    assert( read_item.randomize() with {protocol   ==     write_item.protocol;
+                                        cmd        ==     e_READ;
+                                        burst_size >= write_item.burst_size;
+                                         //burst_size inside {e_1BYTE,e_2BYTES,e_4BYTES};
                                          burst_type ==     write_item.burst_type;
                                          addr       ==     write_item.Start_Address;
                                         len        ==     write_item.len;}

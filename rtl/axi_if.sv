@@ -26,7 +26,8 @@
 interface axi_if #(
                       parameter C_AXI_ID_WIDTH   = 6,
                       parameter C_AXI_ADDR_WIDTH = 32,
-                      parameter C_AXI_DATA_WIDTH = 32
+                      parameter C_AXI_DATA_WIDTH = 32,
+                      parameter C_AXI_LEN_WIDTH = 8
                      )(
                      input wire clk,
                      input wire reset,
@@ -34,7 +35,7 @@ interface axi_if #(
                      inout wire                          awready,  // Slave is ready to accept
                      inout wire [C_AXI_ID_WIDTH-1:0]	 awid,     // Write ID
                      inout wire [C_AXI_ADDR_WIDTH-1:0]   awaddr,   // Write address
-                     inout wire [7:0]                    awlen,    // Write Burst Length
+                     inout wire [C_AXI_LEN_WIDTH-1:0]    awlen,    // Write Burst Length
                      inout wire [2:0]                    awsize,   // Write Burst size
                      inout wire [1:0]                    awburst,  // Write Burst type
                      inout wire [0:0]                    awlock,   // Write lock type
@@ -60,7 +61,7 @@ interface axi_if #(
                      inout  wire                         arready, // Read address ready
                      inout  wire [C_AXI_ID_WIDTH-1:0]    arid,    // Read ID
                      inout  wire [C_AXI_ADDR_WIDTH-1:0]  araddr,  // Read address
-                     inout  wire [7:0]                   arlen,   // Read Burst Length
+                     inout  wire [C_AXI_LEN_WIDTH-1:0]   arlen,   // Read Burst Length
                      inout  wire [2:0]                   arsize,  // Read Burst size
                      inout  wire [1:0]                   arburst, // Read Burst type
                      inout  wire [0:0]                   arlock,  // Read lock type
@@ -85,7 +86,7 @@ interface axi_if #(
   logic [C_AXI_ADDR_WIDTH-1:0]   iawaddr;
   logic                          iawvalid;
   logic                          iawready;
-  logic [7:0]                    iawlen;
+  logic [C_AXI_LEN_WIDTH-1:0]    iawlen;
   logic [2:0]                    iawsize;
   logic [1:0]                    iawburst;
   logic [0:0]                    iawlock;
@@ -110,7 +111,7 @@ interface axi_if #(
   logic                          iarready;
   logic  [C_AXI_ID_WIDTH-1:0]    iarid;
   logic  [C_AXI_ADDR_WIDTH-1:0]  iaraddr;
-  logic  [7:0]                   iarlen;
+  logic  [C_AXI_LEN_WIDTH-1:0]   iarlen;
   logic  [2:0]                   iarsize;
   logic  [1:0]                   iarburst;
   logic  [0:0]                   iarlock;

@@ -34,10 +34,14 @@
 class axi_seq_item extends uvm_sequence_item;
   `uvm_object_utils(axi_seq_item)
 
+  localparam ADDR_WIDTH = 64;
+  localparam ID_WIDTH = 7;
+
     //widths are top-level parameters. but we're setting to max here.
     // A recommendation from veloce docs
-    rand  bit [6:0]    id;
-    rand  bit [63:0]   addr;
+  rand axi_protocol_version_t protocol;
+  rand  bit [ID_WIDTH-1:0]    id;
+  rand  bit [ADDR_WIDTH-1:0]   addr;
     rand  bit          valid []; // keep valid with data,
   // then can also toggle independently and have easy playback on failure
   // @Todo: play around more with the do_record
@@ -58,7 +62,7 @@ class axi_seq_item extends uvm_sequence_item;
           logic [2:0]  prot   = 'h0;
           logic [3:0]  qos    = 'h0;
 
-          logic [6-1:0] bid   = 'hF;
+          logic [ID_WIDTH-1:0] bid   = 'hF;
           logic [1:0]   bresp = 'h3;
 
     rand  cmd_t        cmd; // read or write
@@ -77,16 +81,16 @@ class axi_seq_item extends uvm_sequence_item;
   // if in axi_pkg the logic could be  synthesizable functions
   // and then a non-UVM BFM could easily be created
 
-  bit [63:0] Start_Address;
-  bit [63:0] Aligned_Address;
+  bit [ADDR_WIDTH-1:0] Start_Address;
+  bit [ADDR_WIDTH-1:0] Aligned_Address;
   bit        aligned;
   int        Number_Bytes;
   int        iNumber_Bytes;
   int        Burst_Length_Bytes;
   int        Data_Bus_Bytes;
 
-  bit [63:0] Lower_Wrap_Boundary;
-  bit [63:0] Upper_Wrap_Boundary;
+  bit [ADDR_WIDTH-1:0] Lower_Wrap_Boundary;
+  bit [ADDR_WIDTH-1:0] Upper_Wrap_Boundary;
   int        Lower_Byte_Lane;
   int        Upper_Byte_Lane;
   bit  [1:0] Mode;
@@ -103,29 +107,36 @@ class axi_seq_item extends uvm_sequence_item;
   const int c_AXI4_MAXBEATCNT=256;
 
   constraint max_len {len > 0;
-                      if          (cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN)
+                      len < 10000;
+                      if      (cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN)
                          len == 1;
                       else if (cmd == axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN)
                          len == 1;
                       else if (cmd == axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN)
                          len == 1;
-                      else
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR))
                         len <
+                               ((2**burst_size) * 256)-(addr-int'(addr/(2**burst_size))*(2**burst_size));
+                      else
+                               len <
                         ((2**burst_size) * 16)-(addr-int'(addr/(2**burst_size))*(2**burst_size));
                         // 16 for everything except AXI4 incr.
                         //@Todo: take into account non-aligned addr
                            //len < 256*128;
 
                        } // AXI4 is 256-beat burst by 128-byte wide
+  constraint addr_c     { solve addr before burst_size; }
+  constraint burst_size_c {solve burst_size before len; }
+
     constraint valid_c { solve len before valid;
-                         valid.size() == len*2; }
+                        valid.size() == len*1; }
     constraint data_c {  solve len before data;
                          data.size() == len; }
     constraint wstrb_c { solve len before wstrb;
                          wstrb.size() == len; }
-    constraint wlast_c { solve len before wlast;
-                        wlast.size() == len/4;
-                       } //only the last bit is set, do that in post-randomize
+    //constraint wlast_c { solve len before wlast;
+    //                    wlast.size() == len/4;
+    //                   } //only the last bit is set, do that in post-randomize
 
     // UVM sequence item functions
     extern function        new        (string name="axi_seq_item");
@@ -137,12 +148,12 @@ class axi_seq_item extends uvm_sequence_item;
     extern function void   post_randomize;
 
     // Custom functions
-    extern function bit [63:0] calculate_aligned_address(
-     input bit [63:0] addr,
+    extern function bit [ADDR_WIDTH-1:0] calculate_aligned_address(
+     input bit [ADDR_WIDTH-1:0] addr,
      input int        number_bytes);
 
     extern function int calculate_beats(
-      input bit [63:0] addr,
+      input bit [ADDR_WIDTH-1:0] addr,
       input int        number_bytes,
       input int        burst_length);
 
@@ -159,7 +170,7 @@ class axi_seq_item extends uvm_sequence_item;
     extern static function void   aw_to_class(
       ref    axi_seq_item             t,
       input  axi_seq_item_aw_vector_s v);
-
+/*
     extern static function void   w_from_class(
       input  [31:0]                  wdata,
       input  [3:0]                   wstrb,
@@ -173,9 +184,9 @@ class axi_seq_item extends uvm_sequence_item;
       output                          wvalid,
       output                          wlast,
       input  axi_seq_item_w_vector_s  v);
-
+  */
     extern static function void  b_from_class(
-      input  [5:0]     bid,
+      input  [ID_WIDTH-1:0]     bid,
       input  [1:0]     bresp,
       output axi_seq_item_b_vector_s v);
 
@@ -212,7 +223,7 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s Cmd: %s   ", s, cmd.name);
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
     $sformat(s, "%s ID = 0x%0x",   s, id);
-    $sformat(s, "%s Len = 0x%0x  (0x%0x)",   s, len, len/4);
+    $sformat(s, "%s Len = 0x%0x",   s, len);
     $sformat(s, "%s BurstSize = 0x%0x ",   s, burst_size);
     $sformat(s, "%s BurstType = 0x%0x ",   s, burst_type);
     $sformat(s, "%s BID = 0x%0x",   s, bid);
@@ -339,12 +350,12 @@ function void axi_seq_item::post_randomize;
 
   j=valid.size();
   for (int i=0;i<j;i++) begin
-    valid[i] = $random;
+    valid[i] = 'b1; // $random;
   end
 
-  valid[0] = 1'b1;
-  valid[1] = 1'b1;
-  valid[2] = 1'b0;
+//  valid[0] = 1'b1;
+//  valid[1] = 1'b1;
+//  valid[2] = 1'b0;
 
 
   data[len-1] = 'hFE; // specific value to eaily identify last byte
@@ -390,7 +401,7 @@ function void axi_seq_item::initialize;
     Start_Address     = addr;
     Number_Bytes      = 2**int'(burst_size); // number_bytes; // Partial or Full transfers.
     Burst_Length_Bytes = len;
-    Data_Bus_Bytes    = 4; // //@Todo: the driver needs to update this.
+    Data_Bus_Bytes    = params_pkg::AXI_DATA_WIDTH/8; // //@Todo: the driver needs to update this.
     Mode              = burst_type;
     Aligned_Address   = (int'(addr/Number_Bytes) * Number_Bytes);
     aligned           = (Aligned_Address == addr);
@@ -440,11 +451,11 @@ endfunction : update
  * Used to guarantee transfers are aligned on the bus for
  * most efficient bus usage
  */
-function bit [63:0] axi_seq_item::calculate_aligned_address(
-  input bit [63:0] addr,
+      function bit [axi_seq_item::ADDR_WIDTH-1:0] axi_seq_item::calculate_aligned_address(
+  input bit [ADDR_WIDTH-1:0] addr,
   input int number_bytes);
 
-  bit [63:0] aligned_address ;
+  bit [ADDR_WIDTH-1:0] aligned_address ;
 
         // address - starting address
         // data_bus_bytes - width of data bus (in bytes)
@@ -464,12 +475,12 @@ endfunction : calculate_aligned_address
  * \todo: check if size (length + address-misalignment) is too large
  */
 function int axi_seq_item::calculate_beats(
-    input bit [63:0] addr,
+    input bit [ADDR_WIDTH-1:0] addr,
     input int number_bytes,
     input int burst_length);
 
   int beats;
-  bit [63:0] aligned_addr;
+  bit [ADDR_WIDTH-1:0] aligned_addr;
 
   aligned_addr=calculate_aligned_address(.addr(addr),
                                          .number_bytes(number_bytes));
@@ -557,6 +568,7 @@ endfunction : aw_to_class
  * @param wlast  - wlast (last beat of write burst)
  * @return v      - a packed struct.
  */
+      /*
 function void axi_seq_item::w_from_class(
   input  [31:0]                  wdata,
   input  [3:0]                   wstrb,
@@ -573,7 +585,7 @@ function void axi_seq_item::w_from_class(
 
   v = s;
 endfunction : w_from_class
-
+ */
 /*! \brief take values from a axi_seq_item_w_vector_s
  *
  * \todo: this funct isn't from a class so rename.
@@ -583,6 +595,7 @@ endfunction : w_from_class
  * @return wlast  - wlast (last beat of write burst)
  * @param v      - a packed struct.
  */
+      /*
 function void axi_seq_item::w_to_class(
   output  [31:0]                  wdata,
   output  [3:0]                   wstrb,
@@ -600,6 +613,7 @@ function void axi_seq_item::w_to_class(
      wvalid  = s.wvalid;
 
 endfunction : w_to_class
+*/
 
 /*! \brief take values from write response channel and stuff into a axi_seq_item_b_vector_s
  *
@@ -608,8 +622,8 @@ endfunction : w_to_class
  * @return v - packed struct of type axi_seq_item_b_vector_s
  */
 function void axi_seq_item::b_from_class(
-  input  [5:0]     bid,
-  input  [1:0]     bresp,
+  input  [ID_WIDTH-1:0]     bid,
+  input  [1:0]              bresp,
   output axi_seq_item_b_vector_s v);
 
   axi_seq_item_b_vector_s s;

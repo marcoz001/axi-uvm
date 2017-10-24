@@ -1,15 +1,16 @@
 var searchData=
 [
-  ['c_5faxi3_5fmaxbeatcnt',['c_AXI3_MAXBEATCNT',['../classaxi__seq__item.html#a0b4b0e4a9726d88e5116e41f1c0b61dc',1,'axi_seq_item']]],
-  ['c_5faxi4_5fmaxbeatcnt',['c_AXI4_MAXBEATCNT',['../classaxi__seq__item.html#a9a7e38cade9581c7dabe0515c0daef50',1,'axi_seq_item']]],
-  ['c_5faxi_5faddr_5fwidth',['C_AXI_ADDR_WIDTH',['../axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677',1,'axi_pkg.sv']]],
-  ['c_5faxi_5fdata_5fwidth',['C_AXI_DATA_WIDTH',['../axi__pkg_8sv.html#a3640be56d79c0ba42bea37784ac9ae6d',1,'axi_pkg.sv']]],
-  ['c_5faxi_5fid_5fwidth',['C_AXI_ID_WIDTH',['../axi__pkg_8sv.html#a150391b59e1b2851c89272c84ed02077',1,'axi_pkg.sv']]],
-  ['cache',['cache',['../classaxi__seq__item.html#a124b082c89814a2e3442dce0a4879d3f',1,'axi_seq_item']]],
-  ['calculate_5faligned_5faddress',['calculate_aligned_address',['../classaxi__seq__item.html#ab6adbb6fbe04ecca377377187aff2738',1,'axi_seq_item']]],
-  ['calculate_5fbeats',['calculate_beats',['../classaxi__seq__item.html#ae8e05cac654df340a4a48461bfcf7010',1,'axi_seq_item']]],
-  ['cmd',['cmd',['../classaxi__seq__item.html#a2bf66de95a5cb9efb152085cf6e86243',1,'axi_seq_item']]],
-  ['cmd_5ft',['cmd_t',['../axi__uvm__pkg_8sv.html#a00d51b3cb2e1fa09bdba2968e0cf7ac7',1,'axi_uvm_pkg.sv']]],
-  ['connect_5fphase',['connect_phase',['../classaxi__agent.html#a233b7014fd29530ab963afb26f86fe04',1,'axi_agent::connect_phase()'],['../classaxi__driver.html#aa94820f5234934a33e735a95ff748241',1,'axi_driver::connect_phase()'],['../classaxi__env.html#acb7e08a4799598998798ed1eeeaec6d1',1,'axi_env::connect_phase()'],['../classaxi__monitor.html#adf50ccb4de6b07caf13598a0e761250a',1,'axi_monitor::connect_phase()'],['../classaxi__responder.html#a8d3514286329a1dd89d9b51ac96cd11c',1,'axi_responder::connect_phase()'],['../classaxi__scoreboard.html#a2ad01a56ed03972c8f31befa16693d6a',1,'axi_scoreboard::connect_phase()'],['../classaxi__sequencer.html#a76dadc2819374373031afed3451fabcc',1,'axi_sequencer::connect_phase()']]],
-  ['convert2string',['convert2string',['../classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46',1,'axi_seq_item']]]
+  ['b_5ffrom_5fclass',['b_from_class',['../classaxi__seq__item.html#a72a948e0db8f06de831699c92866bac0',1,'axi_seq_item']]],
+  ['b_5fto_5fclass',['b_to_class',['../classaxi__seq__item.html#a522f78497a15bfa2875d05601738d3ee',1,'axi_seq_item']]],
+  ['bid',['bid',['../axi__pkg_8sv.html#a1037aca20e9a00c0867e3d703afbdfbe',1,'axi_seq_item_b_vector_s::bid()'],['../classaxi__seq__item.html#a9decd4c40bb3d260b437c0800cdd815d',1,'axi_seq_item::bid()']]],
+  ['body',['body',['../classaxi__responder__seq.html#a822d6df8e7d0c4314d398320956c45b3',1,'axi_responder_seq::body()'],['../classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48',1,'axi_seq::body()']]],
+  ['bready_5ftoggle_5fpattern',['bready_toggle_pattern',['../classaxi__agent__config.html#aeee4c72140209307cc8be96a98578f79',1,'axi_agent_config']]],
+  ['bresp',['bresp',['../axi__pkg_8sv.html#ad9cdaf47fa03c7b15311a5315a615ca0',1,'axi_seq_item_b_vector_s::bresp()'],['../classaxi__seq__item.html#a8adca2cabc55a8614924b9e2dd806a01',1,'axi_seq_item::bresp()']]],
+  ['build_5fphase',['build_phase',['../classaxi__agent.html#ad7cebaa406205521c87325bb8b0c6870',1,'axi_agent::build_phase()'],['../classaxi__base__test.html#aafeae2a4e4ad4c00b421b87001272ffd',1,'axi_base_test::build_phase()'],['../classaxi__driver.html#a14add6f8f066f75c40d24ea9061c9c48',1,'axi_driver::build_phase()'],['../classaxi__env.html#a520dcd66e11199120bbaf0984fae1743',1,'axi_env::build_phase()'],['../classaxi__monitor.html#a1adf9a7a1d88c827e3ae6353a1ee386b',1,'axi_monitor::build_phase()'],['../classaxi__responder.html#a2200e436e4d6a1a73eebcc284f64c853',1,'axi_responder::build_phase()'],['../classaxi__scoreboard.html#a4ecf8174aee275af602408aa6c0e63c8',1,'axi_scoreboard::build_phase()'],['../classaxi__sequencer.html#aff1f7cffc9bd91054ec02b906bd2b8e0',1,'axi_sequencer::build_phase()']]],
+  ['burst_5flength_5fbytes',['Burst_Length_Bytes',['../classaxi__seq__item.html#afaba64ed05ce93c24a9eb677db243b44',1,'axi_seq_item']]],
+  ['burst_5fsize',['burst_size',['../classaxi__seq__item.html#a52594723d20d3631aaeae6f20dd5de23',1,'axi_seq_item']]],
+  ['burst_5fsize_5fc',['burst_size_c',['../classaxi__seq__item.html#a8e084c38e2fdcef2a3332dadc07358f8',1,'axi_seq_item']]],
+  ['burst_5fsize_5ft',['burst_size_t',['../axi__pkg_8sv.html#a80eb2d0d4b7978e716989546b93fa848',1,'axi_pkg.sv']]],
+  ['burst_5ftype',['burst_type',['../classaxi__seq__item.html#aa91c7e80a8fb385bebe88432a7a7669f',1,'axi_seq_item']]],
+  ['burst_5ftype_5ft',['burst_type_t',['../axi__pkg_8sv.html#ac948ddb69d517d21ce13ec363f10b95b',1,'axi_pkg.sv']]]
 ];

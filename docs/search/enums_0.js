@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['burst_5fsize_5ft',['burst_size_t',['../axi__pkg_8sv.html#a80eb2d0d4b7978e716989546b93fa848',1,'axi_pkg.sv']]],
-  ['burst_5ftype_5ft',['burst_type_t',['../axi__pkg_8sv.html#ac948ddb69d517d21ce13ec363f10b95b',1,'axi_pkg.sv']]]
+  ['axi_5fprotocol_5fversion_5ft',['axi_protocol_version_t',['../axi__uvm__pkg_8sv.html#a61e2725bbc7455ef96bc6422c484179e',1,'axi_uvm_pkg.sv']]]
 ];

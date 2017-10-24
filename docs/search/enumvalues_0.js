@@ -8,6 +8,8 @@ var searchData=
   ['e_5f4bytes',['e_4BYTES',['../axi__pkg_8sv.html#a80eb2d0d4b7978e716989546b93fa848a01afde8339a75426fad830f0962f10e5',1,'axi_pkg.sv']]],
   ['e_5f64bytes',['e_64BYTES',['../axi__pkg_8sv.html#a80eb2d0d4b7978e716989546b93fa848a7abf5855cf6f1865568a9384c9fbe219',1,'axi_pkg.sv']]],
   ['e_5f8bytes',['e_8BYTES',['../axi__pkg_8sv.html#a80eb2d0d4b7978e716989546b93fa848a7b0e2780221101a2de9ed044008e6e96',1,'axi_pkg.sv']]],
+  ['e_5faxi3',['e_AXI3',['../axi__uvm__pkg_8sv.html#a61e2725bbc7455ef96bc6422c484179eae4b60da8ab9263bf43220d854ca4f083',1,'axi_uvm_pkg.sv']]],
+  ['e_5faxi4',['e_AXI4',['../axi__uvm__pkg_8sv.html#a61e2725bbc7455ef96bc6422c484179eaef6b388d7a7e4a0230aa1f1d88e90e17',1,'axi_uvm_pkg.sv']]],
   ['e_5fdecerr',['e_DECERR',['../axi__pkg_8sv.html#ac8b0f779dd7c96753c4355a5c86e0f9dafdc0186d85ac39b36e66dab544b906c3',1,'axi_pkg.sv']]],
   ['e_5fdriver',['e_DRIVER',['../axi__uvm__pkg_8sv.html#ad8116d2e0fd01b57b2c352460a75e3c2addbb99006361b10c0fc879b634dda59c',1,'axi_uvm_pkg.sv']]],
   ['e_5fexokay',['e_EXOKAY',['../axi__pkg_8sv.html#ac8b0f779dd7c96753c4355a5c86e0f9dad43dac468b1bc25183dd4e26a504bc3a',1,'axi_pkg.sv']]],
