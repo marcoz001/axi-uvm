@@ -312,22 +312,6 @@ task axi_driver::write_data;
     // Update values
     if (item != null) begin
 
-      if (item.validcntr >=  item.validcntr_max) begin
-         item.validcntr=0;
-       end
-
-       //
-       // if invalid-toggling-mode is enabled, then allow deasserting valid
-       // before ready asserts.
-       // Default is to stay asserted, and only allow deasssertion after ready asserts.
-       if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
-          if (vif.get_wvalid() == 1'b0) begin
-             item.validcntr++;
-          end
-       end else begin
-             item.validcntr++;
-       end
-
        s.wvalid = item.valid[item.validcntr]; // 1'b1;
        s.wstrb  = 'h0;
        s.wdata  = 'h0;
@@ -344,6 +328,21 @@ task axi_driver::write_data;
 
        // Write out
        vif.write_w(.s(s));
+
+       //
+       // if invalid-toggling-mode is enabled, then allow deasserting valid
+       // before ready asserts.
+       // Default is to stay asserted, and only allow deasssertion after ready asserts.
+       if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
+          if (vif.get_wvalid() == 1'b0) begin
+             item.validcntr++;
+          end
+       end else begin
+             item.validcntr++;
+       end
+       if (item.validcntr >=  item.validcntr_max) begin
+         item.validcntr=0;
+       end
 
 
     end // (item != null)
