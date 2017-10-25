@@ -329,8 +329,7 @@ task axi_driver::write_data;
        // Write out
        vif.write_w(.s(s));
 
-       //
-       // if invalid-toggling-mode is enabled, then allow deasserting valid
+             // if invalid-toggling-mode is enabled, then allow deasserting valid
        // before ready asserts.
        // Default is to stay asserted, and only allow deasssertion after ready asserts.
        if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
