@@ -230,11 +230,11 @@ Public Attributes</h2></td></tr>
 <p>monitors Read Address channel </p>
 <p>and sends out TLM pkt. If this monitor's agent is a responder, then also creates another TLM packet for Read Data channel monitoring thread to use to send back to the master Loop Wait for activity on the Write Address Channel Convert into an <a class="el" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage ">axi_seq_item</a> Send out analysis port If responder, read from agent's memory, create another TLM packet and send to Read Data channel to send back to master </p>
 
-<p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00253">253</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00268">268</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>References <a class="el" href="axi__monitor_8svh_source.html#l00047">ar_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00693">axi_seq_item::ar_to_class()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00172">axi_seq_item_ar_vector_s::araddr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00068">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">axi_seq_item::convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00049">axi_seq_item::data</a>, <a class="el" href="axi__monitor_8svh_source.html#l00038">driver_activity_ap</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00035">axi_agent_config::drv_type</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00043">e_READ</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00044">e_READ_DATA</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00063">e_RESPONDER</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">axi_seq_item::initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00052">axi_seq_item::len</a>, <a class="el" href="axi__monitor_8svh_source.html#l00050">m_config</a>, <a class="el" href="axi__monitor_8svh_source.html#l00051">m_memory</a>, <a class="el" href="memory_8svh_source.html#l00054">memory::read()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="axi__if__abstract_8svh_source.html#l00182">axi_if_abstract::wait_for_read_address()</a>.</p>
+<p>References <a class="el" href="axi__monitor_8svh_source.html#l00047">ar_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00724">axi_seq_item::ar_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00070">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">axi_seq_item::convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00051">axi_seq_item::data</a>, <a class="el" href="axi__monitor_8svh_source.html#l00038">driver_activity_ap</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00035">axi_agent_config::drv_type</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00043">e_READ</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00044">e_READ_DATA</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00063">e_RESPONDER</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00480">axi_seq_item::get_next_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">axi_seq_item::initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00054">axi_seq_item::len</a>, <a class="el" href="axi__monitor_8svh_source.html#l00050">m_config</a>, <a class="el" href="axi__monitor_8svh_source.html#l00051">m_memory</a>, <a class="el" href="memory_8svh_source.html#l00054">memory::read()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="axi__if__abstract_8svh_source.html#l00182">axi_if_abstract::wait_for_read_address()</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00382">run_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00407">run_phase()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -243,10 +243,11 @@ Here is the call graph for this function:</div>
 <map name="classaxi__monitor_a88ed98b94935cbc5846d6d23b7cb8766_cgraph" id="classaxi__monitor_a88ed98b94935cbc5846d6d23b7cb8766_cgraph">
 <area shape="rect" id="node2" href="classaxi__seq__item.html#a1d06d75ca9c9cb40f3eeccd495e37ad5" title="Pull values out of a axi_seq_item_ar_vector_s and stuffs them into an axi_seq_item. " alt="" coords="220,5,356,47"/>
 <area shape="rect" id="node3" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="193,71,383,98"/>
-<area shape="rect" id="node4" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="211,122,365,149"/>
-<area shape="rect" id="node6" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="237,173,339,199"/>
-<area shape="rect" id="node7" href="classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="219,224,357,265"/>
-<area shape="rect" id="node5" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="431,122,577,149"/>
+<area shape="rect" id="node4" href="classaxi__seq__item.html#afcdf7df56aa24058c5cbb7621afea0b9" title="Get next address for reading/writing to memory. " alt="" coords="209,123,367,164"/>
+<area shape="rect" id="node5" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="211,189,365,215"/>
+<area shape="rect" id="node7" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="237,239,339,266"/>
+<area shape="rect" id="node8" href="classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="219,291,357,332"/>
+<area shape="rect" id="node6" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="431,189,577,215"/>
 </map>
 </div>
 </p>
@@ -278,11 +279,11 @@ Here is the caller graph for this function:</div>
 
 <p>monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel,store in queue Once read address packet received, store queue contents into tlm pkt When rlast received, send out analysis port </p>
 
-<p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00327">327</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00352">352</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>References <a class="el" href="axi__monitor_8svh_source.html#l00047">ar_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00068">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00049">axi_seq_item::data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00102">axi_seq_item::dataoffset</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00044">e_READ_DATA</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">axi_seq_item::initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00052">axi_seq_item::len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00094">axi_seq_item::Lower_Byte_Lane</a>, <a class="el" href="axi__monitor_8svh_source.html#l00042">r_q</a>, <a class="el" href="axi__pkg_8sv_source.html#l00198">axi_seq_item_r_vector_s::rdata</a>, <a class="el" href="axi__pkg_8sv_source.html#l00200">axi_seq_item_r_vector_s::rlast</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00375">axi_seq_item::update_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00095">axi_seq_item::Upper_Byte_Lane</a>, <a class="el" href="axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="axi__if__abstract_8svh_source.html#l00191">axi_if_abstract::wait_for_read_data()</a>.</p>
+<p>References <a class="el" href="axi__monitor_8svh_source.html#l00047">ar_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00070">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00051">axi_seq_item::data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00104">axi_seq_item::dataoffset</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00044">e_READ_DATA</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">axi_seq_item::initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00054">axi_seq_item::len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00096">axi_seq_item::Lower_Byte_Lane</a>, <a class="el" href="axi__monitor_8svh_source.html#l00042">r_q</a>, <a class="el" href="axi__pkg_8sv_source.html#l00198">axi_seq_item_r_vector_s::rdata</a>, <a class="el" href="axi__pkg_8sv_source.html#l00200">axi_seq_item_r_vector_s::rlast</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00378">axi_seq_item::update_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00097">axi_seq_item::Upper_Byte_Lane</a>, <a class="el" href="axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="axi__if__abstract_8svh_source.html#l00191">axi_if_abstract::wait_for_read_data()</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00382">run_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00407">run_phase()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -327,9 +328,9 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00103">103</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>References <a class="el" href="axi__monitor_8svh_source.html#l00046">aw_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00539">axi_seq_item::aw_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00068">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">axi_seq_item::convert2string()</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00042">e_WRITE</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00052">axi_seq_item::len</a>, <a class="el" href="axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="axi__if__abstract_8svh_source.html#l00155">axi_if_abstract::wait_for_write_address()</a>.</p>
+<p>References <a class="el" href="axi__monitor_8svh_source.html#l00046">aw_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00570">axi_seq_item::aw_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00070">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">axi_seq_item::convert2string()</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00042">e_WRITE</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00054">axi_seq_item::len</a>, <a class="el" href="axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="axi__if__abstract_8svh_source.html#l00155">axi_if_abstract::wait_for_write_address()</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00382">run_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00407">run_phase()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -376,20 +377,21 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00145">145</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>References <a class="el" href="axi__monitor_8svh_source.html#l00046">aw_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00068">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00049">axi_seq_item::data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00102">axi_seq_item::dataoffset</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00035">axi_agent_config::drv_type</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00063">e_RESPONDER</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00045">e_WRITE_DATA</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">axi_seq_item::initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00052">axi_seq_item::len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00094">axi_seq_item::Lower_Byte_Lane</a>, <a class="el" href="axi__monitor_8svh_source.html#l00050">m_config</a>, <a class="el" href="axi__monitor_8svh_source.html#l00051">m_memory</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00084">axi_seq_item::Start_Address</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00375">axi_seq_item::update_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00095">axi_seq_item::Upper_Byte_Lane</a>, <a class="el" href="axi__monitor_8svh_source.html#l00049">vif</a>, <a class="el" href="axi__monitor_8svh_source.html#l00041">w_q</a>, <a class="el" href="axi__if__abstract_8svh_source.html#l00164">axi_if_abstract::wait_for_write_data()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00134">axi_seq_item_w_vector_s::wdata</a>, <a class="el" href="axi__pkg_8sv_source.html#l00136">axi_seq_item_w_vector_s::wlast</a>, <a class="el" href="memory_8svh_source.html#l00045">memory::write()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00050">axi_seq_item::wstrb</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00135">axi_seq_item_w_vector_s::wstrb</a>.</p>
+<p>References <a class="el" href="axi__monitor_8svh_source.html#l00046">aw_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00070">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00051">axi_seq_item::data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00104">axi_seq_item::dataoffset</a>, <a class="el" href="axi__agent__config_8svh_source.html#l00035">axi_agent_config::drv_type</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00063">e_RESPONDER</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00045">e_WRITE_DATA</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00480">axi_seq_item::get_next_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">axi_seq_item::initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00054">axi_seq_item::len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00096">axi_seq_item::Lower_Byte_Lane</a>, <a class="el" href="axi__monitor_8svh_source.html#l00050">m_config</a>, <a class="el" href="axi__monitor_8svh_source.html#l00051">m_memory</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00378">axi_seq_item::update_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00097">axi_seq_item::Upper_Byte_Lane</a>, <a class="el" href="axi__monitor_8svh_source.html#l00049">vif</a>, <a class="el" href="axi__monitor_8svh_source.html#l00041">w_q</a>, <a class="el" href="axi__if__abstract_8svh_source.html#l00164">axi_if_abstract::wait_for_write_data()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00134">axi_seq_item_w_vector_s::wdata</a>, <a class="el" href="axi__pkg_8sv_source.html#l00136">axi_seq_item_w_vector_s::wlast</a>, <a class="el" href="memory_8svh_source.html#l00045">memory::write()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00052">axi_seq_item::wstrb</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00135">axi_seq_item_w_vector_s::wstrb</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00382">run_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00407">run_phase()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__monitor_ab005117a8180b27f296f4b84e7c7d6b1_cgraph.png" border="0" usemap="#classaxi__monitor_ab005117a8180b27f296f4b84e7c7d6b1_cgraph" alt=""/></div>
 <map name="classaxi__monitor_ab005117a8180b27f296f4b84e7c7d6b1_cgraph" id="classaxi__monitor_ab005117a8180b27f296f4b84e7c7d6b1_cgraph">
-<area shape="rect" id="node2" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="193,5,348,32"/>
-<area shape="rect" id="node4" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="197,57,344,98"/>
-<area shape="rect" id="node5" href="classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="201,122,340,163"/>
-<area shape="rect" id="node6" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="218,188,323,215"/>
-<area shape="rect" id="node3" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="396,35,543,61"/>
+<area shape="rect" id="node2" href="classaxi__seq__item.html#afcdf7df56aa24058c5cbb7621afea0b9" title="Get next address for reading/writing to memory. " alt="" coords="193,5,351,47"/>
+<area shape="rect" id="node3" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="195,71,349,98"/>
+<area shape="rect" id="node5" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="199,123,345,164"/>
+<area shape="rect" id="node6" href="classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="203,188,341,229"/>
+<area shape="rect" id="node7" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="219,254,325,281"/>
+<area shape="rect" id="node4" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="399,101,545,127"/>
 </map>
 </div>
 </p>
@@ -421,11 +423,11 @@ Here is the caller graph for this function:</div>
 
 <p>monitors Write Response channel and sends out TLM pkt Loop Wait for activity on the Write Response Channel Convert into an <a class="el" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage ">axi_seq_item</a> Send out analysis port </p>
 
-<p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00220">220</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00235">235</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00642">axi_seq_item::b_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00068">axi_seq_item::cmd</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00046">e_WRITE_RESPONSE</a>, <a class="el" href="axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="axi__if__abstract_8svh_source.html#l00173">axi_if_abstract::wait_for_write_response()</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00673">axi_seq_item::b_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00070">axi_seq_item::cmd</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00046">e_WRITE_RESPONSE</a>, <a class="el" href="axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="axi__if__abstract_8svh_source.html#l00173">axi_if_abstract::wait_for_write_response()</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00382">run_phase()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00407">run_phase()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -496,34 +498,35 @@ Here is the caller graph for this function:</div>
 
 <p>Starts the monitoring threads. </p>
 
-<p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00382">382</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00407">407</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>References <a class="el" href="axi__monitor_8svh_source.html#l00253">monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00327">monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00103">monitor_write_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00220">monitor_write_response()</a>.</p>
+<p>References <a class="el" href="axi__monitor_8svh_source.html#l00268">monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00352">monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00103">monitor_write_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00235">monitor_write_response()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__monitor_a34a7e7fb040dbba2301f67bf6e40fe91_cgraph.png" border="0" usemap="#classaxi__monitor_a34a7e7fb040dbba2301f67bf6e40fe91_cgraph" alt=""/></div>
 <map name="classaxi__monitor_a34a7e7fb040dbba2301f67bf6e40fe91_cgraph" id="classaxi__monitor_a34a7e7fb040dbba2301f67bf6e40fe91_cgraph">
-<area shape="rect" id="node2" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="211,276,351,317"/>
-<area shape="rect" id="node9" href="classaxi__monitor.html#a22e36c827d9bcde956cc502ab4d1bb8d" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="211,427,351,468"/>
-<area shape="rect" id="node12" href="classaxi__monitor.html#a344d36a4b510a06f4a774fa76d2aca70" title="monitors Write Address channel " alt="" coords="211,100,351,141"/>
-<area shape="rect" id="node15" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="211,492,351,533"/>
-<area shape="rect" id="node18" href="classaxi__monitor.html#a5ef999b66b6fe9b59cc5af19a130ae3d" title="monitors Write Response channel and sends out TLM pkt Loop Wait for activity on the Write Response Ch..." alt="" coords="211,671,351,712"/>
+<area shape="rect" id="node2" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="211,305,351,347"/>
+<area shape="rect" id="node10" href="classaxi__monitor.html#a22e36c827d9bcde956cc502ab4d1bb8d" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="211,488,351,529"/>
+<area shape="rect" id="node13" href="classaxi__monitor.html#a344d36a4b510a06f4a774fa76d2aca70" title="monitors Write Address channel " alt="" coords="211,100,351,141"/>
+<area shape="rect" id="node16" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="211,553,351,595"/>
+<area shape="rect" id="node19" href="classaxi__monitor.html#a5ef999b66b6fe9b59cc5af19a130ae3d" title="monitors Write Response channel and sends out TLM pkt Loop Wait for activity on the Write Response Ch..." alt="" coords="211,736,351,777"/>
 <area shape="rect" id="node3" href="classaxi__seq__item.html#a1d06d75ca9c9cb40f3eeccd495e37ad5" title="Pull values out of a axi_seq_item_ar_vector_s and stuffs them into an axi_seq_item. " alt="" coords="425,188,561,229"/>
 <area shape="rect" id="node4" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="399,137,588,163"/>
-<area shape="rect" id="node5" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="416,437,571,463"/>
-<area shape="rect" id="node7" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="442,254,545,281"/>
-<area shape="rect" id="node8" href="classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="424,305,563,347"/>
-<area shape="rect" id="node6" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="636,466,783,493"/>
-<area shape="rect" id="node10" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="420,488,567,529"/>
-<area shape="rect" id="node11" href="classaxi__if__abstract.html#ad72883433768852cedc9acbf5263e071" title="Wait for a valid read data to be acknowledged and return it. " alt="" coords="424,371,563,412"/>
-<area shape="rect" id="node13" href="classaxi__seq__item.html#acc505058d3047915a86c2aeed046bf98" title="Pull values out of a axi_seq_item_aw_vector_s and stuffs them into an axi_seq_item. " alt="" coords="422,71,565,112"/>
-<area shape="rect" id="node14" href="classaxi__if__abstract.html#a9e019c384309938d98fb93eb9d19ee35" title="Wait for a valid write address to be acknowledged and return it. " alt="" coords="424,5,563,47"/>
-<area shape="rect" id="node16" href="classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="424,605,563,647"/>
-<area shape="rect" id="node17" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="441,554,546,581"/>
-<area shape="rect" id="node19" href="classaxi__seq__item.html#a522f78497a15bfa2875d05601738d3ee" title="return values from a axi_seq_item_b_vector_s and return an axi_seq_item " alt="" coords="427,736,559,777"/>
-<area shape="rect" id="node20" href="classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538" title="Wait for a valid write response to be acknowledged and return it. " alt="" coords="424,671,563,712"/>
+<area shape="rect" id="node5" href="classaxi__seq__item.html#afcdf7df56aa24058c5cbb7621afea0b9" title="Get next address for reading/writing to memory. " alt="" coords="415,371,572,412"/>
+<area shape="rect" id="node6" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="416,437,571,463"/>
+<area shape="rect" id="node8" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="442,254,545,281"/>
+<area shape="rect" id="node9" href="classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="424,305,563,347"/>
+<area shape="rect" id="node7" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="636,499,783,526"/>
+<area shape="rect" id="node11" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="420,553,567,595"/>
+<area shape="rect" id="node12" href="classaxi__if__abstract.html#ad72883433768852cedc9acbf5263e071" title="Wait for a valid read data to be acknowledged and return it. " alt="" coords="424,488,563,529"/>
+<area shape="rect" id="node14" href="classaxi__seq__item.html#acc505058d3047915a86c2aeed046bf98" title="Pull values out of a axi_seq_item_aw_vector_s and stuffs them into an axi_seq_item. " alt="" coords="422,5,565,47"/>
+<area shape="rect" id="node15" href="classaxi__if__abstract.html#a9e019c384309938d98fb93eb9d19ee35" title="Wait for a valid write address to be acknowledged and return it. " alt="" coords="424,71,563,112"/>
+<area shape="rect" id="node17" href="classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="424,619,563,660"/>
+<area shape="rect" id="node18" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="441,685,546,711"/>
+<area shape="rect" id="node20" href="classaxi__seq__item.html#a522f78497a15bfa2875d05601738d3ee" title="return values from a axi_seq_item_b_vector_s and return an axi_seq_item " alt="" coords="427,736,559,777"/>
+<area shape="rect" id="node21" href="classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538" title="Wait for a valid write response to be acknowledged and return it. " alt="" coords="424,801,563,843"/>
 </map>
 </div>
 </p>
@@ -559,7 +562,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00047">47</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00253">monitor_read_address()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00327">monitor_read_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00268">monitor_read_address()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00352">monitor_read_data()</a>.</p>
 
 </div>
 </div>
@@ -591,7 +594,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00038">38</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00074">build_phase()</a>, <a class="el" href="axi__agent_8svh_source.html#l00104">axi_agent::connect_phase()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00253">monitor_read_address()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00074">build_phase()</a>, <a class="el" href="axi__agent_8svh_source.html#l00104">axi_agent::connect_phase()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00268">monitor_read_address()</a>.</p>
 
 </div>
 </div>
@@ -607,7 +610,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00050">50</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00064">axi_agent::build_phase()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00253">monitor_read_address()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00064">axi_agent::build_phase()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00268">monitor_read_address()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>.</p>
 
 </div>
 </div>
@@ -623,7 +626,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00051">51</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00064">axi_agent::build_phase()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00253">monitor_read_address()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__agent_8svh_source.html#l00064">axi_agent::build_phase()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00268">monitor_read_address()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>.</p>
 
 </div>
 </div>
@@ -639,7 +642,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00042">42</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00327">monitor_read_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00352">monitor_read_data()</a>.</p>
 
 </div>
 </div>
@@ -655,7 +658,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__monitor_8svh_source.html#l00049">49</a> of file <a class="el" href="axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00074">build_phase()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00253">monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00327">monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00103">monitor_write_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00220">monitor_write_response()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00074">build_phase()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00268">monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00352">monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00103">monitor_write_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00235">monitor_write_response()</a>.</p>
 
 </div>
 </div>

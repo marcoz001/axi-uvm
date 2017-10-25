@@ -7,6 +7,7 @@ var searchData=
   ['get_5fbready',['get_bready',['../classaxi__if__abstract.html#ad1a26bec3816fad1bb2155873214e9fc',1,'axi_if_abstract']]],
   ['get_5fbready_5fbvalid',['get_bready_bvalid',['../classaxi__if__abstract.html#afc4f687586493cda59b997ecb9b06755',1,'axi_if_abstract']]],
   ['get_5fbvalid',['get_bvalid',['../classaxi__if__abstract.html#a6e480323f9947438602bf6b5029783e1',1,'axi_if_abstract']]],
+  ['get_5fnext_5faddress',['get_next_address',['../classaxi__seq__item.html#afcdf7df56aa24058c5cbb7621afea0b9',1,'axi_seq_item']]],
   ['get_5frready',['get_rready',['../classaxi__if__abstract.html#acd79e0f4ec676d038fe1d572ceb71939',1,'axi_if_abstract']]],
   ['get_5frready_5frvalid',['get_rready_rvalid',['../classaxi__if__abstract.html#aa49315c83c515d8b588ebe39b8434bf9',1,'axi_if_abstract']]],
   ['get_5frvalid',['get_rvalid',['../classaxi__if__abstract.html#a5da0e6343f60e265dc51587206d42ba3',1,'axi_if_abstract']]],

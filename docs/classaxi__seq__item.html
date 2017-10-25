@@ -106,8 +106,6 @@ Inheritance diagram for axi_seq_item:</div>
 Collaboration diagram for axi_seq_item:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__seq__item__coll__graph.png" border="0" usemap="#axi__seq__item_coll__map" alt="Collaboration graph"/></div>
-<map name="axi__seq__item_coll__map" id="axi__seq__item_coll__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -159,6 +157,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a494c1a855d4078ec81d68c8e31187626"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626">update</a> ()</td></tr>
 <tr class="memdesc:a494c1a855d4078ec81d68c8e31187626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the aligned address and used byte lanes on each beat.  <a href="#a494c1a855d4078ec81d68c8e31187626">More...</a><br /></td></tr>
 <tr class="separator:a494c1a855d4078ec81d68c8e31187626"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcdf7df56aa24058c5cbb7621afea0b9"><td class="memItemLeft" align="right" valign="top">bit&lt; ADDR_WIDTH-1:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq__item.html#afcdf7df56aa24058c5cbb7621afea0b9">get_next_address</a> ()</td></tr>
+<tr class="memdesc:afcdf7df56aa24058c5cbb7621afea0b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get next address for reading/writing to memory.  <a href="#afcdf7df56aa24058c5cbb7621afea0b9">More...</a><br /></td></tr>
+<tr class="separator:afcdf7df56aa24058c5cbb7621afea0b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aada0d930cd4e6040a7584e068e01dc94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq__item.html#aada0d930cd4e6040a7584e068e01dc94">aw_from_class</a> (ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> t, output <a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__aw__vector__s">axi_seq_item_aw_vector_s</a> v)</td></tr>
 <tr class="memdesc:aada0d930cd4e6040a7584e068e01dc94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pull values out of <a class="el" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage ">axi_seq_item</a> and stuff into a <a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__aw__vector__s" title="This packed struct is used to send write address channel information between the DUT and TB...">axi_seq_item_aw_vector_s</a>.  <a href="#aada0d930cd4e6040a7584e068e01dc94">More...</a><br /></td></tr>
 <tr class="separator:aada0d930cd4e6040a7584e068e01dc94"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,6 +192,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:af8542b4095ec6893811f3e6a8bc095f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a7d75debc0f51abef35d58cadb7d8d2"><td class="memItemLeft" align="right" valign="top">rand bit&lt; ADDR_WIDTH-1:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq__item.html#a7a7d75debc0f51abef35d58cadb7d8d2">addr</a></td></tr>
 <tr class="separator:a7a7d75debc0f51abef35d58cadb7d8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7a6757ee01570b56b6ed29c8d59d33c"><td class="memItemLeft" align="right" valign="top">bit&lt; ADDR_WIDTH-1:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq__item.html#ac7a6757ee01570b56b6ed29c8d59d33c">mem_addr</a></td></tr>
+<tr class="separator:ac7a6757ee01570b56b6ed29c8d59d33c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af314aea89ca16b8d3effb90bff314e13"><td class="memItemLeft" align="right" valign="top">rand bit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq__item.html#af314aea89ca16b8d3effb90bff314e13">valid</a> []</td></tr>
 <tr class="separator:af314aea89ca16b8d3effb90bff314e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06006976fdb15ef2725cb83ce411ab74"><td class="memItemLeft" align="right" valign="top">rand bit&lt; 7:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq__item.html#a06006976fdb15ef2725cb83ce411ab74">data</a> []</td></tr>
@@ -268,9 +271,9 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>contains all data and functions related to axi and usage </p>
-<p>In addition to variables like addr,len, id, this alsocontains functions that could be moved into <a class="el" href="namespaceaxi__uvm__pkg.html" title="Systemverilog package for AXI UVM environment. ">axi_uvm_pkg</a> to save object space. Things like calculating aligned_address from address. </p>
+<p>In addition to variables like addr,len, id, this alsocontains functions that could be moved into <a class="el" href="namespaceaxi__uvm__pkg.html" title="Systemverilog package for AXI UVM environment. ">axi_uvm_pkg</a> to save object space. Things like calculating aligned_address from address. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>: this seq_item is laughably large. Don't judge me, I've seen your 'temporary' code too. ;) </dd></dl>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00034">34</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00035">35</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="adf3bff0fef87eb7d306b8965cd22f5e1"></a>
 <div class="memitem">
@@ -293,9 +296,9 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00128">128</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00130">130</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00057">burst_size</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00059">burst_size</a>.</p>
 
 </div>
 </div>
@@ -333,11 +336,11 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>v - packed struct of type <a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__ar__vector__s" title="This packed struct is used to send read address channel information between the DUT and TB...">axi_seq_item_ar_vector_s</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00663">663</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00694">694</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, <a class="el" href="axi__pkg_8sv_source.html#l00172">axi_seq_item_ar_vector_s::araddr</a>, <a class="el" href="axi__pkg_8sv_source.html#l00177">axi_seq_item_ar_vector_s::arburst</a>, <a class="el" href="axi__pkg_8sv_source.html#l00179">axi_seq_item_ar_vector_s::arcache</a>, <a class="el" href="axi__pkg_8sv_source.html#l00171">axi_seq_item_ar_vector_s::arid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00175">axi_seq_item_ar_vector_s::arlen</a>, <a class="el" href="axi__pkg_8sv_source.html#l00178">axi_seq_item_ar_vector_s::arlock</a>, <a class="el" href="axi__pkg_8sv_source.html#l00180">axi_seq_item_ar_vector_s::arprot</a>, <a class="el" href="axi__pkg_8sv_source.html#l00181">axi_seq_item_ar_vector_s::arqos</a>, <a class="el" href="axi__pkg_8sv_source.html#l00176">axi_seq_item_ar_vector_s::arsize</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00454">calculate_aligned_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00477">calculate_beats()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00052">len</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, <a class="el" href="axi__pkg_8sv_source.html#l00172">axi_seq_item_ar_vector_s::araddr</a>, <a class="el" href="axi__pkg_8sv_source.html#l00177">axi_seq_item_ar_vector_s::arburst</a>, <a class="el" href="axi__pkg_8sv_source.html#l00179">axi_seq_item_ar_vector_s::arcache</a>, <a class="el" href="axi__pkg_8sv_source.html#l00171">axi_seq_item_ar_vector_s::arid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00175">axi_seq_item_ar_vector_s::arlen</a>, <a class="el" href="axi__pkg_8sv_source.html#l00178">axi_seq_item_ar_vector_s::arlock</a>, <a class="el" href="axi__pkg_8sv_source.html#l00180">axi_seq_item_ar_vector_s::arprot</a>, <a class="el" href="axi__pkg_8sv_source.html#l00181">axi_seq_item_ar_vector_s::arqos</a>, <a class="el" href="axi__pkg_8sv_source.html#l00176">axi_seq_item_ar_vector_s::arsize</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00458">calculate_aligned_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00508">calculate_beats()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00054">len</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__driver_8svh_source.html#l00410">axi_driver::read_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__driver_8svh_source.html#l00408">axi_driver::read_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -405,11 +408,11 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>v - a packed struct of type <a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__ar__vector__s" title="This packed struct is used to send read address channel information between the DUT and TB...">axi_seq_item_ar_vector_s</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00693">693</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00724">724</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 <p>References <a class="el" href="axi__pkg_8sv_source.html#l00172">axi_seq_item_ar_vector_s::araddr</a>, <a class="el" href="axi__pkg_8sv_source.html#l00177">axi_seq_item_ar_vector_s::arburst</a>, <a class="el" href="axi__pkg_8sv_source.html#l00179">axi_seq_item_ar_vector_s::arcache</a>, <a class="el" href="axi__pkg_8sv_source.html#l00171">axi_seq_item_ar_vector_s::arid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00175">axi_seq_item_ar_vector_s::arlen</a>, <a class="el" href="axi__pkg_8sv_source.html#l00178">axi_seq_item_ar_vector_s::arlock</a>, <a class="el" href="axi__pkg_8sv_source.html#l00180">axi_seq_item_ar_vector_s::arprot</a>, <a class="el" href="axi__pkg_8sv_source.html#l00181">axi_seq_item_ar_vector_s::arqos</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00176">axi_seq_item_ar_vector_s::arsize</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00253">axi_monitor::monitor_read_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00268">axi_monitor::monitor_read_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -458,11 +461,11 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>v a packed struct of type <a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__aw__vector__s" title="This packed struct is used to send write address channel information between the DUT and TB...">axi_seq_item_aw_vector_s</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00509">509</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00540">540</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, <a class="el" href="axi__pkg_8sv_source.html#l00107">axi_seq_item_aw_vector_s::awaddr</a>, <a class="el" href="axi__pkg_8sv_source.html#l00112">axi_seq_item_aw_vector_s::awburst</a>, <a class="el" href="axi__pkg_8sv_source.html#l00114">axi_seq_item_aw_vector_s::awcache</a>, <a class="el" href="axi__pkg_8sv_source.html#l00106">axi_seq_item_aw_vector_s::awid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00110">axi_seq_item_aw_vector_s::awlen</a>, <a class="el" href="axi__pkg_8sv_source.html#l00113">axi_seq_item_aw_vector_s::awlock</a>, <a class="el" href="axi__pkg_8sv_source.html#l00115">axi_seq_item_aw_vector_s::awprot</a>, <a class="el" href="axi__pkg_8sv_source.html#l00116">axi_seq_item_aw_vector_s::awqos</a>, <a class="el" href="axi__pkg_8sv_source.html#l00111">axi_seq_item_aw_vector_s::awsize</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00454">calculate_aligned_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00477">calculate_beats()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00052">len</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, <a class="el" href="axi__pkg_8sv_source.html#l00107">axi_seq_item_aw_vector_s::awaddr</a>, <a class="el" href="axi__pkg_8sv_source.html#l00112">axi_seq_item_aw_vector_s::awburst</a>, <a class="el" href="axi__pkg_8sv_source.html#l00114">axi_seq_item_aw_vector_s::awcache</a>, <a class="el" href="axi__pkg_8sv_source.html#l00106">axi_seq_item_aw_vector_s::awid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00110">axi_seq_item_aw_vector_s::awlen</a>, <a class="el" href="axi__pkg_8sv_source.html#l00113">axi_seq_item_aw_vector_s::awlock</a>, <a class="el" href="axi__pkg_8sv_source.html#l00115">axi_seq_item_aw_vector_s::awprot</a>, <a class="el" href="axi__pkg_8sv_source.html#l00116">axi_seq_item_aw_vector_s::awqos</a>, <a class="el" href="axi__pkg_8sv_source.html#l00111">axi_seq_item_aw_vector_s::awsize</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00458">calculate_aligned_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00508">calculate_beats()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00054">len</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__driver_8svh_source.html#l00157">axi_driver::write_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__driver_8svh_source.html#l00157">axi_driver::write_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -530,11 +533,11 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00539">539</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00570">570</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 <p>References <a class="el" href="axi__pkg_8sv_source.html#l00107">axi_seq_item_aw_vector_s::awaddr</a>, <a class="el" href="axi__pkg_8sv_source.html#l00112">axi_seq_item_aw_vector_s::awburst</a>, <a class="el" href="axi__pkg_8sv_source.html#l00114">axi_seq_item_aw_vector_s::awcache</a>, <a class="el" href="axi__pkg_8sv_source.html#l00106">axi_seq_item_aw_vector_s::awid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00110">axi_seq_item_aw_vector_s::awlen</a>, <a class="el" href="axi__pkg_8sv_source.html#l00113">axi_seq_item_aw_vector_s::awlock</a>, <a class="el" href="axi__pkg_8sv_source.html#l00115">axi_seq_item_aw_vector_s::awprot</a>, <a class="el" href="axi__pkg_8sv_source.html#l00116">axi_seq_item_aw_vector_s::awqos</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00111">axi_seq_item_aw_vector_s::awsize</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00103">axi_monitor::monitor_write_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00103">axi_monitor::monitor_write_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -589,7 +592,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>take values from write data channel and stuff into a <a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB...">axi_seq_item_w_vector_s</a> </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>: this funct isn't from a class so rename. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>: this funct isn't from a class so rename. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">wdata</td><td>- Write data value </td></tr>
@@ -601,7 +604,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>v - a packed struct.</dd></dl>
 <p>take values from a <a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB...">axi_seq_item_w_vector_s</a></p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>: this funct isn't from a class so rename. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>: this funct isn't from a class so rename. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>wdata - Write data value </dd>
 <dd>
 wstrb - Write strobe </dd>
@@ -625,11 +628,11 @@ wlast - wlast (last beat of write burst) </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>v - packed struct of type <a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__b__vector__s" title="This packed struct is used to send write response channel information between the DUT and TB...">axi_seq_item_b_vector_s</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00624">624</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00655">655</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00065">bid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00155">axi_seq_item_b_vector_s::bid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00066">bresp</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00156">axi_seq_item_b_vector_s::bresp</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00067">bid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00155">axi_seq_item_b_vector_s::bid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00068">bresp</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00156">axi_seq_item_b_vector_s::bresp</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -684,11 +687,11 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>t - an <a class="el" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage ">axi_seq_item</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00642">642</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00673">673</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 <p>References <a class="el" href="axi__pkg_8sv_source.html#l00155">axi_seq_item_b_vector_s::bid</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00156">axi_seq_item_b_vector_s::bresp</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00220">axi_monitor::monitor_write_response()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00235">axi_monitor::monitor_write_response()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -725,9 +728,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00129">129</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00131">131</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00052">len</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00054">len</a>.</p>
 
 </div>
 </div>
@@ -758,9 +761,9 @@ Here is the caller graph for this function:</div>
 <p>Calculate aligned address from current address. </p>
 <p>Used to guarantee transfers are aligned on the bus for most efficient bus usage </p>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00454">454</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00458">458</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00663">ar_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00509">aw_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00477">calculate_beats()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00694">ar_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00540">aw_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00508">calculate_beats()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -811,13 +814,13 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Calculate number of beats/clks in this burst. </p>
-<p>If the transfer is too large, this function will return a bogus result The caller is responsible for insuring safety. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>: check if size (length + address-misalignment) is too large </dd></dl>
+<p>If the transfer is too large, this function will return a bogus result The caller is responsible for insuring safety. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>: check if size (length + address-misalignment) is too large </dd></dl>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00477">477</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00508">508</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00454">calculate_aligned_address()</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00458">calculate_aligned_address()</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00663">ar_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00509">aw_from_class()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00694">ar_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00540">aw_from_class()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -861,11 +864,11 @@ Here is the caller graph for this function:</div>
 
 <p>Convert item's variable into one printable string. </p>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00218">218</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00221">221</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00086">aligned</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00085">Aligned_Address</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00065">bid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00066">bresp</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00089">Burst_Length_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00057">burst_size</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00058">burst_type</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00068">cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00049">data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00090">Data_Bus_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00098">dtsize</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00088">iNumber_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00052">len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00094">Lower_Byte_Lane</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00092">Lower_Wrap_Boundary</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00096">Mode</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00087">Number_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00084">Start_Address</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00095">Upper_Byte_Lane</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00093">Upper_Wrap_Boundary</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00088">aligned</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00087">Aligned_Address</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00067">bid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00068">bresp</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00091">Burst_Length_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00059">burst_size</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00060">burst_type</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00070">cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00051">data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00092">Data_Bus_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00100">dtsize</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00090">iNumber_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00054">len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00096">Lower_Byte_Lane</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00094">Lower_Wrap_Boundary</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00098">Mode</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00089">Number_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00086">Start_Address</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00097">Upper_Byte_Lane</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00095">Upper_Wrap_Boundary</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__responder__seq_8svh_source.html#l00056">axi_responder_seq::body()</a>, <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00317">do_print()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00253">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00103">axi_monitor::monitor_write_address()</a>, <a class="el" href="axi__driver_8svh_source.html#l00496">axi_driver::read_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00110">axi_driver::run_phase()</a>, <a class="el" href="axi__responder_8svh_source.html#l00109">axi_responder::run_phase()</a>, <a class="el" href="axi__scoreboard_8svh_source.html#l00075">axi_scoreboard::write()</a>, <a class="el" href="axi__coveragecollector_8svh_source.html#l00105">axi_coveragecollector::write()</a>, <a class="el" href="axi__driver_8svh_source.html#l00157">axi_driver::write_address()</a>, <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00192">axi_responder::write_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00232">axi_responder::write_response()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__responder__seq_8svh_source.html#l00056">axi_responder_seq::body()</a>, <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00320">do_print()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00268">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00103">axi_monitor::monitor_write_address()</a>, <a class="el" href="axi__driver_8svh_source.html#l00494">axi_driver::read_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00110">axi_driver::run_phase()</a>, <a class="el" href="axi__responder_8svh_source.html#l00109">axi_responder::run_phase()</a>, <a class="el" href="axi__scoreboard_8svh_source.html#l00075">axi_scoreboard::write()</a>, <a class="el" href="axi__coveragecollector_8svh_source.html#l00105">axi_coveragecollector::write()</a>, <a class="el" href="axi__driver_8svh_source.html#l00157">axi_driver::write_address()</a>, <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00192">axi_responder::write_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00232">axi_responder::write_response()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -916,9 +919,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00133">133</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00135">135</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00049">data</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00052">len</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00051">data</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00054">len</a>.</p>
 
 </div>
 </div>
@@ -947,13 +950,13 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Deep compare. </p>
-<p>Compare everything </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>: This function needs some attention. </dd></dl>
+<p>Compare everything </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>: This function needs some attention. </dd></dl>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00294">294</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00297">297</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00049">data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00043">id</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00052">len</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00051">data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00044">id</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00054">len</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -984,11 +987,11 @@ Here is the caller graph for this function:</div>
 <p>Deep copy. </p>
 <p>Deep copy everything </p>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00259">259</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00262">262</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00065">bid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00066">bresp</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00057">burst_size</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00058">burst_type</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00061">cache</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00068">cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00049">data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00043">id</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00052">len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00060">lock</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00062">prot</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00063">qos</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00045">valid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00051">wlast</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00050">wstrb</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00067">bid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00068">bresp</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00059">burst_size</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00060">burst_type</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00063">cache</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00070">cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00051">data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00044">id</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00054">len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00062">lock</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00064">prot</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00065">qos</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00047">valid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00053">wlast</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00052">wstrb</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -1018,11 +1021,11 @@ Here is the caller graph for this function:</div>
 
 <p>prints out immediate object, but no parents' stuff. </p>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00317">317</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00320">320</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1046,6 +1049,43 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a class="anchor" id="afcdf7df56aa24058c5cbb7621afea0b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit&lt; axi_seq_item::ADDR_WIDTH-1:0 &gt; axi_seq_item::get_next_address </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get next address for reading/writing to memory. </p>
+<p>Takes into account burst_type. IE: e_FIXED, e_INCR, e_WRAP This function is stateful. When called it updates an internal variable that holds the current address. </p>
+
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00480">480</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00060">burst_type</a>, <a class="el" href="axi__pkg_8sv_source.html#l00081">e_FIXED</a>, <a class="el" href="axi__pkg_8sv_source.html#l00082">e_INCR</a>, <a class="el" href="axi__pkg_8sv_source.html#l00083">e_WRAP</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00094">Lower_Wrap_Boundary</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00046">mem_addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00086">Start_Address</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00095">Upper_Wrap_Boundary</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00268">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__seq__item_afcdf7df56aa24058c5cbb7621afea0b9_icgraph.png" border="0" usemap="#classaxi__seq__item_afcdf7df56aa24058c5cbb7621afea0b9_icgraph" alt=""/></div>
+<map name="classaxi__seq__item_afcdf7df56aa24058c5cbb7621afea0b9_icgraph" id="classaxi__seq__item_afcdf7df56aa24058c5cbb7621afea0b9_icgraph">
+<area shape="rect" id="node2" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="217,5,357,47"/>
+<area shape="rect" id="node4" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="217,71,357,112"/>
+<area shape="rect" id="node5" href="classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="211,137,364,163"/>
+<area shape="rect" id="node3" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="412,46,569,73"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
 <a class="anchor" id="a073680af7b72bdf0c022cfcd95b36c0a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1062,11 +1102,11 @@ Here is the caller graph for this function:</div>
 <p>Initialize all variables after item creation, whether random or manually set. </p>
 <p>All variables that rely on those initial settings but are otherwise static are set/updated in this function. This function is meant to be called once per burst. </p>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00399">399</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00402">402</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00086">aligned</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00085">Aligned_Address</a>, <a class="el" href="params__pkg_8sv_source.html#l00038">AXI_DATA_WIDTH</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00089">Burst_Length_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00057">burst_size</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00058">burst_type</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00090">Data_Bus_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00102">dataoffset</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00098">dtsize</a>, <a class="el" href="axi__pkg_8sv_source.html#l00083">e_WRAP</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00103">initialized</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00052">len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00092">Lower_Wrap_Boundary</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00096">Mode</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00087">Number_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00084">Start_Address</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00093">Upper_Wrap_Boundary</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00045">valid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00100">validcntr</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00101">validcntr_max</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00088">aligned</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00087">Aligned_Address</a>, <a class="el" href="params__pkg_8sv_source.html#l00038">AXI_DATA_WIDTH</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00091">Burst_Length_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00059">burst_size</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00060">burst_type</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00092">Data_Bus_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00104">dataoffset</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00100">dtsize</a>, <a class="el" href="axi__pkg_8sv_source.html#l00083">e_WRAP</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00105">initialized</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00054">len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00094">Lower_Wrap_Boundary</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00046">mem_addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00098">Mode</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00089">Number_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00086">Start_Address</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00095">Upper_Wrap_Boundary</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00047">valid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00102">validcntr</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00103">validcntr_max</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00253">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00327">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00496">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00268">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00352">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00494">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1120,9 +1160,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00109">109</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00111">111</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00057">burst_size</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00037">e_AXI4</a>, <a class="el" href="axi__pkg_8sv_source.html#l00082">e_INCR</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00049">e_SETARREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00047">e_SETAWREADYTOGGLEPATTERN</a>, and <a class="el" href="axi__uvm__pkg_8sv_source.html#l00048">e_SETWREADYTOGGLEPATTERN</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00059">burst_size</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00037">e_AXI4</a>, <a class="el" href="axi__pkg_8sv_source.html#l00082">e_INCR</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00049">e_SETARREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00047">e_SETAWREADYTOGGLEPATTERN</a>, and <a class="el" href="axi__uvm__pkg_8sv_source.html#l00048">e_SETWREADYTOGGLEPATTERN</a>.</p>
 
 </div>
 </div>
@@ -1143,7 +1183,7 @@ Here is the caller graph for this function:</div>
 <p>Constructor. </p>
 <p>Doesn't actually do anything except call parent constructor </p>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00211">211</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00214">214</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 </div>
 </div>
@@ -1163,11 +1203,11 @@ Here is the caller graph for this function:</div>
 <p>Tweak things after randomization. </p>
 <p>Currenly being used to reset the data[] to incrementing pattern ending with 'FE. This is for easier debugging. More love coming. </p>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00327">327</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00330">330</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00049">data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00052">len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00045">valid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00051">wlast</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00050">wstrb</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00051">data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00054">len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00047">valid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00053">wlast</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00052">wstrb</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -1197,11 +1237,11 @@ Here is the caller graph for this function:</div>
 <p>Update the aligned address and used byte lanes on each beat. </p>
 <p>Aligned address and used byte lanes change per beat. That is handled in this function.This function is meant to be called every beat. </p>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00431">431</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00435">435</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00086">aligned</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00085">Aligned_Address</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00090">Data_Bus_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00088">iNumber_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00094">Lower_Byte_Lane</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00087">Number_Bytes</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00095">Upper_Byte_Lane</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00088">aligned</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00087">Aligned_Address</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00092">Data_Bus_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00090">iNumber_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00096">Lower_Byte_Lane</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00089">Number_Bytes</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00097">Upper_Byte_Lane</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00375">update_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00378">update_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -1242,11 +1282,11 @@ Here is the caller graph for this function:</div>
 <p>Update AXI item's address. </p>
 <p>Updates address after every beat. Address changes depending on if it's a partial transfer, width of bus, fixed vs incrementing vs wrapped. </p>
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00375">375</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00378">378</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00086">aligned</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00085">Aligned_Address</a>, <a class="el" href="axi__pkg_8sv_source.html#l00081">e_FIXED</a>, <a class="el" href="axi__pkg_8sv_source.html#l00083">e_WRAP</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00092">Lower_Wrap_Boundary</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00096">Mode</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00087">Number_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00093">Upper_Wrap_Boundary</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00088">aligned</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00087">Aligned_Address</a>, <a class="el" href="axi__pkg_8sv_source.html#l00081">e_FIXED</a>, <a class="el" href="axi__pkg_8sv_source.html#l00083">e_WRAP</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00094">Lower_Wrap_Boundary</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00098">Mode</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00089">Number_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00095">Upper_Wrap_Boundary</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00327">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00496">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00352">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00494">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1315,9 +1355,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00131">131</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00133">133</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">valid</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00047">valid</a>.</p>
 
 </div>
 </div>
@@ -1342,31 +1382,32 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00135">135</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00137">137</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00663">ar_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00693">ar_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00509">aw_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00539">aw_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00624">b_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00642">b_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00065">bid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00454">calculate_aligned_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00477">calculate_beats()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00294">do_compare()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00317">do_print()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00052">len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00327">post_randomize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00375">update_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00050">wstrb</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00045">addr</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00694">ar_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00724">ar_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00540">aw_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00570">aw_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00655">b_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00673">b_to_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00067">bid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00458">calculate_aligned_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00508">calculate_beats()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00297">do_compare()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00320">do_print()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00480">get_next_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00054">len</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00330">post_randomize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00378">update_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00052">wstrb</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__seq__item_a3e6570de0d4aef1f8b24c4336c1c99ec_cgraph.png" border="0" usemap="#classaxi__seq__item_a3e6570de0d4aef1f8b24c4336c1c99ec_cgraph" alt=""/></div>
 <map name="classaxi__seq__item_a3e6570de0d4aef1f8b24c4336c1c99ec_cgraph" id="classaxi__seq__item_a3e6570de0d4aef1f8b24c4336c1c99ec_cgraph">
-<area shape="rect" id="node2" href="classaxi__seq__item.html#a2718ea6ff7551a92fdbc6ff92d80bb14" title="take values from an axi_seq_item and stuff into a axi_seq_item_ar_vector_s " alt="" coords="221,253,371,295"/>
-<area shape="rect" id="node3" href="classaxi__seq__item.html#a58bfe851d94e64c56a3a9f98dfbd5e78" title="Calculate aligned address from current address. " alt="" coords="671,100,829,141"/>
-<area shape="rect" id="node4" href="classaxi__seq__item.html#ad09e167a76225a7d4e2e9e057bfce06d" title="Calculate number of beats/clks in this burst. " alt="" coords="449,129,607,171"/>
-<area shape="rect" id="node5" href="classaxi__seq__item.html#a1d06d75ca9c9cb40f3eeccd495e37ad5" title="Pull values out of a axi_seq_item_ar_vector_s and stuffs them into an axi_seq_item. " alt="" coords="228,188,364,229"/>
-<area shape="rect" id="node6" href="classaxi__seq__item.html#aada0d930cd4e6040a7584e068e01dc94" title="Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s. " alt="" coords="217,71,375,112"/>
-<area shape="rect" id="node7" href="classaxi__seq__item.html#acc505058d3047915a86c2aeed046bf98" title="Pull values out of a axi_seq_item_aw_vector_s and stuffs them into an axi_seq_item. " alt="" coords="225,319,367,360"/>
-<area shape="rect" id="node8" href="classaxi__seq__item.html#a72a948e0db8f06de831699c92866bac0" title="take values from write data channel and stuff into a axi_seq_item_w_vector_s " alt="" coords="223,384,369,425"/>
-<area shape="rect" id="node9" href="classaxi__seq__item.html#a522f78497a15bfa2875d05601738d3ee" title="return values from a axi_seq_item_b_vector_s and return an axi_seq_item " alt="" coords="230,449,362,491"/>
-<area shape="rect" id="node10" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="433,591,623,618"/>
-<area shape="rect" id="node11" href="classaxi__seq__item.html#aed01dfdc179d23f82545e23b53cb1322" title="Deep compare. " alt="" coords="207,566,385,593"/>
-<area shape="rect" id="node12" href="classaxi__seq__item.html#a7ebdae66f8fcaf0ef01077a86de34bb5" title="Deep copy. " alt="" coords="218,617,374,643"/>
-<area shape="rect" id="node13" href="classaxi__seq__item.html#abe28396093aa00b187a5211862b07888" title="prints out immediate object, but no parents&#39; stuff. " alt="" coords="219,667,373,694"/>
-<area shape="rect" id="node14" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="219,785,373,811"/>
-<area shape="rect" id="node15" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="455,785,601,811"/>
-<area shape="rect" id="node16" href="classaxi__seq__item.html#a67eb39560a9d4e5d46c5cc46e8fdb870" title="Tweak things after randomization. " alt="" coords="230,836,362,877"/>
-<area shape="rect" id="node17" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="223,719,369,760"/>
+<area shape="rect" id="node2" href="classaxi__seq__item.html#a2718ea6ff7551a92fdbc6ff92d80bb14" title="take values from an axi_seq_item and stuff into a axi_seq_item_ar_vector_s " alt="" coords="221,254,371,295"/>
+<area shape="rect" id="node3" href="classaxi__seq__item.html#a58bfe851d94e64c56a3a9f98dfbd5e78" title="Calculate aligned address from current address. " alt="" coords="671,101,829,142"/>
+<area shape="rect" id="node4" href="classaxi__seq__item.html#ad09e167a76225a7d4e2e9e057bfce06d" title="Calculate number of beats/clks in this burst. " alt="" coords="449,130,607,171"/>
+<area shape="rect" id="node5" href="classaxi__seq__item.html#a1d06d75ca9c9cb40f3eeccd495e37ad5" title="Pull values out of a axi_seq_item_ar_vector_s and stuffs them into an axi_seq_item. " alt="" coords="228,189,364,230"/>
+<area shape="rect" id="node6" href="classaxi__seq__item.html#aada0d930cd4e6040a7584e068e01dc94" title="Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s. " alt="" coords="217,71,375,113"/>
+<area shape="rect" id="node7" href="classaxi__seq__item.html#acc505058d3047915a86c2aeed046bf98" title="Pull values out of a axi_seq_item_aw_vector_s and stuffs them into an axi_seq_item. " alt="" coords="225,319,367,361"/>
+<area shape="rect" id="node8" href="classaxi__seq__item.html#a72a948e0db8f06de831699c92866bac0" title="take values from write data channel and stuff into a axi_seq_item_w_vector_s " alt="" coords="223,385,369,426"/>
+<area shape="rect" id="node9" href="classaxi__seq__item.html#a522f78497a15bfa2875d05601738d3ee" title="return values from a axi_seq_item_b_vector_s and return an axi_seq_item " alt="" coords="230,450,362,491"/>
+<area shape="rect" id="node10" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="433,592,623,619"/>
+<area shape="rect" id="node11" href="classaxi__seq__item.html#aed01dfdc179d23f82545e23b53cb1322" title="Deep compare. " alt="" coords="207,567,385,593"/>
+<area shape="rect" id="node12" href="classaxi__seq__item.html#a7ebdae66f8fcaf0ef01077a86de34bb5" title="Deep copy. " alt="" coords="218,617,374,644"/>
+<area shape="rect" id="node13" href="classaxi__seq__item.html#abe28396093aa00b187a5211862b07888" title="prints out immediate object, but no parents&#39; stuff. " alt="" coords="219,516,373,543"/>
+<area shape="rect" id="node14" href="classaxi__seq__item.html#afcdf7df56aa24058c5cbb7621afea0b9" title="Get next address for reading/writing to memory. " alt="" coords="217,719,375,761"/>
+<area shape="rect" id="node15" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="219,968,373,995"/>
+<area shape="rect" id="node16" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="455,844,601,871"/>
+<area shape="rect" id="node17" href="classaxi__seq__item.html#a67eb39560a9d4e5d46c5cc46e8fdb870" title="Tweak things after randomization. " alt="" coords="230,902,362,943"/>
+<area shape="rect" id="node18" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="223,837,369,878"/>
 </map>
 </div>
 </p>
@@ -1384,9 +1425,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00044">44</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00045">45</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00128">addr_c()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00663">ar_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00509">aw_from_class()</a>, <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00477">calculate_beats()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00294">do_compare()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00109">max_len()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00375">update_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00130">addr_c()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00694">ar_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00540">aw_from_class()</a>, <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00508">calculate_beats()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00297">do_compare()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00111">max_len()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00378">update_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 </div>
 </div>
@@ -1400,9 +1441,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00086">86</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00088">88</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00375">update_address()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00378">update_address()</a>.</p>
 
 </div>
 </div>
@@ -1416,9 +1457,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00085">85</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00087">87</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00375">update_address()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00378">update_address()</a>.</p>
 
 </div>
 </div>
@@ -1432,7 +1473,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00056">56</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00058">58</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 <p>Referenced by <a class="el" href="axi__coveragecollector_8svh_source.html#l00056">axi_coveragecollector::sample()</a>.</p>
 
@@ -1448,7 +1489,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00055">55</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00057">57</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 </div>
 </div>
@@ -1462,9 +1503,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00065">65</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00067">67</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00624">b_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, <a class="el" href="axi__driver_8svh_source.html#l00378">axi_driver::write_response()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00655">b_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, <a class="el" href="axi__driver_8svh_source.html#l00376">axi_driver::write_response()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 </div>
 </div>
@@ -1478,9 +1519,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00066">66</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00068">68</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00624">b_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00378">axi_driver::write_response()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00655">b_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00376">axi_driver::write_response()</a>.</p>
 
 </div>
 </div>
@@ -1494,9 +1535,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00089">89</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00091">91</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
 
 </div>
 </div>
@@ -1510,9 +1551,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00057">57</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00059">59</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00128">addr_c()</a>, <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00109">max_len()</a>, and <a class="el" href="axi__coveragecollector_8svh_source.html#l00056">axi_coveragecollector::sample()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00130">addr_c()</a>, <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00111">max_len()</a>, and <a class="el" href="axi__coveragecollector_8svh_source.html#l00056">axi_coveragecollector::sample()</a>.</p>
 
 </div>
 </div>
@@ -1526,9 +1567,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00058">58</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00060">60</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, and <a class="el" href="axi__coveragecollector_8svh_source.html#l00056">axi_coveragecollector::sample()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00480">get_next_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, and <a class="el" href="axi__coveragecollector_8svh_source.html#l00056">axi_coveragecollector::sample()</a>.</p>
 
 </div>
 </div>
@@ -1542,7 +1583,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00106">106</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00108">108</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 </div>
 </div>
@@ -1556,7 +1597,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00107">107</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00109">109</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 </div>
 </div>
@@ -1570,9 +1611,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00061">61</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00063">63</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>.</p>
 
 </div>
 </div>
@@ -1586,9 +1627,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00068">68</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00070">70</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00253">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00327">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00103">axi_monitor::monitor_write_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00220">axi_monitor::monitor_write_response()</a>, <a class="el" href="axi__driver_8svh_source.html#l00110">axi_driver::run_phase()</a>, <a class="el" href="axi__responder_8svh_source.html#l00109">axi_responder::run_phase()</a>, <a class="el" href="axi__scoreboard_8svh_source.html#l00075">axi_scoreboard::write()</a>, and <a class="el" href="axi__coveragecollector_8svh_source.html#l00105">axi_coveragecollector::write()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00268">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00352">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00103">axi_monitor::monitor_write_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00235">axi_monitor::monitor_write_response()</a>, <a class="el" href="axi__driver_8svh_source.html#l00110">axi_driver::run_phase()</a>, <a class="el" href="axi__responder_8svh_source.html#l00109">axi_responder::run_phase()</a>, <a class="el" href="axi__scoreboard_8svh_source.html#l00075">axi_scoreboard::write()</a>, and <a class="el" href="axi__coveragecollector_8svh_source.html#l00105">axi_coveragecollector::write()</a>.</p>
 
 </div>
 </div>
@@ -1602,9 +1643,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00049">49</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00051">51</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00133">data_c()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00294">do_compare()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00253">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00327">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00327">post_randomize()</a>, <a class="el" href="axi__driver_8svh_source.html#l00496">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00135">data_c()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00297">do_compare()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00268">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00352">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00330">post_randomize()</a>, <a class="el" href="axi__driver_8svh_source.html#l00494">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
 
 </div>
 </div>
@@ -1618,9 +1659,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00090">90</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00092">92</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>.</p>
 
 </div>
 </div>
@@ -1634,9 +1675,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00102">102</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00104">104</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00327">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00496">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00352">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00494">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
 
 </div>
 </div>
@@ -1650,9 +1691,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00098">98</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00100">100</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>.</p>
 
 </div>
 </div>
@@ -1666,9 +1707,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00043">43</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00044">44</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00294">do_compare()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00297">do_compare()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>.</p>
 
 </div>
 </div>
@@ -1682,7 +1723,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00038">38</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00039">39</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 </div>
 </div>
@@ -1696,9 +1737,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00103">103</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00105">105</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>.</p>
 
 </div>
 </div>
@@ -1712,9 +1753,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00088">88</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00090">90</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>.</p>
 
 </div>
 </div>
@@ -1728,9 +1769,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00052">52</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00054">54</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00663">ar_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00509">aw_from_class()</a>, <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00129">burst_size_c()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00133">data_c()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00294">do_compare()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00253">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00327">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00103">axi_monitor::monitor_write_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00327">post_randomize()</a>, <a class="el" href="axi__driver_8svh_source.html#l00496">axi_driver::read_data()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00694">ar_from_class()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00540">aw_from_class()</a>, <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00131">burst_size_c()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00135">data_c()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00297">do_compare()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00268">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00352">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00103">axi_monitor::monitor_write_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00330">post_randomize()</a>, <a class="el" href="axi__driver_8svh_source.html#l00494">axi_driver::read_data()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 </div>
 </div>
@@ -1744,9 +1785,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00060">60</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00062">62</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>.</p>
 
 </div>
 </div>
@@ -1760,9 +1801,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00094">94</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00096">96</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00327">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00496">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00352">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00494">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
 
 </div>
 </div>
@@ -1776,9 +1817,25 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00092">92</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00094">94</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00375">update_address()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00480">get_next_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00378">update_address()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac7a6757ee01570b56b6ed29c8d59d33c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit&lt;ADDR_WIDTH-1:0&gt; axi_seq_item::mem_addr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00046">46</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00480">get_next_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>.</p>
 
 </div>
 </div>
@@ -1792,9 +1849,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00096">96</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00098">98</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00375">update_address()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00378">update_address()</a>.</p>
 
 </div>
 </div>
@@ -1808,7 +1865,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00099">99</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00101">101</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 </div>
 </div>
@@ -1822,9 +1879,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00087">87</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00089">89</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00375">update_address()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00378">update_address()</a>.</p>
 
 </div>
 </div>
@@ -1838,9 +1895,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00062">62</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00064">64</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>.</p>
 
 </div>
 </div>
@@ -1854,7 +1911,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00042">42</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00043">43</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 <p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>.</p>
 
@@ -1870,9 +1927,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00063">63</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00065">65</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>.</p>
 
 </div>
 </div>
@@ -1886,9 +1943,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00084">84</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00086">86</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00063">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00480">get_next_address()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>.</p>
 
 </div>
 </div>
@@ -1902,7 +1959,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00070">70</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00072">72</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
 <p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00109">axi_responder::run_phase()</a>.</p>
 
@@ -1918,9 +1975,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00095">95</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00097">97</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00327">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00496">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00431">update()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00352">axi_monitor::monitor_read_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__driver_8svh_source.html#l00494">axi_driver::read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00435">update()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
 
 </div>
 </div>
@@ -1934,9 +1991,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00093">93</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00095">95</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00218">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00375">update_address()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00221">convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00480">get_next_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00378">update_address()</a>.</p>
 
 </div>
 </div>
@@ -1950,9 +2007,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00045">45</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00047">47</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00327">post_randomize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00131">valid_c()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00330">post_randomize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00133">valid_c()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
 
 </div>
 </div>
@@ -1966,9 +2023,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00100">100</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00102">102</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
 
 </div>
 </div>
@@ -1982,9 +2039,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00101">101</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00103">103</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00399">initialize()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00402">initialize()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00247">axi_driver::write_data()</a>.</p>
 
 </div>
 </div>
@@ -1998,9 +2055,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00051">51</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00053">53</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00327">post_randomize()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00330">post_randomize()</a>.</p>
 
 </div>
 </div>
@@ -2014,9 +2071,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00050">50</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__seq__item_8svh_source.html#l00052">52</a> of file <a class="el" href="axi__seq__item_8svh_source.html">axi_seq_item.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00259">do_copy()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00327">post_randomize()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00135">wstrb_c()</a>.</p>
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00262">do_copy()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00330">post_randomize()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00137">wstrb_c()</a>.</p>
 
 </div>
 </div>
