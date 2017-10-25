@@ -30,6 +30,7 @@
  *  \brief contains all data and functions related to axi and usage
  *
  * In addition to variables like addr,len, id, this alsocontains functions that could be moved into axi_uvm_pkg to save object space. Things like calculating aligned_address from address.
+ * \todo: this seq_item is laughably large.  Don't judge me, I've seen your 'temporary' code too. ;)
  */
 class axi_seq_item extends uvm_sequence_item;
   `uvm_object_utils(axi_seq_item)
@@ -42,6 +43,7 @@ class axi_seq_item extends uvm_sequence_item;
   rand axi_protocol_version_t protocol;
   rand  bit [ID_WIDTH-1:0]    id;
   rand  bit [ADDR_WIDTH-1:0]   addr;
+        bit [ADDR_WIDTH-1:0]   mem_addr;
     rand  bit          valid []; // keep valid with data,
   // then can also toggle independently and have easy playback on failure
   // @Todo: play around more with the do_record
@@ -161,6 +163,7 @@ class axi_seq_item extends uvm_sequence_item;
     extern function void update_address();
     extern function void initialize();
     extern function void update();  // update_address vs update ?
+      extern function bit[ADDR_WIDTH-1:0] get_next_address();
 
 
     extern  function void   aw_from_class(
@@ -399,6 +402,7 @@ endfunction : update_address
 function void axi_seq_item::initialize;
 //    addr           = item.addr;
     Start_Address     = addr;
+    mem_addr          = Start_Address;
     Number_Bytes      = 2**int'(burst_size); // number_bytes; // Partial or Full transfers.
     Burst_Length_Bytes = len;
     Data_Bus_Bytes    = params_pkg::AXI_DATA_WIDTH/8; // //@Todo: the driver needs to update this.
@@ -451,7 +455,7 @@ endfunction : update
  * Used to guarantee transfers are aligned on the bus for
  * most efficient bus usage
  */
-      function bit [axi_seq_item::ADDR_WIDTH-1:0] axi_seq_item::calculate_aligned_address(
+function bit [axi_seq_item::ADDR_WIDTH-1:0] axi_seq_item::calculate_aligned_address(
   input bit [ADDR_WIDTH-1:0] addr,
   input int number_bytes);
 
@@ -467,6 +471,33 @@ endfunction : update
         return aligned_address;
 
 endfunction : calculate_aligned_address
+
+/*! \brief Get next address for reading/writing to memory
+ *
+ * Takes into account burst_type. IE: e_FIXED, e_INCR, e_WRAP
+ * This function is stateful.  When called it updates an internal variable that holds the current address.
+ */
+function bit[axi_seq_item::ADDR_WIDTH-1:0] axi_seq_item::get_next_address;
+
+  bit [ADDR_WIDTH-1:0] current_addr;
+  bit [ADDR_WIDTH-1:0] tmp_addr;
+
+  current_addr=mem_addr;
+
+  if (burst_type == e_FIXED) begin
+     tmp_addr=Start_Address;
+  end else if (burst_type == e_INCR) begin
+     tmp_addr=current_addr+1;
+  end else if (burst_type == e_WRAP) begin
+     tmp_addr=current_addr+1;
+    if (tmp_addr >= Upper_Wrap_Boundary) begin
+        tmp_addr = Lower_Wrap_Boundary;
+    end
+  end
+  mem_addr = tmp_addr;
+  return current_addr;
+
+endfunction : get_next_address;
 
 /*! \brief Calculate number of beats/clks in this burst.
  *

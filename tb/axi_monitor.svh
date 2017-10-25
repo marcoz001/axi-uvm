@@ -146,6 +146,7 @@ task axi_monitor::monitor_write_data();
   axi_seq_item_w_vector_s  w_s;
   axi_seq_item   item=null;
   axi_seq_item cloned_item=null;
+  bit [63:0] write_addr;
 
   if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
     return;
@@ -172,6 +173,7 @@ task axi_monitor::monitor_write_data();
         cloned_item.cmd=e_WRITE_DATA;
         cloned_item.initialize();
         cloned_item.dataoffset=0;
+        //write_addr=cloned_item.Start_Address-1;  // easier for e_WRAP  \todo: better way?
 
         //
         cloned_item.wstrb = new[cloned_item.len];
@@ -191,20 +193,22 @@ task axi_monitor::monitor_write_data();
                  UVM_HIGH)
        for (int i=cloned_item.Lower_Byte_Lane;i<=cloned_item.Upper_Byte_Lane;i++) begin
           // wstrb may not be asserted. check
-          if (w_s.wstrb[i]==1'b1) begin
-            if (cloned_item.burst_type == e_FIXED) begin
-             m_memory.write(cloned_item.Start_Address,
-                            w_s.wdata[i*8+:8]);
+         write_addr=cloned_item.get_next_address();
 
-            end else if (cloned_item.burst_type == e_INCR) begin
-             m_memory.write(cloned_item.Start_Address+cloned_item.dataoffset,
-                            w_s.wdata[i*8+:8]);
-
-            //end else if (cloned_item.burst_type == e_WRAP) begin
-
-            end else begin
-              `uvm_error(this.get_type_name(), $sformatf("Invalid burst_type:",cloned_item.burst_type))
-            end
+         if (w_s.wstrb[i]==1'b1) begin
+          //   if (cloned_item.burst_type == e_FIXED) begin
+          //      write_addr=cloned_item.Start_Address;
+          //   end else if (cloned_item.burst_type == e_INCR) begin
+          //      write_addr=cloned_item.Start_Address+cloned_item.dataoffset;
+          //   end else if (cloned_item.burst_type == e_WRAP) begin
+          //      write_addr++;
+          //     if (write_addr >= cloned_item.Upper_Wrap_Boundary) begin
+          //         write_addr = cloned_item.Lower_Wrap_Boundary;
+          //      end
+          //   end else begin
+          //      `uvm_error(this.get_type_name(), $sformatf("Invalid burst_type:",cloned_item.burst_type))
+          //   end
+             m_memory.write(write_addr, w_s.wdata[i*8+:8]);
              cloned_item.data[cloned_item.dataoffset]=w_s.wdata[i*8+:8];
           end
          // record wstrb as well so anything else that
@@ -267,6 +271,7 @@ task axi_monitor::monitor_read_address();
   axi_seq_item             cloned_item;
   axi_seq_item             cloned2_item;
   bit [7:0] read_data;
+  bit [63:0] read_addr;
   int offset=0;
   int beatcnt=0;
 
@@ -296,7 +301,9 @@ task axi_monitor::monitor_read_address();
     cloned_item.data=new[cloned_item.len];
     offset=0;
 
-    if (cloned_item.burst_type==e_FIXED) begin
+    read_addr=cloned_item.get_next_address();
+    cloned_item.data[offset]=m_memory.read(read_addr);
+    /* if (cloned_item.burst_type==e_FIXED) begin
        //read_data=m_memory.read(ar_s.araddr);
        for (int z=0;z<cloned_item.len;z++) begin
          cloned_item.data[offset]=m_memory.read(ar_s.araddr); // do actual read, allow error injection in memory
@@ -310,7 +317,7 @@ task axi_monitor::monitor_read_address();
       end
     end else begin // e_WRAP
     end
-
+      */
 
 
     `uvm_info("AR_TO_CLASS_post", $sformatf("%s", cloned_item.convert2string()), UVM_HIGH)

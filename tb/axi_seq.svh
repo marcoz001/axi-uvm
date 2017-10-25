@@ -88,15 +88,15 @@ task axi_seq::body;
 
 
     start_item(write_item);
-    assert( write_item.randomize() with {protocol   ==     e_AXI4;
+    assert( write_item.randomize() with {protocol   ==     e_AXI3;
                                          cmd        ==     e_WRITE;
-                                         //burst_size inside {e_1BYTE,e_2BYTES};
+                                         burst_size inside {e_4BYTES};
                                          //burst_size ==     e_128BYTES;
                                          burst_type ==     e_FIXED;
-                                         addr       <      'h4;
+                                         addr       ==      'h34;
                                          //len        >      'h30;
                                          //len        <=     'h3C;
-
+                                         len >= 'h20;
                                         // addr == 'h1;
                                         // burst_size == 'h2;
                                         // burst_type == 'h1;
@@ -107,9 +107,11 @@ task axi_seq::body;
                     $sformatf("Unable to randomize %s",  write_item.get_full_name()));
          end  //assert
 
-
+    `uvm_info("DATA", $sformatf("Item:  %s", write_item.convert2string()), UVM_INFO)
     finish_item(write_item);
     `uvm_info("DATA", $sformatf("Sending a transfer. Starting_addr: 0x%0x, bytelen: %0d (0x%0x), (burst_size: 0x%0x", write_item.addr, write_item.len, write_item.len, write_item.burst_size), UVM_HIGH)
+
+
     get_response(write_item);
 
 

@@ -35,8 +35,8 @@ package params_pkg;
 // different sizes?
   parameter AXI_ID_WIDTH   = 6;
   parameter AXI_ADDR_WIDTH = 32;
-  parameter AXI_DATA_WIDTH = 1024;
-  parameter AXI_LEN_WIDTH  = 8;
+  parameter AXI_DATA_WIDTH = 32;
+  parameter AXI_LEN_WIDTH  = 4;
 
 
 endpackage : params_pkg
