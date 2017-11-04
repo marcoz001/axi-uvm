@@ -638,11 +638,7 @@ function void axi_seq_item::get_beat_N_byte_lanes(input  int beat_cnt,
 
 
    bit [63:0] Aligned_Start_Address;
-  //bit [63:0] iaddr;
   bit [63:0] Address_N;
-  int Lower_Byte_Lane;
-  int Upper_Byte_Lane;
-  int offset=0;
   string s;
   string msg_s;
 

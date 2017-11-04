@@ -35,7 +35,7 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
   extern task       body;
   extern function void response_handler(uvm_sequence_item response);
 
-  extern function set_data_width(int width);
+    extern function set_data_width(int width=32);
 endclass : axi_seq
 
 
@@ -178,10 +178,12 @@ task axi_seq::body;
                                          //burst_size inside {e_1BYTE, e_2BYTES, e_4BYTES};
                                          burst_size <=     local::max_burst_size;
                                          burst_type inside {e_FIXED, e_INCR, e_WRAP};
-                                         id == local::i;
+                                         //id == local::i;
                                          addr       <=      'h34;
 
                                          len >= 'h2;
+
+
                                         }
                                    ) else begin
          `uvm_fatal(this.get_type_name(),
