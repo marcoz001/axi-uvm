@@ -186,11 +186,6 @@ task axi_seq::body;
 
                                          len >= 'h2;
 
-                                         addr       == 'h10;
-                                         len        == 'h35;
-                                         burst_size == 'h4;
-                                         burst_type == 'h0;
-
                                         }
                                    ) else begin
          `uvm_fatal(this.get_type_name(),
