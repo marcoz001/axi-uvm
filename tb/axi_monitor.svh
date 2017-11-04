@@ -205,7 +205,7 @@ task axi_monitor::monitor_write_data();
       `uvm_info("MONITOR::monitor_write_data", msg_s, UVM_HIGH)
 
       msg_s="wstrb: ";
-      for (int x=3;x>=0;x--) begin
+      for (int x=(vif.get_data_bus_width()/8)-1;x>=0;x--) begin
         $sformat(msg_s, "%s%0b", msg_s, w_s.wstrb[x]);
       end
       `uvm_info("MONITOR::monitor_write_data", msg_s, UVM_HIGH)

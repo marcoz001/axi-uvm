@@ -38,6 +38,9 @@ class axi_base_test extends uvm_test;
     m_env = axi_env::type_id::create("m_env", this);
 
     m_seq = axi_seq::type_id::create("m_seq");
+
+
+    //m_seq.set_data_width();
     m_resp_seq = axi_responder_seq::type_id::create("m_resp_seq");
 
   endfunction : build_phase

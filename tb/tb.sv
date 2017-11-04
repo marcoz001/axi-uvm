@@ -219,6 +219,9 @@ initial begin
 end
 
 initial begin
+
+  uvm_config_db #(int)::set(null, "*", "AXI_DATA_WIDTH", C_AXI_DATA_WIDTH);
+
   axi_driver_vif.use_concrete_class();
   axi_responder_vif.use_concrete_class();
 

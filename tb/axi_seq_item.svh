@@ -282,6 +282,7 @@ function string axi_seq_item::convert2string;
     string s;
     string sdata;
     int j=0;
+    sdata="";
     $sformat(s, "%s", super.convert2string());
     $sformat(s, "%s Cmd: %s   ", s, cmd.name);
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
@@ -296,7 +297,15 @@ function string axi_seq_item::convert2string;
     for (int i =0; i< j; i++) begin
        $sformat(sdata, "%s 0x%02x ", sdata, data[i]);
     end
-    $sformat(s, "%s Data: %s", s, sdata);
+    $sformat(s, "%s Data[]: %s", s, sdata);
+
+    j=wstrb.size();
+    sdata="";
+    for (int i =0; i< j; i++) begin
+      $sformat(sdata, "%s %b ", sdata, wstrb[i]);
+    end
+    $sformat(s, "%s wstrb[]: %s", s, sdata);
+
 
     return s;
 endfunction : convert2string
@@ -693,6 +702,8 @@ function void axi_seq_item::get_beat_N_byte_lanes(input  int beat_cnt,
       msg_s="";
       $sformat(msg_s, "%s beat_cnt:%0d",        msg_s, beat_cnt);
       $sformat(msg_s, "%s data_bus_bytes:%0d",  msg_s, data_bus_bytes);
+      $sformat(msg_s, "%s NumberBytes (2**burst_size):%0d",  msg_s, (2**burst_size));
+
       $sformat(msg_s, "%s addr:%0d",            msg_s, addr);
       $sformat(msg_s, "%s Aligned_Start_Address:%0d",  msg_s, Aligned_Start_Address);
       $sformat(msg_s, "%s Address_N:%0d",  msg_s, Address_N);

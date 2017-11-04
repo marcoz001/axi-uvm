@@ -27,12 +27,15 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
     `uvm_object_utils(axi_seq)
 
   int xfers_done=0;
+  int data_width=32;
 
   memory m_memory;
 
   extern function   new (string name="axi_seq");
   extern task       body;
   extern function void response_handler(uvm_sequence_item response);
+
+  extern function set_data_width(int width);
 endclass : axi_seq
 
 
@@ -50,6 +53,19 @@ endfunction: response_handler
 function axi_seq::new (string name="axi_seq");
   super.new(name);
 endfunction : new
+
+
+/*! \brief Set Data bus width
+ *
+ * AXI supports multiple bus widths, parameterized at runtime.
+ * We have to tell the sequence so we can randomize accordingly.
+ * IE: If the data bus width is 32, don't send a burst_size=64bits.
+ */
+function axi_seq::set_data_width (int width=32);
+  this.data_width = width;
+endfunction : set_data_width
+
+
 
 /*! \brief Does all the work.
  *
@@ -101,6 +117,8 @@ task axi_seq::body;
 
   bit [7:0] expected_data_array [];
 
+  bit [2:0] max_burst_size;
+
   xfers_done=0;
 
   //use_response_handler(1); // Enable Response Handler
@@ -110,6 +128,11 @@ task axi_seq::body;
     end
 
   xfers_to_send=20;
+
+  if (!uvm_config_db #(int)::get(null, "", "AXI_DATA_WIDTH", data_width)) begin
+    `uvm_fatal(this.get_type_name, "Unable to fetch data_width from config db. Using defaults")
+  end
+
 
   // Clear memory
   // AXI write
@@ -130,12 +153,31 @@ task axi_seq::body;
     write_item = axi_seq_item::type_id::create("write_item");
     read_item  = axi_seq_item::type_id::create("read_item");
 
+/*
+    case (data_width)
+        8    : max_burst_size = 0;
+        16   : max_burst_size = 1;
+        32   : max_burst_size = 2;
+        64   : max_burst_size = 3;
+        128  : max_burst_size = 4;
+        256  : max_burst_size = 5;
+        512  : max_burst_size = 6;
+        1024 : max_burst_size = 7;
+    endcase
+*/
+    max_burst_size=$clog2(data_width/8);
+
+    `uvm_info(this.get_type_name(),
+              $sformatf("DATA_BUS_WIDTH:  %0d  max_burst_size: %0d",
+                        data_width, max_burst_size),
+              UVM_INFO)
 
     start_item(write_item);
     assert( write_item.randomize() with {protocol   ==     e_AXI3;
                                          cmd        ==     e_WRITE;
-                                         burst_size inside {e_1BYTE, e_2BYTES, e_4BYTES};
-                                         burst_type  inside {e_FIXED, e_INCR, e_WRAP};
+                                         //burst_size inside {e_1BYTE, e_2BYTES, e_4BYTES};
+                                         burst_size <=     local::max_burst_size;
+                                         burst_type inside {e_FIXED, e_INCR, e_WRAP};
                                          id == local::i;
                                          addr       <=      'h34;
 

@@ -415,7 +415,7 @@ task axi_responder::read_data;
                            .wstrb(strb),
                            .wlast(s.rlast));
 
-      for (int x=0;x<4;x++) begin
+      for (int x=0;x<vif.get_data_bus_width()/8;x++) begin
         s.rdata[x*8+:8] = rdata[x];
       end
 

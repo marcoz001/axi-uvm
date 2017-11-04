@@ -334,7 +334,7 @@ task axi_driver::write_data;
                             .wstrb(wstrb),
                             .wlast(s.wlast));
 
-      for (int x=0;x<4;x++) begin
+      for (int x=0;x<vif.get_data_bus_width()/8;x++) begin
         s.wdata[x*8+:8] = wdata[x];
         s.wstrb[x]      = wstrb[x];
       end
@@ -552,7 +552,7 @@ task axi_driver::read_data;
 
     `uvm_info("axi_driver::read_data", msg_s, UVM_HIGH)
     msg_s="data: 0x";
-    for (int z=3;z>=0;z--) begin
+    for (int z=(vif.get_data_bus_width()/8)-1;z>=0;z--) begin
       $sformat(msg_s, "%s %02x", msg_s,r_s.rdata[z*8+:8]);
     end
     `uvm_info("axi_driver::read_data", msg_s, UVM_HIGH)
