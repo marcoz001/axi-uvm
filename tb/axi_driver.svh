@@ -161,6 +161,9 @@ task axi_driver::write_address;
 
    bit [63:0] aligned_addr;
 
+  bit [7:0] wdata [];
+  bit wstrb [];
+
   int minval;
   int maxval;
   int wait_clks_before_next_aw;
@@ -175,7 +178,7 @@ task axi_driver::write_address;
        writeaddress_mbx.get(item);
       `uvm_info("axi_driver::write_address",
                 $sformatf("Item: %s", item.convert2string()),
-                UVM_INFO)
+                UVM_HIGH)
        item_needs_init=1;
     end
 
@@ -248,6 +251,9 @@ task axi_driver::write_data;
   axi_seq_item item=null;
   axi_seq_item_w_vector_s s;
 
+  bit[7:0] wdata[];
+  bit      wstrb[];
+
   bit iaxi_incompatible_wready_toggling_mode;
 
   int n=0;
@@ -255,16 +261,19 @@ task axi_driver::write_data;
   int minval;
   int maxval;
   int wait_clks_before_next_w;
+  int beat_cntr=0;
+  int beat_cntr_max;
 
   vif.set_wvalid(1'b0);
   forever begin
 
     if (item == null) begin
        writedata_mbx.get(item);
-      item.initialize();
+
+      beat_cntr=0;
       `uvm_info("axi_driver::write_data",
                 $sformatf("Item: %s", item.convert2string()),
-                UVM_INFO)
+                UVM_HIGH)
     end
 
     // Look at this only one per loop, so there's no race condition of it
@@ -273,24 +282,24 @@ task axi_driver::write_data;
 
     vif.wait_for_clks(.cnt(1));
 
-    // defaults. not needed but  I think is cleaner in sim
-    s.wvalid = 'b0;
-    s.wdata  = 'hfeed_beef;
-    s.wstrb  = 'h0;
-    s.wlast  = 1'b0;
 
     // Check if done with this transfer
     if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
-      item.dataoffset = n;
+      //item.dataoffset = n;
       if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
          item.validcntr++;
       end
 
-      item.update_address();
+      beat_cntr++;
 
-      if (item.dataoffset>=item.Burst_Length_Bytes) begin //F
+      beat_cntr_max=item.calculate_beats(.addr(item.addr),
+                                        .number_bytes(2**item.burst_size),
+                                         .burst_length(item.len));
+
+      if (beat_cntr >= beat_cntr_max) begin
           writeresponse_mbx.put(item);
           item = null;
+
 
           minval=min_clks_between_w_transfers;
           maxval=max_clks_between_w_transfers;
@@ -301,9 +310,7 @@ task axi_driver::write_data;
              // if not, check if there's another item
              writedata_mbx.try_get(item);
 
-             if (item != null) begin
-               item.initialize();
-             end
+
           end
        end
     end  // (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1)
@@ -313,21 +320,28 @@ task axi_driver::write_data;
     if (item != null) begin
 
        s.wvalid = item.valid[item.validcntr]; // 1'b1;
-       s.wstrb  = 'h0;
-       s.wdata  = 'h0;
-       s.wlast  = 1'b0;
-       n=item.dataoffset;
-      for (int j=item.Lower_Byte_Lane;j<=item.Upper_Byte_Lane;j++) begin
-        s.wdata[j*8+:8] = item.data[n++];
-          s.wstrb[j]      = 1'b1;
-        if (n>=item.Burst_Length_Bytes) begin
-             s.wlast=1'b1;
-             break;
-          end
-       end // for
+
+
+
+      `uvm_info(this.get_type_name(),
+                $sformatf("Calling get_beat_N_data:  %s",
+                          item.convert2string()),
+                UVM_HIGH)
+
+      item.get_beat_N_data(.beat_cnt(beat_cntr),
+                           .data_bus_bytes(vif.get_data_bus_width()/8),
+                            .data(wdata),
+                            .wstrb(wstrb),
+                            .wlast(s.wlast));
+
+      for (int x=0;x<4;x++) begin
+        s.wdata[x*8+:8] = wdata[x];
+        s.wstrb[x]      = wstrb[x];
+      end
 
        // Write out
        vif.write_w(.s(s));
+
 
              // if invalid-toggling-mode is enabled, then allow deasserting valid
        // before ready asserts.
@@ -364,6 +378,8 @@ task axi_driver::write_data;
     end // if (item == null
   end // forever
 endtask : write_data
+
+
 
 
 /*! \brief Write Response channel thread
@@ -424,6 +440,7 @@ task axi_driver::read_address;
 
     if (item == null) begin
        readaddress_mbx.get(item);
+     // `uvm_info("DRIVER::read_address", $sformatf("Item:  %s", item.convert2string()), UVM_INFO)
        item_needs_init=1;
     end
 
@@ -442,14 +459,16 @@ task axi_driver::read_address;
       if (wait_clks_before_next_ar==0) begin
              // if not, check if there's another item
              readaddress_mbx.try_get(item);
-             if (item!=null) begin
-                item_needs_init=1;
-             end
+           //  if (item!=null) begin
+           //     item_needs_init=1;
+           //  end
           end
        end
        // Initialize values
        if (item != null && item_needs_init==1) begin
           item.ar_from_class(.t(item), .v(v));
+
+          item_needs_init=0;
        end
 
         // Update values <- No need in write address (only one clk per)
@@ -496,34 +515,59 @@ task axi_driver::read_data;
   axi_seq_item_r_vector_s  r_s;
   axi_seq_item item=null;
 
+  int beat_cntr=0;
+  int Lower_Byte_Lane;
+  int Upper_Byte_Lane;
+  int offset;
+  string msg_s;
+
   vif.enable_rready_toggle_pattern(.pattern(m_config.rready_toggle_pattern));
 
   forever begin
 
     if (item == null) begin
        readdata_mbx.get(item);
-       item.initialize();
        item.data=new[item.len];
-       item.dataoffset=0;
-      `uvm_info(this.get_type_name(), $sformatf("%s", item.convert2string()), UVM_HIGH)
+
+       beat_cntr=0;
+      `uvm_info("axi_driver::read_data", $sformatf("%s", item.convert2string()), UVM_INFO)
     end
 
     vif.wait_for_read_data(.s(r_s));
 
-    `uvm_info(this.get_type_name(),$sformatf("r_s.data: 0x%0x   LowerLane:%0d   Upperlane:%0d   dataoffset=%0d", r_s.rdata,item.Lower_Byte_Lane,item.Upper_Byte_Lane, item.dataoffset),
-             UVM_HIGH)
+
+      item.get_beat_N_byte_lanes(.beat_cnt(beat_cntr),
+                                 .data_bus_bytes(vif.get_data_bus_width()/8),
+                                .Lower_Byte_Lane(Lower_Byte_Lane),
+                                .Upper_Byte_Lane(Upper_Byte_Lane),
+                                 .offset(offset));
+
+      msg_s="";
+      $sformat(msg_s, "%s beat_cntr:%0d",       msg_s, beat_cntr);
+      $sformat(msg_s, "%s data_bus_bytes:%0d",  msg_s, vif.get_data_bus_width()/8);
+      $sformat(msg_s, "%s Lower_Byte_Lane:%0d", msg_s, Lower_Byte_Lane);
+      $sformat(msg_s, "%s Upper_Byte_Lane:%0d", msg_s, Upper_Byte_Lane);
+      $sformat(msg_s, "%s offset:%0d",          msg_s, offset);
 
 
-    for (int z=item.Lower_Byte_Lane;z<=item.Upper_Byte_Lane;z++) begin
-      if (item.dataoffset < item.len) begin
-         item.data[item.dataoffset++] = r_s.rdata[z*8+:8];
+    `uvm_info("axi_driver::read_data", msg_s, UVM_HIGH)
+    msg_s="data: 0x";
+    for (int z=3;z>=0;z--) begin
+      $sformat(msg_s, "%s %02x", msg_s,r_s.rdata[z*8+:8]);
+    end
+    `uvm_info("axi_driver::read_data", msg_s, UVM_HIGH)
+
+    for (int z=Lower_Byte_Lane;z<=Upper_Byte_Lane;z++) begin
+      if (offset < item.len) begin
+         item.data[offset++] = r_s.rdata[z*8+:8];
       end
     end
-    item.update_address();
 
+beat_cntr++;
     if (r_s.rlast == 1'b1) begin
       seq_item_port.put(item);
       item=null;
+      beat_cntr=0;
     end
   end   //forever
 

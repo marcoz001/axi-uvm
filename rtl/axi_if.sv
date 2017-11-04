@@ -248,6 +248,10 @@ function new (string name="axi_if_concrete");
     super.new(name);
 endfunction : new
 
+function int get_data_bus_width;
+   return C_AXI_DATA_WIDTH;
+endfunction : get_data_bus_width
+
 // wait for n clock cycles. Default: 1
 task wait_for_clks(int cnt=1);
     if (cnt==0) return;

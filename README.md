@@ -8,6 +8,7 @@
  * - Supports 32-bit and 64-bit address widths
  * - Supports full and partial transfers.
  * - Supports aligned and unaligned transfers.
+ * - Fixed burst_type must be aligned. Unaligned Fixed transfers are not supported.
  * - Testbench side is event driven.  No #'delays, no @clock, etc
  * - Emulator friendly (TB side is event driven. no @clock)
  * - Pipelined AXI driver
@@ -17,14 +18,14 @@
  * - A slave driver  - acts as an AXI slave
  * - Coverage collector
  * - Scoreboard (counts address packets and response packets)
- *   
- * Good whitepaper on slave sequences: 
+ *
+ * Good whitepaper on slave sequences:
  * http://www.verilab.com/files/reactive_slaves_presentation.pdf
  * http://www.verilab.com/files/litterick_uvm_slaves2_paper.pdf
- * 
+ *
  * Parallel/pipelined driver:
  * https://www.quora.com/What-is-the-best-way-to-model-an-out-of-order-transaction-driver-in-UVM
- * 
+ *
  * Monitors
  * https://verificationacademy.com/verification-horizons/june-2013-volume-9-issue-2/Monitors-Monitors-Everywhere-Who-Is-Monitoring-the-Monitors
  */

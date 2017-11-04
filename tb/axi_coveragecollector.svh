@@ -47,7 +47,7 @@ class axi_coveragecollector extends uvm_subscriber #(axi_seq_item);
       bins e_WRAP    = {axi_pkg::e_WRAP};
     }
 
-    AWLEN : coverpoint item.awlen[3:0];
+   // AWLEN : coverpoint item.awlen[3:0];
 
     /* awcache, awlock, awprot, awqos here someday */
 
@@ -74,7 +74,7 @@ class axi_coveragecollector extends uvm_subscriber #(axi_seq_item);
       bins e_WRAP    = {axi_pkg::e_WRAP};
     }
 
-    ARLEN : coverpoint item.arlen[3:0];
+  //  ARLEN : coverpoint item.arlen[3:0];
 
     /* awcache, awlock, awprot, awqos here someday */
 

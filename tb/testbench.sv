@@ -6,13 +6,3 @@
 `include "axi_uvm_pkg.sv"
 
 `include "tb.sv"
-
-
-/*! \mainpage AXI Muckbucket
- *
- * \section intro_sec Introduction
- *
- * This is the introduction.
- *
- * etc...
- */

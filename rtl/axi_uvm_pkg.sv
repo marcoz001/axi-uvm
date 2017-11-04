@@ -63,6 +63,12 @@ typedef enum {e_DRIVER,  /**< Agent is a master */
               e_RESPONDER  /**< Agent is a slave/responder */
              } driver_type_t;
 
+
+
+
+
+
+
 `include "memory.svh"
 
 `include "axi_agent_config.svh"

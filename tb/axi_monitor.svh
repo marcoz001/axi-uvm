@@ -112,7 +112,7 @@ task axi_monitor::monitor_write_address();
 
   forever begin
     vif.wait_for_write_address(.s(aw_s));
-    `uvm_info(this.get_type_name(), "wait_for_write_address - DONE", UVM_HIGH)
+    `uvm_info(this.get_type_name(), "wait_for_write_address - DONE", UVM_INFO)
 
     $cast(item, original_item.clone());
     axi_seq_item::aw_to_class(.t(item), .v(aw_s));
@@ -147,6 +147,11 @@ task axi_monitor::monitor_write_data();
   axi_seq_item   item=null;
   axi_seq_item cloned_item=null;
   bit [63:0] write_addr;
+  int beat_cntr=0;
+  int Lower_Byte_Lane;
+  int Upper_Byte_Lane;
+  int offset;
+  string msg_s;
 
   if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
     return;
@@ -171,13 +176,10 @@ task axi_monitor::monitor_write_data();
         aw_mbx.get(item);
         $cast(cloned_item, item.clone());
         cloned_item.cmd=e_WRITE_DATA;
-        cloned_item.initialize();
-        cloned_item.dataoffset=0;
-        //write_addr=cloned_item.Start_Address-1;  // easier for e_WRAP  \todo: better way?
-
-        //
         cloned_item.wstrb = new[cloned_item.len];
         cloned_item.data  = new[cloned_item.len];
+
+        beat_cntr=0;
       end
     end
 
@@ -186,40 +188,52 @@ task axi_monitor::monitor_write_data();
     while (w_q.size() > 0) begin
 
        w_s=w_q.pop_front();
-       `uvm_info(this.get_type_name(),
-                 $sformatf("Lower_Byte_Lane=%0d, Upper_Byte_Lane=%0d, offset=%0d",
-                           cloned_item.Lower_Byte_Lane, cloned_item.Upper_Byte_Lane,
-                           cloned_item.dataoffset),
-                 UVM_HIGH)
-       for (int i=cloned_item.Lower_Byte_Lane;i<=cloned_item.Upper_Byte_Lane;i++) begin
-          // wstrb may not be asserted. check
-         write_addr=cloned_item.get_next_address();
 
-         if (w_s.wstrb[i]==1'b1) begin
-          //   if (cloned_item.burst_type == e_FIXED) begin
-          //      write_addr=cloned_item.Start_Address;
-          //   end else if (cloned_item.burst_type == e_INCR) begin
-          //      write_addr=cloned_item.Start_Address+cloned_item.dataoffset;
-          //   end else if (cloned_item.burst_type == e_WRAP) begin
-          //      write_addr++;
-          //     if (write_addr >= cloned_item.Upper_Wrap_Boundary) begin
-          //         write_addr = cloned_item.Lower_Wrap_Boundary;
-          //      end
-          //   end else begin
-          //      `uvm_error(this.get_type_name(), $sformatf("Invalid burst_type:",cloned_item.burst_type))
-          //   end
-             m_memory.write(write_addr, w_s.wdata[i*8+:8]);
-             cloned_item.data[cloned_item.dataoffset]=w_s.wdata[i*8+:8];
-          end
-         // record wstrb as well so anything else that
-         // needs or wants to fiddle with data, can.
-          cloned_item.wstrb[cloned_item.dataoffset]=w_s.wstrb[i];
-          cloned_item.dataoffset++;
-       end
-       cloned_item.update_address();
+      item.get_beat_N_byte_lanes(.beat_cnt        (beat_cntr),
+                                 .data_bus_bytes  (vif.get_data_bus_width()/8),
+                                .Lower_Byte_Lane  (Lower_Byte_Lane),
+                                 .Upper_Byte_Lane (Upper_Byte_Lane),
+                                 .offset          (offset));
+
+      msg_s="";
+      $sformat(msg_s, "%s beat_cntr:%0d",       msg_s, beat_cntr);
+      $sformat(msg_s, "%s data_bus_bytes:%0d",  msg_s, vif.get_data_bus_width()/8);
+      $sformat(msg_s, "%s Lower_Byte_Lane:%0d", msg_s, Lower_Byte_Lane);
+      $sformat(msg_s, "%s Upper_Byte_Lane:%0d", msg_s, Upper_Byte_Lane);
+      $sformat(msg_s, "%s offset:%0d",          msg_s, offset);
+
+      `uvm_info("MONITOR::monitor_write_data", msg_s, UVM_HIGH)
+
+      msg_s="wstrb: ";
+      for (int x=3;x>=0;x--) begin
+        $sformat(msg_s, "%s%0b", msg_s, w_s.wstrb[x]);
+      end
+      `uvm_info("MONITOR::monitor_write_data", msg_s, UVM_HIGH)
+
+      for (int x=Lower_Byte_Lane;x<=Upper_Byte_Lane;x++) begin
+        // use get_next_address() to keep addresslogicall nice and in oneplace.
+        // Upper and Lower Wrap Boundaries are set once the write address received
+
+
+        write_addr=cloned_item.get_next_address(.beat_cnt(beat_cntr),
+                                                .lane(x),
+                                                .data_bus_bytes(vif.get_data_bus_width()/8));
+
+        if (w_s.wstrb[x] == 1'b1) begin
+          `uvm_info("M_MEMORY.WRITE",
+                    $sformatf("[0x%0x] = 0x%2x", write_addr, w_s.wdata[x*8+:8]),
+                    UVM_HIGH)
+          m_memory.write(write_addr, w_s.wdata[x*8+:8]);
+        end
+
+      end
+
+       beat_cntr++;
        if (w_s.wlast == 1'b1) begin // @Todo: count, dont rely on wlast?
+
           ap.write(cloned_item);
          item=null;
+         beat_cntr=0;
        end
     end // while
     end// if
@@ -273,7 +287,12 @@ task axi_monitor::monitor_read_address();
   bit [7:0] read_data;
   bit [63:0] read_addr;
   int offset=0;
+  int doffset;
   int beatcnt=0;
+  int beat_cnt_max;
+    int Lower_Byte_Lane;
+    int Upper_Byte_Lane;
+  string msg_s;
 
   if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
      return;
@@ -289,20 +308,70 @@ task axi_monitor::monitor_read_address();
 
     `uvm_info(this.get_type_name(), "wait_for_read_address - DONE", UVM_HIGH)
 
-//    `uvm_info("AR_TO_CLASS",
-//              $sformatf("id:0x%0x  addr:0x%0x len:%d", ar_s.arid, ar_s.araddr, ar_s.arlen),
-//              UVM_INFO)
+    //`uvm_info("AR_TO_CLASS",
+    //          $sformatf("id:0x%0x  addr:0x%0x len:%d", ar_s.arid, ar_s.araddr, ar_s.arlen),
+    //          UVM_INFO)
 
     $cast(cloned_item, item.clone());
     axi_seq_item::ar_to_class(.t(cloned_item), .v(ar_s));
     cloned_item.cmd  = axi_uvm_pkg::e_READ;
-    //item.len=(ar_s.arlen+1)*4;
-    cloned_item.initialize();
+
     cloned_item.data=new[cloned_item.len];
     offset=0;
+    doffset=0;
 
-    read_addr=cloned_item.get_next_address();
-    cloned_item.data[offset]=m_memory.read(read_addr);
+    beat_cnt_max=cloned_item.calculate_beats(
+      .addr(cloned_item.addr),
+      .number_bytes(2**cloned_item.burst_size),
+      .burst_length(cloned_item.len));
+
+    for (int beat_cntr=0;beat_cntr<beat_cnt_max;beat_cntr++) begin
+
+          cloned_item.get_beat_N_byte_lanes(.beat_cnt(beat_cntr),
+                                 .data_bus_bytes(vif.get_data_bus_width()/8),
+                                .Lower_Byte_Lane(Lower_Byte_Lane),
+                                .Upper_Byte_Lane(Upper_Byte_Lane),
+                                .offset(offset));
+
+      msg_s="";
+      $sformat(msg_s, "%s beat_cntr:%0d",       msg_s, beat_cntr);
+      $sformat(msg_s, "%s beat_cnt_max:%0d",    msg_s, beat_cnt_max);
+      $sformat(msg_s, "%s data_bus_bytes:%0d",  msg_s, vif.get_data_bus_width()/8);
+      $sformat(msg_s, "%s Lower_Byte_Lane:%0d", msg_s, Lower_Byte_Lane);
+      $sformat(msg_s, "%s Upper_Byte_Lane:%0d", msg_s, Upper_Byte_Lane);
+      $sformat(msg_s, "%s offset:%0d",          msg_s, offset);
+
+
+      `uvm_info("axi_monitor::monitor_read_address", msg_s, UVM_HIGH)
+
+
+      for (int x=Lower_Byte_Lane;x<=Upper_Byte_Lane;x++) begin
+        // use get_next_address() to keep addresslogicall nice and in oneplace.
+        // Upper and Lower Wrap Boundaries are set once the write address received
+
+        read_addr=cloned_item.get_next_address(.beat_cnt(beat_cntr),
+                                               .lane(x),
+                                              .data_bus_bytes(vif.get_data_bus_width()/8));
+        //if (w_s.wstrb[x] == 1'b1) begin
+        `uvm_info("M_MEMORY.READ",
+                  $sformatf("[0x%0x] = 0x%2x", read_addr, m_memory.read(read_addr)),
+                  UVM_HIGH)
+        cloned_item.data[doffset++] = m_memory.read(read_addr);
+        //end
+      end
+
+
+    end
+
+
+    `uvm_info("AR_TO_CLASS-poost", $sformatf("%s", cloned_item.convert2string()), UVM_HIGH)
+
+    //for (int z=0;z<cloned_item.len;z++) begin
+    //  read_addr=cloned_item.get_next_address(.beat_cnt(), .lane();
+
+    //  `uvm_info(this.get_type_name(), $sformatf("reading FROM addr: 0x%0x", read_addr), UVM_INFO)
+    //   cloned_item.data[z]=m_memory.read(read_addr);
+    //end
     /* if (cloned_item.burst_type==e_FIXED) begin
        //read_data=m_memory.read(ar_s.araddr);
        for (int z=0;z<cloned_item.len;z++) begin
@@ -320,7 +389,7 @@ task axi_monitor::monitor_read_address();
       */
 
 
-    `uvm_info("AR_TO_CLASS_post", $sformatf("%s", cloned_item.convert2string()), UVM_HIGH)
+   // `uvm_info("AR_TO_CLASS_post", $sformatf("%s", cloned_item.convert2string()), UVM_INFO)
    // item.initialize();
     //$cast(item2, item.clone());
 
@@ -329,7 +398,7 @@ task axi_monitor::monitor_read_address();
 
     ap.write(cloned_item);
     ar_mbx.put(cloned_item);
-    `uvm_info("MONITOR_READ_ADDRESS", $sformatf("Item; %s", cloned_item.convert2string()), UVM_HIGH)
+   // `uvm_info("MONITOR_READ_ADDRESS", $sformatf("Item; %s", cloned_item.convert2string()), UVM_HIGH)
     if (m_config.drv_type == e_RESPONDER) begin
       // Sending a pkt with actual data to be put on on the read data channel.
       // so this becomes a read data packet instead of a read (addr) packet
@@ -355,6 +424,12 @@ task axi_monitor::monitor_read_data();
   axi_seq_item             item=null;
   axi_seq_item             cloned_item=null;
 
+  int beat_cntr=0;
+  int Lower_Byte_Lane;
+  int Upper_Byte_Lane;
+  int offset;
+  string msg_s;
+
     //if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
     // return;
   //end
@@ -377,7 +452,7 @@ task axi_monitor::monitor_read_data();
            ar_mbx.get(item);
            $cast(cloned_item, item.clone());
            cloned_item.cmd=e_READ_DATA;
-           cloned_item.initialize();
+         //  cloned_item.initialize();
            cloned_item.data  = new[cloned_item.len];
         end
      end
@@ -387,10 +462,10 @@ task axi_monitor::monitor_read_data();
      while (r_q.size() > 0) begin
 
         r_s=r_q.pop_front();
-        for (int i=cloned_item.Lower_Byte_Lane;i<=cloned_item.Upper_Byte_Lane;i++) begin
-          cloned_item.data[cloned_item.dataoffset++]=r_s.rdata[i*8+:8];
-        end
-        cloned_item.update_address();
+     //   for (int i=cloned_item.Lower_Byte_Lane;i<=cloned_item.Upper_Byte_Lane;i++) begin
+     //     cloned_item.data[cloned_item.dataoffset++]=r_s.rdata[i*8+:8];
+     //   end
+  //      cloned_item.update_address();
         if (r_s.rlast == 1'b1) begin // @Todo: count, dont rely on wlast?
            ap.write(cloned_item);
            cloned_item=null;

@@ -31,6 +31,8 @@ class axi_if_abstract extends uvm_object;
 
     extern function new (string name="axi_if_abstract");
 
+    extern virtual function int get_data_bus_width;
+
     extern virtual task wait_for_clks(int cnt=1);
     extern virtual task wait_for_not_in_reset;
 
@@ -100,6 +102,14 @@ endclass : axi_if_abstract
 function axi_if_abstract::new (string name="axi_if_abstract");
   super.new(name);
 endfunction : new
+
+//! returns data bus width
+/*! This function allows the driver to retrieve the data bus width from the interface.
+ */
+function int axi_if_abstract::get_data_bus_width;
+  `uvm_error(this.get_type_name(),
+             "WARNING. Virtual function get_data_bus_width() not defined.")
+endfunction : get_data_bus_width
 
 //! used for waiting
 /*! The testbench side is entirely event driven (or is meant to be).

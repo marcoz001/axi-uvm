@@ -325,6 +325,7 @@ endtask : read_address
 */
 task axi_responder::read_data;
   axi_seq_item item=null;
+  axi_seq_item cloned_item;
   axi_seq_item_r_vector_s s;
 
   bit iaxi_incompatible_rready_toggling_mode;
@@ -334,15 +335,19 @@ task axi_responder::read_data;
   int minval;
   int maxval;
   int wait_clks_before_next_r;
+  int offset;
+  int beat_cntr=0;
+  int beat_cntr_max;
+  bit [7:0] rdata[];
+  bit strb []; // throwaway
 
   vif.set_rvalid(1'b0);
   forever begin
 
     if (item == null) begin
        readdata_mbx.get(item);
-      item.initialize();
+       beat_cntr=0;
 
-      item.dataoffset=0;
     end
 
     // Look at this only one per loop, so there's no race condition of it
@@ -360,16 +365,20 @@ task axi_responder::read_data;
 
     // Check if done with this transfer
     if (vif.get_rready()==1'b1 && vif.get_rvalid() == 1'b1) begin
-      item.dataoffset = n;
+
       if (iaxi_incompatible_rready_toggling_mode == 1'b0) begin
          item.validcntr++;
       end
 
-      item.update_address();
+      beat_cntr++;
 
-      if (item.dataoffset>=item.Burst_Length_Bytes) begin //F
-          // driver_writeresponse_mbx.put(item);
-          item = null;
+      beat_cntr_max=item.calculate_beats(.addr(item.addr),
+                                         .number_bytes(2**item.burst_size),
+                                         .burst_length(item.len));
+      if (beat_cntr >= beat_cntr_max) begin
+          //writeresponse_mbx.put(item);
+        item = null;
+
 
           minval=min_clks_between_r_transfers;
           maxval=max_clks_between_r_transfers;
@@ -380,50 +389,53 @@ task axi_responder::read_data;
              // if not, check if there's another item
              readdata_mbx.try_get(item);
 
-             if (item != null) begin
-               item.Burst_Length_Bytes=item.Burst_Length_Bytes*4;
-               item.initialize();
-             end
+
           end
        end
-    end  // (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1)
+    end  // (vif.get_rready()==1'b1 && vif.get_rvalid() == 1'b1)
+
+
 
 
     // Update values
     if (item != null) begin
 
-      if (item.validcntr >=  item.validcntr_max) begin
-         item.validcntr=0;
-       end
+       s.rvalid = 1'b1; // item.valid[item.validcntr]; // 1'b1;
 
-       //
-       // if invalid-toggling-mode is enabled, then allow deasserting valid
+
+
+      `uvm_info(this.get_type_name(),
+                $sformatf("Calling get_beat_N_data:  %s",
+                          item.convert2string()),
+                UVM_HIGH)
+
+      item.get_beat_N_data(.beat_cnt(beat_cntr),
+                           .data_bus_bytes(vif.get_data_bus_width()/8),
+                           .data(rdata),
+                           .wstrb(strb),
+                           .wlast(s.rlast));
+
+      for (int x=0;x<4;x++) begin
+        s.rdata[x*8+:8] = rdata[x];
+      end
+
+       // Write out
+       vif.write_r(.s(s));
+
+
+             // if invalid-toggling-mode is enabled, then allow deasserting valid
        // before ready asserts.
        // Default is to stay asserted, and only allow deasssertion after ready asserts.
       if (iaxi_incompatible_rready_toggling_mode == 1'b0) begin
-        if (vif.get_rvalid() == 1'b0) begin
+         if (vif.get_rvalid() == 1'b0) begin
              item.validcntr++;
           end
        end else begin
              item.validcntr++;
        end
-
-       s.rvalid = 1'b1;// item.valid[item.validcntr]; // 1'b1;
-       //s.rstrb  = 'h0;
-       s.rdata  = 'h0;
-       s.rlast  = 1'b0;
-       n=item.dataoffset;
-      for (int j=item.Lower_Byte_Lane;j<=item.Upper_Byte_Lane;j++) begin
-        s.rdata[j*8+:8] = item.data[n++];
-          //s.rstrb[j]      = 1'b1;
-        if (n>=item.Burst_Length_Bytes) begin
-             s.rlast=1'b1;
-             break;
-          end
-       end // for
-
-       // Write out
-      vif.write_r(.s(s));
+       if (item.validcntr >=  item.validcntr_max) begin
+         item.validcntr=0;
+       end
 
 
     end // (item != null)
