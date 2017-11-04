@@ -113,11 +113,14 @@ task axi_seq::body;
   string read_item_s;
   string expected_data_s;
   string msg_s;
+  string localbuffer_s;
   int rollover_cnt;
 
   bit [7:0] expected_data_array [];
 
   bit [2:0] max_burst_size;
+      int yy;
+      bit [7:0] localbuffer [];
 
   xfers_done=0;
 
@@ -183,6 +186,10 @@ task axi_seq::body;
 
                                          len >= 'h2;
 
+                                         addr       == 'h10;
+                                         len        == 'h35;
+                                         burst_size == 'h4;
+                                         burst_type == 'h0;
 
                                         }
                                    ) else begin
@@ -249,7 +256,8 @@ task axi_seq::body;
 
      // compare data
      if (write_item.burst_type == e_FIXED) begin
-        iaddr=write_item.addr;
+/*
+       iaddr=write_item.addr;
         for (int y=2**write_item.burst_size;y>=1;y--) begin
            expected_data=write_item.data[write_item.len-y];
           read_data=m_memory.read(iaddr++);
@@ -260,6 +268,74 @@ task axi_seq::body;
                                    read_data))
            end
         end
+  */
+
+       miscompare_cntr=0;
+       expected_data_array=new[write_item.data.size()];
+
+      // brute force, not elegant at all.
+      // write to local buffer, then compare that buffer (repeated) with the axi readback
+
+
+      yy=0;
+      localbuffer=new[2**write_item.burst_size];
+      for (int y=0;y<localbuffer.size();y++) begin
+         localbuffer[y]='h0;
+      end
+      for (int y=0;y<write_item.len;y++) begin
+        localbuffer[yy++]=write_item.data[y];
+        if (yy >= 2**write_item.burst_size) begin
+          yy=0;
+        end
+      end
+
+      yy=0;
+      for (int y=0; y<expected_data_array.size(); y++) begin
+        expected_data_array[y]=localbuffer[yy++];
+        if (yy >= localbuffer.size()) begin
+          yy=0;
+        end
+      end
+
+      for (int y=0;y<read_item.data.size();y++) begin
+         expected_data = expected_data_array[y];
+        read_data     = m_memory.read(write_item.addr+y);
+         if (expected_data!=read_data) begin
+            miscompare_cntr++;
+         end
+      end
+
+
+     assert (miscompare_cntr==0) else begin
+        write_item_s="";
+//        read_item_s="";
+        expected_data_s="";
+        localbuffer_s="";
+
+       for (int z=0;z<write_item.data.size();z++) begin
+          $sformat(write_item_s, "%s 0x%2x", write_item_s, write_item.data[z]);
+        end
+
+ //       for (int z=0;z<read_item.data.size();z++) begin
+ //         $sformat(read_item_s, "%s 0x%2x", read_item_s, read_item.data[z]);
+ //       end
+
+        for (int z=0;z<expected_data_array.size();z++) begin
+          $sformat(expected_data_s, "%s 0x%2x", expected_data_s, expected_data_array[z]);
+        end
+
+        for (int z=0;z<localbuffer.size();z++) begin
+          $sformat(localbuffer_s, "%s 0x%2x", localbuffer_s, localbuffer[z]);
+        end
+
+
+        `uvm_error("AXI READBACK e_FIXED miscompare",
+                   $sformatf("%0d miscompares between expected and actual data items.  \nExpected: %s \nWritten: %s  \nLocalbuffer: %s", miscompare_cntr, expected_data_s, write_item_s, localbuffer_s ));
+      end
+
+
+
+
      end else if (write_item.burst_type == e_INCR) begin
        for (int z=0;z<write_item.len;z++) begin
           expected_data=write_item.data[z];
@@ -414,6 +490,38 @@ task axi_seq::body;
       miscompare_cntr=0;
       expected_data_array=new[read_item.data.size()];
 
+      // brute force, not elegant at all.
+      // write to local buffer, then compare that buffer (repeated) with the axi readback
+
+
+      yy=0;
+      localbuffer=new[2**write_item.burst_size];
+      for (int y=0;y<localbuffer.size();y++) begin
+         localbuffer[y]='h0;
+      end
+      for (int y=0;y<write_item.len;y++) begin
+        localbuffer[yy++]=write_item.data[y];
+        if (yy >= 2**write_item.burst_size) begin
+          yy=0;
+        end
+      end
+
+      yy=0;
+      for (int y=0; y<expected_data_array.size(); y++) begin
+        expected_data_array[y]=localbuffer[yy++];
+        if (yy >= localbuffer.size()) begin
+          yy=0;
+        end
+      end
+
+      for (int y=0;y<read_item.data.size();y++) begin
+         expected_data = expected_data_array[y];
+         read_data     = read_item.data[y];
+         if (expected_data!=read_data) begin
+            miscompare_cntr++;
+         end
+      end
+/*
       for (int y=1; y<=2**write_item.burst_size;y++) begin
          expected_data=write_item.data[write_item.len-y];
          for (int z=idatacntr-y;z<write_item.len;z=z+idatacntr) begin
@@ -425,11 +533,12 @@ task axi_seq::body;
 
           end  // for z
       end // for y
-
+*/
       assert (miscompare_cntr==0) else begin
         write_item_s="";
         read_item_s="";
         expected_data_s="";
+        localbuffer_s="";
 
        for (int z=0;z<write_item.data.size();z++) begin
           $sformat(write_item_s, "%s 0x%2x", write_item_s, write_item.data[z]);
@@ -443,8 +552,13 @@ task axi_seq::body;
           $sformat(expected_data_s, "%s 0x%2x", expected_data_s, expected_data_array[z]);
         end
 
+        for (int z=0;z<localbuffer.size();z++) begin
+          $sformat(localbuffer_s, "%s 0x%2x", localbuffer_s, localbuffer[z]);
+        end
+
+
         `uvm_error("AXI READBACK e_FIXED miscompare",
-                   $sformatf("%0d miscompares between expected and actual data items.  \nExpected: %s \n  Actual: %s;  \nWritten: %s", miscompare_cntr, expected_data_s, read_item_s, write_item_s ));
+                   $sformatf("%0d miscompares between expected and actual data items.  \nExpected: %s \n  Actual: %s;  \nWritten: %s  \nLocalbuffer: %s", miscompare_cntr, expected_data_s, read_item_s, write_item_s, localbuffer_s ));
       end
 
       ///   ........................
