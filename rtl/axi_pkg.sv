@@ -209,6 +209,45 @@ localparam int AXI_SEQ_ITEM_R_NUM_BITS = $bits(axi_seq_item_r_vector_s);     /*!
 /** \brief Bit vector containing packed read data channel values */
 typedef bit[AXI_SEQ_ITEM_R_NUM_BITS-1:0] axi_seq_item_r_vector_t;
 
+/** \brief calculate burst_size aligned address
+ *
+ * The AXI function to calculate aligned address is:
+ * Aligned_Address = (Address/(2**burst_size)*(2**burst_size)
+ * Zeroing out the bottom burst_size bits does the same thing
+ * which is much more eaily synthesizable.
+ * @param address - starting address
+ * @param burst_size - how many bytes wide is the beat
+ * @returns the burst_size aligned address
+*/
+function bit [C_AXI_ADDR_WIDTH-1:0] calculate_aligned_address(
+  input bit [C_AXI_ADDR_WIDTH-1:0] address,
+  input bit [2:0]                  burst_size);
+
+
+  bit [C_AXI_ADDR_WIDTH-1:0] aligned_address;
+
+  // This can be done in a nice function, but this case
+  // is immediatly understandable.
+  aligned_address = address;
+  case (burst_size)
+    3'b000 : aligned_address = address;
+    3'b001 : aligned_address[0]   = 1'b0;
+    3'b010 : aligned_address[1:0] = 2'b00;
+    3'b011 : aligned_address[2:0] = 3'b000;
+    3'b100 : aligned_address[3:0] = 4'b0000;
+    3'b101 : aligned_address[4:0] = 5'b0_0000;
+    3'b110 : aligned_address[5:0] = 6'b00_0000;
+    3'b111 : aligned_address[6:0] = 7'b000_0000;
+  endcase
+
+  `uvm_info("axi_pkg::calculatate-aligned_adress",
+            $sformatf("address: 0x%0x burst_size:%0d alignedaddress: 0x%0x",
+                      address, burst_size, aligned_address),
+            UVM_HIGH)
+
+  return aligned_address;
+
+endfunction : calculate_aligned_address
 
 `include "axi_if_abstract.svh"
 

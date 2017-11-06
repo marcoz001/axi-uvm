@@ -220,7 +220,10 @@ end
 
 initial begin
 
+  uvm_config_db #(int)::set(null, "*", "AXI_ADDR_WIDTH", C_AXI_ADDR_WIDTH);
   uvm_config_db #(int)::set(null, "*", "AXI_DATA_WIDTH", C_AXI_DATA_WIDTH);
+  uvm_config_db #(int)::set(null, "*", "AXI_ID_WIDTH",   C_AXI_ID_WIDTH);
+  uvm_config_db #(int)::set(null, "*", "AXI_LEN_WIDTH",  C_AXI_LEN_WIDTH);
 
   axi_driver_vif.use_concrete_class();
   axi_responder_vif.use_concrete_class();

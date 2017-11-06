@@ -422,7 +422,7 @@ function void axi_if_abstract::enable_awready_toggle_pattern(bit [31:0] pattern)
 endfunction : enable_awready_toggle_pattern
 
 //! Disable awready toggling.
-/*! @Todo: what happens when disabled..
+/*! @todo: what happens when disabled..
  *
 */
 function void axi_if_abstract::disable_awready_toggle_pattern();
@@ -440,7 +440,7 @@ function void axi_if_abstract::enable_wready_toggle_pattern(bit [31:0] pattern);
 endfunction : enable_wready_toggle_pattern
 
 //! Disable wready toggling.
-/*! @Todo: what happens when disabled..
+/*! @todo: what happens when disabled..
  *
 */
 function void axi_if_abstract::disable_wready_toggle_pattern();
@@ -458,7 +458,7 @@ function void axi_if_abstract::enable_bready_toggle_pattern(bit [31:0] pattern);
 endfunction : enable_bready_toggle_pattern
 
 //! Disable bready toggling.
-/*! @Todo: what happens when disabled..
+/*! @todo: what happens when disabled..
  *
 */
 function void axi_if_abstract::disable_bready_toggle_pattern();
@@ -476,7 +476,7 @@ function void axi_if_abstract::enable_arready_toggle_pattern(bit [31:0] pattern)
 endfunction : enable_arready_toggle_pattern
 
 //! Disable arready toggling.
-/*! @Todo: what happens when disabled..
+/*! @todo: what happens when disabled..
  *
 */
 function void axi_if_abstract::disable_arready_toggle_pattern();
@@ -494,7 +494,7 @@ function void axi_if_abstract::enable_rready_toggle_pattern(bit [31:0] pattern);
 endfunction : enable_rready_toggle_pattern
 
 //! Disable rready toggling.
-/*! @Todo: what happens when disabled..
+/*! @todo: what happens when disabled..
  *
 */
 function void axi_if_abstract::disable_rready_toggle_pattern();
@@ -515,7 +515,7 @@ endfunction : write_aw
 //! Drive all the signals on the write data channel with the specified values.
 /*! s is a packed struct to ease usage in an emulator environment(like Veloce)
  *  @param s - packed struct containing all write data channel signal values
- * @Todo: is this parameter still used anywhere?
+ * @todo: is this parameter still used anywhere?
 */
 function void axi_if_abstract::write_w(axi_seq_item_w_vector_s  s);
   `uvm_error(this.get_type_name(),

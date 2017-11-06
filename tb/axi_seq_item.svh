@@ -143,14 +143,11 @@ class axi_seq_item extends uvm_sequence_item;
                       else if (cmd == axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN)
                          len == 1;
 
-                      if ((burst_type == axi_pkg::e_FIXED) &&
-                               (burst_size == axi_pkg::e_2BYTES))
+                      else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_2BYTES))
                           len[0] == 1'b0;
-                      else if ((burst_type == axi_pkg::e_FIXED) &&
-                                  (burst_size == axi_pkg::e_4BYTES))
+                      else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_4BYTES))
                            len[1:0] == 2'b00;
-                      else if ((burst_type == axi_pkg::e_FIXED) &&
-                                  (burst_size == axi_pkg::e_8BYTES))
+                      else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_8BYTES))
                            len[2:0] == 3'b000;
 
                       // wrap is slightly more difficult.
@@ -178,16 +175,50 @@ class axi_seq_item extends uvm_sequence_item;
                         len inside {[129:256], [385:512], [897:1024], [1921:2048]};
 
 
-                      if ((protocol == axi_uvm_pkg::e_AXI4) &&
-                               (burst_type == axi_pkg::e_INCR))
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b000))
+                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b001))
+                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b010))
+                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[1:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b011))
+                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[2:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b100))
+                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[3:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b101))
+                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[4:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b110))
+                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[5:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b111))
+                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[6:0]);
 
-                           len < ((2**burst_size) * c_AXI4_MAXBEATCNT) -
-                        (addr-int'(addr/(2**burst_size))*(2**burst_size));
-                      else
-                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT)-
-                        (addr-int'(addr/(2**burst_size))*(2**burst_size));
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b000))
+                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b001))
+                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b010))
+                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[1:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b011))
+                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[2:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b100))
+                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[3:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b101))
+                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[4:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b110))
+                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[5:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b111))
+                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[6:0]);
+
+
+//                      if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR))
+//                        (addr-int'(addr/(2**burst_size))*(2**burst_size));
+                      //else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR))
+                        //len < ((2**burst_size) * c_AXI3_MAXBEATCNT)-
+                        //(addr-int'(addr/(2**burst_size))*(2**burst_size));
                         // 16 for everything except AXI4 incr.
                         //@Todo: take into account non-aligned addr
+                     // else
+                     //   len == 666;
 
                        }
 
@@ -213,9 +244,6 @@ class axi_seq_item extends uvm_sequence_item;
     extern function void   post_randomize;
 
     // Custom functions
-    extern function bit [ADDR_WIDTH-1:0] calculate_aligned_address(
-     input bit [ADDR_WIDTH-1:0] addr,
-     input int        number_bytes);
 
     extern function int calculate_beats(
       input bit [ADDR_WIDTH-1:0] addr,
@@ -426,30 +454,6 @@ function void axi_seq_item::post_randomize;
 endfunction : post_randomize
 
 
-/*! \brief Calculate aligned address from current address.
- *
- * Used to guarantee transfers are aligned on the bus for
- * most efficient bus usage
- * @param addr - starting address
- * @param number_bytes - number of bytes per beat (must be consistent throughout burst)
- *                       unless doing a partial transfer, this matches data_bus_bytes
- */
-function bit [axi_seq_item::ADDR_WIDTH-1:0] axi_seq_item::calculate_aligned_address(
-  input bit [ADDR_WIDTH-1:0] addr,
-  input int number_bytes);
-
-  bit [ADDR_WIDTH-1:0] aligned_address ;
-
-
-  aligned_address = (int'(addr/number_bytes))*number_bytes;
-  `uvm_info("FUNCTION: calculate_aligned_address",
-            $sformatf("(int'(%0d/%0d))*%0d)=%0d",
-                      addr, number_bytes,number_bytes,aligned_address),
-            UVM_HIGH)
-        return aligned_address;
-
-endfunction : calculate_aligned_address
-
 /*! \brief Get next address for reading/writing to memory
  *
  * Takes into account burst_type. IE: e_FIXED, e_INCR, e_WRAP
@@ -475,9 +479,9 @@ function bit[axi_seq_item::ADDR_WIDTH-1:0] axi_seq_item::get_next_address(
 
   bit [63:0] Aligned_Address;
 
-  Aligned_Address=calculate_aligned_address(.addr         (addr),
-                                            .number_bytes ((2**burst_size)));
 
+  Aligned_Address=axi_pkg::calculate_aligned_address(.address(addr),
+                                            .burst_size(burst_size));
   max_beat_cnt = calculate_beats(.addr(addr),
                                  .number_bytes(2**burst_size),
                                  .burst_length(len));
@@ -642,9 +646,8 @@ function void axi_seq_item::get_beat_N_byte_lanes(input  int beat_cnt,
   string s;
   string msg_s;
 
-  Aligned_Start_Address=calculate_aligned_address(.addr         (addr),
-                                                  .number_bytes ((2**burst_size)));
-
+  Aligned_Start_Address=axi_pkg::calculate_aligned_address(.address(addr),
+                                                  .burst_size(burst_size));
   Address_N = Aligned_Start_Address+(beat_cnt*(2**burst_size));
 
 
@@ -727,10 +730,9 @@ function int axi_seq_item::calculate_beats(
   int beats;
   bit [ADDR_WIDTH-1:0] aligned_addr;
 
-  aligned_addr=calculate_aligned_address(.addr(addr),
-                                         .number_bytes(number_bytes));
 
-
+     aligned_addr=axi_pkg::calculate_aligned_address(.address(addr),
+                                            .burst_size(burst_size));
         // address - starting address
         // burst_length - total length of burst (in bytes)
         // data_bus_bytes - width of data bus (in bytes)
@@ -758,8 +760,9 @@ function void axi_seq_item::aw_from_class(
   axi_seq_item_aw_vector_s s;
 
    s.awid    = t.id;
-   s.awaddr  = calculate_aligned_address(.addr(t.addr),
-                                        .number_bytes(2**t.burst_size));
+
+  s.awaddr  = axi_pkg::calculate_aligned_address(.address(t.addr),
+                                                 .burst_size(t.burst_size));
 
    s.awlen   = calculate_beats(.addr         (t.addr),
                                .number_bytes (2**t.burst_size),
@@ -855,8 +858,10 @@ function void axi_seq_item::ar_from_class(
   axi_seq_item_ar_vector_s s;
 
   s.arid    = t.id;
-  s.araddr  = calculate_aligned_address(.addr(t.addr),
-                                        .number_bytes(2**t.burst_size));
+
+  s.araddr  = axi_pkg::calculate_aligned_address(.address(t.addr),
+                                                  .burst_size(t.burst_size));
+
   s.arlen   = calculate_beats(.addr  (t.addr),
                               .number_bytes (2**t.burst_size),
                               .burst_length (t.len));
