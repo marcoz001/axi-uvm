@@ -25,6 +25,11 @@ package axi_uvm_pkg;
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
+
+//import params_pkg::*;
+
+localparam ADDR_WIDTH = 32; //params_pkg::AXI_ADDR_WIDTH;
+
 import axi_pkg::*;
 
 /*! \typedef axi_protocol_version_t */
@@ -64,8 +69,35 @@ typedef enum {e_DRIVER,  /**< Agent is a master */
              } driver_type_t;
 
 
+/*! \brief Calculate number of beats/clks in this burst.
+ *
+ * If the transfer is too large, this function will return a bogus result
+ * The caller is responsible for insuring safety.
+ * \todo: check if size (length + address-misalignment) is too large
+ */
+function int calculate_beats(
+    input bit [ADDR_WIDTH-1:0] addr,
+    input int burst_size,
+  input int burst_length);
+
+  int beats;
+  bit [ADDR_WIDTH-1:0] aligned_addr;
 
 
+     aligned_addr=axi_pkg::calculate_aligned_address(.address(addr),
+                                            .burst_size(burst_size));
+        // address - starting address
+        // burst_length - total length of burst (in bytes)
+        // data_bus_bytes - width of data bus (in bytes)
+        // number_bytes - number of bytes per beat (must be consistent throughout burst)
+        //              - this matches data_bus_bytes unless doing a partial transfer
+  beats = $ceil(real'(real'((addr-aligned_addr)+burst_length)/real'(2**burst_size)));
+  // \todo: something easily synthesizable might be nice insttead of $ceil()
+
+ // `uvm_info("CALCULATE BEATS", $sformatf("addr:0x%0x  aligned-addr: 0x%0x   burst_length: %0d    number_bytes: %0d beats [((0x%0x-0x%0x)+%0d)/%0d]=0x%0x", addr, aligned_addr, burst_length, number_bytes, addr, aligned_addr, burst_length,number_bytes,beats), UVM_HIGH)
+
+  return beats;
+endfunction : calculate_beats
 
 
 

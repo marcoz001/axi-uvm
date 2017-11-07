@@ -230,14 +230,14 @@ function bit [C_AXI_ADDR_WIDTH-1:0] calculate_aligned_address(
   // is immediatly understandable.
   aligned_address = address;
   case (burst_size)
-    3'b000 : aligned_address = address;
-    3'b001 : aligned_address[0]   = 1'b0;
-    3'b010 : aligned_address[1:0] = 2'b00;
-    3'b011 : aligned_address[2:0] = 3'b000;
-    3'b100 : aligned_address[3:0] = 4'b0000;
-    3'b101 : aligned_address[4:0] = 5'b0_0000;
-    3'b110 : aligned_address[5:0] = 6'b00_0000;
-    3'b111 : aligned_address[6:0] = 7'b000_0000;
+    e_1BYTE    : aligned_address      = address;
+    e_2BYTES   : aligned_address[0]   = 1'b0;
+    e_4BYTES   : aligned_address[1:0] = 2'b00;
+    e_8BYTES   : aligned_address[2:0] = 3'b000;
+    e_16BYTES  : aligned_address[3:0] = 4'b0000;
+    e_32BYTES  : aligned_address[4:0] = 5'b0_0000;
+    e_64BYTES  : aligned_address[5:0] = 6'b00_0000;
+    e_128BYTES : aligned_address[6:0] = 7'b000_0000;
   endcase
 
   `uvm_info("axi_pkg::calculatate-aligned_adress",
@@ -248,6 +248,44 @@ function bit [C_AXI_ADDR_WIDTH-1:0] calculate_aligned_address(
   return aligned_address;
 
 endfunction : calculate_aligned_address
+
+function bit [C_AXI_LEN_WIDTH-1:0] calculate_beats(
+  input bit [C_AXI_ADDR_WIDTH-1:0] addr,
+  input bit [2:0]                  burst_size,
+  input shortint                   burst_length);
+
+
+  byte unalignment_offset;
+  shortint total_length;
+  shortint shifter;
+  shortint ishifter;
+  bit [C_AXI_LEN_WIDTH-1:0] beats;
+
+    case (burst_size)
+    e_1BYTE    : unalignment_offset = 0;
+    e_2BYTES   : unalignment_offset = shortint'(addr[0]);
+    e_4BYTES   : unalignment_offset = shortint'(addr[1:0]);
+    e_8BYTES   : unalignment_offset = shortint'(addr[2:0]);
+    e_16BYTES  : unalignment_offset = shortint'(addr[3:0]);
+    e_32BYTES  : unalignment_offset = shortint'(addr[4:0]);
+    e_64BYTES  : unalignment_offset = shortint'(addr[5:0]);
+    e_128BYTES : unalignment_offset = shortint'(addr[6:0]);
+  endcase
+
+  total_length=burst_length + unalignment_offset;
+
+  shifter = shortint'(total_length/(2**burst_size));
+
+  ishifter = shifter*(2**burst_size);
+
+  if (ishifter != total_length) begin
+    shifter += 1;
+  end
+
+  beats = shifter;
+  return beats;
+
+endfunction : calculate_beats
 
 `include "axi_if_abstract.svh"
 

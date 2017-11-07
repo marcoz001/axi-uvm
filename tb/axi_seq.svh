@@ -165,7 +165,7 @@ task axi_seq::body;
     `uvm_fatal(this.get_type_name, "Unable to fetch m_memory from config db. Using defaults")
     end
 
-  xfers_to_send=1;
+  xfers_to_send=30;
 
   // If addr_width==0, then the setter hasn't been called. Try to fetch from
   // config db.
@@ -230,17 +230,14 @@ task axi_seq::body;
               UVM_INFO)
 
     start_item(write_item);
-    assert( write_item.randomize() with {protocol   ==     e_AXI3;
+    assert( write_item.randomize() with {//protocol   ==     e_AXI3;
                                          cmd        ==     e_WRITE;
-                                         //burst_size inside {e_1BYTE, e_2BYTES, e_4BYTES};
-                                         burst_size <=     local::max_burst_size;
-                                         burst_type inside {e_FIXED, e_INCR, e_WRAP};
+                                        //burst_size inside {e_1BYTE};
+                                         burst_size <=    local::max_burst_size;
+                                         //burst_type inside {e_FIXED, e_INCR, e_WRAP};
                                          //id == local::i;
-                                         addr       <=      'h34;
-
-                                         //len >= 'h2;
-
-                                        }
+                                         addr       <=      'h1000;
+    }
                                    ) else begin
          `uvm_fatal(this.get_type_name(),
                     $sformatf("Unable to randomize %s",  write_item.get_full_name()));

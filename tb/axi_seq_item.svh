@@ -35,7 +35,7 @@
 class axi_seq_item extends uvm_sequence_item;
   `uvm_object_utils(axi_seq_item)
 
-  localparam ADDR_WIDTH = 64;
+  localparam ADDR_WIDTH = 32;
   localparam ID_WIDTH = 7;
 
     //widths are top-level parameters. but we're setting to max here.
@@ -43,7 +43,7 @@ class axi_seq_item extends uvm_sequence_item;
     rand axi_protocol_version_t                   protocol; // AXI3 or AXI4
     rand bit                    [ADDR_WIDTH-1:0]  addr;
     rand bit                    [7:0]             data  [];
-    rand int                                      len      =0;
+    rand longint                                      len      =0;
 
     rand bit                    [ID_WIDTH-1:0]    id;
     rand logic                  [2:0]             burst_size; // Burst size
@@ -92,7 +92,8 @@ class axi_seq_item extends uvm_sequence_item;
 
 
   constraint protocol_c   { solve protocol   before addr; }
-  constraint burst_type_c { solve burst_type before addr; }
+  constraint burst_type_c { solve burst_type before addr;
+                            burst_type != axi_pkg::e_RESERVED; }
 
   // Address must be aligned if burst_type==Fixed
   // per spec, sect. a3.4.1, fixed and wrap burst types have alignment requirements
@@ -108,7 +109,7 @@ class axi_seq_item extends uvm_sequence_item;
                          // at least one tool complains about ""Expected a constant as index:"
                          // Better way??
 
-                         if ((burst_type == axi_pkg::e_FIXED) &&
+                         if ((burst_type == axi_pkg::e_FIXED || burst_type == axi_pkg::e_WRAP) &&
                              (burst_size == axi_pkg::e_2BYTES))
                            addr[0] == 1'b0;
                          else if ((burst_type == axi_pkg::e_FIXED || burst_type == axi_pkg::e_WRAP) &&
@@ -142,20 +143,37 @@ class axi_seq_item extends uvm_sequence_item;
                          len == 1;
                       else if (cmd == axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN)
                          len == 1;
-
-                      else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_2BYTES))
+                      else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_1BYTE)) {
+                        len <= (1*c_AXI3_MAXBEATCNT);
+                      } else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_2BYTES)) {
                           len[0] == 1'b0;
-                      else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_4BYTES))
+                        len <= (2*c_AXI3_MAXBEATCNT);
+                      } else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_4BYTES)) {
                            len[1:0] == 2'b00;
-                      else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_8BYTES))
+                        len <= (4*c_AXI3_MAXBEATCNT);
+                      } else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_8BYTES)) {
                            len[2:0] == 3'b000;
+                        len <= (8*c_AXI3_MAXBEATCNT);
+                      } else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_16BYTES)) {
+                           len[3:0] == 4'b0000;
+                        len <= (16*c_AXI3_MAXBEATCNT);
+                      } else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_32BYTES)) {
+                           len[4:0] == 5'b0_0000;
+                        len <= (32*c_AXI3_MAXBEATCNT);
+                      } else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_64BYTES)) {
+                           len[5:0] == 6'b00_0000;
+                        len <= (64*c_AXI3_MAXBEATCNT);
+                      } else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_128BYTES)) {
+                           len[6:0] == 7'b000_0000;
+                        len <= (128*c_AXI3_MAXBEATCNT);
+
 
                       // wrap is slightly more difficult.
                       // per spec:A3.4.1, "the length of the burst must be 2,4,8 or 16 beats
                       // however it can be different bytes within those bursts.
                       // IE:   2 beat burst,of 4 byte beats could be length=(5,6,7,8) bytes
                       //       2 beat burst of 2 byte beats could be length=(3,4) bytes
-                      else if (burst_type == axi_pkg::e_WRAP && (burst_size == axi_pkg::e_1BYTE))
+                      } else if (burst_type == axi_pkg::e_WRAP && (burst_size == axi_pkg::e_1BYTE))
                         len inside {2, 4, 8, 16};
                       else if (burst_type == axi_pkg::e_WRAP && (burst_size == axi_pkg::e_2BYTES))
                         len inside {3,4, 7,8, 15,16, 31,32};
@@ -170,44 +188,44 @@ class axi_seq_item extends uvm_sequence_item;
                         len inside {[33:64], [97:128], [225:256], [481:512]};
                       else if (burst_type == axi_pkg::e_WRAP && (burst_size == axi_pkg::e_64BYTES))
                         len inside {[65:128], [193:256], [449:512], [960:1024]};
-
                       else if (burst_type == axi_pkg::e_WRAP && (burst_size == axi_pkg::e_128BYTES))
                         len inside {[129:256], [385:512], [897:1024], [1921:2048]};
 
 
-                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b000))
-                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT);
-                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b001))
-                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b010))
-                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[1:0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b011))
-                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[2:0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b100))
-                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[3:0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b101))
-                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[4:0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b110))
-                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[5:0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b111))
-                        len < ((2**burst_size) * c_AXI4_MAXBEATCNT) - int'(addr[6:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_1BYTE))
+                        len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_2BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT) - byte'(addr[0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_4BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT) - byte'(addr[1:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_8BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT) - byte'(addr[2:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_16BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT) - byte'(addr[3:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_32BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT) - byte'(addr[4:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_64BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT) - byte'(addr[5:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_128BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT) - byte'(addr[6:0]);
 
-                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b000))
-                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT);
-                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b001))
-                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b010))
-                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[1:0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b011))
-                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[2:0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b100))
-                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[3:0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b101))
-                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[4:0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b110))
-                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[5:0]);
-                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == 3'b111))
-                        len < ((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[6:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_1BYTE))
+                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_2BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_4BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[1:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_8BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[2:0]);
+
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_16BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[3:0]);  //((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[3:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_32BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[4:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_64BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[5:0]);
+                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_128BYTES))
+                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[6:0]);
 
 
 //                      if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR))
@@ -312,6 +330,7 @@ function string axi_seq_item::convert2string;
     int j=0;
     sdata="";
     $sformat(s, "%s", super.convert2string());
+    $sformat(s, "%s Protocol: %s", s, protocol.name());
     $sformat(s, "%s Cmd: %s   ", s, cmd.name);
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
     $sformat(s, "%s ID = 0x%0x ",   s, id);
@@ -320,7 +339,7 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s BurstType = 0x%0x ",   s, burst_type);
     $sformat(s, "%s BID = 0x%0x",   s, bid);
     $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
-
+/*
     j=data.size();
     for (int i =0; i< j; i++) begin
        $sformat(sdata, "%s 0x%02x ", sdata, data[i]);
@@ -333,7 +352,7 @@ function string axi_seq_item::convert2string;
       $sformat(sdata, "%s %b ", sdata, wstrb[i]);
     end
     $sformat(s, "%s wstrb[]: %s", s, sdata);
-
+*/
 
     return s;
 endfunction : convert2string
@@ -489,7 +508,7 @@ function bit[axi_seq_item::ADDR_WIDTH-1:0] axi_seq_item::get_next_address(
   dtsize = (2**burst_size) * max_beat_cnt;
 
   Lower_Wrap_Boundary = (int'(Aligned_Address/dtsize) * dtsize);
-//  Lower_Wrap_Boundary = (int'(addr(/max_beat_cnt
+
   Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
 
   get_beat_N_byte_lanes(.beat_cnt(beat_cnt),
@@ -661,17 +680,9 @@ function void axi_seq_item::get_beat_N_byte_lanes(input  int beat_cnt,
 
            offset = beat_cnt*(2**burst_size);
 
-      //  end else begin
-      //     Lower_Byte_Lane = Address_N -
-      //                       (int'(Address_N/data_bus_bytes)) * data_bus_bytes;
-      //     Upper_Byte_Lane = Lower_Byte_Lane + (2**burst_size) - 1;
-
-      //     offset = Address_N - addr;
-      //  end
 
       end  else begin
 
-//  if (beat_cnt==0 || burst_type == e_FIXED) begin
         if (beat_cnt==0) begin
            Lower_Byte_Lane = addr -
                              (int'(addr/data_bus_bytes)) * data_bus_bytes;
@@ -688,15 +699,6 @@ function void axi_seq_item::get_beat_N_byte_lanes(input  int beat_cnt,
            offset = Address_N - addr;
         end
       end
-  `uvm_info("axi_seq_item::get_beat_N_byte_lanes",
-            $sformatf(" %0d - (int'(%0d/%0d)) * %0d =%0d",
-                      Address_N,  Address_N,  data_bus_bytes,   data_bus_bytes,Lower_Byte_Lane ),
-            UVM_HIGH)
-
-//  `uvm_info("axi_seq_item::get_beat_N_byte_lanes",
-//            $sformatf("beat_cnt:%0d data_bus_bytes:%0d number_Bytes: %0d Start_Address: 0x%0x Aligned_Start_Address: 0x%0x Address_N: 0x%0x  Lower_Byte_Lane:%0d Upper_Byte_Lane:%0d offset:%0d",
-//                      beat_cnt, data_bus_bytes,(2**burst_size), addr, Aligned_Start_Address, Address_N,  Lower_Byte_Lane, Upper_Byte_Lane, offset),
-//            UVM_HIGH)
 
       msg_s="";
       $sformat(msg_s, "%s beat_cnt:%0d",        msg_s, beat_cnt);
@@ -727,23 +729,93 @@ function int axi_seq_item::calculate_beats(
     input int number_bytes,
     input int burst_length);
 
-  int beats;
+  byte beats;
+  byte axi_uvm_pkg_beats;
+  byte ibeat_cnt;
   bit [ADDR_WIDTH-1:0] aligned_addr;
+  shortint shifter;
+  shortint ishifter;
+
+  shortint bNumber_Bytes=2**burst_size;
+
+  byte unalignment_offset;
+  shortint total_length;
+
+  string msg_s;
 
 
-     aligned_addr=axi_pkg::calculate_aligned_address(.address(addr),
+  return axi_pkg::calculate_beats(.addr(addr),
+                                     .burst_size(burst_size),
+                                     .burst_length(burst_length));
+
+ /*
+
+
+   aligned_addr=axi_pkg::calculate_aligned_address(.address(addr),
                                             .burst_size(burst_size));
         // address - starting address
         // burst_length - total length of burst (in bytes)
         // data_bus_bytes - width of data bus (in bytes)
         // number_bytes - number of bytes per beat (must be consistent throughout burst)
         //              - this matches data_bus_bytes unless doing a partial transfer
-  beats = $ceil(real'(real'((addr-aligned_addr)+burst_length)/real'(number_bytes)));
+   beats = $ceil(real'(real'((addr-aligned_addr)+burst_length)/real'(number_bytes)));
+
+ // axi_uvm_pkg_beats = axi_uvm_pkg::calculate_beats(
+ //   .addr(addr),
+ //   .burst_size(burst_size),
+ //   .burst_length(burst_length));
+
+  // beatcnt is length(in bytes) + address unalignment (addr-aligned_addr)
+  //            / 2**burst_size
+  //
+
+  case (burst_size)
+    e_1BYTE    : unalignment_offset = 0;
+    e_2BYTES   : unalignment_offset = shortint'(addr[0]);
+    e_4BYTES   : unalignment_offset = shortint'(addr[1:0]);
+    e_8BYTES   : unalignment_offset = shortint'(addr[2:0]);
+    e_16BYTES  : unalignment_offset = shortint'(addr[3:0]);
+    e_32BYTES  : unalignment_offset = shortint'(addr[4:0]);
+    e_64BYTES  : unalignment_offset = shortint'(addr[5:0]);
+    e_128BYTES : unalignment_offset = shortint'(addr[6:0]);
+  endcase
+
+  total_length=burst_length + unalignment_offset;
+
+  shifter = shortint'(total_length/(2**burst_size));
+  ishifter = shifter*(2**burst_size);
+
+  if (ishifter != total_length) begin
+    //`uvm_error("SHift", "shifter+=1")
+    shifter += 1;
+  end
+
+
+  ishifter = axi_pkg::calculate_beats(.addr(addr),
+                                     .burst_size(burst_size),
+                                     .burst_length(burst_length));
+
+  msg_s="";
+  $sformat(msg_s, "%s addr: 0x%0x", msg_s, addr);
+  $sformat(msg_s, "%s beats: %0d", msg_s, beats);
+  $sformat(msg_s, "%s shifter: %0d", msg_s, shifter);
+  $sformat(msg_s, "%s ishifter: %0d", msg_s, ishifter);
+  $sformat(msg_s, "%s burst_size: %0d", msg_s, burst_size);
+  $sformat(msg_s, "%s burst_length: %0d", msg_s, burst_length);
+  $sformat(msg_s, "%s unalignment_offset: %0d", msg_s, unalignment_offset);
+  $sformat(msg_s, "%s total_length: %0d", msg_s, total_length);
+
+
+  if (shifter != ishifter) begin
+    `uvm_error(this.get_type_name(), msg_s)
+  end
+
   // \todo: something easily synthesizable might be nice insttead of $ceil()
 
-  `uvm_info("CALCULATE BEATS", $sformatf("addr:0x%0x  aligned-addr: 0x%0x   burst_length: %0d    number_bytes: %0d beats [((0x%0x-0x%0x)+%0d)/%0d]=0x%0x", addr, aligned_addr, burst_length, number_bytes, addr, aligned_addr, burst_length,number_bytes,beats), UVM_HIGH)
+ // `uvm_info("CALCULATE BEATS", $sformatf("addr:0x%0x  aligned-addr: 0x%0x   burst_length: %0d    number_bytes: %0d beats [((0x%0x-0x%0x)+%0d)/%0d]=0x%0x", addr, aligned_addr, burst_length, number_bytes, addr, aligned_addr, burst_length,number_bytes,beats), UVM_HIGH)
 
   return beats;
+  */
 endfunction : calculate_beats
 
 /*! \brief Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s
