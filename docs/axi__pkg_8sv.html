@@ -194,11 +194,27 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af1b004bb6ced75b75470eb4eaae20493"><td class="memItemLeft" align="right" valign="top">bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#af1b004bb6ced75b75470eb4eaae20493">calculate_aligned_address</a> (input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; address, input bit&lt; 2:0 &gt; burst_size)</td></tr>
-<tr class="memdesc:af1b004bb6ced75b75470eb4eaae20493"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate burst_size aligned address  <a href="#af1b004bb6ced75b75470eb4eaae20493">More...</a><br /></td></tr>
-<tr class="separator:af1b004bb6ced75b75470eb4eaae20493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c8ade980c77973114ddfd403d25bc23"><td class="memItemLeft" align="right" valign="top">bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23">calculate_burst_aligned_address</a> (input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; address, input bit&lt; 2:0 &gt; burst_size)</td></tr>
+<tr class="memdesc:a6c8ade980c77973114ddfd403d25bc23"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate burst_size aligned address  <a href="#a6c8ade980c77973114ddfd403d25bc23">More...</a><br /></td></tr>
+<tr class="separator:a6c8ade980c77973114ddfd403d25bc23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4af175634a55ae773681009062989a5d"><td class="memItemLeft" align="right" valign="top">bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d">calculate_bus_aligned_address</a> (input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; addr, input int bus_size)</td></tr>
+<tr class="memdesc:a4af175634a55ae773681009062989a5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate bus-siz aligned address  <a href="#a4af175634a55ae773681009062989a5d">More...</a><br /></td></tr>
+<tr class="separator:a4af175634a55ae773681009062989a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbfbf7a50bf6dabae3804e39d05434b1"><td class="memItemLeft" align="right" valign="top">bit&lt; <a class="el" href="axi__pkg_8sv.html#ab7eed2ef1c0b3f2e73a3ebe25df4b9e6">C_AXI_LEN_WIDTH</a>-1:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1">calculate_axlen</a> (input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; addr, input bit&lt; 2:0 &gt; burst_size, input shortint burst_length)</td></tr>
+<tr class="memdesc:afbfbf7a50bf6dabae3804e39d05434b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate awlen or arlen  <a href="#afbfbf7a50bf6dabae3804e39d05434b1">More...</a><br /></td></tr>
 <tr class="separator:afbfbf7a50bf6dabae3804e39d05434b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bb88ba6ed9a3a081a64f90042a681b5"><td class="memItemLeft" align="right" valign="top">byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5">calculate_unalignment_offset</a> (input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; addr, input byte burst_size)</td></tr>
+<tr class="memdesc:a1bb88ba6ed9a3a081a64f90042a681b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate how unaligned the address is from the burst size  <a href="#a1bb88ba6ed9a3a081a64f90042a681b5">More...</a><br /></td></tr>
+<tr class="separator:a1bb88ba6ed9a3a081a64f90042a681b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fe6872099e588c0924c5bb71a9964b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3">calculate_wrap_boundary</a> (input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; addr, input bit&lt; 2:0 &gt; burst_size, input shortint burst_length, output bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; Lower_Wrap_Boundary, output bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; Upper_Wrap_Boundary)</td></tr>
+<tr class="memdesc:a1fe6872099e588c0924c5bb71a9964b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the wrap boundaries for a given burst  <a href="#a1fe6872099e588c0924c5bb71a9964b3">More...</a><br /></td></tr>
+<tr class="separator:a1fe6872099e588c0924c5bb71a9964b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bdf1895089f5dfc5195f221ecfc02d8"><td class="memItemLeft" align="right" valign="top">bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8">get_next_address</a> (input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; addr, input bit&lt; 2:0 &gt; burst_size, input shortint burst_length, input bit&lt; 1:0 &gt; burst_type, input int beat_cnt, input int lane, input int data_bus_bytes)</td></tr>
+<tr class="memdesc:a2bdf1895089f5dfc5195f221ecfc02d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get next address for reading/writing to memory.  <a href="#a2bdf1895089f5dfc5195f221ecfc02d8">More...</a><br /></td></tr>
+<tr class="separator:a2bdf1895089f5dfc5195f221ecfc02d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a269e42497226a3a0def0fc1bfdd7d22a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a">get_beat_N_byte_lanes</a> (input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt; addr, input bit&lt; 2:0 &gt; burst_size, input shortint burst_length, input bit&lt; 1:0 &gt; burst_type, input int beat_cnt, input int data_bus_bytes, output int Lower_Byte_Lane, output int Upper_Byte_Lane, output int offset)</td></tr>
+<tr class="memdesc:a269e42497226a3a0def0fc1bfdd7d22a"><td class="mdescLeft">&#160;</td><td class="mdescRight">return byte lanes that contain valid data  <a href="#a269e42497226a3a0def0fc1bfdd7d22a">More...</a><br /></td></tr>
+<tr class="separator:a269e42497226a3a0def0fc1bfdd7d22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -739,12 +755,96 @@ rvalid</td>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="af1b004bb6ced75b75470eb4eaae20493"></a>
+<a class="anchor" id="afbfbf7a50bf6dabae3804e39d05434b1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bit&lt;<a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0&gt; calculate_aligned_address </td>
+          <td class="memname">bit&lt;<a class="el" href="axi__pkg_8sv.html#ab7eed2ef1c0b3f2e73a3ebe25df4b9e6">C_AXI_LEN_WIDTH</a>-1:0&gt; calculate_axlen </td>
+          <td>(</td>
+          <td class="paramtype">input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; 2:0 &gt;&#160;</td>
+          <td class="paramname"><em>burst_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input shortint&#160;</td>
+          <td class="paramname"><em>burst_length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>calculate awlen or arlen </p>
+<p>Calculate the number of beats -1 for a burst. Subtract one because awlen and arlen are one less than the transfer count. awlen=0, means 1 beat. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>- starting address </td></tr>
+    <tr><td class="paramname">burst_size</td><td>- how many bytes wide is the beat </td></tr>
+    <tr><td class="paramname">burst_length</td><td>- how many bytes long is the burst </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the burst_size aligned address </dd></dl>
+
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00312">312</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+
+<p>References <a class="el" href="axi__pkg_8sv_source.html#l00057">C_AXI_LEN_WIDTH</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00366">calculate_unalignment_offset()</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__uvm__pkg_8sv_source.html#l00183">ar_from_class()</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00085">aw_from_class()</a>, <a class="el" href="axi__seq_8svh_source.html#l00114">axi_seq::body()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00398">calculate_wrap_boundary()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00455">axi_seq_item::get_beat_N_data()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00291">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00250">axi_driver::write_data()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_cgraph.png" border="0" usemap="#axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_cgraph" alt=""/></div>
+<map name="axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_cgraph" id="axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_cgraph">
+<area shape="rect" id="node2" href="axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="165,5,316,47"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_icgraph.png" border="0" usemap="#axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_icgraph" alt=""/></div>
+<map name="axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_icgraph" id="axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_icgraph">
+<area shape="rect" id="node2" href="axi__uvm__pkg_8sv.html#a0f4d0c18dcaf8e3158783999e74b7a94" title="take values from an axi_seq_item and stuff into a axi_seq_item_ar_vector_s " alt="" coords="198,5,302,32"/>
+<area shape="rect" id="node5" href="axi__uvm__pkg_8sv.html#a3c088311f24952a34d4689161adaac3e" title="Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s. " alt="" coords="195,56,305,83"/>
+<area shape="rect" id="node7" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="199,275,301,301"/>
+<area shape="rect" id="node8" href="axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="165,325,335,352"/>
+<area shape="rect" id="node12" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="602,369,742,410"/>
+<area shape="rect" id="node13" href="classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="171,158,329,199"/>
+<area shape="rect" id="node14" href="classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="Write Data channel thread. " alt="" coords="393,107,540,133"/>
+<area shape="rect" id="node15" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="383,220,551,247"/>
+<area shape="rect" id="node3" href="classaxi__driver.html#a4edb359e7927c729b939ebd992f83d05" title="Read Address channel thread. " alt="" coords="385,5,549,32"/>
+<area shape="rect" id="node4" href="classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="599,56,745,83"/>
+<area shape="rect" id="node6" href="classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03" title="Write Address channel thread. " alt="" coords="383,56,550,83"/>
+<area shape="rect" id="node9" href="axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="404,325,529,352"/>
+<area shape="rect" id="node10" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="602,303,742,345"/>
+<area shape="rect" id="node11" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="793,344,951,371"/>
+<area shape="rect" id="node17" href="classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="390,165,543,192"/>
+<area shape="rect" id="node16" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="607,213,737,254"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a6c8ade980c77973114ddfd403d25bc23"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit&lt;<a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0&gt; calculate_burst_aligned_address </td>
           <td>(</td>
           <td class="paramtype">input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
           <td class="paramname"><em>address</em>, </td>
@@ -777,38 +877,174 @@ rvalid</td>
 
 <p>References <a class="el" href="axi__pkg_8sv_source.html#l00051">C_AXI_ADDR_WIDTH</a>, <a class="el" href="axi__pkg_8sv_source.html#l00075">e_128BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00072">e_16BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00068">e_1BYTE</a>, <a class="el" href="axi__pkg_8sv_source.html#l00069">e_2BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00073">e_32BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00070">e_4BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00074">e_64BYTES</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00071">e_8BYTES</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__uvm__pkg_8sv_source.html#l00078">calculate_beats()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00658">axi_seq_item::get_beat_N_byte_lanes()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00474">axi_seq_item::get_next_address()</a>.</p>
+<p>Referenced by <a class="el" href="axi__uvm__pkg_8sv_source.html#l00183">ar_from_class()</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00085">aw_from_class()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00398">calculate_wrap_boundary()</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00530">get_beat_N_byte_lanes()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="axi__pkg_8sv_af1b004bb6ced75b75470eb4eaae20493_icgraph.png" border="0" usemap="#axi__pkg_8sv_af1b004bb6ced75b75470eb4eaae20493_icgraph" alt=""/></div>
-<map name="axi__pkg_8sv_af1b004bb6ced75b75470eb4eaae20493_icgraph" id="axi__pkg_8sv_af1b004bb6ced75b75470eb4eaae20493_icgraph">
-<area shape="rect" id="node2" href="axi__uvm__pkg_8sv.html#a5d828599817fd1ca499a9abd29d72eac" title="Calculate number of beats/clks in this burst. " alt="" coords="250,123,363,149"/>
-<area shape="rect" id="node3" href="classaxi__seq__item.html#af0ff7ad91e2f8541c0924b7217543131" title="return byte lanes that contain valid data " alt="" coords="228,174,385,215"/>
-<area shape="rect" id="node10" href="classaxi__seq__item.html#a1193da1dd305c712af3d033635dde120" title="Get next address for reading/writing to memory. " alt="" coords="433,233,591,274"/>
-<area shape="rect" id="node4" href="classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e" title="monitors Read Data channel and sends out TLM pkt " alt="" coords="441,5,583,32"/>
-<area shape="rect" id="node6" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="653,261,793,302"/>
-<area shape="rect" id="node8" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="653,195,793,237"/>
-<area shape="rect" id="node9" href="classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="646,140,799,167"/>
-<area shape="rect" id="node11" href="classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="433,65,591,106"/>
-<area shape="rect" id="node5" href="classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="860,9,1007,36"/>
-<area shape="rect" id="node7" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="855,236,1012,263"/>
-<area shape="rect" id="node12" href="classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="Write Data channel thread. " alt="" coords="649,39,796,65"/>
-<area shape="rect" id="node13" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="639,89,807,116"/>
-<area shape="rect" id="node14" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="869,82,998,123"/>
+<div class="center"><img src="axi__pkg_8sv_a6c8ade980c77973114ddfd403d25bc23_icgraph.png" border="0" usemap="#axi__pkg_8sv_a6c8ade980c77973114ddfd403d25bc23_icgraph" alt=""/></div>
+<map name="axi__pkg_8sv_a6c8ade980c77973114ddfd403d25bc23_icgraph" id="axi__pkg_8sv_a6c8ade980c77973114ddfd403d25bc23_icgraph">
+<area shape="rect" id="node2" href="axi__uvm__pkg_8sv.html#a0f4d0c18dcaf8e3158783999e74b7a94" title="take values from an axi_seq_item and stuff into a axi_seq_item_ar_vector_s " alt="" coords="245,116,349,143"/>
+<area shape="rect" id="node5" href="axi__uvm__pkg_8sv.html#a3c088311f24952a34d4689161adaac3e" title="Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s. " alt="" coords="241,25,352,52"/>
+<area shape="rect" id="node7" href="axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="212,337,381,364"/>
+<area shape="rect" id="node12" href="axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="217,241,376,268"/>
+<area shape="rect" id="node3" href="classaxi__driver.html#a4edb359e7927c729b939ebd992f83d05" title="Read Address channel thread. " alt="" coords="431,61,595,88"/>
+<area shape="rect" id="node4" href="classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="865,79,1012,105"/>
+<area shape="rect" id="node6" href="classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03" title="Write Address channel thread. " alt="" coords="429,5,596,32"/>
+<area shape="rect" id="node8" href="axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="450,363,575,389"/>
+<area shape="rect" id="node9" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="658,307,798,349"/>
+<area shape="rect" id="node11" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="658,373,798,414"/>
+<area shape="rect" id="node10" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="860,348,1017,375"/>
+<area shape="rect" id="node13" href="classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e" title="monitors Read Data channel and sends out TLM pkt " alt="" coords="441,123,584,149"/>
+<area shape="rect" id="node14" href="classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="434,195,591,237"/>
+<area shape="rect" id="node15" href="classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="Write Data channel thread. " alt="" coords="655,155,801,181"/>
+<area shape="rect" id="node16" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="644,256,812,283"/>
+<area shape="rect" id="node18" href="classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="651,205,805,232"/>
+<area shape="rect" id="node17" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="874,249,1003,290"/>
 </map>
 </div>
 </p>
 
 </div>
 </div>
-<a class="anchor" id="afbfbf7a50bf6dabae3804e39d05434b1"></a>
+<a class="anchor" id="a4af175634a55ae773681009062989a5d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bit&lt;<a class="el" href="axi__pkg_8sv.html#ab7eed2ef1c0b3f2e73a3ebe25df4b9e6">C_AXI_LEN_WIDTH</a>-1:0&gt; calculate_axlen </td>
+          <td class="memname">bit&lt;<a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0&gt; calculate_bus_aligned_address </td>
+          <td>(</td>
+          <td class="paramtype">input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input int&#160;</td>
+          <td class="paramname"><em>bus_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>calculate bus-siz aligned address </p>
+<p>The AXI function to calculate aligned address is: Aligned_Address = (Address/(2**bus_size)*(2**bus_sze) Zeroing out the bottom burst_size bits does the same thing which is much more eaily synthesizable. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>- starting address </td></tr>
+    <tr><td class="paramname">bus_size</td><td>- how many bytes wide is the bus </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the bus_size aligned address </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>: bus_size could be byte instead of int? </dd></dl>
+
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00264">264</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+
+<p>References <a class="el" href="axi__pkg_8sv_source.html#l00051">C_AXI_ADDR_WIDTH</a>, <a class="el" href="axi__pkg_8sv_source.html#l00075">e_128BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00072">e_16BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00068">e_1BYTE</a>, <a class="el" href="axi__pkg_8sv_source.html#l00069">e_2BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00073">e_32BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00070">e_4BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00074">e_64BYTES</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00071">e_8BYTES</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pkg_8sv_source.html#l00530">get_beat_N_byte_lanes()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="axi__pkg_8sv_a4af175634a55ae773681009062989a5d_icgraph.png" border="0" usemap="#axi__pkg_8sv_a4af175634a55ae773681009062989a5d_icgraph" alt=""/></div>
+<map name="axi__pkg_8sv_a4af175634a55ae773681009062989a5d_icgraph" id="axi__pkg_8sv_a4af175634a55ae773681009062989a5d_icgraph">
+<area shape="rect" id="node2" href="axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="204,107,363,134"/>
+<area shape="rect" id="node3" href="axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="427,57,552,83"/>
+<area shape="rect" id="node4" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="630,5,770,47"/>
+<area shape="rect" id="node6" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="630,71,770,112"/>
+<area shape="rect" id="node7" href="classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e" title="monitors Read Data channel and sends out TLM pkt " alt="" coords="418,158,561,185"/>
+<area shape="rect" id="node9" href="classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="411,227,568,268"/>
+<area shape="rect" id="node5" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="832,46,989,73"/>
+<area shape="rect" id="node8" href="classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="837,171,984,198"/>
+<area shape="rect" id="node10" href="classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="Write Data channel thread. " alt="" coords="627,201,773,227"/>
+<area shape="rect" id="node11" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="616,251,784,278"/>
+<area shape="rect" id="node13" href="classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="623,302,777,329"/>
+<area shape="rect" id="node12" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="846,244,975,285"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a1bb88ba6ed9a3a081a64f90042a681b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">byte calculate_unalignment_offset </td>
+          <td>(</td>
+          <td class="paramtype">input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input byte&#160;</td>
+          <td class="paramname"><em>burst_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>calculate how unaligned the address is from the burst size </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>- starting address </td></tr>
+    <tr><td class="paramname">burst_size</td><td>- how many bytes wide is the beat </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>how many bytes the address is unaligned from the burst_size </dd></dl>
+
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00366">366</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+
+<p>References <a class="el" href="axi__pkg_8sv_source.html#l00075">e_128BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00072">e_16BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00068">e_1BYTE</a>, <a class="el" href="axi__pkg_8sv_source.html#l00069">e_2BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00073">e_32BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00070">e_4BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00074">e_64BYTES</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00071">e_8BYTES</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pkg_8sv_source.html#l00312">calculate_axlen()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="axi__pkg_8sv_a1bb88ba6ed9a3a081a64f90042a681b5_icgraph.png" border="0" usemap="#axi__pkg_8sv_a1bb88ba6ed9a3a081a64f90042a681b5_icgraph" alt=""/></div>
+<map name="axi__pkg_8sv_a1bb88ba6ed9a3a081a64f90042a681b5_icgraph" id="axi__pkg_8sv_a1bb88ba6ed9a3a081a64f90042a681b5_icgraph">
+<area shape="rect" id="node2" href="axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="204,195,316,221"/>
+<area shape="rect" id="node3" href="axi__uvm__pkg_8sv.html#a0f4d0c18dcaf8e3158783999e74b7a94" title="take values from an axi_seq_item and stuff into a axi_seq_item_ar_vector_s " alt="" coords="397,5,501,32"/>
+<area shape="rect" id="node6" href="axi__uvm__pkg_8sv.html#a3c088311f24952a34d4689161adaac3e" title="Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s. " alt="" coords="393,56,504,83"/>
+<area shape="rect" id="node8" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="397,275,500,301"/>
+<area shape="rect" id="node9" href="axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="364,325,533,352"/>
+<area shape="rect" id="node13" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="801,369,941,410"/>
+<area shape="rect" id="node14" href="classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="370,158,527,199"/>
+<area shape="rect" id="node15" href="classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="Write Data channel thread. " alt="" coords="592,107,739,133"/>
+<area shape="rect" id="node16" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="581,220,749,247"/>
+<area shape="rect" id="node4" href="classaxi__driver.html#a4edb359e7927c729b939ebd992f83d05" title="Read Address channel thread. " alt="" coords="583,5,747,32"/>
+<area shape="rect" id="node5" href="classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="797,56,944,83"/>
+<area shape="rect" id="node7" href="classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03" title="Write Address channel thread. " alt="" coords="582,56,749,83"/>
+<area shape="rect" id="node10" href="axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="603,325,728,352"/>
+<area shape="rect" id="node11" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="801,303,941,345"/>
+<area shape="rect" id="node12" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="992,344,1149,371"/>
+<area shape="rect" id="node18" href="classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="589,165,742,192"/>
+<area shape="rect" id="node17" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="806,213,935,254"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a1fe6872099e588c0924c5bb71a9964b3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void calculate_wrap_boundary </td>
           <td>(</td>
           <td class="paramtype">input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
           <td class="paramname"><em>addr</em>, </td>
@@ -823,7 +1059,19 @@ Here is the caller graph for this function:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">input shortint&#160;</td>
-          <td class="paramname"><em>burst_length</em>&#160;</td>
+          <td class="paramname"><em>burst_length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">output bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>Lower_Wrap_Boundary</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">output bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>Upper_Wrap_Boundary</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -833,28 +1081,273 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00253">253</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+<p>calculate the wrap boundaries for a given burst </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>- starting address </td></tr>
+    <tr><td class="paramname">burst_size</td><td>- how many bytes wide is the beat </td></tr>
+    <tr><td class="paramname">burst_length</td><td>- how many bytes is the burst </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Lower_Wrap_Boundary - Lower Wrap Boundary Address </dd>
+<dd>
+Upper_Wrap_Boundary - Upper Wrap Boundary Address </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>: simplify the logic needed for the math in this function </dd></dl>
 
-<p>References <a class="el" href="axi__pkg_8sv_source.html#l00057">C_AXI_LEN_WIDTH</a>, <a class="el" href="axi__pkg_8sv_source.html#l00075">e_128BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00072">e_16BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00068">e_1BYTE</a>, <a class="el" href="axi__pkg_8sv_source.html#l00069">e_2BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00073">e_32BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00070">e_4BYTES</a>, <a class="el" href="axi__pkg_8sv_source.html#l00074">e_64BYTES</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00071">e_8BYTES</a>.</p>
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00398">398</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00114">axi_seq::body()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00566">axi_seq_item::get_beat_N_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00474">axi_seq_item::get_next_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00282">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">axi_responder::read_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00250">axi_driver::write_data()</a>.</p>
+<p>References <a class="el" href="axi__pkg_8sv_source.html#l00051">C_AXI_ADDR_WIDTH</a>, <a class="el" href="axi__pkg_8sv_source.html#l00312">calculate_axlen()</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00222">calculate_burst_aligned_address()</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pkg_8sv_source.html#l00439">get_next_address()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="axi__pkg_8sv_a1fe6872099e588c0924c5bb71a9964b3_cgraph.png" border="0" usemap="#axi__pkg_8sv_a1fe6872099e588c0924c5bb71a9964b3_cgraph" alt=""/></div>
+<map name="axi__pkg_8sv_a1fe6872099e588c0924c5bb71a9964b3_cgraph" id="axi__pkg_8sv_a1fe6872099e588c0924c5bb71a9964b3_cgraph">
+<area shape="rect" id="node2" href="axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="246,13,358,39"/>
+<area shape="rect" id="node4" href="axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="223,64,381,105"/>
+<area shape="rect" id="node3" href="axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="429,5,580,47"/>
+</map>
+</div>
+</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_icgraph.png" border="0" usemap="#axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_icgraph" alt=""/></div>
-<map name="axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_icgraph" id="axi__pkg_8sv_afbfbf7a50bf6dabae3804e39d05434b1_icgraph">
-<area shape="rect" id="node2" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="193,5,295,32"/>
-<area shape="rect" id="node3" href="classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="165,107,323,149"/>
-<area shape="rect" id="node4" href="classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="Write Data channel thread. " alt="" coords="381,57,528,84"/>
-<area shape="rect" id="node6" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="371,116,539,143"/>
-<area shape="rect" id="node9" href="classaxi__seq__item.html#a1193da1dd305c712af3d033635dde120" title="Get next address for reading/writing to memory. " alt="" coords="165,225,323,266"/>
-<area shape="rect" id="node12" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="385,283,525,325"/>
-<area shape="rect" id="node8" href="classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="378,167,531,193"/>
-<area shape="rect" id="node5" href="classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="592,57,739,84"/>
-<area shape="rect" id="node7" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="601,109,730,150"/>
-<area shape="rect" id="node10" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="385,218,525,259"/>
-<area shape="rect" id="node11" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="587,257,744,284"/>
+<div class="center"><img src="axi__pkg_8sv_a1fe6872099e588c0924c5bb71a9964b3_icgraph.png" border="0" usemap="#axi__pkg_8sv_a1fe6872099e588c0924c5bb71a9964b3_icgraph" alt=""/></div>
+<map name="axi__pkg_8sv_a1fe6872099e588c0924c5bb71a9964b3_icgraph" id="axi__pkg_8sv_a1fe6872099e588c0924c5bb71a9964b3_icgraph">
+<area shape="rect" id="node2" href="axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="223,46,348,73"/>
+<area shape="rect" id="node3" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="396,5,536,47"/>
+<area shape="rect" id="node5" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="396,71,536,112"/>
+<area shape="rect" id="node4" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="584,46,741,73"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a269e42497226a3a0def0fc1bfdd7d22a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void get_beat_N_byte_lanes </td>
+          <td>(</td>
+          <td class="paramtype">input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; 2:0 &gt;&#160;</td>
+          <td class="paramname"><em>burst_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input shortint&#160;</td>
+          <td class="paramname"><em>burst_length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; 1:0 &gt;&#160;</td>
+          <td class="paramname"><em>burst_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input int&#160;</td>
+          <td class="paramname"><em>beat_cnt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input int&#160;</td>
+          <td class="paramname"><em>data_bus_bytes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">output int&#160;</td>
+          <td class="paramname"><em>Lower_Byte_Lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">output int&#160;</td>
+          <td class="paramname"><em>Upper_Byte_Lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">output int&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>return byte lanes that contain valid data </p>
+<p>given the beat number and how wide the bus is, return which lanes to get data from and also what offset from start address to write to.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>- starting address </td></tr>
+    <tr><td class="paramname">burst_size</td><td>- how many bytes wide is the beat </td></tr>
+    <tr><td class="paramname">burst_length</td><td>- how many bytes is the burst </td></tr>
+    <tr><td class="paramname">burst_type</td><td>- Fixed, Incrementing or Wrap </td></tr>
+    <tr><td class="paramname">beat_cnt</td><td>which beat in the burst, starting at 0. </td></tr>
+    <tr><td class="paramname">data_bus_bytes</td><td>- how wide is the bus (the driver/responder can get this from the interface </td></tr>
+    <tr><td class="paramname">Lower_Byte_Lane</td><td>- Lower valid byte lane </td></tr>
+    <tr><td class="paramname">Upper_Byte_Lane</td><td>- Upper valid byte lane </td></tr>
+    <tr><td class="paramname">offset</td><td>- offset from Start_Address. Can be used to write to memory. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00530">530</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+
+<p>References <a class="el" href="axi__pkg_8sv_source.html#l00222">calculate_burst_aligned_address()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00264">calculate_bus_aligned_address()</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00081">e_FIXED</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__seq__item_8svh_source.html#l00455">axi_seq_item::get_beat_N_data()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00439">get_next_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00291">axi_monitor::monitor_read_address()</a>, <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, and <a class="el" href="axi__driver_8svh_source.html#l00521">axi_driver::read_data()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="axi__pkg_8sv_a269e42497226a3a0def0fc1bfdd7d22a_cgraph.png" border="0" usemap="#axi__pkg_8sv_a269e42497226a3a0def0fc1bfdd7d22a_cgraph" alt=""/></div>
+<map name="axi__pkg_8sv_a269e42497226a3a0def0fc1bfdd7d22a_cgraph" id="axi__pkg_8sv_a269e42497226a3a0def0fc1bfdd7d22a_cgraph">
+<area shape="rect" id="node2" href="axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="212,5,371,47"/>
+<area shape="rect" id="node3" href="axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d" title="calculate bus&#45;siz aligned address " alt="" coords="216,71,367,112"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="axi__pkg_8sv_a269e42497226a3a0def0fc1bfdd7d22a_icgraph.png" border="0" usemap="#axi__pkg_8sv_a269e42497226a3a0def0fc1bfdd7d22a_icgraph" alt=""/></div>
+<map name="axi__pkg_8sv_a269e42497226a3a0def0fc1bfdd7d22a_icgraph" id="axi__pkg_8sv_a269e42497226a3a0def0fc1bfdd7d22a_icgraph">
+<area shape="rect" id="node2" href="classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="212,84,369,125"/>
+<area shape="rect" id="node8" href="axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="228,258,353,285"/>
+<area shape="rect" id="node9" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="431,288,571,329"/>
+<area shape="rect" id="node11" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="431,223,571,264"/>
+<area shape="rect" id="node12" href="classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e" title="monitors Read Data channel and sends out TLM pkt " alt="" coords="219,157,362,183"/>
+<area shape="rect" id="node3" href="classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="Write Data channel thread. " alt="" coords="428,63,575,90"/>
+<area shape="rect" id="node5" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="417,13,585,39"/>
+<area shape="rect" id="node7" href="classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="425,114,578,141"/>
+<area shape="rect" id="node4" href="classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="639,118,785,145"/>
+<area shape="rect" id="node6" href="classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="647,5,777,47"/>
+<area shape="rect" id="node10" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="633,262,791,289"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a2bdf1895089f5dfc5195f221ecfc02d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit&lt;<a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0&gt; get_next_address </td>
+          <td>(</td>
+          <td class="paramtype">input bit&lt; <a class="el" href="axi__pkg_8sv.html#ab3a4347d855f294afac6e48ad076f677">C_AXI_ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; 2:0 &gt;&#160;</td>
+          <td class="paramname"><em>burst_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input shortint&#160;</td>
+          <td class="paramname"><em>burst_length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; 1:0 &gt;&#160;</td>
+          <td class="paramname"><em>burst_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input int&#160;</td>
+          <td class="paramname"><em>beat_cnt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input int&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input int&#160;</td>
+          <td class="paramname"><em>data_bus_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get next address for reading/writing to memory. </p>
+<p>Takes into account burst_type. IE: e_FIXED, e_INCR, e_WRAP This function is stateful. When called it updates an internal variable that holds the current address. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>- starting address </td></tr>
+    <tr><td class="paramname">burst_size</td><td>- how many bytes wide is the beat </td></tr>
+    <tr><td class="paramname">burst_length</td><td>- how many bytes is the burst </td></tr>
+    <tr><td class="paramname">burst_type</td><td>- Fixed, Incrementing or Wrap </td></tr>
+    <tr><td class="paramname">beat_cnt</td><td>- beat count the memory address corresponds to. Used with lane. </td></tr>
+    <tr><td class="paramname">lane</td><td>- lane thememory address correspons to. Usedwith beat_cnt </td></tr>
+    <tr><td class="paramname">data_bus_bytes</td><td>- how wide is the bus? </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>memory address that corresponds to the addr + beat_cnt/lane byte </dd></dl>
+
+<p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00439">439</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
+
+<p>References <a class="el" href="axi__pkg_8sv_source.html#l00051">C_AXI_ADDR_WIDTH</a>, <a class="el" href="axi__pkg_8sv_source.html#l00398">calculate_wrap_boundary()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00081">e_FIXED</a>, <a class="el" href="axi__pkg_8sv_source.html#l00082">e_INCR</a>, <a class="el" href="axi__pkg_8sv_source.html#l00083">e_WRAP</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00530">get_beat_N_byte_lanes()</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__monitor_8svh_source.html#l00291">axi_monitor::monitor_read_address()</a>, and <a class="el" href="axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="axi__pkg_8sv_a2bdf1895089f5dfc5195f221ecfc02d8_cgraph.png" border="0" usemap="#axi__pkg_8sv_a2bdf1895089f5dfc5195f221ecfc02d8_cgraph" alt=""/></div>
+<map name="axi__pkg_8sv_a2bdf1895089f5dfc5195f221ecfc02d8_cgraph" id="axi__pkg_8sv_a2bdf1895089f5dfc5195f221ecfc02d8_cgraph">
+<area shape="rect" id="node2" href="axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="179,46,348,73"/>
+<area shape="rect" id="node6" href="axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="184,97,343,123"/>
+<area shape="rect" id="node3" href="axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="419,13,531,39"/>
+<area shape="rect" id="node5" href="axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="396,64,555,105"/>
+<area shape="rect" id="node4" href="axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="603,5,753,47"/>
+<area shape="rect" id="node7" href="axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d" title="calculate bus&#45;siz aligned address " alt="" coords="400,129,551,171"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="axi__pkg_8sv_a2bdf1895089f5dfc5195f221ecfc02d8_icgraph.png" border="0" usemap="#axi__pkg_8sv_a2bdf1895089f5dfc5195f221ecfc02d8_icgraph" alt=""/></div>
+<map name="axi__pkg_8sv_a2bdf1895089f5dfc5195f221ecfc02d8_icgraph" id="axi__pkg_8sv_a2bdf1895089f5dfc5195f221ecfc02d8_icgraph">
+<area shape="rect" id="node2" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="179,5,319,47"/>
+<area shape="rect" id="node4" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="179,71,319,112"/>
+<area shape="rect" id="node3" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="367,46,524,73"/>
 </map>
 </div>
 </p>
@@ -953,7 +1446,7 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00051">51</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00031">axi_if()</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00222">calculate_aligned_address()</a>.</p>
+<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00031">axi_if()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00222">calculate_burst_aligned_address()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00264">calculate_bus_aligned_address()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00398">calculate_wrap_boundary()</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00439">get_next_address()</a>.</p>
 
 </div>
 </div>
@@ -1022,7 +1515,7 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__pkg_8sv_source.html#l00057">57</a> of file <a class="el" href="axi__pkg_8sv_source.html">axi_pkg.sv</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00031">axi_if()</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00253">calculate_axlen()</a>.</p>
+<p>Referenced by <a class="el" href="axi__if_8sv_source.html#l00031">axi_if()</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00312">calculate_axlen()</a>.</p>
 
 </div>
 </div>
