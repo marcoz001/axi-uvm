@@ -422,6 +422,179 @@ function void calculate_wrap_boundary(
 endfunction : calculate_wrap_boundary
 
 
+/*! \brief Get next address for reading/writing to memory
+ *
+ * Takes into account burst_type. IE: e_FIXED, e_INCR, e_WRAP
+ * This function is stateful.  When called it updates an internal variable that holds the current address.
+ */
+function bit[C_AXI_ADDR_WIDTH-1:0] get_next_address(
+  input bit [C_AXI_ADDR_WIDTH-1:0] addr,
+  input bit [2:0]                  burst_size,
+  input shortint                   burst_length,
+  input bit [1:0]                  burst_type,
+  input int beat_cnt,
+  input int lane,
+  input int data_bus_bytes);
+
+  bit [C_AXI_ADDR_WIDTH-1:0] tmp_addr;
+
+  int Lower_Byte_Lane;
+  int Upper_Byte_Lane;
+  int data_offset=0;
+  int Lower_Wrap_Boundary;
+  int Upper_Wrap_Boundary;
+  string s;
+  string msg_s;
+
+
+  calculate_wrap_boundary(.addr                (addr),
+                          .burst_size          (burst_size),
+                          .burst_length        (burst_length),
+                          .Lower_Wrap_Boundary (Lower_Wrap_Boundary),
+                          .Upper_Wrap_Boundary (Upper_Wrap_Boundary));
+
+  get_beat_N_byte_lanes(.addr         (addr),
+                        .burst_size   (burst_size),
+                        .burst_length (burst_length),
+                        .burst_type   (burst_type),
+                        .beat_cnt     (beat_cnt),
+                        .data_bus_bytes(data_bus_bytes),
+                        .Lower_Byte_Lane(Lower_Byte_Lane),
+                        .Upper_Byte_Lane(Upper_Byte_Lane),
+                        .offset(data_offset));
+
+  if (burst_type == e_FIXED) begin
+    tmp_addr=addr+(lane - Lower_Byte_Lane);
+  end else if (burst_type == e_INCR) begin
+    tmp_addr=addr+data_offset+(lane - Lower_Byte_Lane);
+
+  end else if (burst_type == e_WRAP) begin
+
+        tmp_addr=addr+data_offset+(lane - Lower_Byte_Lane);
+
+    if (tmp_addr >= Upper_Wrap_Boundary) begin
+      tmp_addr = Lower_Wrap_Boundary+(tmp_addr-Upper_Wrap_Boundary);
+    end
+// \todo:do we have to worry about double-wrap?
+  end else begin
+    `uvm_error("AXI_PKG::get_next_address", $sformatf("Unknown burst_type: %0d", burst_type))
+  end
+
+  msg_s="";
+
+  $sformat(msg_s, "%s beat_cnt:%0d",              msg_s, beat_cnt);
+ // $sformat(msg_s, "%s max_beat_cnt:%0d",          msg_s, max_beat_cnt);
+  $sformat(msg_s, "%s lane:%0d",                  msg_s, lane);
+  $sformat(msg_s, "%s Lower_Byte_Lane:%0d",       msg_s, Lower_Byte_Lane);
+  $sformat(msg_s, "%s Upper_Byte_Lane:%0d",       msg_s, Upper_Byte_Lane);
+  $sformat(msg_s, "%s Lower_Wrap_Boundary:%0d(0x%0x)", msg_s, Lower_Wrap_Boundary, Lower_Wrap_Boundary);
+  $sformat(msg_s, "%s Upper_Wrap_Boundary:%0d(0x%0x)", msg_s, Upper_Wrap_Boundary, Upper_Wrap_Boundary);
+  $sformat(msg_s, "%s number_bytes:%0d",          msg_s, (2**burst_size));
+  $sformat(msg_s, "%s data_offset:%0d",           msg_s, data_offset);
+  $sformat(msg_s, "%s tmp_addr:%0d(0x%0x)",       msg_s, tmp_addr, tmp_addr);
+
+  `uvm_info("axi_seq_item::get_next_address", msg_s, UVM_HIGH)
+
+  return tmp_addr;
+
+endfunction : get_next_address;
+
+
+
+
+ /*! \brief return byte lanes that contain valid data
+ *
+ * given the beat number and how wide the bus is, return
+ * which lanes to get data from and also what offset from start address
+ * to write to.
+ *
+ * @param beat_cnt which beat inthe burst, starting at 0.
+ * @param data_bus_bytes - how wide is the bus (the driver/responder can get this from the interface
+ * @param Lower_Byte_Lane - Lower valid byte lane
+ * @param Upper_Byte_Lane - Upper valid byte lane
+ * @param offset - offset from Start_Address.  Can be used to write to memory.
+ */
+function void get_beat_N_byte_lanes(
+  input bit       [C_AXI_ADDR_WIDTH-1:0] addr,
+  input bit [2:0] burst_size,
+  input shortint  burst_length,
+  input bit [1:0]                  burst_type,
+  input  int beat_cnt,
+  input  int data_bus_bytes,
+  output int Lower_Byte_Lane,
+  output int Upper_Byte_Lane,
+  output int offset);
+
+
+
+   bit [63:0] Aligned_Start_Address;
+  bit [63:0] Address_N;
+  bit [63:0] Bus_Aligned_Address;
+  bit [63:0] Bus_Aligned_Address_N;
+
+  string s;
+  string msg_s;
+
+  int a;
+  int b;
+
+  Aligned_Start_Address=calculate_burst_aligned_address(.address(addr),
+                                                  .burst_size(burst_size));
+  Address_N = Aligned_Start_Address+(beat_cnt*(2**burst_size));
+
+
+
+  // **********************
+ // a = int'(addr/data_bus_bytes) * data_bus_bytes;
+  Bus_Aligned_Address = calculate_bus_aligned_address(.addr(addr),
+                                                  .bus_size(data_bus_bytes));
+  Bus_Aligned_Address_N = calculate_bus_aligned_address(.addr(Address_N),
+                                                  .bus_size(data_bus_bytes));
+
+
+    // Adjust Lower_Byte_lane up if unaligned.
+      if (burst_type == e_FIXED) begin
+      //  if (beat_cnt==0) begin
+           Lower_Byte_Lane = addr - Bus_Aligned_Address;
+           Upper_Byte_Lane = Aligned_Start_Address + (2**burst_size) - 1 -
+                             Bus_Aligned_Address;
+
+           offset = beat_cnt*(2**burst_size);
+
+
+      end  else begin
+
+        if (beat_cnt==0) begin
+           Lower_Byte_Lane = addr - Bus_Aligned_Address;
+           Upper_Byte_Lane = Aligned_Start_Address + (2**burst_size) - 1 -
+                             Bus_Aligned_Address;
+
+           offset = 0;
+
+        end else begin
+           Lower_Byte_Lane = Address_N - Bus_Aligned_Address_N;
+           Upper_Byte_Lane = Lower_Byte_Lane + (2**burst_size) - 1;
+
+           offset = Address_N - addr;
+        end
+      end
+
+      msg_s="";
+      $sformat(msg_s, "%s beat_cnt:%0d",        msg_s, beat_cnt);
+      $sformat(msg_s, "%s data_bus_bytes:%0d",  msg_s, data_bus_bytes);
+      $sformat(msg_s, "%s NumberBytes (2**burst_size):%0d",  msg_s, (2**burst_size));
+
+      $sformat(msg_s, "%s addr:%0d",            msg_s, addr);
+      $sformat(msg_s, "%s Aligned_Start_Address:%0d",  msg_s, Aligned_Start_Address);
+      $sformat(msg_s, "%s Address_N:%0d",  msg_s, Address_N);
+      $sformat(msg_s, "%s Lower_Byte_Lane:%0d", msg_s, Lower_Byte_Lane);
+      $sformat(msg_s, "%s Upper_Byte_Lane:%0d", msg_s, Upper_Byte_Lane);
+      $sformat(msg_s, "%s offset:%0d",          msg_s, offset);
+
+  `uvm_info("axi_seq_item::get_beat_N_byte_lanes", msg_s, UVM_HIGH)
+
+
+endfunction : get_beat_N_byte_lanes
 
 
 

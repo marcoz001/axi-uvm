@@ -544,7 +544,11 @@ task axi_driver::read_data;
     vif.wait_for_read_data(.s(r_s));
 
 
-      item.get_beat_N_byte_lanes(.beat_cnt(beat_cntr),
+    axi_pkg::get_beat_N_byte_lanes(.addr         (item.addr),
+                                   .burst_size   (item.burst_size),
+                                   .burst_length (item.len),
+                                   .burst_type   (item.burst_type),
+        .beat_cnt(beat_cntr),
                                  .data_bus_bytes(vif.get_data_bus_width()/8),
                                 .Lower_Byte_Lane(Lower_Byte_Lane),
                                 .Upper_Byte_Lane(Upper_Byte_Lane),
