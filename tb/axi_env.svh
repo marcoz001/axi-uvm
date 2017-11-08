@@ -55,23 +55,24 @@ function void axi_env::build_phase (uvm_phase phase);
   m_axidriver_agent    = axi_agent::type_id::create("m_axidriver_agent", this);
   m_axidriver_agent.m_config = axi_agent_config::type_id::create("m_axidriver_agent.m_config", this);
 
+
+  assert(m_axidriver_agent.m_config.randomize() with {
+                                                      //bready_toggle_pattern == 32'h0000_000F;
+                                                      //rready_toggle_pattern == 32'hFFFF_FFFF;
+                                                     });
+
   m_axidriver_agent.m_config.m_active            = UVM_ACTIVE;
   m_axidriver_agent.m_config.drv_type            = e_DRIVER;
-  m_axidriver_agent.m_config.bready_toggle_pattern  = 32'h0000_000F;
-  m_axidriver_agent.m_config.rready_toggle_pattern  = 32'hfffF_FFFF;
 
   m_axiresponder_agent = axi_agent::type_id::create("m_axiresponder_agent", this);
   m_axiresponder_agent.m_config = axi_agent_config::type_id::create("m_axiresponder_agent.m_config", this);
 
 
-  assert(m_axiresponder_agent.m_config.randomize()) else begin
-    `uvm_error(this.get_type_name(), $sformatf("Unable to randomize %s", m_axiresponder_agent.m_config.get_name()));
-  end
+  assert(m_axiresponder_agent.m_config.randomize());
 
   m_axiresponder_agent.m_config.m_active            = UVM_ACTIVE;
   m_axiresponder_agent.m_config.drv_type            = e_RESPONDER;
-  //m_axiresponder_agent.m_config.awready_toggle_mask = 32'hFFFF_FFFF;
-  //m_axiresponder_agent.m_config.wready_toggle_mask  = 32'hFFFF_FFFF;
+
 
   m_memory = memory::type_id::create("m_memory", this);
   uvm_config_db #(memory)::set(null, "*", "m_memory", m_memory);

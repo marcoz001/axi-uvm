@@ -256,8 +256,8 @@ endfunction : calculate_burst_aligned_address
  * Aligned_Address = (Address/(2**bus_size)*(2**bus_sze)
  * Zeroing out the bottom burst_size bits does the same thing
  * which is much more eaily synthesizable.
- * @param address - starting address
- * @param bus - how many bytes wide is the bus
+ * @param addr - starting address
+ * @param bus_size - how many bytes wide is the bus
  * @returns the bus_size aligned address
  * \todo: bus_size could be byte instead of int?
 */
@@ -304,8 +304,9 @@ endfunction : calculate_bus_aligned_address
  * awlen and arlen are one less than
  * the transfer count.  awlen=0,
  * means 1 beat.
- * @param address - starting address
+ * @param addr - starting address
  * @param burst_size - how many bytes wide is the beat
+ * @param burst_length - how many bytes long is the burst
  * @returns the burst_size aligned address
 */
 function bit [C_AXI_LEN_WIDTH-1:0] calculate_axlen(
@@ -358,7 +359,7 @@ endfunction : calculate_axlen
 
 /** \brief calculate how unaligned the address is from the burst size
  *
- * @param address - starting address
+ * @param addr - starting address
  * @param burst_size - how many bytes wide is the beat
  * @returns how many bytes the address is unaligned from the burst_size
 */
@@ -387,7 +388,7 @@ endfunction : calculate_unalignment_offset
 
 /** \brief calculate the wrap boundaries for a given burst
  *
- * @param address - starting address
+ * @param addr - starting address
  * @param burst_size - how many bytes wide is the beat
  * @param burst_length - how many bytes is the burst
  * @return Lower_Wrap_Boundary - Lower Wrap Boundary Address
@@ -426,6 +427,14 @@ endfunction : calculate_wrap_boundary
  *
  * Takes into account burst_type. IE: e_FIXED, e_INCR, e_WRAP
  * This function is stateful.  When called it updates an internal variable that holds the current address.
+ * @param addr - starting address
+ * @param burst_size - how many bytes wide is the beat
+ * @param burst_length - how many bytes is the burst
+ * @param burst_type - Fixed, Incrementing or Wrap
+ * @param beat_cnt - beat count the memory address corresponds to. Used with lane.
+ * @param lane - lane thememory address correspons to. Usedwith beat_cnt
+ * @param data_bus_bytes - how wide is the bus?
+ * @return memory address that corresponds to the addr + beat_cnt/lane byte
  */
 function bit[C_AXI_ADDR_WIDTH-1:0] get_next_address(
   input bit [C_AXI_ADDR_WIDTH-1:0] addr,
@@ -508,7 +517,11 @@ endfunction : get_next_address;
  * which lanes to get data from and also what offset from start address
  * to write to.
  *
- * @param beat_cnt which beat inthe burst, starting at 0.
+ * @param addr - starting address
+ * @param burst_size - how many bytes wide is the beat
+ * @param burst_length - how many bytes is the burst
+ * @param burst_type - Fixed, Incrementing or Wrap
+ * @param beat_cnt which beat in the burst, starting at 0.
  * @param data_bus_bytes - how wide is the bus (the driver/responder can get this from the interface
  * @param Lower_Byte_Lane - Lower valid byte lane
  * @param Upper_Byte_Lane - Upper valid byte lane

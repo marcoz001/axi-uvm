@@ -406,9 +406,9 @@ task axi_driver::write_response;
 
   forever begin
     writeresponse_mbx.get(item);
-    // vif.wait_for_write_response(.s(b_s));
+     //vif.wait_for_write_response(.s(s));
   //  vif.wait_for_bvalid();
-    vif.read_b(.s(s));
+    //vif.read_b(.s(s));
     item.bid   = s.bid;
     item.bresp = s.bresp;
     seq_item_port.put(item);

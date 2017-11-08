@@ -54,7 +54,7 @@ class axi_base_test extends uvm_test;
        m_resp_seq.start(m_env.m_responder_seqr);
     join_none
 
-    #800
+    //#800
     //fork
 
       m_seq.start(m_env.m_driver_seqr);

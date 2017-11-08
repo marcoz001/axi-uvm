@@ -165,7 +165,7 @@ task axi_seq::body;
     `uvm_fatal(this.get_type_name, "Unable to fetch m_memory from config db. Using defaults")
     end
 
-  xfers_to_send=25;
+  xfers_to_send=20;
 
   // If addr_width==0, then the setter hasn't been called. Try to fetch from
   // config db.
@@ -237,7 +237,7 @@ task axi_seq::body;
                                          //burst_type inside {e_FIXED, e_INCR, e_WRAP};
                                          //id == local::i;
       addr <= 'h100;
-                                        // (addr + len) <= local::window_size;
+                                         //(addr + len) <= local::window_size;
 
     }
                                    ) else begin

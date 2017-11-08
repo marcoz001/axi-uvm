@@ -461,7 +461,7 @@ function void axi_seq_item::get_beat_N_data(
 
   int Lower_Byte_Lane;
   int Upper_Byte_Lane;
-  int data_offset=0;
+  int data_offset;
   int last_beat_cnt;
 
   string data_s;
