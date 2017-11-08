@@ -313,7 +313,7 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00326">326</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>References <a class="el" href="axi__responder_8svh_source.html#l00074">axi_incompatible_rready_toggling_mode</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00091">axi_seq_item::Burst_Length_Bytes</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00051">axi_seq_item::data</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00104">axi_seq_item::dataoffset</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00402">axi_seq_item::initialize()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00096">axi_seq_item::Lower_Byte_Lane</a>, <a class="el" href="axi__responder_8svh_source.html#l00072">max_clks_between_r_transfers</a>, <a class="el" href="axi__responder_8svh_source.html#l00071">min_clks_between_r_transfers</a>, <a class="el" href="axi__pkg_8sv_source.html#l00198">axi_seq_item_r_vector_s::rdata</a>, <a class="el" href="axi__responder_8svh_source.html#l00031">readdata_mbx</a>, <a class="el" href="axi__pkg_8sv_source.html#l00202">axi_seq_item_r_vector_s::rid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00200">axi_seq_item_r_vector_s::rlast</a>, <a class="el" href="axi__pkg_8sv_source.html#l00201">axi_seq_item_r_vector_s::rvalid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00378">axi_seq_item::update_address()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00097">axi_seq_item::Upper_Byte_Lane</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00102">axi_seq_item::validcntr</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00103">axi_seq_item::validcntr_max</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">axi_seq_item::addr</a>, <a class="el" href="axi__responder_8svh_source.html#l00074">axi_incompatible_rready_toggling_mode</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00049">axi_seq_item::burst_size</a>, <a class="el" href="axi__pkg_8sv_source.html#l00253">calculate_axlen()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00320">axi_seq_item::convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00566">axi_seq_item::get_beat_N_data()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00046">axi_seq_item::len</a>, <a class="el" href="axi__responder_8svh_source.html#l00072">max_clks_between_r_transfers</a>, <a class="el" href="axi__responder_8svh_source.html#l00071">min_clks_between_r_transfers</a>, <a class="el" href="axi__pkg_8sv_source.html#l00198">axi_seq_item_r_vector_s::rdata</a>, <a class="el" href="axi__responder_8svh_source.html#l00031">readdata_mbx</a>, <a class="el" href="axi__pkg_8sv_source.html#l00202">axi_seq_item_r_vector_s::rid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00200">axi_seq_item_r_vector_s::rlast</a>, <a class="el" href="axi__pkg_8sv_source.html#l00201">axi_seq_item_r_vector_s::rvalid</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00084">axi_seq_item::validcntr</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00085">axi_seq_item::validcntr_max</a>.</p>
 
 <p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00109">run_phase()</a>.</p>
 
@@ -322,9 +322,11 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder_a2944f2ebd74a2fbaef300d355ed917e0_cgraph.png" border="0" usemap="#classaxi__responder_a2944f2ebd74a2fbaef300d355ed917e0_cgraph" alt=""/></div>
 <map name="classaxi__responder_a2944f2ebd74a2fbaef300d355ed917e0_cgraph" id="classaxi__responder_a2944f2ebd74a2fbaef300d355ed917e0_cgraph">
-<area shape="rect" id="node2" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="221,5,376,32"/>
-<area shape="rect" id="node4" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="225,57,372,98"/>
-<area shape="rect" id="node3" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="424,35,571,61"/>
+<area shape="rect" id="node2" href="axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate_axlen" alt="" coords="481,5,593,32"/>
+<area shape="rect" id="node3" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="221,31,411,57"/>
+<area shape="rect" id="node4" href="classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="237,82,395,123"/>
+<area shape="rect" id="node5" href="classaxi__seq__item.html#af0ff7ad91e2f8541c0924b7217543131" title="return byte lanes that contain valid data " alt="" coords="459,82,616,123"/>
+<area shape="rect" id="node6" href="axi__pkg_8sv.html#af1b004bb6ced75b75470eb4eaae20493" title="calculate burst_size aligned address " alt="" coords="664,89,839,116"/>
 </map>
 </div>
 </p>
@@ -360,22 +362,23 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00109">109</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00070">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">axi_seq_item::convert2string()</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00044">e_READ_DATA</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00049">e_SETARREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00047">e_SETAWREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00048">e_SETWREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00042">e_WRITE</a>, <a class="el" href="axi__responder_8svh_source.html#l00313">read_address()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00031">readdata_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00072">axi_seq_item::toggle_pattern</a>, <a class="el" href="axi__responder_8svh_source.html#l00162">write_address()</a>, <a class="el" href="axi__responder_8svh_source.html#l00192">write_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00232">write_response()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00036">writeaddress_mbx</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00071">axi_seq_item::cmd</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00320">axi_seq_item::convert2string()</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00049">e_READ_DATA</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00054">e_SETARREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00052">e_SETAWREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00053">e_SETWREADYTOGGLEPATTERN</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00047">e_WRITE</a>, <a class="el" href="axi__responder_8svh_source.html#l00313">read_address()</a>, <a class="el" href="axi__responder_8svh_source.html#l00326">read_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00031">readdata_mbx</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00073">axi_seq_item::toggle_pattern</a>, <a class="el" href="axi__responder_8svh_source.html#l00162">write_address()</a>, <a class="el" href="axi__responder_8svh_source.html#l00192">write_data()</a>, <a class="el" href="axi__responder_8svh_source.html#l00232">write_response()</a>, and <a class="el" href="axi__responder_8svh_source.html#l00036">writeaddress_mbx</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder_a1cbb78601c4535a0ca361989b7ca2077_cgraph.png" border="0" usemap="#classaxi__responder_a1cbb78601c4535a0ca361989b7ca2077_cgraph" alt=""/></div>
 <map name="classaxi__responder_a1cbb78601c4535a0ca361989b7ca2077_cgraph" id="classaxi__responder_a1cbb78601c4535a0ca361989b7ca2077_cgraph">
-<area shape="rect" id="node2" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="401,283,591,309"/>
-<area shape="rect" id="node3" href="classaxi__responder.html#ac2bfb80d5d72e298202f4f31f0a2db72" title="Read Address channel thread. " alt="" coords="200,86,336,127"/>
-<area shape="rect" id="node4" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="184,35,352,61"/>
-<area shape="rect" id="node8" href="classaxi__responder.html#a40c2090c7f4e386461faceb42937241d" title="Write Address channel thread. " alt="" coords="199,217,337,258"/>
-<area shape="rect" id="node9" href="classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c" title="Write Data channel thread. " alt="" coords="183,283,353,309"/>
-<area shape="rect" id="node10" href="classaxi__responder.html#ad6540250bab8663a8723afa67dc222b9" title="Write Response channel thread. " alt="" coords="199,151,337,193"/>
-<area shape="rect" id="node5" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="419,5,573,32"/>
-<area shape="rect" id="node7" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="423,57,569,98"/>
-<area shape="rect" id="node6" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="639,35,785,61"/>
+<area shape="rect" id="node2" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="401,229,591,255"/>
+<area shape="rect" id="node3" href="classaxi__responder.html#ac2bfb80d5d72e298202f4f31f0a2db72" title="Read Address channel thread. " alt="" coords="200,93,336,135"/>
+<area shape="rect" id="node4" href="classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="184,42,352,69"/>
+<area shape="rect" id="node9" href="classaxi__responder.html#a40c2090c7f4e386461faceb42937241d" title="Write Address channel thread. " alt="" coords="199,224,337,265"/>
+<area shape="rect" id="node10" href="classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c" title="Write Data channel thread. " alt="" coords="183,290,353,317"/>
+<area shape="rect" id="node11" href="classaxi__responder.html#ad6540250bab8663a8723afa67dc222b9" title="Write Response channel thread. " alt="" coords="199,159,337,200"/>
+<area shape="rect" id="node5" href="axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate_axlen" alt="" coords="661,71,773,98"/>
+<area shape="rect" id="node6" href="classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="417,5,575,47"/>
+<area shape="rect" id="node7" href="classaxi__seq__item.html#af0ff7ad91e2f8541c0924b7217543131" title="return byte lanes that contain valid data " alt="" coords="639,5,796,47"/>
+<area shape="rect" id="node8" href="axi__pkg_8sv.html#af1b004bb6ced75b75470eb4eaae20493" title="calculate burst_size aligned address " alt="" coords="844,13,1019,39"/>
 </map>
 </div>
 </p>
@@ -412,7 +415,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Write Address channel thread. </p>
-<p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
+<p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
 
 <p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00162">162</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
@@ -446,11 +449,11 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Write Data channel thread. </p>
-<p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
+<p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
 
 <p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00192">192</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00221">axi_seq_item::convert2string()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00136">axi_seq_item_w_vector_s::wlast</a>, <a class="el" href="axi__responder_8svh_source.html#l00037">writedata_mbx</a>, and <a class="el" href="axi__responder_8svh_source.html#l00038">writeresponse_mbx</a>.</p>
+<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00320">axi_seq_item::convert2string()</a>, <a class="el" href="axi__pkg_8sv_source.html#l00136">axi_seq_item_w_vector_s::wlast</a>, <a class="el" href="axi__responder_8svh_source.html#l00037">writedata_mbx</a>, and <a class="el" href="axi__responder_8svh_source.html#l00038">writeresponse_mbx</a>.</p>
 
 <p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00109">run_phase()</a>.</p>
 
@@ -502,7 +505,7 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="axi__responder_8svh_source.html#l00232">232</a> of file <a class="el" href="axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
-<p>References <a class="el" href="axi__pkg_8sv_source.html#l00155">axi_seq_item_b_vector_s::bid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00156">axi_seq_item_b_vector_s::bresp</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00221">axi_seq_item::convert2string()</a>, <a class="el" href="axi__responder_8svh_source.html#l00057">max_clks_between_b_transfers</a>, <a class="el" href="axi__responder_8svh_source.html#l00056">min_clks_between_b_transfers</a>, and <a class="el" href="axi__responder_8svh_source.html#l00038">writeresponse_mbx</a>.</p>
+<p>References <a class="el" href="axi__pkg_8sv_source.html#l00155">axi_seq_item_b_vector_s::bid</a>, <a class="el" href="axi__pkg_8sv_source.html#l00156">axi_seq_item_b_vector_s::bresp</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00320">axi_seq_item::convert2string()</a>, <a class="el" href="axi__responder_8svh_source.html#l00057">max_clks_between_b_transfers</a>, <a class="el" href="axi__responder_8svh_source.html#l00056">min_clks_between_b_transfers</a>, and <a class="el" href="axi__responder_8svh_source.html#l00038">writeresponse_mbx</a>.</p>
 
 <p>Referenced by <a class="el" href="axi__responder_8svh_source.html#l00109">run_phase()</a>.</p>
 

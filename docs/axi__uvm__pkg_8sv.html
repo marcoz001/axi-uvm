@@ -89,7 +89,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">axi_uvm_pkg.sv File Reference</div>  </div>
 </div><!--header-->
@@ -178,6 +180,17 @@ Enumerations</h2></td></tr>
  }<tr class="memdesc:ad8116d2e0fd01b57b2c352460a75e3c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config variable that tells <a class="el" href="classaxi__driver.html" title="Logic to act as an AXI master for all 5 channels. ">axi_driver</a> whether it is a master driver or slave driver(responder)  <a href="axi__uvm__pkg_8sv.html#ad8116d2e0fd01b57b2c352460a75e3c2">More...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:ad8116d2e0fd01b57b2c352460a75e3c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a5d828599817fd1ca499a9abd29d72eac"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__uvm__pkg_8sv.html#a5d828599817fd1ca499a9abd29d72eac">calculate_beats</a> (input bit&lt; <a class="el" href="axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt; addr, input int burst_size, input int burst_length)</td></tr>
+<tr class="memdesc:a5d828599817fd1ca499a9abd29d72eac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate number of beats/clks in this burst.  <a href="#a5d828599817fd1ca499a9abd29d72eac">More...</a><br /></td></tr>
+<tr class="separator:a5d828599817fd1ca499a9abd29d72eac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a137c0955e8f91047325731db53b341bf"><td class="memItemLeft" align="right" valign="top">localparam&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a> = 32</td></tr>
+<tr class="separator:a137c0955e8f91047325731db53b341bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a class="anchor" id="a61e2725bbc7455ef96bc6422c484179e"></a>
@@ -202,7 +215,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00037">37</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00042">42</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -248,7 +261,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00042">42</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00047">47</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
 
 </div>
 </div>
@@ -273,7 +286,74 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00062">62</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
+<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00067">67</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a5d828599817fd1ca499a9abd29d72eac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int calculate_beats </td>
+          <td>(</td>
+          <td class="paramtype">input bit&lt; <a class="el" href="axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input int&#160;</td>
+          <td class="paramname"><em>burst_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input int&#160;</td>
+          <td class="paramname"><em>burst_length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate number of beats/clks in this burst. </p>
+<p>If the transfer is too large, this function will return a bogus result The caller is responsible for insuring safety. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>: check if size (length + address-misalignment) is too large </dd></dl>
+
+<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00078">78</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
+
+<p>References <a class="el" href="axi__uvm__pkg_8sv_source.html#l00031">ADDR_WIDTH</a>, and <a class="el" href="axi__pkg_8sv_source.html#l00222">calculate_aligned_address()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="axi__uvm__pkg_8sv_a5d828599817fd1ca499a9abd29d72eac_cgraph.png" border="0" usemap="#axi__uvm__pkg_8sv_a5d828599817fd1ca499a9abd29d72eac_cgraph" alt=""/></div>
+<map name="axi__uvm__pkg_8sv_a5d828599817fd1ca499a9abd29d72eac_cgraph" id="axi__uvm__pkg_8sv_a5d828599817fd1ca499a9abd29d72eac_cgraph">
+<area shape="rect" id="node2" href="axi__pkg_8sv.html#af1b004bb6ced75b75470eb4eaae20493" title="calculate burst_size aligned address " alt="" coords="167,5,341,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="a137c0955e8f91047325731db53b341bf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">localparam ADDR_WIDTH = 32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__uvm__pkg_8sv_source.html#l00031">31</a> of file <a class="el" href="axi__uvm__pkg_8sv_source.html">axi_uvm_pkg.sv</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__uvm__pkg_8sv_source.html#l00078">calculate_beats()</a>, and <a class="el" href="axi__seq__item_8svh_source.html#l00474">axi_seq_item::get_next_address()</a>.</p>
 
 </div>
 </div>

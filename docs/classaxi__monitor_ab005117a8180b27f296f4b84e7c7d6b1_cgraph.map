@@ -1,8 +1,9 @@
 <map id="axi_monitor::monitor_write_data" name="axi_monitor::monitor_write_data">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#afcdf7df56aa24058c5cbb7621afea0b9" title="Get next address for reading/writing to memory. " alt="" coords="193,5,351,47"/>
-<area shape="rect" id="node3" href="$classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="195,71,349,98"/>
-<area shape="rect" id="node5" href="$classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="199,123,345,164"/>
-<area shape="rect" id="node6" href="$classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="203,188,341,229"/>
-<area shape="rect" id="node7" href="$classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="219,254,325,281"/>
-<area shape="rect" id="node4" href="$classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="399,101,545,127"/>
+<area shape="rect" id="node2" href="$classaxi__seq__item.html#af0ff7ad91e2f8541c0924b7217543131" title="return byte lanes that contain valid data " alt="" coords="399,16,556,57"/>
+<area shape="rect" id="node4" href="$classaxi__if__abstract.html#a834de2d058eec05c4c890435fae83a5b" title="returns data bus width " alt="" coords="205,34,339,76"/>
+<area shape="rect" id="node5" href="$classaxi__seq__item.html#a1193da1dd305c712af3d033635dde120" title="Get next address for reading/writing to memory. " alt="" coords="193,100,351,141"/>
+<area shape="rect" id="node7" href="$classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="203,165,341,206"/>
+<area shape="rect" id="node8" href="$classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="219,231,325,258"/>
+<area shape="rect" id="node3" href="$axi__pkg_8sv.html#af1b004bb6ced75b75470eb4eaae20493" title="calculate burst_size aligned address " alt="" coords="604,52,779,79"/>
+<area shape="rect" id="node6" href="$axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate_axlen" alt="" coords="421,132,533,159"/>
 </map>

@@ -1,9 +1,8 @@
 var searchData=
 [
   ['data',['data',['../classaxi__seq__item.html#a06006976fdb15ef2725cb83ce411ab74',1,'axi_seq_item']]],
-  ['data_5fbus_5fbytes',['Data_Bus_Bytes',['../classaxi__seq__item.html#a4b4e1c1af8dbc2c397302ac4f0bd2027',1,'axi_seq_item']]],
   ['data_5fc',['data_c',['../classaxi__seq__item.html#ac9ec7a8710cde01bb533e4951e492b5f',1,'axi_seq_item']]],
-  ['dataoffset',['dataoffset',['../classaxi__seq__item.html#a0ec97346da472c68085409601118d3e8',1,'axi_seq_item']]],
+  ['data_5fwidth',['data_width',['../classaxi__seq.html#a4ee2dafd8b4ec15c811e88e5b6df0dee',1,'axi_seq']]],
   ['design_2esv',['design.sv',['../design_8sv.html',1,'']]],
   ['disable_5farready_5ftoggle_5fpattern',['disable_arready_toggle_pattern',['../classaxi__if__abstract.html#a409e8cd096385a58742315b4f531cc2f',1,'axi_if_abstract']]],
   ['disable_5fawready_5ftoggle_5fpattern',['disable_awready_toggle_pattern',['../classaxi__if__abstract.html#ae95bb13d2cc5c21c4779f2f4ab76db2b',1,'axi_if_abstract']]],
@@ -15,6 +14,5 @@ var searchData=
   ['do_5fprint',['do_print',['../classaxi__seq__item.html#abe28396093aa00b187a5211862b07888',1,'axi_seq_item']]],
   ['driver_5factivity_5fap',['driver_activity_ap',['../classaxi__monitor.html#ad221ada88970cbfcc956744c45aa6acd',1,'axi_monitor']]],
   ['driver_5ftype_5ft',['driver_type_t',['../axi__uvm__pkg_8sv.html#ad8116d2e0fd01b57b2c352460a75e3c2',1,'axi_uvm_pkg.sv']]],
-  ['drv_5ftype',['drv_type',['../classaxi__agent__config.html#ac6dca74e341352b849c8fb8e5c103789',1,'axi_agent_config']]],
-  ['dtsize',['dtsize',['../classaxi__seq__item.html#a54a1fe851241ea43ab14f03186acdd64',1,'axi_seq_item']]]
+  ['drv_5ftype',['drv_type',['../classaxi__agent__config.html#ac6dca74e341352b849c8fb8e5c103789',1,'axi_agent_config']]]
 ];

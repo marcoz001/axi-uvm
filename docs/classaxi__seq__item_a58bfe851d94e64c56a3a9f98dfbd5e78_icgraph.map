@@ -1,9 +1,20 @@
 <map id="axi_seq_item::calculate_aligned_address" name="axi_seq_item::calculate_aligned_address">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#a2718ea6ff7551a92fdbc6ff92d80bb14" title="take values from an axi_seq_item and stuff into a axi_seq_item_ar_vector_s " alt="" coords="422,173,573,215"/>
-<area shape="rect" id="node5" href="$classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="631,107,784,134"/>
+<area shape="rect" id="node2" href="$classaxi__seq__item.html#a2718ea6ff7551a92fdbc6ff92d80bb14" title="take values from an axi_seq_item and stuff into a axi_seq_item_ar_vector_s " alt="" coords="422,71,573,112"/>
+<area shape="rect" id="node5" href="$classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="631,355,785,382"/>
 <area shape="rect" id="node6" href="$classaxi__seq__item.html#aada0d930cd4e6040a7584e068e01dc94" title="Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s. " alt="" coords="419,5,576,47"/>
-<area shape="rect" id="node8" href="$classaxi__seq__item.html#ad09e167a76225a7d4e2e9e057bfce06d" title="Calculate number of beats/clks in this burst. " alt="" coords="212,123,371,164"/>
-<area shape="rect" id="node3" href="$classaxi__driver.html#a4edb359e7927c729b939ebd992f83d05" title="Read Address channel thread. " alt="" coords="625,162,789,189"/>
-<area shape="rect" id="node4" href="$classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="839,95,985,122"/>
-<area shape="rect" id="node7" href="$classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03" title="Write Address channel thread. " alt="" coords="624,27,791,54"/>
+<area shape="rect" id="node8" href="$classaxi__seq__item.html#ad09e167a76225a7d4e2e9e057bfce06d" title="Calculate number of beats/clks in this burst. " alt="" coords="212,268,371,309"/>
+<area shape="rect" id="node15" href="$classaxi__seq__item.html#a1193da1dd305c712af3d033635dde120" title="Get next address for reading/writing to memory. " alt="" coords="419,609,576,651"/>
+<area shape="rect" id="node18" href="$classaxi__seq__item.html#af0ff7ad91e2f8541c0924b7217543131" title="return byte lanes that contain valid data " alt="" coords="213,551,370,592"/>
+<area shape="rect" id="node3" href="$classaxi__driver.html#a4edb359e7927c729b939ebd992f83d05" title="Read Address channel thread. " alt="" coords="626,82,790,109"/>
+<area shape="rect" id="node4" href="$classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="845,110,992,137"/>
+<area shape="rect" id="node7" href="$classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03" title="Write Address channel thread. " alt="" coords="625,22,791,49"/>
+<area shape="rect" id="node9" href="$classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="Write Data channel thread. " alt="" coords="635,137,781,163"/>
+<area shape="rect" id="node10" href="$classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="638,609,778,651"/>
+<area shape="rect" id="node12" href="$classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="624,267,792,294"/>
+<area shape="rect" id="node14" href="$classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="446,187,549,214"/>
+<area shape="rect" id="node17" href="$classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="419,289,576,331"/>
+<area shape="rect" id="node11" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="840,649,997,675"/>
+<area shape="rect" id="node13" href="$classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="854,260,983,301"/>
+<area shape="rect" id="node16" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="638,675,778,716"/>
+<area shape="rect" id="node19" href="$classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e" title="monitors Read Data channel and sends out TLM pkt " alt="" coords="426,558,569,585"/>
 </map>

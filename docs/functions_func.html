@@ -84,7 +84,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_d"><span>d</span></a></li>
       <li><a href="#index_e"><span>e</span></a></li>
       <li><a href="#index_g"><span>g</span></a></li>
-      <li><a href="#index_i"><span>i</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_n"><span>n</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
@@ -156,16 +155,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>burst_size_c()
 : <a class="el" href="classaxi__seq__item.html#a8e084c38e2fdcef2a3332dadc07358f8">axi_seq_item</a>
 </li>
+<li>burst_type_c()
+: <a class="el" href="classaxi__seq__item.html#af6a72ce3ca03ad918b8fe6859e40bfde">axi_seq_item</a>
+</li>
 </ul>
 
 
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
-<li>calculate_aligned_address()
-: <a class="el" href="classaxi__seq__item.html#a58bfe851d94e64c56a3a9f98dfbd5e78">axi_seq_item</a>
-</li>
-<li>calculate_beats()
-: <a class="el" href="classaxi__seq__item.html#ad09e167a76225a7d4e2e9e057bfce06d">axi_seq_item</a>
-</li>
 <li>connect_phase()
 : <a class="el" href="classaxi__agent.html#a233b7014fd29530ab963afb26f86fe04">axi_agent</a>
 , <a class="el" href="classaxi__driver.html#aa94820f5234934a33e735a95ff748241">axi_driver</a>
@@ -244,6 +240,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>get_awready_awvalid()
 : <a class="el" href="classaxi__if__abstract.html#abbf98bd165754605b7878b05f63fe8b6">axi_if_abstract</a>
 </li>
+<li>get_beat_N_byte_lanes()
+: <a class="el" href="classaxi__seq__item.html#af0ff7ad91e2f8541c0924b7217543131">axi_seq_item</a>
+</li>
+<li>get_beat_N_data()
+: <a class="el" href="classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215">axi_seq_item</a>
+</li>
 <li>get_bready()
 : <a class="el" href="classaxi__if__abstract.html#ad1a26bec3816fad1bb2155873214e9fc">axi_if_abstract</a>
 </li>
@@ -253,8 +255,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>get_bvalid()
 : <a class="el" href="classaxi__if__abstract.html#a6e480323f9947438602bf6b5029783e1">axi_if_abstract</a>
 </li>
+<li>get_data_bus_width()
+: <a class="el" href="classaxi__if__abstract.html#a834de2d058eec05c4c890435fae83a5b">axi_if_abstract</a>
+</li>
 <li>get_next_address()
-: <a class="el" href="classaxi__seq__item.html#afcdf7df56aa24058c5cbb7621afea0b9">axi_seq_item</a>
+: <a class="el" href="classaxi__seq__item.html#a1193da1dd305c712af3d033635dde120">axi_seq_item</a>
 </li>
 <li>get_rready()
 : <a class="el" href="classaxi__if__abstract.html#acd79e0f4ec676d038fe1d572ceb71939">axi_if_abstract</a>
@@ -273,13 +278,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>get_wvalid()
 : <a class="el" href="classaxi__if__abstract.html#a7b5812097a1ebe2ea45d79b9453fccaa">axi_if_abstract</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
-<li>initialize()
-: <a class="el" href="classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a">axi_seq_item</a>
 </li>
 </ul>
 
@@ -329,6 +327,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>post_randomize()
 : <a class="el" href="classaxi__seq__item.html#a67eb39560a9d4e5d46c5cc46e8fdb870">axi_seq_item</a>
 </li>
+<li>protocol_c()
+: <a class="el" href="classaxi__seq__item.html#a8502061a0a4ab54a3a2fe7108d34acd7">axi_seq_item</a>
+</li>
 </ul>
 
 
@@ -376,6 +377,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>sample()
 : <a class="el" href="classaxi__coveragecollector.html#a93977878c23aef96b88197e8681af9b7">axi_coveragecollector</a>
 </li>
+<li>set_addr_width()
+: <a class="el" href="classaxi__seq.html#a1a5bb4b0b6215f8d8deb94fde8d617a3">axi_seq</a>
+</li>
 <li>set_arvalid()
 : <a class="el" href="classaxi__if__abstract.html#aac24a02c292e31a02d5ffe11776c1456">axi_if_abstract</a>
 </li>
@@ -390,6 +394,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>set_bvalid()
 : <a class="el" href="classaxi__if__abstract.html#ac78126ed417bc75fa48573df7e8f1349">axi_if_abstract</a>
+</li>
+<li>set_data_width()
+: <a class="el" href="classaxi__seq.html#a820beb0641ab5a5b74693cb778e420ed">axi_seq</a>
+</li>
+<li>set_id_width()
+: <a class="el" href="classaxi__seq.html#a601ec23738c06c9b2538b4c2469ae420">axi_seq</a>
+</li>
+<li>set_len_width()
+: <a class="el" href="classaxi__seq.html#a499661b69d2b68d5fee8607760e91a1b">axi_seq</a>
 </li>
 <li>set_rready()
 : <a class="el" href="classaxi__if__abstract.html#a0883b7dd58da7786effb3866b5ea7433">axi_if_abstract</a>
@@ -407,12 +420,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
-<li>update()
-: <a class="el" href="classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626">axi_seq_item</a>
-</li>
-<li>update_address()
-: <a class="el" href="classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3">axi_seq_item</a>
-</li>
 <li>uvm_component_utils()
 : <a class="el" href="classaxi__agent.html#a33b2e34283d6c3f984e58ad02d72006b">axi_agent</a>
 , <a class="el" href="classaxi__base__test.html#a63e8de47eabb5c91eb49c076e5a89feb">axi_base_test</a>

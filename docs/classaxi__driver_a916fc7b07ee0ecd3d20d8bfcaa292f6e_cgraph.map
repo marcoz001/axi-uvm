@@ -1,6 +1,5 @@
 <map id="axi_driver::read_data" name="axi_driver::read_data">
 <area shape="rect" id="node2" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="196,5,385,32"/>
-<area shape="rect" id="node3" href="$classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="213,56,368,83"/>
-<area shape="rect" id="node5" href="$classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="217,107,364,149"/>
-<area shape="rect" id="node4" href="$classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="433,85,580,112"/>
+<area shape="rect" id="node3" href="$classaxi__seq__item.html#af0ff7ad91e2f8541c0924b7217543131" title="return byte lanes that contain valid data " alt="" coords="212,57,369,98"/>
+<area shape="rect" id="node4" href="$axi__pkg_8sv.html#af1b004bb6ced75b75470eb4eaae20493" title="calculate burst_size aligned address " alt="" coords="433,64,608,91"/>
 </map>

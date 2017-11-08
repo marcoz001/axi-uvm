@@ -1,5 +1,7 @@
 <map id="axi_responder::read_data" name="axi_responder::read_data">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="Initialize all variables after item creation, whether random or manually set. " alt="" coords="221,5,376,32"/>
-<area shape="rect" id="node4" href="$classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="Update AXI item&#39;s address. " alt="" coords="225,57,372,98"/>
-<area shape="rect" id="node3" href="$classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="Update the aligned address and used byte lanes on each beat. " alt="" coords="424,35,571,61"/>
+<area shape="rect" id="node2" href="$axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate_axlen" alt="" coords="481,5,593,32"/>
+<area shape="rect" id="node3" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="221,31,411,57"/>
+<area shape="rect" id="node4" href="$classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="237,82,395,123"/>
+<area shape="rect" id="node5" href="$classaxi__seq__item.html#af0ff7ad91e2f8541c0924b7217543131" title="return byte lanes that contain valid data " alt="" coords="459,82,616,123"/>
+<area shape="rect" id="node6" href="$axi__pkg_8sv.html#af1b004bb6ced75b75470eb4eaae20493" title="calculate burst_size aligned address " alt="" coords="664,89,839,116"/>
 </map>

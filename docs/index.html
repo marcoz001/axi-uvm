@@ -95,6 +95,7 @@ Introduction</h1>
 <li>- Supports 32-bit and 64-bit address widths</li>
 <li>- Supports full and partial transfers.</li>
 <li>- Supports aligned and unaligned transfers.</li>
+<li>- Fixed burst_type must be aligned. Unaligned Fixed transfers are not supported.</li>
 <li>- Testbench side is event driven. No #'delays, no , etc</li>
 <li>- Emulator friendly (TB side is event driven. no )</li>
 <li>- Pipelined AXI driver</li>
@@ -113,7 +114,24 @@ Introduction</h1>
 <li><a href="https://www.quora.com/What-is-the-best-way-to-model-an-out-of-order-transaction-driver-in-UVM">https://www.quora.com/What-is-the-best-way-to-model-an-out-of-order-transaction-driver-in-UVM</a></li>
 <li></li>
 <li>Monitors</li>
-<li><a href="https://verificationacademy.com/verification-horizons/june-2013-volume-9-issue-2/Monitors-Monitors-Everywhere-Who-Is-Monitoring-the-Monitors">https://verificationacademy.com/verification-horizons/june-2013-volume-9-issue-2/Monitors-Monitors-Everywhere-Who-Is-Monitoring-the-Monitors</a> */ </li>
+<li><a href="https://verificationacademy.com/verification-horizons/june-2013-volume-9-issue-2/Monitors-Monitors-Everywhere-Who-Is-Monitoring-the-Monitors">https://verificationacademy.com/verification-horizons/june-2013-volume-9-issue-2/Monitors-Monitors-Everywhere-Who-Is-Monitoring-the-Monitors</a></li>
+<li></li>
+<li>verification plan (put in seperate doc):</li>
+<li>- For each supported data width:</li>
+<li>- check all 3 burst_types(e_FIXED, e_INCR, e_WRAP)</li>
+<li>- all possible burst_sizes (including invalid, make sure they fail)</li>
+<li>- all possible lens (only have a couple coverbins though,or any cross will be too large.)</li>
+<li>- min (1), max, everything in-between ?</li>
+<li>- stable *ready</li>
+<li>- toggling *ready</li>
+<li>- stable *valid</li>
+<li>- toggling *valid</li>
+<li>- AXI-incompabible *valid toggling (valid deasserts before ready asserts)</li>
+<li>- back-to-back bursts (aw,w,b,ar,r)</li>
+<li>- one clock delay between bursts (aw,w,b,ar,r)</li>
+<li>- serial mode (aw, then w, then b, repeat) (ar, then r, repeat)</li>
+<li>- pipelined (multiple aw, then multiple w, then multiple b, repeat) (multiple ar,then multiple r,repeat)</li>
+<li>*/ </li>
 </ul>
 </div></div><!-- contents -->
 <!-- start footer part -->
