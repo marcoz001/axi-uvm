@@ -204,7 +204,7 @@ task axi_driver::write_address;
        end
        // Initialize values
        if (item_needs_init==1) begin
-          item.aw_from_class(.t(item), .v(v));
+          axi_uvm_pkg::aw_from_class(.t(item), .v(v));
 
           item_needs_init=0;
        end
@@ -474,7 +474,7 @@ task axi_driver::read_address;
        end
        // Initialize values
        if (item != null && item_needs_init==1) begin
-          item.ar_from_class(.t(item), .v(v));
+          axi_uvm_pkg::ar_from_class(.t(item), .v(v));
 
           item_needs_init=0;
        end

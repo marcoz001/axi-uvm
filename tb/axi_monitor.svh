@@ -115,7 +115,7 @@ task axi_monitor::monitor_write_address();
     `uvm_info(this.get_type_name(), "wait_for_write_address - DONE", UVM_INFO)
 
     $cast(item, original_item.clone());
-    axi_seq_item::aw_to_class(.t(item), .v(aw_s));
+    axi_uvm_pkg::aw_to_class(.t(item), .v(aw_s));
     item.cmd         = axi_uvm_pkg::e_WRITE;
 
     // Queue up so write data channel monitor knows
@@ -258,7 +258,7 @@ task axi_monitor::monitor_write_response();
     `uvm_info(this.get_type_name(), "wait_for_write_response - DONE", UVM_HIGH)
 
     $cast(cloned_item, item.clone()); // Clone is faster than creating new
-    axi_seq_item::b_to_class(.t(cloned_item), .v(b_s));
+    axi_uvm_pkg::b_to_class(.t(cloned_item), .v(b_s));
     cloned_item.cmd         = axi_uvm_pkg::e_WRITE_RESPONSE;
     ap.write(cloned_item);
 
@@ -313,7 +313,7 @@ task axi_monitor::monitor_read_address();
     //          UVM_INFO)
 
     $cast(cloned_item, item.clone());
-    axi_seq_item::ar_to_class(.t(cloned_item), .v(ar_s));
+    axi_uvm_pkg::ar_to_class(.t(cloned_item), .v(ar_s));
     cloned_item.cmd  = axi_uvm_pkg::e_READ;
 
     cloned_item.data=new[cloned_item.len];

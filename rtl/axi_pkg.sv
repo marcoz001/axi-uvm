@@ -219,7 +219,7 @@ typedef bit[AXI_SEQ_ITEM_R_NUM_BITS-1:0] axi_seq_item_r_vector_t;
  * @param burst_size - how many bytes wide is the beat
  * @returns the burst_size aligned address
 */
-function bit [C_AXI_ADDR_WIDTH-1:0] calculate_aligned_address(
+function bit [C_AXI_ADDR_WIDTH-1:0] calculate_burst_aligned_address(
   input bit [C_AXI_ADDR_WIDTH-1:0] address,
   input bit [2:0]                  burst_size);
 
@@ -247,9 +247,67 @@ function bit [C_AXI_ADDR_WIDTH-1:0] calculate_aligned_address(
 
   return aligned_address;
 
-endfunction : calculate_aligned_address
+endfunction : calculate_burst_aligned_address
 
 
+/** \brief calculate bus-siz aligned address
+ *
+ * The AXI function to calculate aligned address is:
+ * Aligned_Address = (Address/(2**bus_size)*(2**bus_sze)
+ * Zeroing out the bottom burst_size bits does the same thing
+ * which is much more eaily synthesizable.
+ * @param address - starting address
+ * @param bus - how many bytes wide is the bus
+ * @returns the bus_size aligned address
+ * \todo: bus_size could be byte instead of int?
+*/
+function bit [C_AXI_ADDR_WIDTH-1:0] calculate_bus_aligned_address(
+  input bit [C_AXI_ADDR_WIDTH-1:0] addr,
+  input int                       bus_size);
+
+  bit [C_AXI_ADDR_WIDTH-1:0] aligned_address;
+
+  string msg_s;
+
+  aligned_address = addr;
+
+  case (bus_size)
+    2**e_1BYTE    : aligned_address      = addr;
+    2**e_2BYTES   : aligned_address[0]   = 1'b0;
+    2**e_4BYTES   : aligned_address[1:0] = 2'b00;
+    2**e_8BYTES   : aligned_address[2:0] = 3'b000;
+    2**e_16BYTES  : aligned_address[3:0] = 4'b0000;
+    2**e_32BYTES  : aligned_address[4:0] = 5'b0_0000;
+    2**e_64BYTES  : aligned_address[5:0] = 6'b00_0000;
+    2**e_128BYTES : aligned_address[6:0] = 7'b000_0000;
+  endcase
+
+
+  msg_s="";
+  $sformat(msg_s, "%s addr: 0x%0x", msg_s, addr);
+  $sformat(msg_s, "%s aligned_address: 0x%0x", msg_s, aligned_address);
+  $sformat(msg_s, "%s bus_size: 0x%0x", msg_s, bus_size);
+
+
+
+  `uvm_info("calculate_bus_aligned_address", msg_s,UVM_HIGH)
+
+  return aligned_address;
+
+endfunction : calculate_bus_aligned_address
+
+
+/** \brief calculate awlen or arlen
+ *
+ *  Calculate the number of beats -1
+ * for a burst.  Subtract one because
+ * awlen and arlen are one less than
+ * the transfer count.  awlen=0,
+ * means 1 beat.
+ * @param address - starting address
+ * @param burst_size - how many bytes wide is the beat
+ * @returns the burst_size aligned address
+*/
 function bit [C_AXI_LEN_WIDTH-1:0] calculate_axlen(
   input bit [C_AXI_ADDR_WIDTH-1:0] addr,
   input bit [2:0]                  burst_size,
@@ -264,16 +322,9 @@ function bit [C_AXI_LEN_WIDTH-1:0] calculate_axlen(
 
   string msg_s;
 
-    case (burst_size)
-    e_1BYTE    : unalignment_offset = 0;
-    e_2BYTES   : unalignment_offset = byte'(addr[0]);
-    e_4BYTES   : unalignment_offset = byte'(addr[1:0]);
-    e_8BYTES   : unalignment_offset = byte'(addr[2:0]);
-    e_16BYTES  : unalignment_offset = byte'(addr[3:0]);
-    e_32BYTES  : unalignment_offset = byte'(addr[4:0]);
-    e_64BYTES  : unalignment_offset = byte'(addr[5:0]);
-    e_128BYTES : unalignment_offset = byte'(addr[6:0]);
-  endcase
+  unalignment_offset = calculate_unalignment_offset(
+                            .addr(addr),
+                            .burst_size(burst_size));
 
   total_length=burst_length + unalignment_offset;
 
@@ -304,6 +355,76 @@ function bit [C_AXI_LEN_WIDTH-1:0] calculate_axlen(
   return beats;
 
 endfunction : calculate_axlen
+
+/** \brief calculate how unaligned the address is from the burst size
+ *
+ * @param address - starting address
+ * @param burst_size - how many bytes wide is the beat
+ * @returns how many bytes the address is unaligned from the burst_size
+*/
+function byte calculate_unalignment_offset(
+  input bit [C_AXI_ADDR_WIDTH-1:0] addr,
+  input byte                  burst_size);
+
+  byte unalignment_offset;
+
+    case (burst_size)
+      e_1BYTE    : unalignment_offset = 0;
+      e_2BYTES   : unalignment_offset = byte'(addr[0]);
+      e_4BYTES   : unalignment_offset = byte'(addr[1:0]);
+      e_8BYTES   : unalignment_offset = byte'(addr[2:0]);
+      e_16BYTES  : unalignment_offset = byte'(addr[3:0]);
+      e_32BYTES  : unalignment_offset = byte'(addr[4:0]);
+      e_64BYTES  : unalignment_offset = byte'(addr[5:0]);
+      e_128BYTES : unalignment_offset = byte'(addr[6:0]);
+  endcase
+
+  return unalignment_offset;
+
+
+endfunction : calculate_unalignment_offset
+
+
+/** \brief calculate the wrap boundaries for a given burst
+ *
+ * @param address - starting address
+ * @param burst_size - how many bytes wide is the beat
+ * @param burst_length - how many bytes is the burst
+ * @return Lower_Wrap_Boundary - Lower Wrap Boundary Address
+ * @return Upper_Wrap_Boundary - Upper Wrap Boundary Address
+ * \todo: simplify the logic needed for the math in this function
+*/
+function void calculate_wrap_boundary(
+  input bit [C_AXI_ADDR_WIDTH-1:0] addr,
+  input bit [2:0]                  burst_size,
+  input shortint                   burst_length,
+  output bit [C_AXI_ADDR_WIDTH-1:0] Lower_Wrap_Boundary,
+  output bit [C_AXI_ADDR_WIDTH-1:0] Upper_Wrap_Boundary);
+
+
+  int max_beat_cnt;
+  int dtsize;
+  bit [C_AXI_ADDR_WIDTH-1:0] Aligned_Address;
+
+  max_beat_cnt = calculate_axlen(.addr         (addr),
+                                 .burst_size   (burst_size),
+                                 .burst_length (burst_length)) + 1;
+
+  Aligned_Address=calculate_burst_aligned_address(.address(addr),
+                                            .burst_size(burst_size));
+
+
+  dtsize = (2**burst_size) * max_beat_cnt;
+
+  Lower_Wrap_Boundary = (int'(Aligned_Address/dtsize) * dtsize);
+  Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
+
+endfunction : calculate_wrap_boundary
+
+
+
+
+
 
 `include "axi_if_abstract.svh"
 
