@@ -28,5 +28,21 @@
  *
  * Monitors
  * https://verificationacademy.com/verification-horizons/june-2013-volume-9-issue-2/Monitors-Monitors-Everywhere-Who-Is-Monitoring-the-Monitors
- */
-
+ *
+ * verification plan (put in seperate doc):
+ * - For each supported data width:
+ * -    check all 3 burst_types(e_FIXED, e_INCR, e_WRAP)
+ * -    all possible burst_sizes (including invalid, make sure they fail)
+ * -    all possible lens (only have a couple coverbins though,or any cross will be too large.)
+ * -       min (1),  max, everything in-between ?
+ * -    stable *ready
+ * -    toggling *ready
+ * -    stable *valid
+ * -    toggling *valid
+ * -    AXI-incompabible *valid toggling (valid deasserts before ready asserts)
+ * - back-to-back bursts (aw,w,b,ar,r)
+ * - one clock delay between bursts (aw,w,b,ar,r)
+ * - serial mode (aw, then w, then b, repeat)   (ar, then r, repeat)
+ * - pipelined (multiple aw, then multiple w, then multiple b, repeat)   (multiple ar,then multiple r,repeat)
+ *
+*/
