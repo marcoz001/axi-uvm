@@ -320,10 +320,14 @@ task axi_monitor::monitor_read_address();
     offset=0;
     doffset=0;
 
-    beat_cnt_max=cloned_item.calculate_beats(
-      .addr(cloned_item.addr),
-      .number_bytes(2**cloned_item.burst_size),
-      .burst_length(cloned_item.len));
+    //beat_cnt_max=cloned_item.calculate_beats(
+    //  .addr(cloned_item.addr),
+    //  .number_bytes(2**cloned_item.burst_size),
+    //  .burst_length(cloned_item.len));
+
+    beat_cnt_max=axi_pkg::calculate_beats(.addr         (cloned_item.addr),
+                                          .burst_size   (cloned_item.burst_size),
+                                          .burst_length (cloned_item.len));
 
     for (int beat_cntr=0;beat_cntr<beat_cnt_max;beat_cntr++) begin
 

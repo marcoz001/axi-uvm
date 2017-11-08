@@ -236,7 +236,8 @@ task axi_seq::body;
                                          burst_size <=    local::max_burst_size;
                                          //burst_type inside {e_FIXED, e_INCR, e_WRAP};
                                          //id == local::i;
-                                         addr       <=      'h1000;
+      addr <= 'h100;
+                                        // (addr + len) <= local::window_size;
     }
                                    ) else begin
          `uvm_fatal(this.get_type_name(),
@@ -256,9 +257,12 @@ task axi_seq::body;
     if (write_item.burst_type == e_WRAP) begin
 
 
-      max_beat_cnt = write_item.calculate_beats(.addr         (write_item.addr),
-                                                .number_bytes (2**write_item.burst_size),
-                                                .burst_length (write_item.len));
+      //max_beat_cnt = write_item.calculate_beats(.addr         (write_item.addr),
+      //                                          .number_bytes (2**write_item.burst_size),
+      //                                          .burst_length (write_item.len));
+      max_beat_cnt = axi_pkg::calculate_beats(.addr(write_item.addr),
+                                              .burst_size(write_item.burst_size),
+                                              .burst_length(write_item.len));
 
       dtsize = (2**write_item.burst_size) * max_beat_cnt;
 
