@@ -134,7 +134,6 @@ class axi_seq_item extends uvm_sequence_item;
                         }
   constraint burst_size_c {solve burst_size before len; }
 
-
   constraint max_len {len > 0;
                       len < 10000;
                       if      (cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN)
@@ -262,12 +261,6 @@ class axi_seq_item extends uvm_sequence_item;
     extern function void   post_randomize;
 
     // Custom functions
-/*
-    extern function int calculate_beats(
-      input bit [ADDR_WIDTH-1:0] addr,
-      input int        number_bytes,
-      input int        burst_length);
-*/
     extern function bit[ADDR_WIDTH-1:0] get_next_address(input int beat_cnt,
                                                          input int lane,
                                                          input int data_bus_bytes);
@@ -505,9 +498,10 @@ function bit[axi_seq_item::ADDR_WIDTH-1:0] axi_seq_item::get_next_address(
   //                               .number_bytes(2**burst_size),
   //                               .burst_length(len));
 
-  max_beat_cnt = axi_pkg::calculate_beats(.addr         (addr),
+  max_beat_cnt = axi_pkg::calculate_axlen(.addr         (addr),
                                           .burst_size   (burst_size),
-                                          .burst_length (len));
+                                          .burst_length (len)) + 1;
+
 
   dtsize = (2**burst_size) * max_beat_cnt;
 
@@ -603,10 +597,10 @@ function void axi_seq_item::get_beat_N_data(input  int beat_cnt,
   //last_beat_cnt = calculate_beats(.addr         (addr),
   //                                .number_bytes (2**burst_size),
   //                                .burst_length (len)) - 1;
-  last_beat_cnt = axi_pkg::calculate_beats(.addr         (addr),
+  last_beat_cnt = axi_pkg::calculate_axlen(.addr         (addr),
                                            .burst_size   (burst_size),
                                            .burst_length (len));
-  last_beat_cnt -= 1;
+  //last_beat_cnt -= 1;
 
   if (beat_cnt == last_beat_cnt) begin
      wlast = 1'b1;
@@ -729,105 +723,6 @@ endfunction : get_beat_N_byte_lanes
 
 /*! \brief Calculate number of beats/clks in this burst.
  *
- * If the transfer is too large, this function will return a bogus result
- * The caller is responsible for insuring safety.
- * \todo: check if size (length + address-misalignment) is too large
- */
-      /*
-function int axi_seq_item::calculate_beats(
-    input bit [ADDR_WIDTH-1:0] addr,
-    input int number_bytes,
-    input int burst_length);
-
-  byte beats;
-  byte axi_uvm_pkg_beats;
-  byte ibeat_cnt;
-  bit [ADDR_WIDTH-1:0] aligned_addr;
-  shortint shifter;
-  shortint ishifter;
-
-  shortint bNumber_Bytes=2**burst_size;
-
-  byte unalignment_offset;
-  shortint total_length;
-
-  string msg_s;
-
-
-  return axi_pkg::calculate_beats(.addr(addr),
-                                     .burst_size(burst_size),
-                                     .burst_length(burst_length));
-
-
-
-
-   aligned_addr=axi_pkg::calculate_aligned_address(.address(addr),
-                                            .burst_size(burst_size));
-        // address - starting address
-        // burst_length - total length of burst (in bytes)
-        // data_bus_bytes - width of data bus (in bytes)
-        // number_bytes - number of bytes per beat (must be consistent throughout burst)
-        //              - this matches data_bus_bytes unless doing a partial transfer
-   beats = $ceil(real'(real'((addr-aligned_addr)+burst_length)/real'(number_bytes)));
-
- // axi_uvm_pkg_beats = axi_uvm_pkg::calculate_beats(
- //   .addr(addr),
- //   .burst_size(burst_size),
- //   .burst_length(burst_length));
-
-  // beatcnt is length(in bytes) + address unalignment (addr-aligned_addr)
-  //            / 2**burst_size
-  //
-
-  case (burst_size)
-    e_1BYTE    : unalignment_offset = 0;
-    e_2BYTES   : unalignment_offset = shortint'(addr[0]);
-    e_4BYTES   : unalignment_offset = shortint'(addr[1:0]);
-    e_8BYTES   : unalignment_offset = shortint'(addr[2:0]);
-    e_16BYTES  : unalignment_offset = shortint'(addr[3:0]);
-    e_32BYTES  : unalignment_offset = shortint'(addr[4:0]);
-    e_64BYTES  : unalignment_offset = shortint'(addr[5:0]);
-    e_128BYTES : unalignment_offset = shortint'(addr[6:0]);
-  endcase
-
-  total_length=burst_length + unalignment_offset;
-
-  shifter = shortint'(total_length/(2**burst_size));
-  ishifter = shifter*(2**burst_size);
-
-  if (ishifter != total_length) begin
-    //`uvm_error("SHift", "shifter+=1")
-    shifter += 1;
-  end
-
-
-  ishifter = axi_pkg::calculate_beats(.addr(addr),
-                                     .burst_size(burst_size),
-                                     .burst_length(burst_length));
-
-  msg_s="";
-  $sformat(msg_s, "%s addr: 0x%0x", msg_s, addr);
-  $sformat(msg_s, "%s beats: %0d", msg_s, beats);
-  $sformat(msg_s, "%s shifter: %0d", msg_s, shifter);
-  $sformat(msg_s, "%s ishifter: %0d", msg_s, ishifter);
-  $sformat(msg_s, "%s burst_size: %0d", msg_s, burst_size);
-  $sformat(msg_s, "%s burst_length: %0d", msg_s, burst_length);
-  $sformat(msg_s, "%s unalignment_offset: %0d", msg_s, unalignment_offset);
-  $sformat(msg_s, "%s total_length: %0d", msg_s, total_length);
-
-
-  if (shifter != ishifter) begin
-    `uvm_error(this.get_type_name(), msg_s)
-  end
-
-  // \todo: something easily synthesizable might be nice insttead of $ceil()
-
- // `uvm_info("CALCULATE BEATS", $sformatf("addr:0x%0x  aligned-addr: 0x%0x   burst_length: %0d    number_bytes: %0d beats [((0x%0x-0x%0x)+%0d)/%0d]=0x%0x", addr, aligned_addr, burst_length, number_bytes, addr, aligned_addr, burst_length,number_bytes,beats), UVM_HIGH)
-
-  return beats;
-
-endfunction : calculate_beats
-*/
 
 /*! \brief Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s
  *
@@ -852,10 +747,10 @@ function void axi_seq_item::aw_from_class(
    //s.awlen   = calculate_beats(.addr         (t.addr),
    //                            .number_bytes (2**t.burst_size),
    //                            .burst_length (t.len));
-  s.awlen     = axi_pkg::calculate_beats(.addr         (t.addr),
+  s.awlen     = axi_pkg::calculate_axlen(.addr         (t.addr),
                                          .burst_size   (t.burst_size),
                                          .burst_length (t.len));
-   s.awlen   = s.awlen-1;
+   // s.awlen   = s.awlen-1;
    s.awsize  = t.burst_size;
    s.awburst = t.burst_type;
    s.awlock  = t.lock;
@@ -950,14 +845,14 @@ function void axi_seq_item::ar_from_class(
   s.araddr  = axi_pkg::calculate_aligned_address(.address(t.addr),
                                                   .burst_size(t.burst_size));
 
-  s.arlen   = axi_pkg::calculate_beats(.addr         (t.addr),
+  s.arlen   = axi_pkg::calculate_axlen(.addr         (t.addr),
                                        .burst_size   (t.burst_size),
                                        .burst_length (t.len));
 
   //s.arlen   = calculate_beats(.addr  (t.addr),
   //                            .number_bytes (2**t.burst_size),
   //                            .burst_length (t.len));
-  s.arlen   = s.arlen-1;
+  //s.arlen   = s.arlen-1;
 
   s.arsize  = t.burst_size;
   s.arburst = t.burst_type;

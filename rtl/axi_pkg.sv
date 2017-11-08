@@ -249,7 +249,8 @@ function bit [C_AXI_ADDR_WIDTH-1:0] calculate_aligned_address(
 
 endfunction : calculate_aligned_address
 
-function bit [C_AXI_LEN_WIDTH-1:0] calculate_beats(
+
+function bit [C_AXI_LEN_WIDTH-1:0] calculate_axlen(
   input bit [C_AXI_ADDR_WIDTH-1:0] addr,
   input bit [2:0]                  burst_size,
   input shortint                   burst_length);
@@ -261,15 +262,17 @@ function bit [C_AXI_LEN_WIDTH-1:0] calculate_beats(
   shortint ishifter;
   bit [C_AXI_LEN_WIDTH-1:0] beats;
 
+  string msg_s;
+
     case (burst_size)
     e_1BYTE    : unalignment_offset = 0;
-    e_2BYTES   : unalignment_offset = shortint'(addr[0]);
-    e_4BYTES   : unalignment_offset = shortint'(addr[1:0]);
-    e_8BYTES   : unalignment_offset = shortint'(addr[2:0]);
-    e_16BYTES  : unalignment_offset = shortint'(addr[3:0]);
-    e_32BYTES  : unalignment_offset = shortint'(addr[4:0]);
-    e_64BYTES  : unalignment_offset = shortint'(addr[5:0]);
-    e_128BYTES : unalignment_offset = shortint'(addr[6:0]);
+    e_2BYTES   : unalignment_offset = byte'(addr[0]);
+    e_4BYTES   : unalignment_offset = byte'(addr[1:0]);
+    e_8BYTES   : unalignment_offset = byte'(addr[2:0]);
+    e_16BYTES  : unalignment_offset = byte'(addr[3:0]);
+    e_32BYTES  : unalignment_offset = byte'(addr[4:0]);
+    e_64BYTES  : unalignment_offset = byte'(addr[5:0]);
+    e_128BYTES : unalignment_offset = byte'(addr[6:0]);
   endcase
 
   total_length=burst_length + unalignment_offset;
@@ -282,10 +285,25 @@ function bit [C_AXI_LEN_WIDTH-1:0] calculate_beats(
     shifter += 1;
   end
 
-  beats = shifter;
+  beats = shifter - 1;
+
+
+  msg_s="";
+  $sformat(msg_s, "%s addr: 0x%0x",     msg_s, addr);
+  $sformat(msg_s, "%s burst_size: %0d", msg_s, burst_size);
+  $sformat(msg_s, "%s unalignment_offset: %0d", msg_s, unalignment_offset);
+  $sformat(msg_s, "%s burst_length: %0d", msg_s, burst_length);
+  $sformat(msg_s, "%s total_length: %0d", msg_s, total_length);
+  $sformat(msg_s, "%s shifter: %0d", msg_s, shifter);
+  $sformat(msg_s, "%s ishifter: %0d", msg_s, ishifter);
+
+  `uvm_info("axi_pkg::calculate_beats",
+            msg_s,
+            UVM_HIGH)
+
   return beats;
 
-endfunction : calculate_beats
+endfunction : calculate_axlen
 
 `include "axi_if_abstract.svh"
 

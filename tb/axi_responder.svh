@@ -375,9 +375,9 @@ task axi_responder::read_data;
 //      beat_cntr_max=item.calculate_beats(.addr(item.addr),
 //                                         .number_bytes(2**item.burst_size),
  //                                        .burst_length(item.len));
-      beat_cntr_max=axi_pkg::calculate_beats(.addr(item.addr),
+      beat_cntr_max=axi_pkg::calculate_axlen(.addr(item.addr),
                                              .burst_size(item.burst_size),
-                                             .burst_length(item.len));
+                                             .burst_length(item.len)) + 1;
 
       if (beat_cntr >= beat_cntr_max) begin
           //writeresponse_mbx.put(item);

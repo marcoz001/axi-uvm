@@ -165,7 +165,7 @@ task axi_seq::body;
     `uvm_fatal(this.get_type_name, "Unable to fetch m_memory from config db. Using defaults")
     end
 
-  xfers_to_send=30;
+  xfers_to_send=5;
 
   // If addr_width==0, then the setter hasn't been called. Try to fetch from
   // config db.
@@ -238,6 +238,13 @@ task axi_seq::body;
                                          //id == local::i;
       addr <= 'h100;
                                         // (addr + len) <= local::window_size;
+      //  Protocol: e_AXI4 Cmd: e_WRITE    Addr = 0x3a  ID = 0x53  Len = 0x7fc (2044)  BurstSize = 0x3  BurstType = 0x1
+      protocol == e_AXI4;
+      addr =='h3a;
+      len  == 'h7fc;
+      burst_size == 'h3;
+      burst_type == '1;
+
     }
                                    ) else begin
          `uvm_fatal(this.get_type_name(),
@@ -260,9 +267,9 @@ task axi_seq::body;
       //max_beat_cnt = write_item.calculate_beats(.addr         (write_item.addr),
       //                                          .number_bytes (2**write_item.burst_size),
       //                                          .burst_length (write_item.len));
-      max_beat_cnt = axi_pkg::calculate_beats(.addr(write_item.addr),
+      max_beat_cnt = axi_pkg::calculate_axlen(.addr(write_item.addr),
                                               .burst_size(write_item.burst_size),
-                                              .burst_length(write_item.len));
+                                              .burst_length(write_item.len)) + 1;
 
       dtsize = (2**write_item.burst_size) * max_beat_cnt;
 
@@ -376,8 +383,9 @@ task axi_seq::body;
          read_data=m_memory.read(write_item.addr+z);
           //s=$sformatf("%s 0x%0x", s, read_data);
           assert(expected_data==read_data) else begin
-            `uvm_fatal("e_INCR miscompare",
-                        $sformatf("expected: 0x%0x   actual:0x%0x",
+            `uvm_error("e_INCR miscompare",
+                       $sformatf("addr:0x%0x expected: 0x%0x   actual:0x%0x",
+                                  write_item.addr+z,
                                   expected_data,
                                   read_data))
           end
@@ -426,7 +434,7 @@ task axi_seq::body;
             expected_data=write_item.data[i-write_item.addr];
             read_data=m_memory.read(i);
             assert(expected_data==read_data) else begin
-               `uvm_fatal("e_WRAP miscompare",
+               `uvm_error("e_WRAP miscompare",
                           $sformatf("expected: 0x%0x   actual:0x%0x",
                                     expected_data,
                                     read_data))

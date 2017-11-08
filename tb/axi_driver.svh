@@ -273,7 +273,7 @@ task axi_driver::write_data;
       beat_cntr=0;
       `uvm_info("axi_driver::write_data",
                 $sformatf("Item: %s", item.convert2string()),
-                UVM_HIGH)
+                UVM_INFO)
     end
 
     // Look at this only one per loop, so there's no race condition of it
@@ -295,9 +295,14 @@ task axi_driver::write_data;
       //beat_cntr_max=item.calculate_beats(.addr(item.addr),
       //                                  .number_bytes(2**item.burst_size),
       //                                   .burst_length(item.len));
-      beat_cntr_max=axi_pkg::calculate_beats(.addr(item.addr),
+      beat_cntr_max=axi_pkg::calculate_axlen(.addr(item.addr),
                                              .burst_size(item.burst_size),
-                                             .burst_length(item.len));
+                                             .burst_length(item.len)) + 1;
+
+      `uvm_info("axi_driver::write_data",
+                $sformatf("beat_cntr:%0d  beat_cntr_max: %0d", beat_cntr, beat_cntr_max),
+                UVM_HIGH)
+
 
       if (beat_cntr >= beat_cntr_max) begin
           writeresponse_mbx.put(item);

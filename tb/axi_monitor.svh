@@ -217,7 +217,7 @@ task axi_monitor::monitor_write_data();
 
         write_addr=cloned_item.get_next_address(.beat_cnt(beat_cntr),
                                                 .lane(x),
-                                                .data_bus_bytes(vif.get_data_bus_width()/8));
+                                               .data_bus_bytes(vif.get_data_bus_width()/8));
 
         if (w_s.wstrb[x] == 1'b1) begin
           `uvm_info("M_MEMORY.WRITE",
@@ -325,9 +325,9 @@ task axi_monitor::monitor_read_address();
     //  .number_bytes(2**cloned_item.burst_size),
     //  .burst_length(cloned_item.len));
 
-    beat_cnt_max=axi_pkg::calculate_beats(.addr         (cloned_item.addr),
+    beat_cnt_max=axi_pkg::calculate_axlen(.addr         (cloned_item.addr),
                                           .burst_size   (cloned_item.burst_size),
-                                          .burst_length (cloned_item.len));
+                                          .burst_length (cloned_item.len)) + 1;
 
     for (int beat_cntr=0;beat_cntr<beat_cnt_max;beat_cntr++) begin
 
