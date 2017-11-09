@@ -204,7 +204,7 @@ task axi_responder::write_data;
     `uvm_info(this.get_type_name(),
               $sformatf("axi_responder::write_data - Waiting for data for %s",
                         item.convert2string()),
-              UVM_HIGH)
+              UVM_INFO)
     wlast=1'b0;
     while (wlast != 1'b1) begin
       vif.wait_for_clks(.cnt(1));
@@ -340,6 +340,8 @@ task axi_responder::read_data;
   int beat_cntr_max;
   bit [7:0] rdata[];
   bit strb []; // throwaway
+  int validcntr;
+  int validcntr_max;
 
   vif.set_rvalid(1'b0);
   forever begin
@@ -347,7 +349,8 @@ task axi_responder::read_data;
     if (item == null) begin
        readdata_mbx.get(item);
        beat_cntr=0;
-
+      validcntr=0;
+      validcntr_max=item.valid.size();
     end
 
     // Look at this only one per loop, so there's no race condition of it
@@ -367,7 +370,7 @@ task axi_responder::read_data;
     if (vif.get_rready()==1'b1 && vif.get_rvalid() == 1'b1) begin
 
       if (iaxi_incompatible_rready_toggling_mode == 1'b0) begin
-         item.validcntr++;
+         validcntr++;
       end
 
       beat_cntr++;
@@ -392,7 +395,10 @@ task axi_responder::read_data;
         if (wait_clks_before_next_r==0) begin
              // if not, check if there's another item
              readdata_mbx.try_get(item);
-
+            if (item != null) begin
+                validcntr=0;
+                validcntr_max=item.valid.size();
+            end
 
           end
        end
@@ -404,7 +410,7 @@ task axi_responder::read_data;
     // Update values
     if (item != null) begin
 
-       s.rvalid = 1'b1; // item.valid[item.validcntr]; // 1'b1;
+       s.rvalid = item.valid[validcntr];
 
 
 
@@ -432,13 +438,13 @@ task axi_responder::read_data;
        // Default is to stay asserted, and only allow deasssertion after ready asserts.
       if (iaxi_incompatible_rready_toggling_mode == 1'b0) begin
          if (vif.get_rvalid() == 1'b0) begin
-             item.validcntr++;
+             validcntr++;
           end
        end else begin
-             item.validcntr++;
+             validcntr++;
        end
-       if (item.validcntr >=  item.validcntr_max) begin
-         item.validcntr=0;
+       if (validcntr >=  validcntr_max) begin
+         validcntr=0;
        end
 
 

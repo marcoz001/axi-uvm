@@ -263,12 +263,16 @@ task axi_driver::write_data;
   int wait_clks_before_next_w;
   int beat_cntr=0;
   int beat_cntr_max;
+  int validcntr;
+  int validcntr_max;
 
   vif.set_wvalid(1'b0);
   forever begin
 
     if (item == null) begin
        writedata_mbx.get(item);
+      validcntr=0;
+      validcntr_max=item.valid.size();
 
       beat_cntr=0;
       `uvm_info("axi_driver::write_data",
@@ -281,13 +285,14 @@ task axi_driver::write_data;
     iaxi_incompatible_wready_toggling_mode = axi_incompatible_wready_toggling_mode;
 
     vif.wait_for_clks(.cnt(1));
+    `uvm_info("driver", $sformatf("validcntr:%0d get_wvali:%0b togglmode:%0d waiting for wvali()", validcntr, vif.get_wvalid(), iaxi_incompatible_wready_toggling_mode), UVM_INFO)
 
 
     // Check if done with this transfer
     if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
       //item.dataoffset = n;
       if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
-         item.validcntr++;
+         validcntr++;
       end
 
       beat_cntr++;
@@ -301,7 +306,7 @@ task axi_driver::write_data;
 
       `uvm_info("axi_driver::write_data",
                 $sformatf("beat_cntr:%0d  beat_cntr_max: %0d", beat_cntr, beat_cntr_max),
-                UVM_HIGH)
+                UVM_INFO)
 
 
       if (beat_cntr >= beat_cntr_max) begin
@@ -317,6 +322,10 @@ task axi_driver::write_data;
           if (wait_clks_before_next_w==0) begin
              // if not, check if there's another item
              writedata_mbx.try_get(item);
+            if (item != null) begin
+                validcntr=0;
+                validcntr_max=item.valid.size();
+            end
 
 
           end
@@ -327,7 +336,7 @@ task axi_driver::write_data;
     // Update values
     if (item != null) begin
 
-       s.wvalid = item.valid[item.validcntr]; // 1'b1;
+       s.wvalid = item.valid[validcntr]; // 1'b1;
 
 
 
@@ -356,13 +365,13 @@ task axi_driver::write_data;
        // Default is to stay asserted, and only allow deasssertion after ready asserts.
        if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
           if (vif.get_wvalid() == 1'b0) begin
-             item.validcntr++;
+             validcntr++;
           end
        end else begin
-             item.validcntr++;
+             validcntr++;
        end
-       if (item.validcntr >=  item.validcntr_max) begin
-         item.validcntr=0;
+       if (validcntr >=  validcntr_max) begin
+         validcntr=0;
        end
 
 

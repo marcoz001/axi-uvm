@@ -302,6 +302,7 @@ task axi_monitor::monitor_read_address();
     int Lower_Byte_Lane;
     int Upper_Byte_Lane;
   string msg_s;
+  int j;
 
   if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
      return;
@@ -328,6 +329,11 @@ task axi_monitor::monitor_read_address();
     cloned_item.data=new[cloned_item.len];
     offset=0;
     doffset=0;
+    cloned_item.valid=new[cloned_item.len*3];
+    j=cloned_item.valid.size();
+    for (int i=0;i<j;i++) begin
+        cloned_item.valid[i] = $random;
+    end
 
     //beat_cnt_max=cloned_item.calculate_beats(
     //  .addr(cloned_item.addr),

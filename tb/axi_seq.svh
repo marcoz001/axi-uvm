@@ -165,7 +165,7 @@ task axi_seq::body;
     `uvm_fatal(this.get_type_name, "Unable to fetch m_memory from config db. Using defaults")
     end
 
-  xfers_to_send=20;
+  xfers_to_send=2;
 
   // If addr_width==0, then the setter hasn't been called. Try to fetch from
   // config db.

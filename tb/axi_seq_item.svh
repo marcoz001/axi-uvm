@@ -81,8 +81,8 @@ class axi_seq_item extends uvm_sequence_item;
   // if in axi_pkg the logic could be  synthesizable functions
   // and then a non-UVM BFM could easily be created
 
-  int validcntr;
-  int validcntr_max;
+  //int validcntr;
+ // int validcntr_max;
 
 
 
@@ -403,8 +403,11 @@ function void axi_seq_item::post_randomize;
   super.post_randomize;
 //  data=new[len];
   //wstrb=new[len];
-  //valid=new[len*2];  // only need one per beat instead of one per byte,
+  valid=new[len*3];  // only need one per beat instead of one per byte,
                      // we won't use the extras.
+  // \todo: howto guaranteesufficient valid
+
+
   if (cmd == e_WRITE) begin
      for (int i=0; i < len; i++) begin
         data[i] = i;
@@ -424,7 +427,7 @@ function void axi_seq_item::post_randomize;
 
      j=valid.size();
      for (int i=0;i<j;i++) begin
-        valid[i] = 'b1; // $random;
+        valid[i] = $random;
      end
 
 
@@ -435,6 +438,8 @@ function void axi_seq_item::post_randomize;
 
      data[len-1] = 'hFE; // specific value to eaily identify last byte
   end // if (cmd == e_WRITE)
+
+
 
   //assert(valid.randomize()) else begin
   //  `uvm_error(this.get_type_name, "Unable to randomize valid");

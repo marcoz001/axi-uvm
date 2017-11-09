@@ -449,7 +449,7 @@ function bit[C_AXI_ADDR_WIDTH-1:0] get_next_address(
 
   int Lower_Byte_Lane;
   int Upper_Byte_Lane;
-  int data_offset=0;
+  int data_offset;
   int Lower_Wrap_Boundary;
   int Upper_Wrap_Boundary;
   string s;
