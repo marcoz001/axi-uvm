@@ -285,7 +285,6 @@ task axi_driver::write_data;
     iaxi_incompatible_wready_toggling_mode = axi_incompatible_wready_toggling_mode;
 
     vif.wait_for_clks(.cnt(1));
-    `uvm_info("driver", $sformatf("validcntr:%0d get_wvali:%0b togglmode:%0d waiting for wvali()", validcntr, vif.get_wvalid(), iaxi_incompatible_wready_toggling_mode), UVM_INFO)
 
 
     // Check if done with this transfer
@@ -306,7 +305,7 @@ task axi_driver::write_data;
 
       `uvm_info("axi_driver::write_data",
                 $sformatf("beat_cntr:%0d  beat_cntr_max: %0d", beat_cntr, beat_cntr_max),
-                UVM_INFO)
+                UVM_HIGH)
 
 
       if (beat_cntr >= beat_cntr_max) begin

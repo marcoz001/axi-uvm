@@ -302,7 +302,11 @@ task axi_monitor::monitor_read_address();
     int Lower_Byte_Lane;
     int Upper_Byte_Lane;
   string msg_s;
+  string valid_s;
   int j;
+  int valid_asserts;
+  int valid_assert_bit;
+
 
   if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
      return;
@@ -330,10 +334,30 @@ task axi_monitor::monitor_read_address();
     offset=0;
     doffset=0;
     cloned_item.valid=new[cloned_item.len*3];
+    valid_s="";
+    valid_asserts = 0;
     j=cloned_item.valid.size();
     for (int i=0;i<j;i++) begin
         cloned_item.valid[i] = $random;
+        if (cloned_item.valid[i] == 1'b1) begin
+           valid_asserts++;
+        end
     end
+
+     if (valid_asserts==0) begin
+       valid_assert_bit=$urandom_range(j-1,0);
+       cloned_item.valid[valid_assert_bit] = 1'b1;
+       `uvm_info("axi_monitor",
+                 $sformatf("All zeros. Settin bit %0d to 1", valid_assert_bit),
+                 UVM_INFO)
+     end
+
+     valid_s="";
+     for (int i=0;i<j;i++) begin
+        $sformat(valid_s, "%s%0b", valid_s, cloned_item.valid[i]);
+     end
+
+
 
     //beat_cnt_max=cloned_item.calculate_beats(
     //  .addr(cloned_item.addr),

@@ -399,6 +399,10 @@ endfunction : do_print
 */
 function void axi_seq_item::post_randomize;
   int j;
+  string valid_s;
+  int valid_asserts;
+  int valid_assert_bit;
+
 
   super.post_randomize;
 //  data=new[len];
@@ -425,10 +429,27 @@ function void axi_seq_item::post_randomize;
      wlast[0] = 1'b1;
 
 
+     valid_asserts = 0;
      j=valid.size();
      for (int i=0;i<j;i++) begin
         valid[i] = $random;
+        if (valid[i] == 1'b1) begin
+           valid_asserts++;
+        end
      end
+
+     // valid must be asserted at least once to avoid never sending data.
+     if (valid_asserts==0) begin
+       valid_assert_bit=$urandom_range(j-1,0);
+       valid[valid_assert_bit] = 1'b1;
+       `uvm_info("axi_seq_item.post_randomize()",$sformatf("All zeros. Settin bit %0d to 1", valid_assert_bit), UVM_INFO)
+     end
+
+     valid_s="";
+     for (int i=0;i<j;i++) begin
+        $sformat(valid_s, "%s%0b", valid_s, valid[i]);
+     end
+
 
 
 //  valid[0] = 1'b1;
