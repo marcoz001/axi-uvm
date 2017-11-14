@@ -47,31 +47,6 @@ class axi_driver extends uvm_driver #(axi_seq_item);
   extern task          read_address;
   extern task          read_data;
 
-   // If multiple write transfers are queued,
-   // this allows easily testing back to back or pausing between write address transfers.
-  int min_clks_between_aw_transfers=0;
-  int max_clks_between_aw_transfers=0;
-
-  int min_clks_between_w_transfers=0;
-  int max_clks_between_w_transfers=0;
-
-  int min_clks_between_b_transfers=0;
-  int max_clks_between_b_transfers=0;
-
-  // AXI spec, A3.2.2,  states once valid is asserted,it must stay asserted until
-  // ready asserts.  These varibles let us toggle valid to beat on the ready/valid
-  // logic
-  bit axi_incompatible_awready_toggling_mode=0;
-  bit axi_incompatible_wready_toggling_mode=0;
-  bit axi_incompatible_bready_toggling_mode=0;
-
-  int min_clks_between_ar_transfers=0;
-  int max_clks_between_ar_transfers=0;
-
-  int min_clks_between_r_transfers=0;
-  int max_clks_between_r_transfers=0;
-
-  bit axi_incompatible_rready_toggling_mode=0;
 
 endclass : axi_driver
 
@@ -126,7 +101,7 @@ task axi_driver::run_phase(uvm_phase phase);
 
     `uvm_info(this.get_type_name(),
               $sformatf("Item: %s", item.convert2string()),
-              UVM_HIGH)
+              UVM_INFO)
 
     case (item.cmd)
       axi_uvm_pkg::e_WRITE : begin
@@ -168,7 +143,7 @@ task axi_driver::write_address;
   int maxval;
   int wait_clks_before_next_aw;
 
-  int item_needs_init=1;
+  // int item_needs_init=1;
 
   vif.set_awvalid(1'b0);
 
@@ -179,7 +154,8 @@ task axi_driver::write_address;
       `uvm_info("axi_driver::write_address",
                 $sformatf("Item: %s", item.convert2string()),
                 UVM_HIGH)
-       item_needs_init=1;
+       // item_needs_init=1;
+       axi_uvm_pkg::aw_from_class(.t(item), .v(v));
     end
 
     vif.wait_for_clks(.cnt(1));
@@ -189,8 +165,8 @@ task axi_driver::write_address;
           writedata_mbx.put(item);
           item=null;
 
-          minval=min_clks_between_aw_transfers;
-          maxval=max_clks_between_aw_transfers;
+          minval=m_config.min_clks_between_aw_transfers;
+          maxval=m_config.max_clks_between_aw_transfers;
           wait_clks_before_next_aw=$urandom_range(maxval,minval);
 
           // Check if delay wanted
@@ -198,37 +174,35 @@ task axi_driver::write_address;
              // if not, check if there's another item
              writeaddress_mbx.try_get(item);
              if (item!=null) begin
-                item_needs_init=1;
+                // item_needs_init=1;
+                axi_uvm_pkg::aw_from_class(.t(item), .v(v));
              end
           end
        end
-       // Initialize values
-       if (item_needs_init==1) begin
-          axi_uvm_pkg::aw_from_class(.t(item), .v(v));
+       // Initialize values  <-no need
 
-          item_needs_init=0;
-       end
-
-        // Update values <- No need in write address (only one clk per)
+       // Update values <- No need in write address (only one clk per)
 
        // Write out
        if (item != null) begin
           vif.write_aw(.s(v), .valid(1'b1));
-          if (wait_clks_before_next_aw > 0) begin
-             vif.wait_for_clks(.cnt(wait_clks_before_next_aw-1)); // -1 because another wait
-                                                                // at beginning of loop
-          end
-       end   // if (item != null)
+       end  else begin// if (item != null)
 
     // No item for next clock, so close out bus
-    if (item == null) begin
+    // if (item == null) begin
          v.awaddr  = 'h0;
          v.awid    = 'h0;
          v.awsize  = 'h0;
          v.awburst = 'h0;
          vif.write_aw(.s(v), .valid(1'b0));
-         vif.wait_for_clks(.cnt(1));
+    // end
+
+        if (wait_clks_before_next_aw > 0) begin
+           vif.wait_for_clks(.cnt(wait_clks_before_next_aw-1)); // -1 because another wait
+                                                                // // at beginning of loop
+        end
     end
+    // vif.wait_for_clks(.cnt(1));
 
     end // forever
 
@@ -275,14 +249,17 @@ task axi_driver::write_data;
       validcntr_max=item.valid.size();
 
       beat_cntr=0;
+      beat_cntr_max=axi_pkg::calculate_axlen(.addr(item.addr),
+                                             .burst_size(item.burst_size),
+                                             .burst_length(item.len)) + 1;
       `uvm_info("axi_driver::write_data",
                 $sformatf("Item: %s", item.convert2string()),
-                UVM_INFO)
+                UVM_HIGH)
     end
 
     // Look at this only one per loop, so there's no race condition of it
     // changing mid-loop.
-    iaxi_incompatible_wready_toggling_mode = axi_incompatible_wready_toggling_mode;
+    iaxi_incompatible_wready_toggling_mode = m_config.axi_incompatible_wready_toggling_mode;
 
     vif.wait_for_clks(.cnt(1));
 
@@ -299,9 +276,6 @@ task axi_driver::write_data;
       //beat_cntr_max=item.calculate_beats(.addr(item.addr),
       //                                  .number_bytes(2**item.burst_size),
       //                                   .burst_length(item.len));
-      beat_cntr_max=axi_pkg::calculate_axlen(.addr(item.addr),
-                                             .burst_size(item.burst_size),
-                                             .burst_length(item.len)) + 1;
 
       `uvm_info("axi_driver::write_data",
                 $sformatf("beat_cntr:%0d  beat_cntr_max: %0d", beat_cntr, beat_cntr_max),
@@ -313,8 +287,8 @@ task axi_driver::write_data;
           item = null;
 
 
-          minval=min_clks_between_w_transfers;
-          maxval=max_clks_between_w_transfers;
+          minval=m_config.min_clks_between_w_transfers;
+          maxval=m_config.max_clks_between_w_transfers;
           wait_clks_before_next_w=$urandom_range(maxval,minval);
 
           // Check if delay wanted
@@ -324,8 +298,12 @@ task axi_driver::write_data;
             if (item != null) begin
                 validcntr=0;
                 validcntr_max=item.valid.size();
-            end
 
+                beat_cntr=0;
+                beat_cntr_max=axi_pkg::calculate_axlen(.addr(item.addr),
+                                                       .burst_size(item.burst_size),
+                                                       .burst_length(item.len)) + 1;
+            end
 
           end
        end
@@ -412,8 +390,14 @@ task axi_driver::write_response;
 
   vif.enable_bready_toggle_pattern(m_config.bready_toggle_pattern);
 
+  // \todo: Ch to be like others. wait for write_resonse, add to quque, then
+  // process.
+  // // need timeout on get ???
+
   forever begin
     writeresponse_mbx.get(item);
+
+    item.cmd = e_WRITE_RESPONSE;
      //vif.wait_for_write_response(.s(s));
   //  vif.wait_for_bvalid();
     //vif.read_b(.s(s));
@@ -444,11 +428,14 @@ task axi_driver::read_address;
 
    bit [63:0] aligned_addr;
 
+  // bit [7:0] wdata [];
+  // bit wstrb [];
+
   int minval;
   int maxval;
   int wait_clks_before_next_ar;
 
-  int item_needs_init=1;
+  // int item_needs_init=1;
 
   vif.set_arvalid(1'b0);
 
@@ -456,61 +443,60 @@ task axi_driver::read_address;
 
     if (item == null) begin
        readaddress_mbx.get(item);
-     // `uvm_info("DRIVER::read_address", $sformatf("Item:  %s", item.convert2string()), UVM_INFO)
-       item_needs_init=1;
+      `uvm_info("axi_driver::read_address",
+                $sformatf("Item: %s", item.convert2string()),
+                UVM_HIGH)
+       // item_needs_init=1;
+       axi_uvm_pkg::ar_from_class(.t(item), .v(v));
     end
 
     vif.wait_for_clks(.cnt(1));
 
       // if done with this xfer (write address is only one clock, done with valid & ready
-    if (vif.get_arready_arvalid == 1'b1) begin
+       if (vif.get_arready_arvalid == 1'b1) begin
           readdata_mbx.put(item);
           item=null;
 
-          minval=min_clks_between_ar_transfers;
-          maxval=max_clks_between_ar_transfers;
+          minval=m_config.min_clks_between_ar_transfers;
+          maxval=m_config.max_clks_between_ar_transfers;
           wait_clks_before_next_ar=$urandom_range(maxval,minval);
 
           // Check if delay wanted
-      if (wait_clks_before_next_ar==0) begin
+          if (wait_clks_before_next_ar==0) begin
              // if not, check if there's another item
              readaddress_mbx.try_get(item);
-           //  if (item!=null) begin
-           //     item_needs_init=1;
-           //  end
+             if (item!=null) begin
+                // item_needs_init=1;
+                axi_uvm_pkg::ar_from_class(.t(item), .v(v));
+             end
           end
        end
-       // Initialize values
-       if (item != null && item_needs_init==1) begin
-          axi_uvm_pkg::ar_from_class(.t(item), .v(v));
+       // Initialize values  <-no need
 
-          item_needs_init=0;
-       end
-
-        // Update values <- No need in write address (only one clk per)
+       // Update values <- No need in write address (only one clk per)
 
        // Write out
        if (item != null) begin
           vif.write_ar(.s(v), .valid(1'b1));
-         if (wait_clks_before_next_ar > 0) begin
-           vif.wait_for_clks(.cnt(wait_clks_before_next_ar-1)); // -1 because another wait
-                                                                // at beginning of loop
-          end
-       end   // if (item != null)
+       end  else begin// if (item != null)
 
     // No item for next clock, so close out bus
-    if (item == null) begin
+    // if (item == null) begin
          v.araddr  = 'h0;
          v.arid    = 'h0;
          v.arsize  = 'h0;
          v.arburst = 'h0;
-         v.arlen   = 'h0;
          vif.write_ar(.s(v), .valid(1'b0));
-         vif.wait_for_clks(.cnt(1));
+    // end
+
+        if (wait_clks_before_next_ar > 0) begin
+           vif.wait_for_clks(.cnt(wait_clks_before_next_ar-1)); // -1 because another wait
+                                                                // // at beginning of loop
+        end
     end
+    // vif.wait_for_clks(.cnt(1));
 
     end // forever
-
 endtask : read_address
 
 
@@ -528,68 +514,102 @@ endtask : read_address
 */
 task axi_driver::read_data;
 
-  axi_seq_item_r_vector_s  r_s;
-  axi_seq_item item=null;
+   axi_seq_item_r_vector_s  r_s;
+   axi_seq_item_r_vector_s  r_q[$];
+   axi_seq_item   item=null;
+   axi_seq_item cloned_item=null;
+   bit [63:0] read_addr;
+   int beat_cntr=0;
+   int beat_cntr_max=0;
+   int Lower_Byte_Lane;
+   int Upper_Byte_Lane;
+   int offset;
+   string msg_s;
 
-  int beat_cntr=0;
-  int Lower_Byte_Lane;
-  int Upper_Byte_Lane;
-  int offset;
-  string msg_s;
+   // if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
+      // return;
+   // end
 
   vif.enable_rready_toggle_pattern(.pattern(m_config.rready_toggle_pattern));
 
-  forever begin
+   forever begin
+      `uvm_info(this.get_type_name(),
+                "========> wait_for_read_data()",
+                UVM_HIGH)
 
-    if (item == null) begin
-       readdata_mbx.get(item);
-       item.data=new[item.len];
+      vif.wait_for_read_data(.s(r_s));
+      `uvm_info(this.get_type_name(), "wait_for_read_data - DONE", UVM_HIGH)
 
-       beat_cntr=0;
-      `uvm_info("axi_driver::read_data", $sformatf("%s", item.convert2string()), UVM_INFO)
-    end
+      //  Can we just queue the data no matter what and
+      // if the addresshasn'tarrived, we don't sit and poll continuosly
+      // for and address.
+      // What happens if we don't get an address until after wlast?
+      r_q.push_back(r_s);
 
-    vif.wait_for_read_data(.s(r_s));
+      if (item == null) begin
+        if (readdata_mbx.num() > 0) begin
+          readdata_mbx.get(item);
+          $cast(cloned_item, item.clone());
+          cloned_item.set_id_info(item);
 
+          cloned_item.cmd=e_READ_DATA;
+          cloned_item.data  = new[cloned_item.len];
 
-    axi_pkg::get_beat_N_byte_lanes(.addr         (item.addr),
-                                   .burst_size   (item.burst_size),
-                                   .burst_length (item.len),
-                                   .burst_type   (item.burst_type),
-        .beat_cnt(beat_cntr),
-                                 .data_bus_bytes(vif.get_data_bus_width()/8),
-                                .Lower_Byte_Lane(Lower_Byte_Lane),
-                                .Upper_Byte_Lane(Upper_Byte_Lane),
-                                 .offset(offset));
+          beat_cntr=0;
+          beat_cntr_max=axi_pkg::calculate_axlen(.addr         (cloned_item.addr),
+                                                 .burst_size   (cloned_item.burst_size),
+                                                 .burst_length (cloned_item.len)) + 1;
+        end  // if .num > 0
+      end // if item == null
 
-      msg_s="";
-      $sformat(msg_s, "%s beat_cntr:%0d",       msg_s, beat_cntr);
-      $sformat(msg_s, "%s data_bus_bytes:%0d",  msg_s, vif.get_data_bus_width()/8);
-      $sformat(msg_s, "%s Lower_Byte_Lane:%0d", msg_s, Lower_Byte_Lane);
-      $sformat(msg_s, "%s Upper_Byte_Lane:%0d", msg_s, Upper_Byte_Lane);
-      $sformat(msg_s, "%s offset:%0d",          msg_s, offset);
+      // if anything in data queue, write it out
+      if (item != null) begin
+         while (item != null && r_q.size() > 0) begin
 
+            r_s=r_q.pop_front();
+            axi_pkg::get_beat_N_byte_lanes(.addr         (cloned_item.addr),
+                                           .burst_size   (cloned_item.burst_size),
+                                           .burst_length (cloned_item.len),
+                                           .burst_type   (cloned_item.burst_type),
+                                           .beat_cnt        (beat_cntr),
+                                           .data_bus_bytes  (vif.get_data_bus_width()/8),
+                                           .Lower_Byte_Lane  (Lower_Byte_Lane),
+                                           .Upper_Byte_Lane (Upper_Byte_Lane),
+                                           .offset          (offset));
 
-    `uvm_info("axi_driver::read_data", msg_s, UVM_HIGH)
-    msg_s="data: 0x";
-    for (int z=(vif.get_data_bus_width()/8)-1;z>=0;z--) begin
-      $sformat(msg_s, "%s %02x", msg_s,r_s.rdata[z*8+:8]);
-    end
-    `uvm_info("axi_driver::read_data", msg_s, UVM_HIGH)
+            msg_s="";
+           $sformat(msg_s, "%s beat_cntr:%0d",       msg_s, beat_cntr);
+           $sformat(msg_s, "%s beat_cntr_max:%0d",   msg_s, beat_cntr_max);
+           $sformat(msg_s, "%s data_bus_bytes:%0d",  msg_s, vif.get_data_bus_width()/8);
+           $sformat(msg_s, "%s Lower_Byte_Lane:%0d", msg_s, Lower_Byte_Lane);
+           $sformat(msg_s, "%s Upper_Byte_Lane:%0d", msg_s, Upper_Byte_Lane);
+           $sformat(msg_s, "%s offset:%0d",          msg_s, offset);
 
-    for (int z=Lower_Byte_Lane;z<=Upper_Byte_Lane;z++) begin
-      if (offset < item.len) begin
-         item.data[offset++] = r_s.rdata[z*8+:8];
-      end
-    end
+           // `uvm_info("driver::read_data", msg_s, UVM_INFO)
+     
+           msg_s="data: 0x";
+           for (int z=(vif.get_data_bus_width()/8)-1;z>=0;z--) begin
+             $sformat(msg_s, "%s%02x", msg_s, r_s.rdata[z*8+:8]);
+           end
+           // `uvm_info("driver::read_data", msg_s, UVM_INFO)
 
-beat_cntr++;
-    if (r_s.rlast == 1'b1) begin
-      seq_item_port.put(item);
-      item=null;
-      beat_cntr=0;
-    end
-  end   //forever
+           for (int z=Lower_Byte_Lane;z<=Upper_Byte_Lane;z++) begin
+              if (offset < cloned_item.len) begin
+                 cloned_item.data[offset++] = r_s.rdata[z*8+:8];
+              end
+           end
+
+           beat_cntr++;
+           // if (r_s.rlast == 1'b1) begin // @Todo: count, dont rely on wlast?
+           if (beat_cntr >= beat_cntr_max) begin
+              // ap.write(cloned_item);
+              seq_item_port.put(cloned_item);
+             item=null;
+             beat_cntr=0;
+           end  // if .wlast == 1
+        end // while
+     end// if
+  end  // forever
 
 endtask : read_data
 

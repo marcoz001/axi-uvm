@@ -51,28 +51,6 @@ class axi_responder extends uvm_driver #(axi_seq_item);
   extern task          read_address;
   extern task          read_data;
 
-   // If multiple write transfers are queued,
-   // this allows easily testing back to back or pausing between write address transfers.
-  int min_clks_between_b_transfers=0;
-  int max_clks_between_b_transfers=0;
-
-  // AXI spec, A3.2.2,  states once valid is asserted,it must stay asserted until
-    // ready asserts.  These varibles let us toggle valid to beat on the ready/valid
-    // logic
-  bit axi_incompatible_awready_toggling_mode=0;
-  bit axi_incompatible_wready_toggling_mode=0;
-  bit axi_incompatible_bready_toggling_mode=0;
-
-
-
-   int min_clks_between_ar_transfers=0;
-   int max_clks_between_ar_transfers=0;
-
-   int min_clks_between_r_transfers=0;
-   int max_clks_between_r_transfers=0;
-
-   bit axi_incompatible_rready_toggling_mode=0;
-
 endclass : axi_responder
 
 /*! \brief Constructor
@@ -135,7 +113,7 @@ task axi_responder::run_phase(uvm_phase phase);
       axi_uvm_pkg::e_READ_DATA  : begin
         readdata_mbx.put(item);
       end
-
+/*
       axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN : begin
          vif.enable_awready_toggle_pattern(.pattern(item.toggle_pattern));
       end
@@ -145,6 +123,7 @@ task axi_responder::run_phase(uvm_phase phase);
       axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN : begin
          vif.enable_arready_toggle_pattern(.pattern(item.toggle_pattern));
       end
+*/
    endcase
 
   end // forever
@@ -164,6 +143,7 @@ task axi_responder::write_address;
   axi_seq_item             item;
   axi_seq_item_aw_vector_s s;
 
+  vif.enable_awready_toggle_pattern(m_config.awready_toggle_pattern);
 
   forever begin
     writeaddress_mbx.get(item);
@@ -198,6 +178,8 @@ task axi_responder::write_data;
   axi_seq_item_w_vector_s s;
   bit foo;
   bit wlast;
+
+  vif.enable_wready_toggle_pattern(m_config.wready_toggle_pattern);
 
   forever begin
      writedata_mbx.get(item);
@@ -261,8 +243,8 @@ task axi_responder::write_response;
       //    driver_writedata_mbx.put(item);
           item=null;
 
-          minval=min_clks_between_b_transfers;
-          maxval=max_clks_between_b_transfers;
+          minval=m_config.min_clks_between_b_transfers;
+          maxval=m_config.max_clks_between_b_transfers;
           wait_clks_before_next_b=$urandom_range(maxval,minval);
 
           // Check if delay wanted
@@ -311,6 +293,7 @@ endtask : write_response
  * creating a read data packet that gets sent to the read data channel thread.
  */
 task axi_responder::read_address;
+  vif.enable_arready_toggle_pattern(m_config.arready_toggle_pattern);
 endtask : read_address
 
 /*! \brief Read Data channel thread
@@ -349,13 +332,16 @@ task axi_responder::read_data;
     if (item == null) begin
        readdata_mbx.get(item);
        beat_cntr=0;
+      beat_cntr_max=axi_pkg::calculate_axlen(.addr(item.addr),
+                                             .burst_size(item.burst_size),
+                                             .burst_length(item.len)) + 1;
       validcntr=0;
       validcntr_max=item.valid.size();
     end
 
     // Look at this only one per loop, so there's no race condition of it
     // changing mid-loop.
-    iaxi_incompatible_rready_toggling_mode = axi_incompatible_rready_toggling_mode;
+    iaxi_incompatible_rready_toggling_mode = m_config.axi_incompatible_rready_toggling_mode;
 
     vif.wait_for_clks(.cnt(1));
 
@@ -375,20 +361,14 @@ task axi_responder::read_data;
 
       beat_cntr++;
 
-//      beat_cntr_max=item.calculate_beats(.addr(item.addr),
-//                                         .number_bytes(2**item.burst_size),
- //                                        .burst_length(item.len));
-      beat_cntr_max=axi_pkg::calculate_axlen(.addr(item.addr),
-                                             .burst_size(item.burst_size),
-                                             .burst_length(item.len)) + 1;
 
       if (beat_cntr >= beat_cntr_max) begin
           //writeresponse_mbx.put(item);
         item = null;
 
 
-          minval=min_clks_between_r_transfers;
-          maxval=max_clks_between_r_transfers;
+          minval=m_config.min_clks_between_r_transfers;
+          maxval=m_config.max_clks_between_r_transfers;
           wait_clks_before_next_r=$urandom_range(maxval,minval);
 
           // Check if delay wanted
@@ -396,6 +376,10 @@ task axi_responder::read_data;
              // if not, check if there's another item
              readdata_mbx.try_get(item);
             if (item != null) begin
+                beat_cntr=0;
+                beat_cntr_max=axi_pkg::calculate_axlen(.addr(item.addr),
+                                                       .burst_size(item.burst_size),
+                                                       .burst_length(item.len)) + 1;
                 validcntr=0;
                 validcntr_max=item.valid.size();
             end

@@ -40,6 +40,19 @@ class axi_base_test extends uvm_test;
     m_seq = axi_seq::type_id::create("m_seq");
 
 
+    // m_seq.randomize() with (awready_pattern
+                                                     // bready_toggle_pattern == 32'hFFFF_FFFF;
+                                                      // rready_toggle_pattern == 32'hFFFF_FFFF;
+// 
+    // assert(m_seq.randomize() with {
+                                   // bready_toggle_pattern == 32'hFFFF_FFFF;
+                                   // bready_toggle_pattern == 32'hFFFF_FFFF;
+                                   // rready_toggle_pattern == 32'hFFFF_FFFF;
+                                                     // });
+
+
+
+
     //m_seq.set_data_width();
     m_resp_seq = axi_responder_seq::type_id::create("m_resp_seq");
 
@@ -54,7 +67,7 @@ class axi_base_test extends uvm_test;
        m_resp_seq.start(m_env.m_responder_seqr);
     join_none
 
-    //#800
+    #800
     //fork
 
       m_seq.start(m_env.m_driver_seqr);

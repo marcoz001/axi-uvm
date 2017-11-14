@@ -136,13 +136,13 @@ class axi_seq_item extends uvm_sequence_item;
 
   constraint max_len {len > 0;
                       len < 10000;
-                      if      (cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN)
-                         len == 1;
-                      else if (cmd == axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN)
-                         len == 1;
-                      else if (cmd == axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN)
-                         len == 1;
-                      else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_1BYTE)) {
+                      // if      (cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN)
+                         // len == 1;
+                      // else if (cmd == axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN)
+                         // len == 1;
+                      // else if (cmd == axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN)
+                         // len == 1;
+                      if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_1BYTE)) {
                         len <= (1*c_AXI3_MAXBEATCNT);
                       } else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_2BYTES)) {
                           len[0] == 1'b0;
@@ -308,13 +308,13 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s BurstType = 0x%0x ",   s, burst_type);
     $sformat(s, "%s BID = 0x%0x",   s, bid);
     $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
-/*
+
     j=data.size();
     for (int i =0; i< j; i++) begin
        $sformat(sdata, "%s 0x%02x ", sdata, data[i]);
     end
     $sformat(s, "%s Data[]: %s", s, sdata);
-
+/*
     j=wstrb.size();
     sdata="";
     for (int i =0; i< j; i++) begin

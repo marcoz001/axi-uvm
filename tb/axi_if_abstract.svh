@@ -109,6 +109,7 @@ endfunction : new
 function int axi_if_abstract::get_data_bus_width;
   `uvm_error(this.get_type_name(),
              "WARNING. Virtual function get_data_bus_width() not defined.")
+  return -1;
 endfunction : get_data_bus_width
 
 //! used for waiting
@@ -212,6 +213,7 @@ endtask : wait_for_read_data
 function bit axi_if_abstract::get_awready_awvalid();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_awready_awvalid() not defined.")
+  return 0;
 endfunction : get_awready_awvalid
 
 
@@ -222,6 +224,7 @@ endfunction : get_awready_awvalid
 function bit axi_if_abstract::get_awready();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_awready() not defined.")
+  return 0;
 endfunction : get_awready
 
 //! Get the value of wready and wvalid.
@@ -233,6 +236,7 @@ endfunction : get_awready
 function bit axi_if_abstract::get_wready_wvalid();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_wready_wvalid() not defined.")
+  return 0;
 endfunction : get_wready_wvalid
 
 //! Get the value of wvalid
@@ -242,6 +246,7 @@ endfunction : get_wready_wvalid
 function bit axi_if_abstract::get_wvalid();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_wvalid() not defined.")
+  return 0;
 endfunction : get_wvalid
 
 //! Get the value of wready
@@ -251,6 +256,7 @@ endfunction : get_wvalid
 function bit axi_if_abstract::get_wready();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_wready() not defined.")
+  return 0;
 endfunction : get_wready
 
 //! Get the value of bready and bvalid.
@@ -262,6 +268,7 @@ endfunction : get_wready
 function bit axi_if_abstract::get_bready_bvalid();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_bready_bvalid() not defined.")
+  return 0;
 endfunction : get_bready_bvalid
 
 //! Get the value of bvalid
@@ -271,6 +278,7 @@ endfunction : get_bready_bvalid
 function bit axi_if_abstract::get_bvalid();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_bvalid() not defined.")
+  return 0;
 endfunction : get_bvalid
 
 //! Get the value of bready
@@ -280,6 +288,7 @@ endfunction : get_bvalid
 function bit axi_if_abstract::get_bready();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_bready() not defined.")
+  return 0;
 endfunction : get_bready
 
 //! Get the value of arready and arvalid.
@@ -291,6 +300,7 @@ endfunction : get_bready
 function bit axi_if_abstract::get_arready_arvalid();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_arready_arvalid() not defined.")
+  return 0;
 endfunction : get_arready_arvalid
 
 //! Get the value of arready
@@ -300,6 +310,7 @@ endfunction : get_arready_arvalid
 function bit axi_if_abstract::get_arready();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_arready() not defined.")
+  return 0;
 endfunction : get_arready
 
 //! Get the value of rready and rvalid.
@@ -311,6 +322,7 @@ endfunction : get_arready
 function bit axi_if_abstract::get_rready_rvalid();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_rready_rvalid() not defined.")
+  return 0;
 endfunction : get_rready_rvalid
 
 //! Get the value of rvalid
@@ -320,6 +332,7 @@ endfunction : get_rready_rvalid
 function bit axi_if_abstract::get_rvalid();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_rvalid() not defined.")
+  return 0;
 endfunction : get_rvalid
 
 //! Get the value of rready
@@ -329,6 +342,7 @@ endfunction : get_rvalid
 function bit axi_if_abstract::get_rready();
    `uvm_error(this.get_type_name(),
               "WARNING. Virtual function get_rready() not defined.")
+  return 0;
 endfunction : get_rready
 
 //! Set the value of awvalid

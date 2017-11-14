@@ -57,8 +57,8 @@ function void axi_env::build_phase (uvm_phase phase);
 
 
   assert(m_axidriver_agent.m_config.randomize() with {
-                                                      //bready_toggle_pattern == 32'h0000_000F;
-                                                      //rready_toggle_pattern == 32'hFFFF_FFFF;
+                                                      bready_toggle_pattern == 32'hFFFF_FFFF;
+                                                      rready_toggle_pattern == 32'hFFFF_FFFF;
                                                      });
 
   m_axidriver_agent.m_config.m_active            = UVM_ACTIVE;
@@ -68,7 +68,11 @@ function void axi_env::build_phase (uvm_phase phase);
   m_axiresponder_agent.m_config = axi_agent_config::type_id::create("m_axiresponder_agent.m_config", this);
 
 
-  assert(m_axiresponder_agent.m_config.randomize());
+  assert(m_axiresponder_agent.m_config.randomize() with {
+                                                      awready_toggle_pattern == 32'hFFFF_FFFF;
+                                                       wready_toggle_pattern == 32'hFFFF_FFFF;
+                                                      arready_toggle_pattern == 32'hFFFF_FFFF;
+                                                     });
 
   m_axiresponder_agent.m_config.m_active            = UVM_ACTIVE;
   m_axiresponder_agent.m_config.drv_type            = e_RESPONDER;
