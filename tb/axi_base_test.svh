@@ -43,7 +43,7 @@ class axi_base_test extends uvm_test;
     // m_seq.randomize() with (awready_pattern
                                                      // bready_toggle_pattern == 32'hFFFF_FFFF;
                                                       // rready_toggle_pattern == 32'hFFFF_FFFF;
-// 
+//
     // assert(m_seq.randomize() with {
                                    // bready_toggle_pattern == 32'hFFFF_FFFF;
                                    // bready_toggle_pattern == 32'hFFFF_FFFF;
@@ -70,7 +70,7 @@ class axi_base_test extends uvm_test;
     #800
     //fork
 
-      m_seq.start(m_env.m_driver_seqr);
+    m_seq.start(m_env.m_driver_seqr);
     //join_none
 
     //#1000us

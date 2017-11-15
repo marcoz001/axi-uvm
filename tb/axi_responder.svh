@@ -250,8 +250,9 @@ task axi_responder::write_response;
           // Check if delay wanted
         if (wait_clks_before_next_b==0) begin
              // if not, check if there's another item
-             writeresponse_mbx.try_get(item);
-             if (item!=null) begin
+             //writeresponse_mbx.try_get(item);
+             //if (item!=null) begin
+          if (writeresponse_mbx.try_get(item)) begin
                 item_needs_init=1;
              end
           end
@@ -374,8 +375,9 @@ task axi_responder::read_data;
           // Check if delay wanted
         if (wait_clks_before_next_r==0) begin
              // if not, check if there's another item
-             readdata_mbx.try_get(item);
-            if (item != null) begin
+            // readdata_mbx.try_get(item);
+            //if (item != null) begin
+          if (readdata_mbx.try_get(item)) begin
                 beat_cntr=0;
                 beat_cntr_max=axi_pkg::calculate_axlen(.addr(item.addr),
                                                        .burst_size(item.burst_size),

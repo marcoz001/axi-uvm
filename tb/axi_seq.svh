@@ -28,12 +28,12 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
 
   const int axi_readback  = 1;
   const int clearmemory   = 0;
-  const int postcheck     = 0;
-  const int precheck      = 0;
+  const int postcheck     = 1;
+  const int precheck      = 1;
   const int window_size   = 'h1000;
-  const int xfers_to_send = 3;
+  const int xfers_to_send = 30;
 
-  const int pipelined_bursts_enabled=1;
+  const int pipelined_bursts_enabled=0;
 
 
 
@@ -83,7 +83,7 @@ xfer_cnt=item.id;
 
     `uvm_info("axi_seq::response_handler::READBACK COMPARE", $sformatf("Now comparing axi write transfer %0d with axi read transfer %0d", xfer_cnt, xfer_cnt), UVM_INFO)
     assert (compare_items (.xfer_cnt(xfer_cnt)));
-   end 
+   end
 
 endfunction: response_handler
 
@@ -159,6 +159,8 @@ task axi_seq::body;
   bit [63:0] Lower_Wrap_Boundary;
   bit [63:0] Upper_Wrap_Boundary;
   bit [63:0] iaddr;
+  bit [63:0] addr_lo;
+  bit [63:0] addr_hi;
 
   int idatacntr;
   int miscompare_cntr;
@@ -168,6 +170,7 @@ task axi_seq::body;
   string msg_s;
   string localbuffer_s;
   int rollover_cnt;
+  bit [7:0] xid;
 
   bit [7:0] expected_data_array [];
 
@@ -224,6 +227,13 @@ task axi_seq::body;
      end
   end
 
+      max_burst_size=$clog2(data_width/8);
+
+    `uvm_info(this.get_type_name(),
+              $sformatf("DATA_BUS_WIDTH:  %0d  max_burst_size: %0d",
+                        data_width, max_burst_size),
+              UVM_HIGH)
+
   // Clear memory
   // AXI write
   // direct readback of memory
@@ -243,26 +253,40 @@ task axi_seq::body;
     write_item[xfer_cnt] = axi_seq_item::type_id::create("write_item");
     read_item[xfer_cnt]  = axi_seq_item::type_id::create("read_item");
 
-    max_burst_size=$clog2(data_width/8);
+
+    // Not sure why I have to define and set these and
+    // then use them in the randomize with {} but
+    // Riviera Pro works better like this.
+    addr_lo=xfer_cnt*window_size;
+    addr_hi=addr_lo+'h100;
+    xid =xfer_cnt & 8'hFF;
+    start_item(write_item[xfer_cnt]);
 
     `uvm_info(this.get_type_name(),
-              $sformatf("DATA_BUS_WIDTH:  %0d  max_burst_size: %0d",
-                        data_width, max_burst_size),
-              UVM_HIGH)
+              $sformatf("item %0d id:0x%0x addr_lo: 0x%0x  addr_hi: 0x%0x",
+                        xfer_cnt, xid, addr_lo,addr_hi),
+              UVM_INFO)
 
-    start_item(write_item[xfer_cnt]);
+
     assert( write_item[xfer_cnt].randomize() with {
                                          cmd        == e_WRITE;
                                          burst_size <= local::max_burst_size;
-                                         id         == (local::xfer_cnt & 'hf);
-                                         addr        > local::xfer_cnt*local::window_size;
-                                         addr       <= local::xfer_cnt*local::window_size+'h100;
-                                         len        <= 'h40;
-                                         //(addr + len) <= local::window_size;
+                                         id         == local::xid;
+                                         addr       >= local::addr_lo;
+                                         addr       <  local::addr_hi;
+                                         //len        <= 'h40;
+      //(addr + len) <= local::window_size;
                                          //protocol   ==     e_AXI3;
                                         //burst_size inside {e_1BYTE};
                                          //burst_type inside {e_FIXED, e_INCR, e_WRAP};
                                          //id == local::i;
+
+//       Protocol: e_AXI3 Cmd: e_WRITE    Addr = 0xe  ID = 0x1  Len = 0x14 (20)  BurstSize = 0x1  BurstType = 0x1
+ //     protocol == e_AXI3;
+//     addr == 'he;
+      len < 'h14;
+     // burst_size == 'h1;
+     // burst_type == 'h1;
 
     })
     `uvm_info("DATA", $sformatf("\n\n\nItem %0d:  %s", xfer_cnt, write_item[xfer_cnt].convert2string()), UVM_INFO)
@@ -270,24 +294,20 @@ task axi_seq::body;
 
     if (pipelined_bursts_enabled != 1) begin
        get_response(write_item[xfer_cnt]);
+
+      if (!check_memory(.item       (write_item[xfer_cnt]),
+                        .lower_addr (xfer_cnt*window_size),
+                        .upper_addr ((xfer_cnt+1)*window_size))) begin
+        `uvm_info("MISCOMPARE","Miscompare error", UVM_INFO)
+      end
+
     end
   end  //for
 
   #2us
   // \todo: setup so read memm and axireadback don't commense until write
   // response is received.
-  // 
-
-
-
-  for (int xfer_cnt=0;xfer_cnt<xfers_to_send;xfer_cnt++) begin
-
-   assert ( check_memory(.item       (write_item[xfer_cnt]),
-                         .lower_addr (xfer_cnt*window_size),
-                         .upper_addr ((xfer_cnt+1)*window_size)));  
-
-
-  end //for 
+  //
 
   //use_response_handler(0); // Enable Response Handler
 if (axi_readback==1) begin
@@ -342,7 +362,7 @@ end // if axi_readback=1
 endtask : body
 
 
-function bit axi_seq::check_memory(
+function automatic bit axi_seq::check_memory(
                 ref axi_seq_item item,
                 input bit [63:0] lower_addr,
                 input bit [63:0] upper_addr);
@@ -371,17 +391,28 @@ function bit axi_seq::check_memory(
   string write_item_s;
   string read_item_s;
   string expected_data_s;
+  string actual_data_s;
   string msg_s;
   string localbuffer_s;
   int rollover_cnt;
 
   bit [7:0] expected_data_array [];
+  bit [7:0] actual_data_array [];
 
   bit [2:0] max_burst_size;
   int yy;
   bit [7:0] localbuffer [];
   bit [7:0] read_data;
   bit [7:0] expected_data;
+
+
+  assert (item != null);
+
+  if (item == null) begin
+    `uvm_fatal(this.get_type_name(), "Item is null")
+  end
+
+
 
 
     //***** Readback
@@ -401,12 +432,12 @@ function bit axi_seq::check_memory(
       Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
 
       pre_check_start_addr  = lower_addr;
-      pre_check_stop_addr   = pre_check_start_addr+Lower_Wrap_Boundary;
+      pre_check_stop_addr   = Lower_Wrap_Boundary;
 
-      check_start_addr      = pre_check_start_addr+Lower_Wrap_Boundary;
-      check_stop_addr       = pre_check_start_addr+Upper_Wrap_Boundary;
+      check_start_addr      = Lower_Wrap_Boundary;
+      check_stop_addr       = Upper_Wrap_Boundary;
 
-      post_check_start_addr = pre_check_start_addr+Upper_Wrap_Boundary;
+      post_check_start_addr = Upper_Wrap_Boundary;
       post_check_stop_addr  = upper_addr;
 
     end else begin
@@ -419,6 +450,24 @@ function bit axi_seq::check_memory(
        post_check_start_addr=item.addr+item.len;
        post_check_stop_addr=upper_addr;
     end
+
+    msg_s="";
+  $sformat(msg_s, "%s Item: %s",                     msg_s, item.convert2string());
+  $sformat(msg_s, "%s pre_check_start_addr: 0x%0x",  msg_s, pre_check_start_addr);
+  $sformat(msg_s, "%s pre_check_stop_addr: 0x%0x",   msg_s, pre_check_stop_addr);
+  $sformat(msg_s, "%s check_start_addr: 0x%0x",      msg_s, check_start_addr);
+  $sformat(msg_s, "%s check_stop_addr: 0x%0x",       msg_s, check_stop_addr);
+  $sformat(msg_s, "%s post_check_start_addr: 0x%0x", msg_s, post_check_start_addr);
+  $sformat(msg_s, "%s post_check_stop_addr: 0x%0x",  msg_s, post_check_stop_addr);
+  $sformat(msg_s, "%s Lower_Wrap_Boundary: 0x%0x",   msg_s, Lower_Wrap_Boundary);
+  $sformat(msg_s, "%s Upper_Wrap_Boundary: 0x%0x",   msg_s, Upper_Wrap_Boundary);
+
+
+    `uvm_info("CHECK MEMORY",
+            msg_s,
+            UVM_INFO)
+
+
 
      miscompare_cntr=0;
 
@@ -440,14 +489,15 @@ function bit axi_seq::check_memory(
      // compare data
      if (item.burst_type == e_FIXED) begin
 
-       expected_data_array=new[item.data.size()];
-
+       expected_data_array = new[2**item.burst_size];
+       actual_data_array   = new[2**item.burst_size];
+       localbuffer         = new[2**item.burst_size];
       // brute force, not elegant at all.
       // write to local buffer, then compare that buffer (repeated) with the axi readback
 
 
       yy=0;
-      localbuffer=new[2**item.burst_size];
+
       for (int y=0;y<localbuffer.size();y++) begin
          localbuffer[y]='h0;
       end
@@ -465,38 +515,59 @@ function bit axi_seq::check_memory(
           yy=0;
         end
       end
-
+/*
       for (int y=0;y<item.data.size();y++) begin
          expected_data = expected_data_array[y];
-        read_data     = m_memory.read(item.addr+y);
+         read_data     = m_memory.read(item.addr+y);
+        actual_data_array[y] = read_data;
          if (expected_data!=read_data) begin
             miscompare_cntr++;
          end
       end
+*/
 
+       // on a fixed burst, we only need to compare last beat of data
+       for (int y=0;y<localbuffer.size();y++) begin
+          expected_data = expected_data_array[y];
+          read_data     = m_memory.read(item.addr+y);
+          actual_data_array[y] = read_data;
+          if (expected_data!=read_data) begin
+             miscompare_cntr++;
+          end
+       end
 
      assert (miscompare_cntr==0) else begin
-        write_item_s="";
+         write_item_s="";
 //        read_item_s="";
-        expected_data_s="";
-        localbuffer_s="";
+         expected_data_s="";
+         actual_data_s="";
+         localbuffer_s="";
 
-       for (int z=0;z<item.data.size();z++) begin
-          $sformat(write_item_s, "%s 0x%2x", write_item_s, item.data[z]);
-        end
+         for (int z=0;z<item.data.size();z++) begin
+            $sformat(write_item_s, "%s 0x%2x", write_item_s, item.data[z]);
+         end
 
 
         for (int z=0;z<expected_data_array.size();z++) begin
           $sformat(expected_data_s, "%s 0x%2x", expected_data_s, expected_data_array[z]);
         end
 
+       for (int z=0;z<actual_data_array.size();z++) begin
+         $sformat(actual_data_s, "%s 0x%2x", actual_data_s, actual_data_array[z]);
+        end
+
         for (int z=0;z<localbuffer.size();z++) begin
           $sformat(localbuffer_s, "%s 0x%2x", localbuffer_s, localbuffer[z]);
         end
 
+        msg_s="";
+       $sformat(msg_s, "%s %0d miscompares between expected and actual data items.", msg_s, miscompare_cntr );
+       $sformat(msg_s, "%s \nExpected:    %s", msg_s, expected_data_s);
+       $sformat(msg_s, "%s \nActual:      %s", msg_s, actual_data_s);
+       $sformat(msg_s, "%s \nWritten:     %s", msg_s, write_item_s);
+       $sformat(msg_s, "%s \nLocalbuffer: %s", msg_s, localbuffer_s);
 
-        `uvm_error("READBACK e_FIXED miscompare",
-                   $sformatf("%0d miscompares between expected and actual data items.  \nExpected: %s \nWritten: %s  \nLocalbuffer: %s", miscompare_cntr, expected_data_s, write_item_s, localbuffer_s ));
+        `uvm_error("READBACK e_FIXED miscompare", msg_s);
       end
 
 
@@ -737,7 +808,7 @@ function bit axi_seq::compare_items (int xfer_cnt);
     end else begin
            miscompare_cntr++;
       `uvm_error(this.get_type_name(),
-                 $sformatf("Unsupported burst type", write_item[xfer_cnt].burst_type))
+                 $sformatf("Unsupported burst type %0d", write_item[xfer_cnt].burst_type))
 
     end
 

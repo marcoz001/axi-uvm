@@ -49,7 +49,7 @@ class axi_agent_config extends uvm_object;
   rand bit[31:0]  awready_toggle_pattern;
   rand bit[31:0]  wready_toggle_pattern;
   rand bit[31:0]  arready_toggle_pattern;
-  
+
   // If multiple write transfers are queued,
   // this allows easily testing back to back or pausing between write address transfers.
   int min_clks_between_aw_transfers=1;

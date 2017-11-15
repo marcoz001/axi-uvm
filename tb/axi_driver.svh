@@ -172,8 +172,9 @@ task axi_driver::write_address;
           // Check if delay wanted
           if (wait_clks_before_next_aw==0) begin
              // if not, check if there's another item
-             writeaddress_mbx.try_get(item);
-             if (item!=null) begin
+             //writeaddress_mbx.try_get(item);
+             //if (item!=null) begin
+            if (writeaddress_mbx.try_get(item)) begin
                 // item_needs_init=1;
                 axi_uvm_pkg::aw_from_class(.t(item), .v(v));
              end
@@ -294,8 +295,9 @@ task axi_driver::write_data;
           // Check if delay wanted
           if (wait_clks_before_next_w==0) begin
              // if not, check if there's another item
-             writedata_mbx.try_get(item);
-            if (item != null) begin
+            // writedata_mbx.try_get(item);
+            //if (item != null) begin
+            if (writedata_mbx.try_get(item)) begin
                 validcntr=0;
                 validcntr_max=item.valid.size();
 
@@ -464,8 +466,9 @@ task axi_driver::read_address;
           // Check if delay wanted
           if (wait_clks_before_next_ar==0) begin
              // if not, check if there's another item
-             readaddress_mbx.try_get(item);
-             if (item!=null) begin
+             //readaddress_mbx.try_get(item);
+             //if (item!=null) begin
+            if (readaddress_mbx.try_get(item)) begin
                 // item_needs_init=1;
                 axi_uvm_pkg::ar_from_class(.t(item), .v(v));
              end
@@ -586,7 +589,7 @@ task axi_driver::read_data;
            $sformat(msg_s, "%s offset:%0d",          msg_s, offset);
 
            // `uvm_info("driver::read_data", msg_s, UVM_INFO)
-     
+
            msg_s="data: 0x";
            for (int z=(vif.get_data_bus_width()/8)-1;z>=0;z--) begin
              $sformat(msg_s, "%s%02x", msg_s, r_s.rdata[z*8+:8]);

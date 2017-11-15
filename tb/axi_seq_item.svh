@@ -234,8 +234,8 @@ class axi_seq_item extends uvm_sequence_item;
                         //(addr-int'(addr/(2**burst_size))*(2**burst_size));
                         // 16 for everything except AXI4 incr.
                         //@Todo: take into account non-aligned addr
-                     // else
-                     //   len == 666;
+                      else
+                        len == 666;
 
                        }
 
@@ -258,6 +258,7 @@ class axi_seq_item extends uvm_sequence_item;
     extern function bit    do_compare (uvm_object rhs, uvm_comparer comparer);
     extern function void   do_print   (uvm_printer printer);
 
+    extern function void   pre_randomize;
     extern function void   post_randomize;
 
       /*
@@ -391,6 +392,13 @@ function void axi_seq_item::do_print(uvm_printer printer);
   printer.m_string = convert2string();
 endfunction : do_print
 
+
+function void axi_seq_item::pre_randomize;
+  `uvm_info(this.get_type_name(), "Starting pre_randomize", UVM_INFO)
+
+  `uvm_info(this.get_type_name(), "Done pre_randomize", UVM_INFO)
+endfunction : pre_randomize
+
 /*! \brief Tweak things after randomization
  *
  * Currenly being used to reset the data[] to incrementing pattern
@@ -402,6 +410,8 @@ function void axi_seq_item::post_randomize;
   string valid_s;
   int valid_asserts;
   int valid_assert_bit;
+
+  `uvm_info(this.get_type_name(), "Starting post_randomize", UVM_INFO)
 
 
   super.post_randomize;
@@ -461,7 +471,7 @@ function void axi_seq_item::post_randomize;
   end // if (cmd == e_WRITE)
 
 
-
+  `uvm_info(this.get_type_name(), "Done post_randomize", UVM_INFO)
   //assert(valid.randomize()) else begin
   //  `uvm_error(this.get_type_name, "Unable to randomize valid");
   //end
