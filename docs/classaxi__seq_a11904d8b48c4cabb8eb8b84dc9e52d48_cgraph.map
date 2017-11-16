@@ -1,7 +1,9 @@
 <map id="axi_seq::body" name="axi_seq::body">
-<area shape="rect" id="node2" href="$axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="195,13,307,39"/>
-<area shape="rect" id="node4" href="$classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="156,63,345,90"/>
-<area shape="rect" id="node5" href="$classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="199,114,302,141"/>
-<area shape="rect" id="node6" href="$classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="198,165,303,191"/>
-<area shape="rect" id="node3" href="$axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="393,5,544,47"/>
+<area shape="rect" id="node2" href="$classaxi__seq.html#a39e676c6fdd179e113d3dc0d130d24b0" title="axi_seq::check_memory" alt="" coords="156,38,320,65"/>
+<area shape="rect" id="node6" href="$classaxi__seq.html#a3e1d96cf1d872bcc860464bfbc72c8e1" title="axi_seq::compare_items" alt="" coords="156,89,320,115"/>
+<area shape="rect" id="node7" href="$classaxi__seq.html#a703120fea83a77c9cf9cf3801c7e8903" title="Make sure addr_width,data_width, etc are set. " alt="" coords="177,139,299,166"/>
+<area shape="rect" id="node8" href="$classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="185,190,291,217"/>
+<area shape="rect" id="node3" href="$result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="368,13,480,39"/>
+<area shape="rect" id="node5" href="$classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="373,63,475,90"/>
+<area shape="rect" id="node4" href="$result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="528,5,679,47"/>
 </map>

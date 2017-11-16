@@ -1,14 +1,14 @@
 <map id="axi_env" name="axi_env">
-<area shape="rect" id="node3" href="$classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="225,143,295,169"/>
-<area shape="rect" id="node5" href="$classaxi__agent.html" title="Encapsulates driver, monitor, coverage collector, a local memory. " alt="" coords="800,291,879,317"/>
-<area shape="rect" id="node7" href="$classaxi__responder.html" title="Logic to act as an AXI slave (responder) for all 5 channels. " alt="" coords="487,220,589,247"/>
-<area shape="rect" id="node11" href="$classaxi__driver.html" title="Logic to act as an AXI master for all 5 channels. " alt="" coords="499,339,577,365"/>
-<area shape="rect" id="node12" href="$classaxi__monitor.html" title="monitors all 5 channels for activity " alt="" coords="493,491,583,517"/>
-<area shape="rect" id="node9" href="$classaxi__agent__config.html" title="Configuration object for an axi_agent. " alt="" coords="200,379,320,405"/>
-<area shape="rect" id="node14" href="$classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="207,543,313,569"/>
-<area shape="rect" id="node15" href="$axi__pkg_8sv.html#structaxi__seq__item__r__vector__s" title="This packed struct is used to send read data channel information between the DUT and TB..." alt="" coords="177,593,343,620"/>
-<area shape="rect" id="node16" href="$axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="173,644,347,671"/>
-<area shape="rect" id="node17" href="$classaxi__scoreboard.html" title="scoreboard " alt="" coords="483,541,593,568"/>
-<area shape="rect" id="node19" href="$classaxi__coveragecollector.html" title="Collects coverage. " alt="" coords="464,592,612,619"/>
-<area shape="rect" id="node20" href="$classaxi__sequencer.html" title="Normal sequencer with an extra analysis fifo and export. " alt="" coords="485,643,591,669"/>
+<area shape="rect" id="node3" href="$classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="225,445,295,472"/>
+<area shape="rect" id="node5" href="$classaxi__agent.html" title="Encapsulates driver, monitor, coverage collector, a local memory. " alt="" coords="800,560,879,587"/>
+<area shape="rect" id="node7" href="$classaxi__responder.html" title="Logic to act as an AXI slave (responder) for all 5 channels. " alt="" coords="487,611,589,637"/>
+<area shape="rect" id="node11" href="$classaxi__driver.html" title="Logic to act as an AXI master for all 5 channels. " alt="" coords="499,507,577,533"/>
+<area shape="rect" id="node12" href="$classaxi__monitor.html" title="monitors all 5 channels for activity " alt="" coords="493,131,583,157"/>
+<area shape="rect" id="node9" href="$classaxi__agent__config.html" title="Configuration object for an axi_agent. " alt="" coords="200,225,320,252"/>
+<area shape="rect" id="node14" href="$classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="207,5,313,32"/>
+<area shape="rect" id="node15" href="$rtl_2axi__pkg_8sv.html#structaxi__seq__item__r__vector__s" title="This packed struct is used to send read data channel information between the DUT and TB..." alt="" coords="177,157,343,184"/>
+<area shape="rect" id="node16" href="$rtl_2axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="173,56,347,83"/>
+<area shape="rect" id="node17" href="$classaxi__scoreboard.html" title="scoreboard " alt="" coords="483,696,593,723"/>
+<area shape="rect" id="node19" href="$classaxi__coveragecollector.html" title="Collects coverage. " alt="" coords="464,753,612,780"/>
+<area shape="rect" id="node20" href="$classaxi__sequencer.html" title="Normal sequencer with an extra analysis fifo and export. " alt="" coords="485,807,591,833"/>
 </map>

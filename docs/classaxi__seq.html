@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classaxi__seq-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">axi_seq Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">axi_seq Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -101,7 +101,7 @@ Inheritance diagram for axi_seq:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__seq__inherit__graph.png" border="0" usemap="#axi__seq_inherit__map" alt="Inheritance graph"/></div>
 <map name="axi__seq_inherit__map" id="axi__seq_inherit__map">
-<area shape="rect" id="node3" href="classaxi__responder__seq.html" title="Forever running sequence that setups up responder *ready toggle patterns, then receives TLM packet fr..." alt="" coords="23,169,154,196"/>
+<area shape="rect" id="node3" href="classaxi__responder__seq.html" title="Forever running sequence that receives TLM packets from monitor and sends to responder. " alt="" coords="23,169,154,196"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -110,13 +110,14 @@ Collaboration diagram for axi_seq:</div>
 <div class="center"><img src="classaxi__seq__coll__graph.png" border="0" usemap="#axi__seq_coll__map" alt="Collaboration graph"/></div>
 <map name="axi__seq_coll__map" id="axi__seq_coll__map">
 <area shape="rect" id="node3" href="classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="197,89,266,115"/>
+<area shape="rect" id="node5" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage " alt="" coords="337,89,435,115"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aea9fb74b90844dd22dd86402e94e2a9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#aea9fb74b90844dd22dd86402e94e2a9e">uvm_object_utils</a> (<a class="el" href="classaxi__seq.html">axi_seq</a>) int xfers_done=0</td></tr>
-<tr class="separator:aea9fb74b90844dd22dd86402e94e2a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a267e634d9e826ee7fc6ccc33999d0394"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a267e634d9e826ee7fc6ccc33999d0394">uvm_object_utils</a> (<a class="el" href="classaxi__seq.html">axi_seq</a>) const int axi_readback</td></tr>
+<tr class="separator:a267e634d9e826ee7fc6ccc33999d0394"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e3a9642246211575719fb840e1e9343"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a9e3a9642246211575719fb840e1e9343">new</a> (string name=&quot;axi_seq&quot;)</td></tr>
 <tr class="memdesc:a9e3a9642246211575719fb840e1e9343"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9e3a9642246211575719fb840e1e9343">More...</a><br /></td></tr>
 <tr class="separator:a9e3a9642246211575719fb840e1e9343"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,21 +126,80 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a11904d8b48c4cabb8eb8b84dc9e52d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8514cd0265ee9d53f6df519050e412a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a8514cd0265ee9d53f6df519050e412a9">response_handler</a> (uvm_sequence_item response)</td></tr>
 <tr class="separator:a8514cd0265ee9d53f6df519050e412a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a5bb4b0b6215f8d8deb94fde8d617a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a1a5bb4b0b6215f8d8deb94fde8d617a3">set_addr_width</a> (int width=0)</td></tr>
-<tr class="memdesc:a1a5bb4b0b6215f8d8deb94fde8d617a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Address bus width.  <a href="#a1a5bb4b0b6215f8d8deb94fde8d617a3">More...</a><br /></td></tr>
-<tr class="separator:a1a5bb4b0b6215f8d8deb94fde8d617a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a820beb0641ab5a5b74693cb778e420ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a820beb0641ab5a5b74693cb778e420ed">set_data_width</a> (int width=0)</td></tr>
-<tr class="memdesc:a820beb0641ab5a5b74693cb778e420ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Data bus width.  <a href="#a820beb0641ab5a5b74693cb778e420ed">More...</a><br /></td></tr>
-<tr class="separator:a820beb0641ab5a5b74693cb778e420ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a601ec23738c06c9b2538b4c2469ae420"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a601ec23738c06c9b2538b4c2469ae420">set_id_width</a> (int width=0)</td></tr>
-<tr class="memdesc:a601ec23738c06c9b2538b4c2469ae420"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set ID vector width.  <a href="#a601ec23738c06c9b2538b4c2469ae420">More...</a><br /></td></tr>
-<tr class="separator:a601ec23738c06c9b2538b4c2469ae420"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a499661b69d2b68d5fee8607760e91a1b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a499661b69d2b68d5fee8607760e91a1b">set_len_width</a> (int width=0)</td></tr>
-<tr class="memdesc:a499661b69d2b68d5fee8607760e91a1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set length vector width.  <a href="#a499661b69d2b68d5fee8607760e91a1b">More...</a><br /></td></tr>
-<tr class="separator:a499661b69d2b68d5fee8607760e91a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a703120fea83a77c9cf9cf3801c7e8903"><td class="memItemLeft" align="right" valign="top">bit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a703120fea83a77c9cf9cf3801c7e8903">initialize</a> ()</td></tr>
+<tr class="memdesc:a703120fea83a77c9cf9cf3801c7e8903"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make sure addr_width,data_width, etc are set.  <a href="#a703120fea83a77c9cf9cf3801c7e8903">More...</a><br /></td></tr>
+<tr class="separator:a703120fea83a77c9cf9cf3801c7e8903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fa2a8b6a468b44b7eb41271d6c8c3fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a9fa2a8b6a468b44b7eb41271d6c8c3fa">set_addr_width</a> (int width=0)</td></tr>
+<tr class="memdesc:a9fa2a8b6a468b44b7eb41271d6c8c3fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Address bus width.  <a href="#a9fa2a8b6a468b44b7eb41271d6c8c3fa">More...</a><br /></td></tr>
+<tr class="separator:a9fa2a8b6a468b44b7eb41271d6c8c3fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ca8a8c9b127320d4c13779cd876dc95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a7ca8a8c9b127320d4c13779cd876dc95">set_data_width</a> (int width=0)</td></tr>
+<tr class="memdesc:a7ca8a8c9b127320d4c13779cd876dc95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Data bus width.  <a href="#a7ca8a8c9b127320d4c13779cd876dc95">More...</a><br /></td></tr>
+<tr class="separator:a7ca8a8c9b127320d4c13779cd876dc95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a524e5619030b671965414f20ef423331"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a524e5619030b671965414f20ef423331">set_id_width</a> (int width=0)</td></tr>
+<tr class="memdesc:a524e5619030b671965414f20ef423331"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set ID vector width.  <a href="#a524e5619030b671965414f20ef423331">More...</a><br /></td></tr>
+<tr class="separator:a524e5619030b671965414f20ef423331"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d54bfd6a1957562b0a863d17e256af2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a5d54bfd6a1957562b0a863d17e256af2">set_len_width</a> (int width=0)</td></tr>
+<tr class="memdesc:a5d54bfd6a1957562b0a863d17e256af2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set length vector width.  <a href="#a5d54bfd6a1957562b0a863d17e256af2">More...</a><br /></td></tr>
+<tr class="separator:a5d54bfd6a1957562b0a863d17e256af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e1d96cf1d872bcc860464bfbc72c8e1"><td class="memItemLeft" align="right" valign="top">bit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a3e1d96cf1d872bcc860464bfbc72c8e1">compare_items</a> (ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> <a class="el" href="classaxi__seq.html#a1c4bae84819ba5d698647a93dec1dc46">write_item</a>, ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> <a class="el" href="classaxi__seq.html#a137f20c0e062cf202555848bb22917fb">read_item</a>)</td></tr>
+<tr class="separator:a3e1d96cf1d872bcc860464bfbc72c8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39e676c6fdd179e113d3dc0d130d24b0"><td class="memItemLeft" align="right" valign="top">bit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a39e676c6fdd179e113d3dc0d130d24b0">check_memory</a> (ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> item, input bit&lt; 63:0 &gt; lower_addr, input bit&lt; 63:0 &gt; upper_addr)</td></tr>
+<tr class="separator:a39e676c6fdd179e113d3dc0d130d24b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a267e634d9e826ee7fc6ccc33999d0394"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a267e634d9e826ee7fc6ccc33999d0394">uvm_object_utils</a> (<a class="el" href="classaxi__seq.html">axi_seq</a>) const int axi_readback</td></tr>
+<tr class="separator:a267e634d9e826ee7fc6ccc33999d0394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e3a9642246211575719fb840e1e9343"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a9e3a9642246211575719fb840e1e9343">new</a> (string name=&quot;axi_seq&quot;)</td></tr>
+<tr class="separator:a9e3a9642246211575719fb840e1e9343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11904d8b48c4cabb8eb8b84dc9e52d48"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48">body</a> ()</td></tr>
+<tr class="separator:a11904d8b48c4cabb8eb8b84dc9e52d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8514cd0265ee9d53f6df519050e412a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a8514cd0265ee9d53f6df519050e412a9">response_handler</a> (uvm_sequence_item response)</td></tr>
+<tr class="separator:a8514cd0265ee9d53f6df519050e412a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a703120fea83a77c9cf9cf3801c7e8903"><td class="memItemLeft" align="right" valign="top">bit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a703120fea83a77c9cf9cf3801c7e8903">initialize</a> ()</td></tr>
+<tr class="separator:a703120fea83a77c9cf9cf3801c7e8903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fa2a8b6a468b44b7eb41271d6c8c3fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a9fa2a8b6a468b44b7eb41271d6c8c3fa">set_addr_width</a> (int width=0)</td></tr>
+<tr class="separator:a9fa2a8b6a468b44b7eb41271d6c8c3fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ca8a8c9b127320d4c13779cd876dc95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a7ca8a8c9b127320d4c13779cd876dc95">set_data_width</a> (int width=0)</td></tr>
+<tr class="separator:a7ca8a8c9b127320d4c13779cd876dc95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a524e5619030b671965414f20ef423331"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a524e5619030b671965414f20ef423331">set_id_width</a> (int width=0)</td></tr>
+<tr class="separator:a524e5619030b671965414f20ef423331"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d54bfd6a1957562b0a863d17e256af2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a5d54bfd6a1957562b0a863d17e256af2">set_len_width</a> (int width=0)</td></tr>
+<tr class="separator:a5d54bfd6a1957562b0a863d17e256af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e1d96cf1d872bcc860464bfbc72c8e1"><td class="memItemLeft" align="right" valign="top">bit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a3e1d96cf1d872bcc860464bfbc72c8e1">compare_items</a> (ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> <a class="el" href="classaxi__seq.html#a1c4bae84819ba5d698647a93dec1dc46">write_item</a>, ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> <a class="el" href="classaxi__seq.html#a137f20c0e062cf202555848bb22917fb">read_item</a>)</td></tr>
+<tr class="separator:a3e1d96cf1d872bcc860464bfbc72c8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39e676c6fdd179e113d3dc0d130d24b0"><td class="memItemLeft" align="right" valign="top">bit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a39e676c6fdd179e113d3dc0d130d24b0">check_memory</a> (ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> item, input bit&lt; 63:0 &gt; lower_addr, input bit&lt; 63:0 &gt; upper_addr)</td></tr>
+<tr class="separator:a39e676c6fdd179e113d3dc0d130d24b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a267e634d9e826ee7fc6ccc33999d0394"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a267e634d9e826ee7fc6ccc33999d0394">uvm_object_utils</a> (<a class="el" href="classaxi__seq.html">axi_seq</a>) const int axi_readback</td></tr>
+<tr class="separator:a267e634d9e826ee7fc6ccc33999d0394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e3a9642246211575719fb840e1e9343"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a9e3a9642246211575719fb840e1e9343">new</a> (string name=&quot;axi_seq&quot;)</td></tr>
+<tr class="separator:a9e3a9642246211575719fb840e1e9343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11904d8b48c4cabb8eb8b84dc9e52d48"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48">body</a> ()</td></tr>
+<tr class="separator:a11904d8b48c4cabb8eb8b84dc9e52d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8514cd0265ee9d53f6df519050e412a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a8514cd0265ee9d53f6df519050e412a9">response_handler</a> (uvm_sequence_item response)</td></tr>
+<tr class="separator:a8514cd0265ee9d53f6df519050e412a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ca8a8c9b127320d4c13779cd876dc95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a7ca8a8c9b127320d4c13779cd876dc95">set_data_width</a> (int width=0)</td></tr>
+<tr class="separator:a7ca8a8c9b127320d4c13779cd876dc95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a524e5619030b671965414f20ef423331"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a524e5619030b671965414f20ef423331">set_id_width</a> (int width=0)</td></tr>
+<tr class="separator:a524e5619030b671965414f20ef423331"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d54bfd6a1957562b0a863d17e256af2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a5d54bfd6a1957562b0a863d17e256af2">set_len_width</a> (int width=0)</td></tr>
+<tr class="separator:a5d54bfd6a1957562b0a863d17e256af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e1d96cf1d872bcc860464bfbc72c8e1"><td class="memItemLeft" align="right" valign="top">bit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a3e1d96cf1d872bcc860464bfbc72c8e1">compare_items</a> (ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> <a class="el" href="classaxi__seq.html#a1c4bae84819ba5d698647a93dec1dc46">write_item</a>, ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> <a class="el" href="classaxi__seq.html#a137f20c0e062cf202555848bb22917fb">read_item</a>)</td></tr>
+<tr class="separator:a3e1d96cf1d872bcc860464bfbc72c8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a1d543939f792cbb7539aa8855e03a7"><td class="memItemLeft" align="right" valign="top">bit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a7a1d543939f792cbb7539aa8855e03a7">check_memory</a> (ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> item, input bit&lt; <a class="el" href="rtl_2axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt; lower_addr, input bit&lt; <a class="el" href="rtl_2axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt; upper_addr)</td></tr>
+<tr class="separator:a7a1d543939f792cbb7539aa8855e03a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a090b03942302d4f1189f8f52d114e9da"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a090b03942302d4f1189f8f52d114e9da">clearmemory</a> = 0</td></tr>
+<tr class="separator:a090b03942302d4f1189f8f52d114e9da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a481d2f0615105939e162d19e7d46ff5b"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a481d2f0615105939e162d19e7d46ff5b">postcheck</a> = 0</td></tr>
+<tr class="separator:a481d2f0615105939e162d19e7d46ff5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6d508b4273ff7bcdfdad9ff074397e0"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#af6d508b4273ff7bcdfdad9ff074397e0">precheck</a> = 0</td></tr>
+<tr class="separator:af6d508b4273ff7bcdfdad9ff074397e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35e2ef3dac762ca6cebfb3e7fee1fe8d"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a35e2ef3dac762ca6cebfb3e7fee1fe8d">window_size</a> = 0x1000</td></tr>
+<tr class="separator:a35e2ef3dac762ca6cebfb3e7fee1fe8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a538cd772f189ef3be84b72eb83f586"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a2a538cd772f189ef3be84b72eb83f586">xfers_to_send</a> = 3</td></tr>
+<tr class="separator:a2a538cd772f189ef3be84b72eb83f586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa300ffd2a9ee8aca6bd21383a25ad18d"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#aa300ffd2a9ee8aca6bd21383a25ad18d">pipelined_bursts_enabled</a> =0</td></tr>
+<tr class="separator:aa300ffd2a9ee8aca6bd21383a25ad18d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67eeb9054b086fd1ba87d84e31833599"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a67eeb9054b086fd1ba87d84e31833599">addr_width</a> =0</td></tr>
 <tr class="separator:a67eeb9054b086fd1ba87d84e31833599"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ee2dafd8b4ec15c811e88e5b6df0dee"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a4ee2dafd8b4ec15c811e88e5b6df0dee">data_width</a> =0</td></tr>
@@ -148,15 +208,38 @@ Public Attributes</h2></td></tr>
 <tr class="separator:afd5d79b6395051a827d8bc43a2a1a142"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abca16349953632a5d124128437d094bf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#abca16349953632a5d124128437d094bf">len_width</a> =0</td></tr>
 <tr class="separator:abca16349953632a5d124128437d094bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedd71f30b38e538b02c93c20bf210e08"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#aedd71f30b38e538b02c93c20bf210e08">xfers_done</a> =0</td></tr>
+<tr class="separator:aedd71f30b38e538b02c93c20bf210e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e081ffeeb0b6ee993973c75439b5614"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmemory.html">memory</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a9e081ffeeb0b6ee993973c75439b5614">m_memory</a></td></tr>
 <tr class="separator:a9e081ffeeb0b6ee993973c75439b5614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c4bae84819ba5d698647a93dec1dc46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a1c4bae84819ba5d698647a93dec1dc46">write_item</a> []</td></tr>
+<tr class="separator:a1c4bae84819ba5d698647a93dec1dc46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a137f20c0e062cf202555848bb22917fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a137f20c0e062cf202555848bb22917fb">read_item</a> []</td></tr>
+<tr class="separator:a137f20c0e062cf202555848bb22917fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71bfbd4ba0c1836dee6194cb4f1939c9"><td class="memItemLeft" align="right" valign="top">event&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__seq.html#a71bfbd4ba0c1836dee6194cb4f1939c9">writes_done</a></td></tr>
+<tr class="separator:a71bfbd4ba0c1836dee6194cb4f1939c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Writes to memory over AXI, backdoor readback, then AXI readback. </p>
 <p>miscompares are flagged. </p>
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00025">25</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00025">25</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a11904d8b48c4cabb8eb8b84dc9e52d48"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">task axi_seq::body </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a11904d8b48c4cabb8eb8b84dc9e52d48"></a>
 <div class="memitem">
 <div class="memproto">
@@ -177,24 +260,329 @@ Public Attributes</h2></td></tr>
 <li>Backdoor read of memory to verify correctly written</li>
 <li>Creates constrained random AXI read packet with same len and address as write packet</li>
 <li>Sends it</li>
-<li>Verifies read back data with written data. </li>
+<li><p class="startli">Verifies read back data with written data.</p>
+<p class="startli">two modes: Serial, Write_addr, then write, then resp. Repeat Parallel - Multiple write_adr, then multiple write_data, then multiple resp, repeat </p>
+</li>
 </ol>
-<p>........................ </p>
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00114">114</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">234</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq__item_8svh_source.html#l00044">axi_seq_item::addr</a>, <a class="el" href="axi__seq_8svh_source.html#l00031">addr_width</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00049">axi_seq_item::burst_size</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00050">axi_seq_item::burst_type</a>, <a class="el" href="axi__pkg_8sv_source.html#l00312">calculate_axlen()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00296">axi_seq_item::convert2string()</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00045">axi_seq_item::data</a>, <a class="el" href="axi__seq_8svh_source.html#l00032">data_width</a>, <a class="el" href="axi__pkg_8sv_source.html#l00081">e_FIXED</a>, <a class="el" href="axi__pkg_8sv_source.html#l00082">e_INCR</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00049">e_READ</a>, <a class="el" href="axi__pkg_8sv_source.html#l00083">e_WRAP</a>, <a class="el" href="axi__uvm__pkg_8sv_source.html#l00048">e_WRITE</a>, <a class="el" href="axi__seq_8svh_source.html#l00033">id_width</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00046">axi_seq_item::len</a>, <a class="el" href="axi__seq_8svh_source.html#l00034">len_width</a>, <a class="el" href="axi__seq_8svh_source.html#l00036">m_memory</a>, <a class="el" href="axi__seq__item_8svh_source.html#l00043">axi_seq_item::protocol</a>, <a class="el" href="memory_8svh_source.html#l00054">memory::read()</a>, and <a class="el" href="memory_8svh_source.html#l00045">memory::write()</a>.</p>
+<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00044">axi_seq_item::addr</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00049">axi_seq_item::burst_size</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00050">axi_seq_item::burst_type</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00378">check_memory()</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00030">clearmemory</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00669">compare_items()</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00041">data_width</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00049">e_READ</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00048">e_WRITE</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00048">axi_seq_item::id</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00170">initialize()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00046">axi_seq_item::len</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00046">m_memory</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00036">pipelined_bursts_enabled</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00043">axi_seq_item::protocol</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00049">read_item</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00033">window_size</a>, <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html#l00045">memory::write()</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00048">write_item</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00054">writes_done</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00044">xfers_done</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00034">xfers_to_send</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__seq_a11904d8b48c4cabb8eb8b84dc9e52d48_cgraph.png" border="0" usemap="#classaxi__seq_a11904d8b48c4cabb8eb8b84dc9e52d48_cgraph" alt=""/></div>
 <map name="classaxi__seq_a11904d8b48c4cabb8eb8b84dc9e52d48_cgraph" id="classaxi__seq_a11904d8b48c4cabb8eb8b84dc9e52d48_cgraph">
-<area shape="rect" id="node2" href="axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="195,13,307,39"/>
-<area shape="rect" id="node4" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="156,63,345,90"/>
-<area shape="rect" id="node5" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="199,114,302,141"/>
-<area shape="rect" id="node6" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="198,165,303,191"/>
-<area shape="rect" id="node3" href="axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="393,5,544,47"/>
+<area shape="rect" id="node2" href="classaxi__seq.html#a39e676c6fdd179e113d3dc0d130d24b0" title="axi_seq::check_memory" alt="" coords="156,38,320,65"/>
+<area shape="rect" id="node6" href="classaxi__seq.html#a3e1d96cf1d872bcc860464bfbc72c8e1" title="axi_seq::compare_items" alt="" coords="156,89,320,115"/>
+<area shape="rect" id="node7" href="classaxi__seq.html#a703120fea83a77c9cf9cf3801c7e8903" title="Make sure addr_width,data_width, etc are set. " alt="" coords="177,139,299,166"/>
+<area shape="rect" id="node8" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="185,190,291,217"/>
+<area shape="rect" id="node3" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="368,13,480,39"/>
+<area shape="rect" id="node5" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="373,63,475,90"/>
+<area shape="rect" id="node4" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="528,5,679,47"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a11904d8b48c4cabb8eb8b84dc9e52d48"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">task axi_seq::body </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7a1d543939f792cbb7539aa8855e03a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">automatic bit axi_seq::check_memory </td>
+          <td>(</td>
+          <td class="paramtype">ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td>
+          <td class="paramname"><em>item</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; <a class="el" href="rtl_2axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>lower_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; <a class="el" href="rtl_2axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>upper_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="tb_2axi__seq_8svh_source.html#l00398">398</a> of file <a class="el" href="tb_2axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00031">ADDR_WIDTH</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00312">calculate_axlen()</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00669">compare_items()</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00081">e_FIXED</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00082">e_INCR</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00083">e_WRAP</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html#l00054">memory::read()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__seq_a7a1d543939f792cbb7539aa8855e03a7_cgraph.png" border="0" usemap="#classaxi__seq_a7a1d543939f792cbb7539aa8855e03a7_cgraph" alt=""/></div>
+<map name="classaxi__seq_a7a1d543939f792cbb7539aa8855e03a7_cgraph" id="classaxi__seq_a7a1d543939f792cbb7539aa8855e03a7_cgraph">
+<area shape="rect" id="node2" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="243,13,355,39"/>
+<area shape="rect" id="node4" href="classaxi__seq.html#a3e1d96cf1d872bcc860464bfbc72c8e1" title="axi_seq::compare_items" alt="" coords="217,63,381,90"/>
+<area shape="rect" id="node5" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="248,114,351,141"/>
+<area shape="rect" id="node3" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="429,5,580,47"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a39e676c6fdd179e113d3dc0d130d24b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit axi_seq::check_memory </td>
+          <td>(</td>
+          <td class="paramtype">ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td>
+          <td class="paramname"><em>item</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; 63:0 &gt;&#160;</td>
+          <td class="paramname"><em>lower_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; 63:0 &gt;&#160;</td>
+          <td class="paramname"><em>upper_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00378">378</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00312">calculate_axlen()</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00081">e_FIXED</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00082">e_INCR</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00083">e_WRAP</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00046">m_memory</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00031">postcheck</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00032">precheck</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html#l00054">memory::read()</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__seq_a39e676c6fdd179e113d3dc0d130d24b0_cgraph.png" border="0" usemap="#classaxi__seq_a39e676c6fdd179e113d3dc0d130d24b0_cgraph" alt=""/></div>
+<map name="classaxi__seq_a39e676c6fdd179e113d3dc0d130d24b0_cgraph" id="classaxi__seq_a39e676c6fdd179e113d3dc0d130d24b0_cgraph">
+<area shape="rect" id="node2" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="217,13,329,39"/>
+<area shape="rect" id="node4" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="222,63,325,90"/>
+<area shape="rect" id="node3" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="377,5,528,47"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__seq_a39e676c6fdd179e113d3dc0d130d24b0_icgraph.png" border="0" usemap="#classaxi__seq_a39e676c6fdd179e113d3dc0d130d24b0_icgraph" alt=""/></div>
+<map name="classaxi__seq_a39e676c6fdd179e113d3dc0d130d24b0_icgraph" id="classaxi__seq_a39e676c6fdd179e113d3dc0d130d24b0_icgraph">
+<area shape="rect" id="node2" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="217,5,320,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a39e676c6fdd179e113d3dc0d130d24b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit axi_seq::check_memory </td>
+          <td>(</td>
+          <td class="paramtype">ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td>
+          <td class="paramname"><em>item</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; 63:0 &gt;&#160;</td>
+          <td class="paramname"><em>lower_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; 63:0 &gt;&#160;</td>
+          <td class="paramname"><em>upper_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3e1d96cf1d872bcc860464bfbc72c8e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit axi_seq::compare_items </td>
+          <td>(</td>
+          <td class="paramtype">ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td>
+          <td class="paramname"><em>write_item</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td>
+          <td class="paramname"><em>read_item</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3e1d96cf1d872bcc860464bfbc72c8e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit axi_seq::compare_items </td>
+          <td>(</td>
+          <td class="paramtype">ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td>
+          <td class="paramname"><em>write_item</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td>
+          <td class="paramname"><em>read_item</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3e1d96cf1d872bcc860464bfbc72c8e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit axi_seq::compare_items </td>
+          <td>(</td>
+          <td class="paramtype">ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td>
+          <td class="paramname"><em>write_item</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td>
+          <td class="paramname"><em>read_item</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>........................ </p>
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00669">669</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00081">e_FIXED</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00082">e_INCR</a>, and <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00083">e_WRAP</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>, <a class="el" href="tb_2axi__seq_8svh_source.html#l00398">check_memory()</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00079">response_handler()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__seq_a3e1d96cf1d872bcc860464bfbc72c8e1_icgraph.png" border="0" usemap="#classaxi__seq_a3e1d96cf1d872bcc860464bfbc72c8e1_icgraph" alt=""/></div>
+<map name="classaxi__seq_a3e1d96cf1d872bcc860464bfbc72c8e1_icgraph" id="classaxi__seq_a3e1d96cf1d872bcc860464bfbc72c8e1_icgraph">
+<area shape="rect" id="node2" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="255,5,357,32"/>
+<area shape="rect" id="node3" href="classaxi__seq.html#a7a1d543939f792cbb7539aa8855e03a7" title="axi_seq::check_memory" alt="" coords="224,56,388,83"/>
+<area shape="rect" id="node4" href="classaxi__seq.html#a8514cd0265ee9d53f6df519050e412a9" title="axi_seq::response_handler" alt="" coords="217,107,395,133"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a703120fea83a77c9cf9cf3801c7e8903"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit axi_seq::initialize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a703120fea83a77c9cf9cf3801c7e8903"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bit axi_seq::initialize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Make sure addr_width,data_width, etc are set. </p>
+<p>if they are not, then try to fetch them from config db. if unable, then fail. </p><dl class="section return"><dt>Returns</dt><dd>true if success, false if fail </dd></dl>
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00170">170</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>References <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00040">addr_width</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00041">data_width</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00042">id_width</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00043">len_width</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00046">m_memory</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__seq_a703120fea83a77c9cf9cf3801c7e8903_icgraph.png" border="0" usemap="#classaxi__seq_a703120fea83a77c9cf9cf3801c7e8903_icgraph" alt=""/></div>
+<map name="classaxi__seq_a703120fea83a77c9cf9cf3801c7e8903_icgraph" id="classaxi__seq_a703120fea83a77c9cf9cf3801c7e8903_icgraph">
+<area shape="rect" id="node2" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="176,5,279,32"/>
 </map>
 </div>
 </p>
@@ -215,10 +603,42 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
+</div>
+</div>
+<a class="anchor" id="a9e3a9642246211575719fb840e1e9343"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">axi_seq::new </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>name</em> = <code>&quot;axi_seq&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p>Constructor. </p>
 <p>Doesn't actually do anything except call parent constructor </p>
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00061">61</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00120">120</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9e3a9642246211575719fb840e1e9343"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">axi_seq::new </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>name</em> = <code>&quot;axi_seq&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -236,16 +656,77 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00051">51</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a1a5bb4b0b6215f8d8deb94fde8d617a3"></a>
+<a class="anchor" id="a8514cd0265ee9d53f6df519050e412a9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">axi_seq::set_addr_width </td>
+          <td class="memname">void axi_seq::response_handler </td>
+          <td>(</td>
+          <td class="paramtype">uvm_sequence_item&#160;</td>
+          <td class="paramname"><em>response</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00079">79</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00071">axi_seq_item::cmd</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00669">compare_items()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00296">axi_seq_item::convert2string()</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00050">e_READ_DATA</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00052">e_WRITE_RESPONSE</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00048">axi_seq_item::id</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00049">read_item</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00048">write_item</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00044">xfers_done</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00034">xfers_to_send</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__seq_a8514cd0265ee9d53f6df519050e412a9_cgraph.png" border="0" usemap="#classaxi__seq_a8514cd0265ee9d53f6df519050e412a9_cgraph" alt=""/></div>
+<map name="classaxi__seq_a8514cd0265ee9d53f6df519050e412a9_cgraph" id="classaxi__seq_a8514cd0265ee9d53f6df519050e412a9_cgraph">
+<area shape="rect" id="node2" href="classaxi__seq.html#a3e1d96cf1d872bcc860464bfbc72c8e1" title="axi_seq::compare_items" alt="" coords="243,5,407,32"/>
+<area shape="rect" id="node3" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="231,56,420,83"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a8514cd0265ee9d53f6df519050e412a9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_seq::response_handler </td>
+          <td>(</td>
+          <td class="paramtype">uvm_sequence_item&#160;</td>
+          <td class="paramname"><em>response</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9fa2a8b6a468b44b7eb41271d6c8c3fa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_seq::set_addr_width </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9fa2a8b6a468b44b7eb41271d6c8c3fa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_seq::set_addr_width </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
@@ -257,18 +738,50 @@ Here is the call graph for this function:</div>
 <p>Set Address bus width. </p>
 <p>AXI supports multiple bus widths, parameterized at runtime. We have to tell the sequence so we can randomize accordingly. IE: If the addr bus width is 32, don't try to use 64 bits. </p>
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00071">71</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00130">130</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq_8svh_source.html#l00031">addr_width</a>.</p>
+<p>References <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00040">addr_width</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a820beb0641ab5a5b74693cb778e420ed"></a>
+<a class="anchor" id="a7ca8a8c9b127320d4c13779cd876dc95"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">axi_seq::set_data_width </td>
+          <td class="memname">void axi_seq::set_data_width </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7ca8a8c9b127320d4c13779cd876dc95"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_seq::set_data_width </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7ca8a8c9b127320d4c13779cd876dc95"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_seq::set_data_width </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
@@ -278,20 +791,40 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Set Data bus width. </p>
+<p>Set Address bus width.</p>
+<p>AXI supports multiple bus widths, parameterized at runtime. We have to tell the sequence so we can randomize accordingly. IE: If the data bus width is 32, don't send a burst_size=64bits.</p>
+<p>AXI supports multiple bus widths, parameterized at runtime. We have to tell the sequence so we can randomize accordingly. IE: If the addr bus width is 32, don't try to use 64 bits.</p>
+<p>Set Data bus width</p>
 <p>AXI supports multiple bus widths, parameterized at runtime. We have to tell the sequence so we can randomize accordingly. IE: If the data bus width is 32, don't send a burst_size=64bits. </p>
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00081">81</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00140">140</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq_8svh_source.html#l00032">data_width</a>.</p>
+<p>References <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00041">data_width</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a601ec23738c06c9b2538b4c2469ae420"></a>
+<a class="anchor" id="a524e5619030b671965414f20ef423331"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">axi_seq::set_id_width </td>
+          <td class="memname">void axi_seq::set_id_width </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a524e5619030b671965414f20ef423331"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_seq::set_id_width </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
@@ -303,18 +836,66 @@ Here is the call graph for this function:</div>
 <p>Set ID vector width. </p>
 <p>AXI supports ID widths, parameterized at runtime. We have to tell the sequence so we can randomize accordingly. </p>
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00090">90</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00149">149</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq_8svh_source.html#l00033">id_width</a>.</p>
+<p>References <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00042">id_width</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a499661b69d2b68d5fee8607760e91a1b"></a>
+<a class="anchor" id="a524e5619030b671965414f20ef423331"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">axi_seq::set_len_width </td>
+          <td class="memname">void axi_seq::set_id_width </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5d54bfd6a1957562b0a863d17e256af2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_seq::set_len_width </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5d54bfd6a1957562b0a863d17e256af2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_seq::set_len_width </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5d54bfd6a1957562b0a863d17e256af2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_seq::set_len_width </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>width</em> = <code>0</code></td><td>)</td>
@@ -326,32 +907,56 @@ Here is the call graph for this function:</div>
 <p>Set length vector width. </p>
 <p>AXI supports 2 different AxLEN widths, parameterized at runtime. 4-bit and 8-bit. We have to tell the sequence so we can randomize accordingly. </p>
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00101">101</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00160">160</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 
-<p>References <a class="el" href="axi__seq_8svh_source.html#l00034">len_width</a>.</p>
+<p>References <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00043">len_width</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aea9fb74b90844dd22dd86402e94e2a9e"></a>
+<a class="anchor" id="a267e634d9e826ee7fc6ccc33999d0394"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">axi_seq::uvm_object_utils </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classaxi__seq.html">axi_seq</a>&#160;</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a267e634d9e826ee7fc6ccc33999d0394"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">axi_seq::uvm_object_utils </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classaxi__seq.html">axi_seq</a>&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a267e634d9e826ee7fc6ccc33999d0394"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">axi_seq::uvm_object_utils </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classaxi__seq.html">axi_seq</a>&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>
@@ -367,9 +972,25 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00031">31</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00040">40</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00114">body()</a>, and <a class="el" href="axi__seq_8svh_source.html#l00071">set_addr_width()</a>.</p>
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00170">initialize()</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00130">set_addr_width()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a090b03942302d4f1189f8f52d114e9da"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int axi_seq::clearmemory = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00030">30</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>.</p>
 
 </div>
 </div>
@@ -383,9 +1004,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00032">32</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00041">41</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00114">body()</a>, and <a class="el" href="axi__seq_8svh_source.html#l00081">set_data_width()</a>.</p>
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00170">initialize()</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00140">set_data_width()</a>.</p>
 
 </div>
 </div>
@@ -399,9 +1020,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00033">33</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00042">42</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00114">body()</a>, and <a class="el" href="axi__seq_8svh_source.html#l00090">set_id_width()</a>.</p>
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00170">initialize()</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00149">set_id_width()</a>.</p>
 
 </div>
 </div>
@@ -415,9 +1036,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00034">34</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00043">43</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00114">body()</a>, and <a class="el" href="axi__seq_8svh_source.html#l00101">set_len_width()</a>.</p>
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00170">initialize()</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00160">set_len_width()</a>.</p>
 
 </div>
 </div>
@@ -431,14 +1052,159 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__seq_8svh_source.html#l00036">36</a> of file <a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00046">46</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__seq_8svh_source.html#l00114">body()</a>.</p>
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>, <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00378">check_memory()</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00170">initialize()</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>tb/<a class="el" href="axi__seq_8svh_source.html">axi_seq.svh</a></li>
+<a class="anchor" id="aa300ffd2a9ee8aca6bd21383a25ad18d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int axi_seq::pipelined_bursts_enabled =0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00036">36</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a481d2f0615105939e162d19e7d46ff5b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int axi_seq::postcheck = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00031">31</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00378">check_memory()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af6d508b4273ff7bcdfdad9ff074397e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int axi_seq::precheck = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00032">32</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00378">check_memory()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a137f20c0e062cf202555848bb22917fb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classaxi__seq__item.html">axi_seq_item</a> axi_seq::read_item</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00049">49</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00079">response_handler()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a35e2ef3dac762ca6cebfb3e7fee1fe8d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int axi_seq::window_size = 0x1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00033">33</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1c4bae84819ba5d698647a93dec1dc46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classaxi__seq__item.html">axi_seq_item</a> axi_seq::write_item</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00048">48</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00079">response_handler()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a71bfbd4ba0c1836dee6194cb4f1939c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">event axi_seq::writes_done</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00054">54</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aedd71f30b38e538b02c93c20bf210e08"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int axi_seq::xfers_done =0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00044">44</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00079">response_handler()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2a538cd772f189ef3be84b72eb83f586"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int axi_seq::xfers_to_send = 3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00034">34</a> of file <a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00234">body()</a>, and <a class="el" href="axi__pipelined__writes__seq_8svh_source.html#l00079">response_handler()</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>result_from_tec101/tb/tb/<a class="el" href="axi__pipelined__writes__seq_8svh_source.html">axi_pipelined_writes_seq.svh</a></li>
+<li>result_from_tec101/tb/tb/<a class="el" href="result__from__tec101_2tb_2tb_2axi__seq_8svh_source.html">axi_seq.svh</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
