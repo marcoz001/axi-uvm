@@ -216,7 +216,7 @@ task axi_responder::write_response;
   axi_seq_item_b_vector_s s;
 
 
-   bit [63:0] aligned_addr;
+   bit [ADDR_WIDTH-1:0] aligned_addr;
 
   int minval;
   int maxval;

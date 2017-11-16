@@ -26,18 +26,18 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
 
   `uvm_object_utils(axi_seq)
 
-  const int axi_readback  = 1;
+  const int axi_readback  = 0;
   const int clearmemory   = 0;
-  const int postcheck     = 1;
-  const int precheck      = 1;
+  const int postcheck     = 0;
+  const int precheck      = 0;
   const int window_size   = 'h1000;
-  const int xfers_to_send = 30;
+  const int xfers_to_send = 10;
 
   const int pipelined_bursts_enabled=0;
 
 
 
-  int addr_width=0;
+//  int addr_width=0;
   int data_width=0;
   int id_width=0;
   int len_width=0;
@@ -53,15 +53,15 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
   extern task       body;
   extern function void response_handler(uvm_sequence_item response);
 
-  extern function void set_addr_width(int width=0);
+ // extern function void set_addr_width(int width=0);
   extern function void set_data_width(int width=0);
   extern function void set_id_width(int width=0);
   extern function void set_len_width(int width=0);
 
   extern function bit compare_items (int xfer_cnt);
   extern function bit check_memory(ref axi_seq_item item,
-                               input bit [63:0] lower_addr,
-                               input bit [63:0] upper_addr);
+                                   input bit [ADDR_WIDTH-1:0] lower_addr,
+                               input bit [ADDR_WIDTH-1:0] upper_addr);
 
 endclass : axi_seq
 
@@ -101,9 +101,9 @@ endfunction : new
  * We have to tell the sequence so we can randomize accordingly.
  * IE: If the addr bus width is 32, don't try to use 64 bits.
  */
-function void axi_seq::set_addr_width (int width=0);
-  this.addr_width = width;
-endfunction : set_addr_width
+//function void axi_seq::set_addr_width (int width=0);
+//  this.addr_width = width;
+//endfunction : set_addr_width
 
 /*! \brief Set Data bus width
  *
@@ -156,11 +156,11 @@ task axi_seq::body;
 
 
 
-  bit [63:0] Lower_Wrap_Boundary;
-  bit [63:0] Upper_Wrap_Boundary;
-  bit [63:0] iaddr;
-  bit [63:0] addr_lo;
-  bit [63:0] addr_hi;
+  bit [ADDR_WIDTH-1:0] Lower_Wrap_Boundary;
+  bit [ADDR_WIDTH-1:0] Upper_Wrap_Boundary;
+  bit [ADDR_WIDTH-1:0] iaddr;
+  bit [ADDR_WIDTH-1:0] addr_lo;
+  bit [ADDR_WIDTH-1:0] addr_hi;
 
   int idatacntr;
   int miscompare_cntr;
@@ -170,7 +170,7 @@ task axi_seq::body;
   string msg_s;
   string localbuffer_s;
   int rollover_cnt;
-  bit [7:0] xid;
+  bit [ID_WIDTH-1:0] xid;
 
   bit [7:0] expected_data_array [];
 
@@ -193,12 +193,12 @@ task axi_seq::body;
 
   // If addr_width==0, then the setter hasn't been called. Try to fetch from
   // config db.
-  if (addr_width == 0) begin
-    if (!uvm_config_db #(int)::get(null, "", "AXI_ADDR_WIDTH", addr_width)) begin
-        `uvm_fatal(this.get_type_name,
-                   "Unable to fetch AXI_ADDR_WIDTH from config db. Using defaults")
-     end
-  end
+//  if (addr_width == 0) begin
+//    if (!uvm_config_db #(int)::get(null, "", "AXI_ADDR_WIDTH", addr_width)) begin
+//        `uvm_fatal(this.get_type_name,
+//                   "Unable to fetch AXI_ADDR_WIDTH from config db. Using defaults")
+//     end
+//  end
 
   // If data_width==0, then the setter hasn't been called. Try to fetch from
   // config db.
@@ -259,7 +259,7 @@ task axi_seq::body;
     // Riviera Pro works better like this.
     addr_lo=xfer_cnt*window_size;
     addr_hi=addr_lo+'h100;
-    xid =xfer_cnt & 8'hFF;
+    xid =xfer_cnt[ID_WIDTH-1:0];
     start_item(write_item[xfer_cnt]);
 
     `uvm_info(this.get_type_name(),
@@ -284,11 +284,17 @@ task axi_seq::body;
 //       Protocol: e_AXI3 Cmd: e_WRITE    Addr = 0xe  ID = 0x1  Len = 0x14 (20)  BurstSize = 0x1  BurstType = 0x1
  //     protocol == e_AXI3;
 //     addr == 'he;
-      len < 'h14;
+    //  len > 'h10;
+    //  len < 'h14;
      // burst_size == 'h1;
-     // burst_type == 'h1;
+    //  burst_type == e_INCR;
+    //  burst_size == e_1BYTE;
+      //protocol inside { axi_uvm_pkg::e_AXI4};
+
+      //problem with len
 
     })
+
     `uvm_info("DATA", $sformatf("\n\n\nItem %0d:  %s", xfer_cnt, write_item[xfer_cnt].convert2string()), UVM_INFO)
     finish_item(write_item[xfer_cnt]);
 
@@ -364,25 +370,25 @@ endtask : body
 
 function automatic bit axi_seq::check_memory(
                 ref axi_seq_item item,
-                input bit [63:0] lower_addr,
-                input bit [63:0] upper_addr);
+                input bit [ADDR_WIDTH-1:0] lower_addr,
+                input bit [ADDR_WIDTH-1:0] upper_addr);
 
 
   int max_beat_cnt;
   int dtsize;
 
-  bit [63:0] Lower_Wrap_Boundary;
-  bit [63:0] Upper_Wrap_Boundary;
-  bit [63:0] iaddr;
+  bit [ADDR_WIDTH-1:0] Lower_Wrap_Boundary;
+  bit [ADDR_WIDTH-1:0] Upper_Wrap_Boundary;
+  bit [ADDR_WIDTH-1:0] iaddr;
 
-  bit [63:0]  pre_check_start_addr;
-  bit [63:0]  pre_check_stop_addr;
+  bit [ADDR_WIDTH-1:0]  pre_check_start_addr;
+  bit [ADDR_WIDTH-1:0]  pre_check_stop_addr;
 
-  bit [63:0]  check_start_addr;
-  bit [63:0]  check_stop_addr;
+  bit [ADDR_WIDTH-1:0]  check_start_addr;
+  bit [ADDR_WIDTH-1:0]  check_stop_addr;
 
-  bit [63:0]  post_check_start_addr;
-  bit [63:0]  post_check_stop_addr;
+  bit [ADDR_WIDTH-1:0]  post_check_start_addr;
+  bit [ADDR_WIDTH-1:0]  post_check_stop_addr;
 
 
  //  string write_item_s;

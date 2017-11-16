@@ -40,7 +40,7 @@ import axi_pkg::*;
  * - AXI4 has no WID
  * - if burst_type=e_INCR, then AxLEN can be to 256[2**8], instead of just 16 [2**4]
 */
-typedef enum bit {e_AXI3, e_AXI4} axi_protocol_version_t;
+typedef enum bit {e_AXI3=0, e_AXI4=1} axi_protocol_version_t;
 
 /*! \typedef cmd_t */
 /** \brief Command type - what is the purpose of this packet?

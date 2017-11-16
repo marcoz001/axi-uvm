@@ -134,7 +134,7 @@ task axi_driver::write_address;
   axi_seq_item item=null;
   axi_seq_item_aw_vector_s v;
 
-   bit [63:0] aligned_addr;
+  bit [ADDR_WIDTH-1:0] aligned_addr;
 
   bit [7:0] wdata [];
   bit wstrb [];
@@ -428,7 +428,7 @@ task axi_driver::read_address;
   axi_seq_item item=null;
   axi_seq_item_ar_vector_s v;
 
-   bit [63:0] aligned_addr;
+   bit [ADDR_WIDTH-1:0] aligned_addr;
 
   // bit [7:0] wdata [];
   // bit wstrb [];
@@ -521,7 +521,7 @@ task axi_driver::read_data;
    axi_seq_item_r_vector_s  r_q[$];
    axi_seq_item   item=null;
    axi_seq_item cloned_item=null;
-   bit [63:0] read_addr;
+   bit [ADDR_WIDTH-1:0] read_addr;
    int beat_cntr=0;
    int beat_cntr_max=0;
    int Lower_Byte_Lane;

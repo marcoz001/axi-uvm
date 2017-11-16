@@ -35,15 +35,15 @@
 class axi_seq_item extends uvm_sequence_item;
   `uvm_object_utils(axi_seq_item)
 
-  localparam ADDR_WIDTH = 32;
-  localparam ID_WIDTH = 7;
+  //localparam ADDR_WIDTH = 32;
+  //localparam ID_WIDTH = 7;
 
     //widths are top-level parameters. but we're setting to max here.
     // A recommendation from veloce docs
     rand axi_protocol_version_t                   protocol; // AXI3 or AXI4
     rand bit                    [ADDR_WIDTH-1:0]  addr;
     rand bit                    [7:0]             data  [];
-    rand longint                                      len      =0;
+    rand int                              len;//      =0;
 
     rand bit                    [ID_WIDTH-1:0]    id;
     rand logic                  [2:0]             burst_size; // Burst size
@@ -86,12 +86,14 @@ class axi_seq_item extends uvm_sequence_item;
 
 
 
-  const int c_AXI3_MAXBEATCNT=16;
-  const int c_AXI4_MAXBEATCNT=256;
+  const shortint c_AXI3_MAXBEATCNT=16;
+  const shortint c_AXI4_MAXBEATCNT=256;
 
 
 
-  constraint protocol_c   { solve protocol   before addr; }
+  constraint protocol_c   { solve protocol   before len; }
+//                            protocol inside { axi_uvm_pkg::e_AXI4, axi_uvm_pkg::e_AXI4};}
+  //
   constraint burst_type_c { solve burst_type before addr;
                             burst_type != axi_pkg::e_RESERVED; }
 
@@ -135,13 +137,8 @@ class axi_seq_item extends uvm_sequence_item;
   constraint burst_size_c {solve burst_size before len; }
 
   constraint max_len {len > 0;
-                      len < 10000;
-                      // if      (cmd == axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN)
-                         // len == 1;
-                      // else if (cmd == axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN)
-                         // len == 1;
-                      // else if (cmd == axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN)
-                         // len == 1;
+                      //len < 10000;
+
                       if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_1BYTE)) {
                         len <= (1*c_AXI3_MAXBEATCNT);
                       } else if ((burst_type == axi_pkg::e_FIXED) && (burst_size == axi_pkg::e_2BYTES)) {
@@ -191,8 +188,8 @@ class axi_seq_item extends uvm_sequence_item;
                         len inside {[129:256], [385:512], [897:1024], [1921:2048]};
 
 
-                      else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_1BYTE))
-                        len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT);
+                     // else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_1BYTE))
+                      //  len <= c_AXI4_MAXBEATCNT;
                       else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_2BYTES))
                         len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT) - byte'(addr[0]);
                       else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_4BYTES))
@@ -208,8 +205,8 @@ class axi_seq_item extends uvm_sequence_item;
                       else if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_128BYTES))
                         len <= ((2**byte'(burst_size)) * c_AXI4_MAXBEATCNT) - byte'(addr[6:0]);
 
-                      else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_1BYTE))
-                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT);
+                    //  else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_1BYTE))
+                    //    len <= c_AXI3_MAXBEATCNT;
                       else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_2BYTES))
                         len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[0]);
                       else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_4BYTES))
@@ -218,36 +215,33 @@ class axi_seq_item extends uvm_sequence_item;
                         len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[2:0]);
 
                       else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_16BYTES))
-                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[3:0]);  //((2**burst_size) * c_AXI3_MAXBEATCNT) - int'(addr[3:0]);
+                        len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[3:0]);
                       else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_32BYTES))
                         len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[4:0]);
                       else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_64BYTES))
                         len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[5:0]);
                       else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_128BYTES))
                         len <= ((2**byte'(burst_size)) * c_AXI3_MAXBEATCNT) - byte'(addr[6:0]);
-
-
-//                      if ((protocol == axi_uvm_pkg::e_AXI4) && (burst_type == axi_pkg::e_INCR))
-//                        (addr-int'(addr/(2**burst_size))*(2**burst_size));
-                      //else if ((protocol == axi_uvm_pkg::e_AXI3) && (burst_type == axi_pkg::e_INCR))
-                        //len < ((2**burst_size) * c_AXI3_MAXBEATCNT)-
-                        //(addr-int'(addr/(2**burst_size))*(2**burst_size));
-                        // 16 for everything except AXI4 incr.
-                        //@Todo: take into account non-aligned addr
-                      else
-                        len == 666;
-
+                      // some weird problem with Riviera Pro that won't access those above. so I put them here
+                      else if ((burst_type == axi_pkg::e_INCR) && (burst_size == axi_pkg::e_1BYTE)) {
+                        if (protocol == axi_uvm_pkg::e_AXI4) {
+                          len <= c_AXI4_MAXBEATCNT;
+                        } else {
+                         len <= c_AXI4_MAXBEATCNT ;
+                        }
+                          } else {
+                         len == 0;
                        }
-
-
+                          }
 
     constraint valid_c { solve len before valid;
-                        valid.size() == len*1; }
+                        valid.size() == len; }
     constraint data_c {  solve len before data;
                          data.size() == len; }
     constraint wstrb_c { solve len before wstrb;
                          wstrb.size() == len; }
-    //constraint wlast_c { solve len before wlast;
+
+  //constraint wlast_c { solve len before wlast;
     //                    wlast.size() == len/4;
     //                   } //only the last bit is set, do that in post-randomize
 
@@ -300,7 +294,7 @@ function string axi_seq_item::convert2string;
     int j=0;
     sdata="";
     $sformat(s, "%s", super.convert2string());
-    $sformat(s, "%s Protocol: %s", s, protocol.name());
+  $sformat(s, "%s Protocol: %s", s, protocol.name);
     $sformat(s, "%s Cmd: %s   ", s, cmd.name);
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
     $sformat(s, "%s ID = 0x%0x ",   s, id);
