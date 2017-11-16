@@ -26,10 +26,10 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
 
   `uvm_object_utils(axi_seq)
 
-  const int axi_readback  = 0;
-  const int clearmemory   = 0;
-  const int postcheck     = 0;
-  const int precheck      = 0;
+  const int axi_readback  = 1;
+  const int clearmemory   = 1;
+  const int postcheck     = 1;
+  const int precheck      = 1;
   const int window_size   = 'h1000;
   const int xfers_to_send = 10;
 
@@ -48,6 +48,10 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
   axi_seq_item write_item [];
   axi_seq_item read_item  [];
 
+  // all write responses have been received
+  // Reads can go ahead
+  event writes_done;
+
 
   extern function   new (string name="axi_seq");
   extern task       body;
@@ -58,7 +62,7 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
   extern function void set_id_width(int width=0);
   extern function void set_len_width(int width=0);
 
-  extern function bit compare_items (int xfer_cnt);
+  extern function bit compare_items (ref axi_seq_item write_item, ref axi_seq_item read_item);
   extern function bit check_memory(ref axi_seq_item item,
                                    input bit [ADDR_WIDTH-1:0] lower_addr,
                                input bit [ADDR_WIDTH-1:0] upper_addr);
@@ -76,14 +80,30 @@ $cast(item,response);
 
 $cast(read_item[item.id], item.clone);
 xfer_cnt=item.id;
+ if (item.cmd== e_WRITE_RESPONSE) begin
    xfers_done++;
+
+  if (xfers_done >= xfers_to_send) begin
+     `uvm_info("axi_seq::response_handler::sending event ",
+               $sformatf("xfers_done:%0d  xfers_to_send: %0d  sending event",
+                         xfers_done, xfers_to_send),
+               UVM_INFO)
+    ->writes_done;
+  end
+
+end
   `uvm_info(this.get_type_name(), $sformatf("SEQ_response_handler xfers_done=%0d.   Item: %s",xfers_done, item.convert2string()), UVM_INFO)
+
 
  if (item.cmd== e_READ_DATA) begin
 
-    `uvm_info("axi_seq::response_handler::READBACK COMPARE", $sformatf("Now comparing axi write transfer %0d with axi read transfer %0d", xfer_cnt, xfer_cnt), UVM_INFO)
-    assert (compare_items (.xfer_cnt(xfer_cnt)));
+    `uvm_info("axi_seq::response_handler::READBACK COMPARE",
+              $sformatf("Now comparing axi write transfer %0d with axi read transfer %0d", xfer_cnt, xfer_cnt),
+              UVM_INFO)
+    assert (compare_items (.write_item (write_item[xfer_cnt]),
+                           .read_item  (item)));
    end
+
 
 endfunction: response_handler
 
@@ -298,7 +318,7 @@ task axi_seq::body;
     `uvm_info("DATA", $sformatf("\n\n\nItem %0d:  %s", xfer_cnt, write_item[xfer_cnt].convert2string()), UVM_INFO)
     finish_item(write_item[xfer_cnt]);
 
-    if (pipelined_bursts_enabled != 1) begin
+    if (!pipelined_bursts_enabled) begin
        get_response(write_item[xfer_cnt]);
 
       if (!check_memory(.item       (write_item[xfer_cnt]),
@@ -310,7 +330,14 @@ task axi_seq::body;
     end
   end  //for
 
-  #2us
+  //#2us
+  // wait for all
+    if (pipelined_bursts_enabled) begin
+       `uvm_info("READBACK", "writes done. waiting for event trigger", UVM_INFO)
+       wait (writes_done.triggered);
+       `uvm_info("READBACK", "event trigger detected1111", UVM_INFO)
+
+    end
   // \todo: setup so read memm and axireadback don't commense until write
   // response is received.
   //
@@ -707,7 +734,7 @@ endfunction : check_memory
 
 
 // This functionompares thewrite-item withthe correspondingread_item
-function bit axi_seq::compare_items (int xfer_cnt);
+function bit axi_seq::compare_items (ref axi_seq_item write_item, ref axi_seq_item read_item);
 
   bit [2:0] max_burst_size;
   int yy;
@@ -726,9 +753,9 @@ function bit axi_seq::compare_items (int xfer_cnt);
   bit [7:0] expected_data_array [];
 
 
-    if (write_item[xfer_cnt].burst_type==e_FIXED) begin
+    if (write_item.burst_type==e_FIXED) begin
 
-      idatacntr=2**write_item[xfer_cnt].burst_size;
+      idatacntr=2**write_item.burst_size;
 
       // compare every nth byte with the same offset byte in last beat.
       // should look like only the last beat got sent repeatedly
@@ -736,20 +763,20 @@ function bit axi_seq::compare_items (int xfer_cnt);
       // if miscompare, print original, readback and (calculated) expected.
 
       miscompare_cntr=0;
-      expected_data_array=new[read_item[xfer_cnt].data.size()];
+      expected_data_array=new[read_item.data.size()];
 
       // brute force, not elegant at all.
       // write to local buffer, then compare that buffer (repeated) with the axi readback
 
 
       yy=0;
-      localbuffer=new[2**write_item[xfer_cnt].burst_size];
+      localbuffer=new[2**write_item.burst_size];
       for (int y=0;y<localbuffer.size();y++) begin
          localbuffer[y]='h0;
       end
-      for (int y=0;y<write_item[xfer_cnt].len;y++) begin
-        localbuffer[yy++]=write_item[xfer_cnt].data[y];
-        if (yy >= 2**write_item[xfer_cnt].burst_size) begin
+      for (int y=0;y<write_item.len;y++) begin
+        localbuffer[yy++]=write_item.data[y];
+        if (yy >= 2**write_item.burst_size) begin
           yy=0;
         end
       end
@@ -762,9 +789,9 @@ function bit axi_seq::compare_items (int xfer_cnt);
         end
       end
 
-      for (int y=0;y<read_item[xfer_cnt].data.size();y++) begin
+      for (int y=0;y<read_item.data.size();y++) begin
          expected_data = expected_data_array[y];
-         read_data     = read_item[xfer_cnt].data[y];
+         read_data     = read_item.data[y];
          if (expected_data!=read_data) begin
             miscompare_cntr++;
          end
@@ -776,12 +803,12 @@ function bit axi_seq::compare_items (int xfer_cnt);
         expected_data_s="";
         localbuffer_s="";
 
-       for (int z=0;z<write_item[xfer_cnt].data.size();z++) begin
-          $sformat(write_item_s, "%s 0x%2x", write_item_s, write_item[xfer_cnt].data[z]);
+       for (int z=0;z<write_item.data.size();z++) begin
+          $sformat(write_item_s, "%s 0x%2x", write_item_s, write_item.data[z]);
         end
 
-        for (int z=0;z<read_item[xfer_cnt].data.size();z++) begin
-          $sformat(read_item_s, "%s 0x%2x", read_item_s, read_item[xfer_cnt].data[z]);
+        for (int z=0;z<read_item.data.size();z++) begin
+          $sformat(read_item_s, "%s 0x%2x", read_item_s, read_item.data[z]);
         end
 
         for (int z=0;z<expected_data_array.size();z++) begin
@@ -799,10 +826,10 @@ function bit axi_seq::compare_items (int xfer_cnt);
 
       ///   ........................
 
-    end else if (write_item[xfer_cnt].burst_type==e_INCR || write_item[xfer_cnt].burst_type==e_WRAP) begin
-      for (int z=0;z<write_item[xfer_cnt].len;z++) begin
-         read_data=read_item[xfer_cnt].data[z];
-         expected_data=write_item[xfer_cnt].data[z];
+    end else if (write_item.burst_type==e_INCR || write_item.burst_type==e_WRAP) begin
+      for (int z=0;z<write_item.len;z++) begin
+         read_data=read_item.data[z];
+         expected_data=write_item.data[z];
          assert(expected_data==read_data) else begin
            miscompare_cntr++;
            `uvm_error("AXI READBACK e_INCR miscompare",
@@ -814,7 +841,7 @@ function bit axi_seq::compare_items (int xfer_cnt);
     end else begin
            miscompare_cntr++;
       `uvm_error(this.get_type_name(),
-                 $sformatf("Unsupported burst type %0d", write_item[xfer_cnt].burst_type))
+                 $sformatf("Unsupported burst type", write_item.burst_type))
 
     end
 
