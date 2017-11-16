@@ -19,6 +19,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 /*! \class axi_base_test
  * \brief base test.  AXI tests are to be extended from this test.
+ *
+ * This test creates the driver sequence and the responder sequence.
+ * Tests that extend this, can type_override to change the sequence.
+ * // \todo: what if want to restart a seq?
  */
 class axi_base_test extends uvm_test;
 
@@ -26,56 +30,52 @@ class axi_base_test extends uvm_test;
 
   axi_env m_env;
   axi_seq m_seq;
-  axi_responder_seq  m_resp_seq  ;
+  axi_responder_seq  m_resp_seq;
+
+  //memory m_memory;
 
   function new (string name="axi_base_test", uvm_component parent=null);
     super.new(name, parent);
   endfunction : new
 
   function void build_phase(uvm_phase phase);
+
+    int transactions;
+
     super.build_phase(phase);
 
     m_env = axi_env::type_id::create("m_env", this);
 
     m_seq = axi_seq::type_id::create("m_seq");
 
-
-    // m_seq.randomize() with (awready_pattern
-                                                     // bready_toggle_pattern == 32'hFFFF_FFFF;
-                                                      // rready_toggle_pattern == 32'hFFFF_FFFF;
-//
-    // assert(m_seq.randomize() with {
-                                   // bready_toggle_pattern == 32'hFFFF_FFFF;
-                                   // bready_toggle_pattern == 32'hFFFF_FFFF;
-                                   // rready_toggle_pattern == 32'hFFFF_FFFF;
-                                                     // });
+    if ($value$plusargs("transactions=%d", transactions)) begin
+    `uvm_info("plusargs", $sformatf("TRANSACTIONS: %0d", transactions), UVM_INFO)
+       m_seq.set_transaction_count(transactions);
+  end
 
 
 
-
-    //m_seq.set_data_width();
     m_resp_seq = axi_responder_seq::type_id::create("m_resp_seq");
+
+   //if (!uvm_config_db #(memory)::get(null, "", "m_memory", m_memory)) begin
+   //    `uvm_fatal(this.get_type_name,
+   //               "Unable to fetch m_memory from config db.")
+  //  end
+
+    //max_burst_size=$clog2(data_width/8);
 
   endfunction : build_phase
 
   task run_phase(uvm_phase phase);
-        phase.raise_objection(this);
-
-    //#200
+    phase.raise_objection(this);
 
     fork
        m_resp_seq.start(m_env.m_responder_seqr);
     join_none
 
-    #800
-    //fork
-
     m_seq.start(m_env.m_driver_seqr);
-    //join_none
 
-    //#1000us
-
-     phase.drop_objection(this);
+    phase.drop_objection(this);
   endtask : run_phase
 
 

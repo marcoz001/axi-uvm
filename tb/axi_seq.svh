@@ -31,9 +31,11 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
   const int postcheck     = 1;
   const int precheck      = 1;
   const int window_size   = 'h1000;
-  const int xfers_to_send = 10;
+  int xfers_to_send = 10;
 
   const int pipelined_bursts_enabled=0;
+
+  bit [2:0] max_burst_size;
 
 
 
@@ -61,6 +63,9 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
   extern function void set_data_width(int width=0);
   extern function void set_id_width(int width=0);
   extern function void set_len_width(int width=0);
+
+  extern function void set_transaction_count(int count);
+
 
   extern function bit compare_items (ref axi_seq_item write_item, ref axi_seq_item read_item);
   extern function bit check_memory(ref axi_seq_item item,
@@ -154,6 +159,17 @@ endfunction : set_id_width
 function void axi_seq::set_len_width (int width=0);
   this.len_width = width;
 endfunction : set_len_width
+
+/*! \brief How many transactions?
+ *
+ * This method sets how many transactions to send
+ * (Write Address, Write Data, Write Response) is one traction
+ * (Read Address, Read Data) is one transaction
+ */
+function void axi_seq::set_transaction_count(int count);
+  xfers_to_send = count;
+endfunction : set_transaction_count
+
 
 /*! \brief Does all the work.
  *
@@ -841,7 +857,7 @@ function bit axi_seq::compare_items (ref axi_seq_item write_item, ref axi_seq_it
     end else begin
            miscompare_cntr++;
       `uvm_error(this.get_type_name(),
-                 $sformatf("Unsupported burst type", write_item.burst_type))
+                 $sformatf("Unsupported burst type %0d", write_item.burst_type))
 
     end
 

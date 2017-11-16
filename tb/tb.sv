@@ -101,6 +101,7 @@ module tb;
   wire                            wb_ack;
   wire                            wb_stall;
   wire                            wb_err;
+  int transactions;
 
 
   /*! Driver instantiation */
@@ -220,6 +221,10 @@ end
 
 initial begin
 
+  if ($value$plusargs("transactions=%d", transactions)) begin
+    `uvm_info("plusargs", $sformatf("TRANSACTIONS: %0d", transactions), UVM_INFO)
+  end
+
   uvm_config_db #(int)::set(null, "*", "AXI_ADDR_WIDTH", C_AXI_ADDR_WIDTH);
   uvm_config_db #(int)::set(null, "*", "AXI_DATA_WIDTH", C_AXI_DATA_WIDTH);
   uvm_config_db #(int)::set(null, "*", "AXI_ID_WIDTH",   C_AXI_ID_WIDTH);
@@ -228,7 +233,9 @@ initial begin
   axi_driver_vif.use_concrete_class();
   axi_responder_vif.use_concrete_class();
 
-  run_test("axi_base_test");
+  //run_test("axi_sequential_writes_test");
+  run_test();
+
 end
 
 initial begin
