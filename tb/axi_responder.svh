@@ -113,17 +113,7 @@ task axi_responder::run_phase(uvm_phase phase);
       axi_uvm_pkg::e_READ_DATA  : begin
         readdata_mbx.put(item);
       end
-/*
-      axi_uvm_pkg::e_SETAWREADYTOGGLEPATTERN : begin
-         vif.enable_awready_toggle_pattern(.pattern(item.toggle_pattern));
-      end
-      axi_uvm_pkg::e_SETWREADYTOGGLEPATTERN : begin
-         vif.enable_wready_toggle_pattern(.pattern(item.toggle_pattern));
-      end
-      axi_uvm_pkg::e_SETARREADYTOGGLEPATTERN : begin
-         vif.enable_arready_toggle_pattern(.pattern(item.toggle_pattern));
-      end
-*/
+
    endcase
 
   end // forever
@@ -147,13 +137,6 @@ task axi_responder::write_address;
 
   forever begin
     writeaddress_mbx.get(item);
-    //`uvm_info(this.get_type_name(), "======>>>> axi_responder::write_address Getting address", UVM_HIGH)
-    //vif.read_aw(.s(s));
-    //axi_seq_item::aw_to_class(.t(item), .v(s));
-
-    //item.data=new[item.len];
-    //item.wlast=new[item.len];
-    //item.wstrb=new[item.len];
 
     writedata_mbx.put(item);
   end
@@ -189,8 +172,9 @@ task axi_responder::write_data;
               UVM_INFO)
     wlast=1'b0;
     while (wlast != 1'b1) begin
-      vif.wait_for_clks(.cnt(1));
-      vif.read_w(.s(s));
+      vif.wait_for_write_data(.s(s));
+      //vif.wait_for_clks(.cnt(1));
+//      vif.read_w(.s(s));
       wlast=s.wlast;
     end
     // \todo: Dont' rely on wlast
@@ -222,7 +206,7 @@ task axi_responder::write_response;
   int maxval;
   int wait_clks_before_next_b;
 
-  int item_needs_init=1;
+  //int item_needs_init=1;
 
   vif.set_bvalid(1'b0);
   forever begin
@@ -232,8 +216,8 @@ task axi_responder::write_response;
        `uvm_info(this.get_type_name(),
                  $sformatf("axi_responder::write_response - Waiting for data for %s",
                         item.convert2string()),
-              UVM_HIGH)
-       item_needs_init=1;
+              UVM_INFO)
+     //  item_needs_init=1;
     end
 
     vif.wait_for_clks(.cnt(1));
@@ -253,15 +237,15 @@ task axi_responder::write_response;
              //writeresponse_mbx.try_get(item);
              //if (item!=null) begin
           if (writeresponse_mbx.try_get(item)) begin
-                item_needs_init=1;
+          //      item_needs_init=1;
              end
           end
        end
 
        // Initialize values
-       if (item_needs_init==1) begin
-          item_needs_init=0;
-       end
+      // if (item_needs_init==1) begin
+      //    item_needs_init=0;
+      // end
 
         // Update values <- No need in write address (only one clk per)
 

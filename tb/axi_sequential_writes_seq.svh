@@ -17,7 +17,7 @@
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
-/*! \class axi_seq
+/*! \class axi_sequential_writes_seq
  *  \brief Writes to memory over AXI, backdoor memory readback and verify
  *
  *  miscompares are flagged.
@@ -25,15 +25,12 @@
 class axi_sequential_writes_seq extends axi_seq;
 
   `uvm_object_utils(axi_sequential_writes_seq)
-  
+
   const int clearmemory   = 1;
   const int window_size   = 'h1000;
-  //const int xfers_to_send = 1;
 
-
-  extern function   new (string name="axi_seq");
+  extern function   new (string name="axi_sequential_writes_seq");
   extern task       body;
-
 
 endclass : axi_sequential_writes_seq
 
@@ -45,7 +42,6 @@ endclass : axi_sequential_writes_seq
 function axi_sequential_writes_seq::new (string name="axi_sequential_writes_seq");
   super.new(name);
 endfunction : new
-
 
 
 /*! \brief Does all the work.
@@ -67,11 +63,6 @@ task axi_sequential_writes_seq::body;
       `uvm_fatal(this.get_type_name,
                   "Unable to fetch m_memory from config db.")
   end
-
- //   `uvm_info(this.get_type_name(),
- //             $sformatf("DATA_BUS_WIDTH:  %0d  max_burst_size: %0d",
-  //                      data_width, max_burst_size),
-   //           UVM_HIGH)
 
   // Clear memory
   // AXI write
@@ -99,22 +90,22 @@ task axi_sequential_writes_seq::body;
     addr_hi = addr_lo+'h100;
     xid     = xfer_cnt[ID_WIDTH-1:0];
     start_item(write_item);
-    
+
     `uvm_info(this.get_type_name(),
               $sformatf("item %0d id:0x%0x addr_lo: 0x%0x  addr_hi: 0x%0x",
                         xfer_cnt, xid, addr_lo,addr_hi),
-              UVM_INFO)
+              UVM_HIGH)
 
-    
+
     assert( write_item.randomize() with {
                                          cmd        == e_WRITE;
                                          burst_size <= local::max_burst_size;
                                          id         == local::xid;
                                          addr       >= local::addr_lo;
                                          addr       <  local::addr_hi;
- 
+
     })
-      
+
     `uvm_info("DATA",
               $sformatf("\n\n\nItem %0d:  %s",
                         xfer_cnt, write_item.convert2string()),
@@ -123,12 +114,12 @@ task axi_sequential_writes_seq::body;
 
 
     get_response(write_item);
-      
+
     if (!check_memory(.item       (write_item),
                       .lower_addr (xfer_cnt*window_size),
                       .upper_addr ((xfer_cnt+1)*window_size))) begin
         `uvm_info("MISCOMPARE","Miscompare error", UVM_INFO)
-    end  
+    end
 
 
   end  //for

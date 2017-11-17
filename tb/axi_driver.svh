@@ -274,10 +274,6 @@ task axi_driver::write_data;
 
       beat_cntr++;
 
-      //beat_cntr_max=item.calculate_beats(.addr(item.addr),
-      //                                  .number_bytes(2**item.burst_size),
-      //                                   .burst_length(item.len));
-
       `uvm_info("axi_driver::write_data",
                 $sformatf("beat_cntr:%0d  beat_cntr_max: %0d", beat_cntr, beat_cntr_max),
                 UVM_HIGH)
@@ -295,8 +291,7 @@ task axi_driver::write_data;
           // Check if delay wanted
           if (wait_clks_before_next_w==0) begin
              // if not, check if there's another item
-            // writedata_mbx.try_get(item);
-            //if (item != null) begin
+
             if (writedata_mbx.try_get(item)) begin
                 validcntr=0;
                 validcntr_max=item.valid.size();
@@ -400,9 +395,7 @@ task axi_driver::write_response;
     writeresponse_mbx.get(item);
 
     item.cmd = e_WRITE_RESPONSE;
-     //vif.wait_for_write_response(.s(s));
-  //  vif.wait_for_bvalid();
-    //vif.read_b(.s(s));
+    vif.wait_for_write_response(.s(s));
     item.bid   = s.bid;
     item.bresp = s.bresp;
     seq_item_port.put(item);
@@ -430,14 +423,11 @@ task axi_driver::read_address;
 
    bit [ADDR_WIDTH-1:0] aligned_addr;
 
-  // bit [7:0] wdata [];
-  // bit wstrb [];
 
   int minval;
   int maxval;
   int wait_clks_before_next_ar;
 
-  // int item_needs_init=1;
 
   vif.set_arvalid(1'b0);
 
@@ -448,7 +438,7 @@ task axi_driver::read_address;
       `uvm_info("axi_driver::read_address",
                 $sformatf("Item: %s", item.convert2string()),
                 UVM_HIGH)
-       // item_needs_init=1;
+
        axi_uvm_pkg::ar_from_class(.t(item), .v(v));
     end
 
@@ -466,10 +456,9 @@ task axi_driver::read_address;
           // Check if delay wanted
           if (wait_clks_before_next_ar==0) begin
              // if not, check if there's another item
-             //readaddress_mbx.try_get(item);
-             //if (item!=null) begin
+
             if (readaddress_mbx.try_get(item)) begin
-                // item_needs_init=1;
+
                 axi_uvm_pkg::ar_from_class(.t(item), .v(v));
              end
           end
@@ -497,7 +486,7 @@ task axi_driver::read_address;
                                                                 // // at beginning of loop
         end
     end
-    // vif.wait_for_clks(.cnt(1));
+
 
     end // forever
 endtask : read_address
@@ -528,10 +517,6 @@ task axi_driver::read_data;
    int Upper_Byte_Lane;
    int offset;
    string msg_s;
-
-   // if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
-      // return;
-   // end
 
   vif.enable_rready_toggle_pattern(.pattern(m_config.rready_toggle_pattern));
 

@@ -32,9 +32,9 @@ class axi_sequential_writes_test extends axi_base_test;
   endfunction : new
 
   function void build_phase(uvm_phase phase);
-    
-    axi_seq::type_id::set_type_override(axi_sequential_writes_seq::get_type(), 1); 
-    
+
+    axi_seq::type_id::set_type_override(axi_sequential_writes_seq::get_type(), 1);
+
     super.build_phase(phase);
 
   endfunction : build_phase

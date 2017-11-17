@@ -103,6 +103,7 @@ endfunction : connect_phase
 task axi_monitor::monitor_write_address();
    axi_seq_item             original_item;
    axi_seq_item             item;
+  axi_seq_item  cloned2_item;
     axi_seq_item item2;
    axi_seq_item_aw_vector_s aw_s;
 
@@ -118,14 +119,24 @@ task axi_monitor::monitor_write_address();
     axi_uvm_pkg::aw_to_class(.t(item), .v(aw_s));
     item.cmd         = axi_uvm_pkg::e_WRITE;
 
+
+
+    if (m_config.drv_type == e_RESPONDER) begin
+      // Sending a pkt with actual data to be put on on the read data channel.
+      // so this becomes a read data packet instead of a read (addr) packet
+      $cast(cloned2_item, item.clone());
+      //cloned2_item.cmd  = axi_uvm_pkg::e_WRITE;
+      driver_activity_ap.write(cloned2_item);
+    end
+
+
     // Queue up so write data channel monitor knows
     aw_mbx.put(item);
     ap.write(item);
     `uvm_info("WRITE_ADDRESS", $sformatf("Item; %s", item.convert2string()), UVM_HIGH)
 
-//    if (m_config.drv_type == e_RESPONDER) begin
-//       driver_activity_ap.write(item);
-//    end
+    // \todo sync up var name between methods
+
 
   end  // forever
 endtask : monitor_write_address
@@ -318,13 +329,10 @@ task axi_monitor::monitor_read_address();
   forever begin
 
     vif.wait_for_read_address(.s(ar_s));
-//    aw_q.push_back(aw_s);
+
 
     `uvm_info(this.get_type_name(), "wait_for_read_address - DONE", UVM_HIGH)
 
-    //`uvm_info("AR_TO_CLASS",
-    //          $sformatf("id:0x%0x  addr:0x%0x len:%d", ar_s.arid, ar_s.araddr, ar_s.arlen),
-    //          UVM_INFO)
 
     $cast(cloned_item, item.clone());
     axi_uvm_pkg::ar_to_class(.t(cloned_item), .v(ar_s));
@@ -358,11 +366,6 @@ task axi_monitor::monitor_read_address();
      end
 
 
-
-    //beat_cnt_max=cloned_item.calculate_beats(
-    //  .addr(cloned_item.addr),
-    //  .number_bytes(2**cloned_item.burst_size),
-    //  .burst_length(cloned_item.len));
 
     beat_cnt_max=axi_pkg::calculate_axlen(.addr         (cloned_item.addr),
                                           .burst_size   (cloned_item.burst_size),
@@ -418,39 +421,9 @@ task axi_monitor::monitor_read_address();
 
     `uvm_info("AR_TO_CLASS-poost", $sformatf("%s", cloned_item.convert2string()), UVM_HIGH)
 
-    //for (int z=0;z<cloned_item.len;z++) begin
-    //  read_addr=cloned_item.get_next_address(.beat_cnt(), .lane();
-
-    //  `uvm_info(this.get_type_name(), $sformatf("reading FROM addr: 0x%0x", read_addr), UVM_INFO)
-    //   cloned_item.data[z]=m_memory.read(read_addr);
-    //end
-    /* if (cloned_item.burst_type==e_FIXED) begin
-       //read_data=m_memory.read(ar_s.araddr);
-       for (int z=0;z<cloned_item.len;z++) begin
-         cloned_item.data[offset]=m_memory.read(ar_s.araddr); // do actual read, allow error injection in memory
-          offset++;
-      end
-
-    end else if (cloned_item.burst_type==e_INCR) begin
-       for (int z=0;z<cloned_item.len;z++) begin
-          cloned_item.data[offset]=m_memory.read(ar_s.araddr+z);
-          offset++;
-      end
-    end else begin // e_WRAP
-    end
-      */
 
 
-   // `uvm_info("AR_TO_CLASS_post", $sformatf("%s", cloned_item.convert2string()), UVM_INFO)
-   // item.initialize();
-    //$cast(item2, item.clone());
 
-    // Now send seq item containing expected read data to slave responder
-    // If you wanna test data corruption, this seq item is an easy place to do it.
-
-    ap.write(cloned_item);
-    ar_mbx.put(cloned_item);
-   // `uvm_info("MONITOR_READ_ADDRESS", $sformatf("Item; %s", cloned_item.convert2string()), UVM_HIGH)
     if (m_config.drv_type == e_RESPONDER) begin
       // Sending a pkt with actual data to be put on on the read data channel.
       // so this becomes a read data packet instead of a read (addr) packet
@@ -458,6 +431,12 @@ task axi_monitor::monitor_read_address();
       cloned2_item.cmd  = axi_uvm_pkg::e_READ_DATA;
       driver_activity_ap.write(cloned2_item);
     end
+
+    // Now send seq item containing expected read data to slave responder
+    // If you wanna test data corruption, this seq item is an easy place to do it.
+
+    ap.write(cloned_item);
+    ar_mbx.put(cloned_item);
 
   end
 
