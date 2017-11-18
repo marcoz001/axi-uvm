@@ -255,26 +255,13 @@ class axi_seq_item extends uvm_sequence_item;
     extern function void   pre_randomize;
     extern function void   post_randomize;
 
-      /*
-    // Custom functions
-    extern function bit[ADDR_WIDTH-1:0] get_next_address(input int beat_cnt,
-                                                         input int lane,
-                                                         input int data_bus_bytes);
 
-*/
     extern function void get_beat_N_data(input  int beat_cnt,
                                          input  int      data_bus_bytes,
                                          ref    bit[7:0] data[],
                                          ref    bit      wstrb[],
                                          output bit      wlast);
-  /*
-      extern function void get_beat_N_byte_lanes(input  int beat_cnt,
-                                            input  int data_bus_bytes,
-                                            output int Lower_Byte_Lane,
-                                            output int Upper_Byte_Lane,
-                                            output int offset);
 
-      */
 
 endclass : axi_seq_item
 
@@ -388,9 +375,9 @@ endfunction : do_print
 
 
 function void axi_seq_item::pre_randomize;
-  `uvm_info(this.get_type_name(), "Starting pre_randomize", UVM_INFO)
+  `uvm_info(this.get_type_name(), "Starting pre_randomize", UVM_HIGH)
 
-  `uvm_info(this.get_type_name(), "Done pre_randomize", UVM_INFO)
+  `uvm_info(this.get_type_name(), "Done pre_randomize", UVM_HIGH)
 endfunction : pre_randomize
 
 /*! \brief Tweak things after randomization
@@ -405,7 +392,7 @@ function void axi_seq_item::post_randomize;
   int valid_asserts;
   int valid_assert_bit;
 
-  `uvm_info(this.get_type_name(), "Starting post_randomize", UVM_INFO)
+  `uvm_info(this.get_type_name(), "Starting post_randomize", UVM_HIGH)
 
 
   super.post_randomize;
@@ -454,18 +441,11 @@ function void axi_seq_item::post_randomize;
         $sformat(valid_s, "%s%0b", valid_s, valid[i]);
      end
 
-
-
-//  valid[0] = 1'b1;
-//  valid[1] = 1'b1;
-//  valid[2] = 1'b0;
-
-
      data[len-1] = 'hFE; // specific value to eaily identify last byte
   end // if (cmd == e_WRITE)
 
 
-  `uvm_info(this.get_type_name(), "Done post_randomize", UVM_INFO)
+  `uvm_info(this.get_type_name(), "Done post_randomize", UVM_HIGH)
   //assert(valid.randomize()) else begin
   //  `uvm_error(this.get_type_name, "Unable to randomize valid");
   //end

@@ -27,29 +27,23 @@ class axi_responder extends uvm_driver #(axi_seq_item);
   axi_agent_config    m_config;
   memory              m_memory;
 
-  mailbox #(axi_seq_item) readaddress_mbx  = new(0);
-  mailbox #(axi_seq_item) readdata_mbx     = new(0);
-
-  // probably unnecessary but
-  // having different variables
-  // makes it easier for me to follow (less confusing)
   mailbox #(axi_seq_item) writeaddress_mbx  = new(0);  //unbounded mailboxes
   mailbox #(axi_seq_item) writedata_mbx     = new(0);
   mailbox #(axi_seq_item) writeresponse_mbx = new(0);
+  mailbox #(axi_seq_item) readaddress_mbx   = new(0);
+  mailbox #(axi_seq_item) readdata_mbx      = new(0);
 
+  extern function      new (string name="axi_responder", uvm_component parent=null);
 
-  extern function new (string name="axi_responder", uvm_component parent=null);
+  extern function void build_phase     (uvm_phase phase);
+  extern function void connect_phase   (uvm_phase phase);
+  extern task          run_phase       (uvm_phase phase);
 
-  extern function void build_phase              (uvm_phase phase);
-  extern function void connect_phase            (uvm_phase phase);
-  extern task          run_phase                (uvm_phase phase);
-
-  extern task          write_address;
-  extern task          write_data;
-  extern task          write_response;
-
-  extern task          read_address;
-  extern task          read_data;
+  extern task          write_address   ();
+  extern task          write_data      ();
+  extern task          write_response  ();
+  extern task          read_address    ();
+  extern task          read_data       ();
 
 endclass : axi_responder
 
@@ -69,7 +63,8 @@ endfunction : build_phase
 
 /*! \brief
  *
- * Nothing to connect so doesn't actually do anything except call parent connect phase */
+ * Nothing to connect so doesn't actually do anything except call parent connect phase
+ */
 function void axi_responder::connect_phase (uvm_phase phase);
   super.connect_phase(phase);
 endfunction : connect_phase
@@ -173,8 +168,6 @@ task axi_responder::write_data;
     wlast=1'b0;
     while (wlast != 1'b1) begin
       vif.wait_for_write_data(.s(s));
-      //vif.wait_for_clks(.cnt(1));
-//      vif.read_w(.s(s));
       wlast=s.wlast;
     end
     // \todo: Dont' rely on wlast
@@ -206,8 +199,6 @@ task axi_responder::write_response;
   int maxval;
   int wait_clks_before_next_b;
 
-  //int item_needs_init=1;
-
   vif.set_bvalid(1'b0);
   forever begin
 
@@ -217,14 +208,13 @@ task axi_responder::write_response;
                  $sformatf("axi_responder::write_response - Waiting for data for %s",
                         item.convert2string()),
               UVM_INFO)
-     //  item_needs_init=1;
     end
 
     vif.wait_for_clks(.cnt(1));
 
       // if done with this xfer (write address is only one clock, done with valid & ready
       if (vif.get_bready_bvalid == 1'b1) begin
-      //    driver_writedata_mbx.put(item);
+
           item=null;
 
           minval=m_config.min_clks_between_b_transfers;
@@ -234,18 +224,14 @@ task axi_responder::write_response;
           // Check if delay wanted
         if (wait_clks_before_next_b==0) begin
              // if not, check if there's another item
-             //writeresponse_mbx.try_get(item);
-             //if (item!=null) begin
-          if (writeresponse_mbx.try_get(item)) begin
-          //      item_needs_init=1;
-             end
+
+           if (writeresponse_mbx.try_get(item)) begin
+
+           end
           end
        end
 
        // Initialize values
-      // if (item_needs_init==1) begin
-      //    item_needs_init=0;
-      // end
 
         // Update values <- No need in write address (only one clk per)
 
@@ -348,7 +334,7 @@ task axi_responder::read_data;
 
 
       if (beat_cntr >= beat_cntr_max) begin
-          //writeresponse_mbx.put(item);
+
         item = null;
 
 
@@ -359,8 +345,7 @@ task axi_responder::read_data;
           // Check if delay wanted
         if (wait_clks_before_next_r==0) begin
              // if not, check if there's another item
-            // readdata_mbx.try_get(item);
-            //if (item != null) begin
+
           if (readdata_mbx.try_get(item)) begin
                 beat_cntr=0;
                 beat_cntr_max=axi_pkg::calculate_axlen(.addr(item.addr),

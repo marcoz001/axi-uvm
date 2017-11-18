@@ -246,6 +246,7 @@ endfunction : ar_to_class
 `include "axi_seq.svh"
 `include "axi_responder_seq.svh"
 `include "axi_sequential_writes_seq.svh"
+`include "axi_pipelined_writes_seq.svh"
 
 `include "axi_driver.svh"
 `include "axi_responder.svh"
@@ -261,5 +262,6 @@ endfunction : ar_to_class
 
 `include "axi_base_test.svh"
 `include "axi_sequential_writes_test.svh"
+`include "axi_pipelined_writes_test.svh"
 
 endpackage : axi_uvm_pkg

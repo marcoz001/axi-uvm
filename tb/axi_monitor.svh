@@ -34,35 +34,27 @@ class axi_monitor extends uvm_monitor;
   `uvm_component_utils(axi_monitor)
 
   uvm_analysis_port #(axi_seq_item) ap;
-
   uvm_analysis_port #(axi_seq_item) driver_activity_ap; // detect driver activity
 
-  // will move this out of monitor but for now it's quick and easy experimentation
-  axi_seq_item_w_vector_s  w_q[$];
-  axi_seq_item_r_vector_s  r_q[$];
-  //axi_seq_item_aw_vector_s aw_q[$];
-  //axi_seq_item_b_vector_s  b_q[$];
-  //axi_seq_item   aw_mbx;
-  mailbox #(axi_seq_item) aw_mbx  = new(0);
-  mailbox #(axi_seq_item) ar_mbx  = new(0);
-  // used to kick off slave seq
   axi_if_abstract     vif;
   axi_agent_config    m_config;
   memory              m_memory;
 
+  mailbox #(axi_seq_item) writedata_mbx  = new(0);
+  mailbox #(axi_seq_item) readdata_mbx   = new(0);
+
+
   extern function new (string name="axi_monitor", uvm_component parent=null);
 
-  extern function void build_phase              (uvm_phase phase);
-  extern function void connect_phase            (uvm_phase phase);
-  extern task          run_phase                (uvm_phase phase);
+  extern function void build_phase     (uvm_phase phase);
+  extern function void connect_phase   (uvm_phase phase);
+  extern task          run_phase       (uvm_phase phase);
 
-
-  extern task monitor_write_address();
-  extern task monitor_write_data();
-  extern task monitor_write_response();
-
-  extern task monitor_read_address();
-  extern task monitor_read_data();
+  extern task          write_address   ();
+  extern task          write_data      ();
+  extern task          write_response  ();
+  extern task          read_address    ();
+  extern task          read_data       ();
 
 endclass : axi_monitor
 
@@ -71,14 +63,14 @@ function axi_monitor::new (string name="axi_monitor", uvm_component parent=null)
   super.new(name, parent);
 endfunction : new
 
+/*! \brief Creates the analysis port and virtual interface
+ *
+ */
 function void axi_monitor::build_phase (uvm_phase phase);
   super.build_phase(phase);
-  //aw_mbx=new();
 
   ap=new("ap", this);
-  //if (m_config.drv_type == e_RESPONDER) begin
-     driver_activity_ap=new("driver_activity_ap", this);
-  //end
+  driver_activity_ap=new("driver_activity_ap", this);
 
   vif=axi_if_abstract::type_id::create("vif", this);
 
@@ -87,6 +79,19 @@ endfunction : build_phase
 function void axi_monitor::connect_phase (uvm_phase phase);
   super.connect_phase(phase);
 endfunction : connect_phase
+
+
+/*! \brief Starts the monitoring threads */
+task axi_monitor::run_phase(uvm_phase phase);
+  fork
+    write_address();
+    write_data();
+    write_response();
+    read_address();
+    read_data();
+
+  join
+endtask : run_phase
 
 
 /*! \brief monitors Write Address channel
@@ -100,7 +105,7 @@ endfunction : connect_phase
  *    Send out analysis port
  *    Add to Write Data Channel monitoring thread's queue
 */
-task axi_monitor::monitor_write_address();
+task axi_monitor::write_address();
    axi_seq_item             original_item;
    axi_seq_item             item;
   axi_seq_item  cloned2_item;
@@ -131,7 +136,7 @@ task axi_monitor::monitor_write_address();
 
 
     // Queue up so write data channel monitor knows
-    aw_mbx.put(item);
+    writedata_mbx.put(item);
     ap.write(item);
     `uvm_info("WRITE_ADDRESS", $sformatf("Item; %s", item.convert2string()), UVM_HIGH)
 
@@ -139,7 +144,7 @@ task axi_monitor::monitor_write_address();
 
 
   end  // forever
-endtask : monitor_write_address
+endtask : write_address
 
 
 /*! \brief monitors Write Data channel
@@ -153,7 +158,7 @@ endtask : monitor_write_address
  *    - write to m_memory (likely the agent's local memory memory instantiation
  *    Once number of expected beats is received (matches awlen), then send out analysis port
 */
-task axi_monitor::monitor_write_data();
+task axi_monitor::write_data();
   axi_seq_item_w_vector_s  w_s;
   axi_seq_item   item=null;
   axi_seq_item cloned_item=null;
@@ -163,6 +168,7 @@ task axi_monitor::monitor_write_data();
   int Upper_Byte_Lane;
   int offset;
   string msg_s;
+    axi_seq_item_w_vector_s  w_q[$];
 
   if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
     return;
@@ -183,8 +189,8 @@ task axi_monitor::monitor_write_data();
     w_q.push_back(w_s);
 
     if (item == null) begin
-      if (aw_mbx.num() > 0) begin
-        aw_mbx.get(item);
+      if (writedata_mbx.num() > 0) begin
+        writedata_mbx.get(item);
         $cast(cloned_item, item.clone());
         cloned_item.cmd=e_WRITE_DATA;
         cloned_item.wstrb = new[cloned_item.len];
@@ -217,13 +223,13 @@ task axi_monitor::monitor_write_data();
       $sformat(msg_s, "%s Upper_Byte_Lane:%0d", msg_s, Upper_Byte_Lane);
       $sformat(msg_s, "%s offset:%0d",          msg_s, offset);
 
-      `uvm_info("MONITOR::monitor_write_data", msg_s, UVM_HIGH)
+      `uvm_info("MONITOR::write_data", msg_s, UVM_HIGH)
 
       msg_s="wstrb: ";
       for (int x=(vif.get_data_bus_width()/8)-1;x>=0;x--) begin
         $sformat(msg_s, "%s%0b", msg_s, w_s.wstrb[x]);
       end
-      `uvm_info("MONITOR::monitor_write_data", msg_s, UVM_HIGH)
+      `uvm_info("MONITOR::write_data", msg_s, UVM_HIGH)
 
       for (int x=Lower_Byte_Lane;x<=Upper_Byte_Lane;x++) begin
         // use get_next_address() to keep addresslogicall nice and in oneplace.
@@ -258,7 +264,7 @@ task axi_monitor::monitor_write_data();
     end // while
     end// if
   end  // forever
-endtask : monitor_write_data
+endtask : write_data
 
 /*! \brief monitors Write Response channel and sends out TLM pkt
  * Loop
@@ -266,7 +272,7 @@ endtask : monitor_write_data
  *    Convert into an axi_seq_item
  *    Send out analysis port
 */
-task axi_monitor::monitor_write_response();
+task axi_monitor::write_response();
 
   axi_seq_item_b_vector_s  b_s;
   axi_seq_item item;
@@ -284,7 +290,7 @@ task axi_monitor::monitor_write_response();
 
   end  //forever
 
-endtask : monitor_write_response
+endtask : write_response
 
 /*! \brief monitors Read Address channel
  *
@@ -299,7 +305,7 @@ endtask : monitor_write_response
  *    If responder, read from agent's memory, create another TLM packet
  *            and send to Read Data channel to send back to master
 */
-task axi_monitor::monitor_read_address();
+task axi_monitor::read_address();
   axi_seq_item_ar_vector_s ar_s;
   axi_seq_item             item;
   axi_seq_item             cloned_item;
@@ -392,7 +398,7 @@ task axi_monitor::monitor_read_address();
       $sformat(msg_s, "%s offset:%0d",          msg_s, offset);
 
 
-      `uvm_info("axi_monitor::monitor_read_address", msg_s, UVM_HIGH)
+      `uvm_info("axi_monitor::read_address", msg_s, UVM_HIGH)
 
 
       for (int x=Lower_Byte_Lane;x<=Upper_Byte_Lane;x++) begin
@@ -436,12 +442,12 @@ task axi_monitor::monitor_read_address();
     // If you wanna test data corruption, this seq item is an easy place to do it.
 
     ap.write(cloned_item);
-    ar_mbx.put(cloned_item);
+    readdata_mbx.put(cloned_item);
 
   end
 
 
-endtask : monitor_read_address
+endtask : read_address
 
 /*! \brief monitors Read Data channel and sends out TLM pkt
  * Loop
@@ -449,7 +455,7 @@ endtask : monitor_read_address
  *    Once read address packet received, store queue contents into tlm pkt
  *    When rlast received, send out analysis port
 */
-task axi_monitor::monitor_read_data();
+task axi_monitor::read_data();
 
     axi_seq_item_r_vector_s r_s;
   axi_seq_item             item=null;
@@ -460,6 +466,7 @@ task axi_monitor::monitor_read_data();
   int Upper_Byte_Lane;
   int offset;
   string msg_s;
+    axi_seq_item_r_vector_s  r_q[$];
 
     //if (m_config.drv_type != axi_uvm_pkg::e_RESPONDER) begin
     // return;
@@ -479,8 +486,8 @@ task axi_monitor::monitor_read_data();
      r_q.push_back(r_s);
 
      if (item == null) begin
-        if (ar_mbx.num() > 0) begin
-           ar_mbx.get(item);
+        if (readdata_mbx.num() > 0) begin
+           readdata_mbx.get(item);
            $cast(cloned_item, item.clone());
            cloned_item.cmd=e_READ_DATA;
          //  cloned_item.initialize();
@@ -493,10 +500,7 @@ task axi_monitor::monitor_read_data();
      while (r_q.size() > 0) begin
 
         r_s=r_q.pop_front();
-     //   for (int i=cloned_item.Lower_Byte_Lane;i<=cloned_item.Upper_Byte_Lane;i++) begin
-     //     cloned_item.data[cloned_item.dataoffset++]=r_s.rdata[i*8+:8];
-     //   end
-  //      cloned_item.update_address();
+
         if (r_s.rlast == 1'b1) begin // @Todo: count, dont rely on wlast?
            ap.write(cloned_item);
            cloned_item=null;
@@ -507,17 +511,5 @@ task axi_monitor::monitor_read_data();
   end  // forever
 
 
-endtask : monitor_read_data
+endtask : read_data
 
-/*! \brief Starts the monitoring threads */
-task axi_monitor::run_phase(uvm_phase phase);
-  fork
-    monitor_write_address();
-    monitor_write_data();
-    monitor_write_response();
-
-    monitor_read_address();
-    monitor_read_data();
-
-  join
-endtask : run_phase

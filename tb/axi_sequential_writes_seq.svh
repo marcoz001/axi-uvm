@@ -103,8 +103,7 @@ task axi_sequential_writes_seq::body;
                                          id         == local::xid;
                                          addr       >= local::addr_lo;
                                          addr       <  local::addr_hi;
-
-    })
+                                        })
 
     `uvm_info("DATA",
               $sformatf("\n\n\nItem %0d:  %s",

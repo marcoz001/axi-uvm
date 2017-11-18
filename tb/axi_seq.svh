@@ -40,9 +40,9 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
 
 
 //  int addr_width=0;
-  int data_width=0;
-  int id_width=0;
-  int len_width=0;
+ // int data_width=0;
+ // int id_width=0;
+ // int len_width=0;
   int xfers_done=0;
 
   memory m_memory;
@@ -60,9 +60,9 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
   extern function void response_handler(uvm_sequence_item response);
 
  // extern function void set_addr_width(int width=0);
-  extern function void set_data_width(int width=0);
-  extern function void set_id_width(int width=0);
-  extern function void set_len_width(int width=0);
+ // extern function void set_data_width(int width=0);
+ // extern function void set_id_width(int width=0);
+//  extern function void set_len_width(int width=0);
 
   extern function void set_transaction_count(int count);
 
@@ -136,18 +136,18 @@ endfunction : new
  * We have to tell the sequence so we can randomize accordingly.
  * IE: If the data bus width is 32, don't send a burst_size=64bits.
  */
-function void axi_seq::set_data_width (int width=0);
-  this.data_width = width;
-endfunction : set_data_width
+//function void axi_seq::set_data_width (int width=0);
+//  this.data_width = width;
+//endfunction : set_data_width
 
 /*! \brief Set ID vector width
  *
  * AXI supports  ID widths, parameterized at runtime.
  * We have to tell the sequence so we can randomize accordingly.
  */
-function void axi_seq::set_id_width (int width=0);
-  this.id_width = width;
-endfunction : set_id_width
+//function void axi_seq::set_id_width (int width=0);
+ // this.id_width = width;
+//endfunction : set_id_width
 
 /*! \brief Set length vector width
  *
@@ -156,9 +156,9 @@ endfunction : set_id_width
  * We have to tell the sequence so we can randomize accordingly.
  *
  */
-function void axi_seq::set_len_width (int width=0);
-  this.len_width = width;
-endfunction : set_len_width
+//function void axi_seq::set_len_width (int width=0);
+ // this.len_width = width;
+//endfunction : set_len_width
 
 /*! \brief How many transactions?
  *
@@ -238,6 +238,7 @@ task axi_seq::body;
 
   // If data_width==0, then the setter hasn't been called. Try to fetch from
   // config db.
+  /*
   if (data_width == 0) begin
      if (!uvm_config_db #(int)::get(null, "", "AXI_DATA_WIDTH", data_width)) begin
         `uvm_fatal(this.get_type_name,
@@ -262,13 +263,13 @@ task axi_seq::body;
                    "Unable to fetch AXI_LEN_WIDTH from config db. Using defaults")
      end
   end
+  */
+   //   max_burst_size=$clog2(data_width/8);
 
-      max_burst_size=$clog2(data_width/8);
-
-    `uvm_info(this.get_type_name(),
-              $sformatf("DATA_BUS_WIDTH:  %0d  max_burst_size: %0d",
-                        data_width, max_burst_size),
-              UVM_HIGH)
+   // `uvm_info(this.get_type_name(),
+   //           $sformatf("DATA_BUS_WIDTH:  %0d  max_burst_size: %0d",
+   //                     data_width, max_burst_size),
+   //           UVM_HIGH)
 
   // Clear memory
   // AXI write

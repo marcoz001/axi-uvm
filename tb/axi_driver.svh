@@ -23,29 +23,27 @@
 class axi_driver extends uvm_driver #(axi_seq_item);
   `uvm_component_utils(axi_driver)
 
-  axi_if_abstract vif;
+  axi_if_abstract     vif;
   axi_agent_config    m_config;
   memory              m_memory;
 
   mailbox #(axi_seq_item) writeaddress_mbx  = new(0);  //unbounded mailboxes
   mailbox #(axi_seq_item) writedata_mbx     = new(0);
   mailbox #(axi_seq_item) writeresponse_mbx = new(0);
-
-  mailbox #(axi_seq_item) readaddress_mbx  = new(0);
-  mailbox #(axi_seq_item) readdata_mbx     = new(0);
+  mailbox #(axi_seq_item) readaddress_mbx   = new(0);
+  mailbox #(axi_seq_item) readdata_mbx      = new(0);
 
   extern function new (string name="axi_driver", uvm_component parent=null);
 
-  extern function void build_phase              (uvm_phase phase);
-  extern function void connect_phase            (uvm_phase phase);
-  extern task          run_phase                (uvm_phase phase);
+  extern function void build_phase     (uvm_phase phase);
+  extern function void connect_phase   (uvm_phase phase);
+  extern task          run_phase       (uvm_phase phase);
 
-  extern task          write_address;
-  extern task          write_data;
-  extern task          write_response;
-
-  extern task          read_address;
-  extern task          read_data;
+  extern task          write_address   ();
+  extern task          write_data      ();
+  extern task          write_response  ();
+  extern task          read_address    ();
+  extern task          read_data       ();
 
 
 endclass : axi_driver
@@ -143,7 +141,6 @@ task axi_driver::write_address;
   int maxval;
   int wait_clks_before_next_aw;
 
-  // int item_needs_init=1;
 
   vif.set_awvalid(1'b0);
 
@@ -154,7 +151,7 @@ task axi_driver::write_address;
       `uvm_info("axi_driver::write_address",
                 $sformatf("Item: %s", item.convert2string()),
                 UVM_HIGH)
-       // item_needs_init=1;
+
        axi_uvm_pkg::aw_from_class(.t(item), .v(v));
     end
 
@@ -172,10 +169,9 @@ task axi_driver::write_address;
           // Check if delay wanted
           if (wait_clks_before_next_aw==0) begin
              // if not, check if there's another item
-             //writeaddress_mbx.try_get(item);
-             //if (item!=null) begin
+
             if (writeaddress_mbx.try_get(item)) begin
-                // item_needs_init=1;
+
                 axi_uvm_pkg::aw_from_class(.t(item), .v(v));
              end
           end
@@ -267,7 +263,7 @@ task axi_driver::write_data;
 
     // Check if done with this transfer
     if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
-      //item.dataoffset = n;
+
       if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
          validcntr++;
       end

@@ -80,13 +80,13 @@ function void axi_scoreboard::write(axi_seq_item t);
        write_address_cntr++;
        `uvm_info("SCOREBOARD",
                  $sformatf("write_address_cntr=%0d", write_address_cntr),
-                 UVM_INFO)
+                 UVM_HIGH)
      end
      e_WRITE_RESPONSE : begin
        write_response_cntr++;
        `uvm_info("SCOREBOARD",
                  $sformatf("write_response_cntr=%0d", write_response_cntr),
-                 UVM_INFO)
+                 UVM_HIGH)
 
      end
 
