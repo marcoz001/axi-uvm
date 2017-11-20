@@ -54,15 +54,8 @@ class axi_base_test extends uvm_test;
   end
 
 
-
     m_resp_seq = axi_responder_seq::type_id::create("m_resp_seq");
 
-   //if (!uvm_config_db #(memory)::get(null, "", "m_memory", m_memory)) begin
-   //    `uvm_fatal(this.get_type_name,
-   //               "Unable to fetch m_memory from config db.")
-  //  end
-
-    //max_burst_size=$clog2(data_width/8);
 
   endfunction : build_phase
 

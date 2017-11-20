@@ -282,7 +282,7 @@ task axi_responder::read_data;
   axi_seq_item cloned_item;
   axi_seq_item_r_vector_s s;
 
-  bit iaxi_incompatible_rready_toggling_mode;
+  bit iaxi_incompatible_rvalid_toggling_mode;
 
   int n=0;
 
@@ -312,7 +312,7 @@ task axi_responder::read_data;
 
     // Look at this only one per loop, so there's no race condition of it
     // changing mid-loop.
-    iaxi_incompatible_rready_toggling_mode = m_config.axi_incompatible_rready_toggling_mode;
+    iaxi_incompatible_rvalid_toggling_mode = m_config.axi_incompatible_rvalid_toggling_mode;
 
     vif.wait_for_clks(.cnt(1));
 
@@ -325,11 +325,13 @@ task axi_responder::read_data;
 
     // Check if done with this transfer
     if (vif.get_rready()==1'b1 && vif.get_rvalid() == 1'b1) begin
-
+/*
       if (iaxi_incompatible_rready_toggling_mode == 1'b0) begin
-         validcntr++;
+        if (++validcntr >= validcntr_max) begin
+          validcntr=0;
+        end
       end
-
+*/
       beat_cntr++;
 
 
@@ -391,16 +393,24 @@ task axi_responder::read_data;
              // if invalid-toggling-mode is enabled, then allow deasserting valid
        // before ready asserts.
        // Default is to stay asserted, and only allow deasssertion after ready asserts.
-      if (iaxi_incompatible_rready_toggling_mode == 1'b0) begin
-         if (vif.get_rvalid() == 1'b0) begin
-             validcntr++;
-          end
-       end else begin
-             validcntr++;
-       end
+       // if invalid-toggling-mode is enabled, then allow deasserting valid
+       // before ready asserts.
+       // Default is to stay asserted, and only allow deasssertion after ready asserts.
+      if (vif.get_rready()==1'b1 && vif.get_rvalid() == 1'b1) begin
+          validcntr++;
+          `uvm_info(this.get_type_name(),
+                    $sformatf("debuga validcntr=%0d",validcntr),
+                    UVM_HIGH)
+      end else if (iaxi_incompatible_rvalid_toggling_mode == 1'b0) begin
+         validcntr++;
+         `uvm_info(this.get_type_name(),
+                   $sformatf("debugb validcntr=%0d",validcntr),
+                UVM_HIGH)
+        end
        if (validcntr >=  validcntr_max) begin
          validcntr=0;
        end
+
 
 
     end // (item != null)

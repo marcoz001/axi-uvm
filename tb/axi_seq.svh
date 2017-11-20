@@ -31,18 +31,15 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
   const int postcheck     = 1;
   const int precheck      = 1;
   const int window_size   = 'h1000;
-  int xfers_to_send = 10;
+  int xfers_to_send = 1;
+
+  bit valid [];
 
   const int pipelined_bursts_enabled=0;
 
   bit [2:0] max_burst_size;
 
 
-
-//  int addr_width=0;
- // int data_width=0;
- // int id_width=0;
- // int len_width=0;
   int xfers_done=0;
 
   memory m_memory;
@@ -59,18 +56,14 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
   extern task       body;
   extern function void response_handler(uvm_sequence_item response);
 
- // extern function void set_addr_width(int width=0);
- // extern function void set_data_width(int width=0);
- // extern function void set_id_width(int width=0);
-//  extern function void set_len_width(int width=0);
-
   extern function void set_transaction_count(int count);
+  extern function void set_valid(ref bit valid []);
 
 
   extern function bit compare_items (ref axi_seq_item write_item, ref axi_seq_item read_item);
   extern function bit check_memory(ref axi_seq_item item,
                                    input bit [ADDR_WIDTH-1:0] lower_addr,
-                               input bit [ADDR_WIDTH-1:0] upper_addr);
+                                   input bit [ADDR_WIDTH-1:0] upper_addr);
 
 endclass : axi_seq
 
@@ -120,45 +113,6 @@ function axi_seq::new (string name="axi_seq");
   super.new(name);
 endfunction : new
 
-/*! \brief Set Address bus width
- *
- * AXI supports multiple bus widths, parameterized at runtime.
- * We have to tell the sequence so we can randomize accordingly.
- * IE: If the addr bus width is 32, don't try to use 64 bits.
- */
-//function void axi_seq::set_addr_width (int width=0);
-//  this.addr_width = width;
-//endfunction : set_addr_width
-
-/*! \brief Set Data bus width
- *
- * AXI supports multiple bus widths, parameterized at runtime.
- * We have to tell the sequence so we can randomize accordingly.
- * IE: If the data bus width is 32, don't send a burst_size=64bits.
- */
-//function void axi_seq::set_data_width (int width=0);
-//  this.data_width = width;
-//endfunction : set_data_width
-
-/*! \brief Set ID vector width
- *
- * AXI supports  ID widths, parameterized at runtime.
- * We have to tell the sequence so we can randomize accordingly.
- */
-//function void axi_seq::set_id_width (int width=0);
- // this.id_width = width;
-//endfunction : set_id_width
-
-/*! \brief Set length vector width
- *
- * AXI supports 2 different AxLEN widths, parameterized at runtime.
- * 4-bit and 8-bit.
- * We have to tell the sequence so we can randomize accordingly.
- *
- */
-//function void axi_seq::set_len_width (int width=0);
- // this.len_width = width;
-//endfunction : set_len_width
 
 /*! \brief How many transactions?
  *
@@ -170,6 +124,12 @@ function void axi_seq::set_transaction_count(int count);
   xfers_to_send = count;
 endfunction : set_transaction_count
 
+
+
+function void axi_seq::set_valid(ref bit valid []);
+  this.valid=new[valid.size()](valid);
+
+endfunction : set_valid
 
 /*! \brief Does all the work.
  *
@@ -223,53 +183,9 @@ task axi_seq::body;
   use_response_handler(pipelined_bursts_enabled); // Enable Response Handler
 
   if (!uvm_config_db #(memory)::get(null, "", "m_memory", m_memory)) begin
-    `uvm_fatal(this.get_type_name, "Unable to fetch m_memory from config db. Using defaults")
+    `uvm_fatal(this.get_type_name(),
+               "Unable to fetch m_memory from config db. Using defaults")
     end
-
-
-  // If addr_width==0, then the setter hasn't been called. Try to fetch from
-  // config db.
-//  if (addr_width == 0) begin
-//    if (!uvm_config_db #(int)::get(null, "", "AXI_ADDR_WIDTH", addr_width)) begin
-//        `uvm_fatal(this.get_type_name,
-//                   "Unable to fetch AXI_ADDR_WIDTH from config db. Using defaults")
-//     end
-//  end
-
-  // If data_width==0, then the setter hasn't been called. Try to fetch from
-  // config db.
-  /*
-  if (data_width == 0) begin
-     if (!uvm_config_db #(int)::get(null, "", "AXI_DATA_WIDTH", data_width)) begin
-        `uvm_fatal(this.get_type_name,
-                   "Unable to fetch AXI_DATA_WIDTH from config db. Using defaults")
-     end
-  end
-
-  // If id_width==0, then the setter hasn't been called. Try to fetch from
-  // config db.
-  if (id_width == 0) begin
-    if (!uvm_config_db #(int)::get(null, "", "AXI_ID_WIDTH", id_width)) begin
-        `uvm_fatal(this.get_type_name,
-                   "Unable to fetch AXI_ID_WIDTH from config db. Using defaults")
-     end
-  end
-
-  // If id_width==0, then the setter hasn't been called. Try to fetch from
-  // config db.
-  if (len_width == 0) begin
-    if (!uvm_config_db #(int)::get(null, "", "AXI_LEN_WIDTH", len_width)) begin
-        `uvm_fatal(this.get_type_name,
-                   "Unable to fetch AXI_LEN_WIDTH from config db. Using defaults")
-     end
-  end
-  */
-   //   max_burst_size=$clog2(data_width/8);
-
-   // `uvm_info(this.get_type_name(),
-   //           $sformatf("DATA_BUS_WIDTH:  %0d  max_burst_size: %0d",
-   //                     data_width, max_burst_size),
-   //           UVM_HIGH)
 
   // Clear memory
   // AXI write
@@ -277,6 +193,12 @@ task axi_seq::body;
   //  check that addresses before Axi start address are still 0
   //  chck expected data
   //  check that addresses after axi start_addres+length are still 0
+
+
+  //if (valid.size() == 0) begin
+ //   valid = new[1];
+ //   valid[0] = 1'b1;
+ // end
 
   for (int xfer_cnt=0;xfer_cnt<xfers_to_send;xfer_cnt++) begin
 
@@ -311,25 +233,6 @@ task axi_seq::body;
                                          id         == local::xid;
                                          addr       >= local::addr_lo;
                                          addr       <  local::addr_hi;
-                                         //len        <= 'h40;
-      //(addr + len) <= local::window_size;
-                                         //protocol   ==     e_AXI3;
-                                        //burst_size inside {e_1BYTE};
-                                         //burst_type inside {e_FIXED, e_INCR, e_WRAP};
-                                         //id == local::i;
-
-//       Protocol: e_AXI3 Cmd: e_WRITE    Addr = 0xe  ID = 0x1  Len = 0x14 (20)  BurstSize = 0x1  BurstType = 0x1
- //     protocol == e_AXI3;
-//     addr == 'he;
-    //  len > 'h10;
-    //  len < 'h14;
-     // burst_size == 'h1;
-    //  burst_type == e_INCR;
-    //  burst_size == e_1BYTE;
-      //protocol inside { axi_uvm_pkg::e_AXI4};
-
-      //problem with len
-
     })
 
     `uvm_info("DATA", $sformatf("\n\n\nItem %0d:  %s", xfer_cnt, write_item[xfer_cnt].convert2string()), UVM_INFO)

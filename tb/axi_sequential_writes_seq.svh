@@ -104,6 +104,10 @@ task axi_sequential_writes_seq::body;
                                          addr       >= local::addr_lo;
                                          addr       <  local::addr_hi;
                                         })
+    // If valid specified, then pass it to seq item.
+    if (valid.size() > 0) begin
+       write_item.valid = new[valid.size()](valid);
+    end
 
     `uvm_info("DATA",
               $sformatf("\n\n\nItem %0d:  %s",

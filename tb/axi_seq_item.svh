@@ -292,10 +292,20 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
 
     j=data.size();
+    sdata="";
     for (int i =0; i< j; i++) begin
        $sformat(sdata, "%s 0x%02x ", sdata, data[i]);
     end
     $sformat(s, "%s Data[]: %s", s, sdata);
+
+    j=valid.size();
+    sdata="";
+    for (int i =0; i< j; i++) begin
+      $sformat(sdata, "%s%0b", sdata, valid[i]);
+    end
+    $sformat(s, "%s valid[]: %s", s, sdata);
+
+
 /*
     j=wstrb.size();
     sdata="";
@@ -398,7 +408,7 @@ function void axi_seq_item::post_randomize;
   super.post_randomize;
 //  data=new[len];
   //wstrb=new[len];
-  valid=new[len*3];  // only need one per beat instead of one per byte,
+  valid=new[len];  // only need one per beat instead of one per byte,
                      // we won't use the extras.
   // \todo: howto guaranteesufficient valid
 

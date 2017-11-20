@@ -52,31 +52,51 @@ endfunction : new
 function void axi_env::build_phase (uvm_phase phase);
   super.build_phase(phase);
 
+
   m_axidriver_agent    = axi_agent::type_id::create("m_axidriver_agent", this);
-  m_axidriver_agent.m_config = axi_agent_config::type_id::create("m_axidriver_agent.m_config", this);
+
+  if (uvm_config_db #(axi_agent_config)::get(this, "", "m_axidriver_agent.m_config", m_axidriver_agent.m_config)) begin
+    `uvm_info(this.get_type_name,
+                 "Found m_axidriver_agent.m_config in config db.",
+                 UVM_INFO)
+  end else begin
+     `uvm_info(this.get_type_name,
+                 "Unable to fetch m_axidriver_agent.m_config from config db. Using defaults",
+                 UVM_INFO)
+
+     m_axidriver_agent.m_config = axi_agent_config::type_id::create("m_axidriver_agent.m_config", this);
 
 
-  assert(m_axidriver_agent.m_config.randomize() with {
-                                                      bready_toggle_pattern == 32'hFFFF_FFFF;
-                                                      rready_toggle_pattern == 32'hFFFF_FFFF;
-                                                     });
+    assert(m_axidriver_agent.m_config.randomize());
 
-  m_axidriver_agent.m_config.m_active            = UVM_ACTIVE;
-  m_axidriver_agent.m_config.drv_type            = e_DRIVER;
+     m_axidriver_agent.m_config.m_active            = UVM_ACTIVE;
+     m_axidriver_agent.m_config.drv_type            = e_DRIVER;
+  end
+
+
+
+
 
   m_axiresponder_agent = axi_agent::type_id::create("m_axiresponder_agent", this);
-  m_axiresponder_agent.m_config = axi_agent_config::type_id::create("m_axiresponder_agent.m_config", this);
 
 
-  assert(m_axiresponder_agent.m_config.randomize() with {
-                                                      awready_toggle_pattern == 32'hFFFF_FFFF;
-                                                       wready_toggle_pattern == 32'hFFFF_FFFF;
-                                                      arready_toggle_pattern == 32'hFFFF_FFFF;
-                                                     });
+  if (uvm_config_db #(axi_agent_config)::get(this, "", "m_axiresponder_agent.m_config", m_axiresponder_agent.m_config)) begin
+    `uvm_info(this.get_type_name,
+                 "Found m_axiresponder_agent.m_config in config db.",
+                 UVM_INFO)
+  end else begin
+       `uvm_info(this.get_type_name,
+                 "Unable to fetch m_axiresponder_agent.m_config from config db. Using defaults",
+                 UVM_INFO)
 
-  m_axiresponder_agent.m_config.m_active            = UVM_ACTIVE;
-  m_axiresponder_agent.m_config.drv_type            = e_RESPONDER;
+     m_axiresponder_agent.m_config = axi_agent_config::type_id::create("m_axiresponder_agent.m_config", this);
 
+
+    assert(m_axiresponder_agent.m_config.randomize());
+
+    m_axiresponder_agent.m_config.m_active            = UVM_ACTIVE;
+    m_axiresponder_agent.m_config.drv_type            = e_RESPONDER;
+  end
 
   m_memory = memory::type_id::create("m_memory", this);
   uvm_config_db #(memory)::set(null, "*", "m_memory", m_memory);

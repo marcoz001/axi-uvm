@@ -52,29 +52,32 @@ class axi_agent_config extends uvm_object;
 
   // If multiple write transfers are queued,
   // this allows easily testing back to back or pausing between write address transfers.
-  int min_clks_between_aw_transfers=1;
-  int max_clks_between_aw_transfers=2;
+  rand byte min_clks_between_aw_transfers=0;
+  rand byte max_clks_between_aw_transfers=0;
 
-  int min_clks_between_w_transfers=1;
-  int max_clks_between_w_transfers=1;
+  rand byte min_clks_between_w_transfers=0;
+  rand byte max_clks_between_w_transfers=0;
 
-  int min_clks_between_b_transfers=0;
-  int max_clks_between_b_transfers=0;
+  rand byte min_clks_between_b_transfers=0;
+  rand byte max_clks_between_b_transfers=0;
+
+  rand byte min_clks_between_ar_transfers=0;
+  rand byte max_clks_between_ar_transfers=0;
+
+  rand byte min_clks_between_r_transfers=0;
+  rand byte max_clks_between_r_transfers=0;
+
 
   // AXI spec, A3.2.2,  states once valid is asserted,it must stay asserted until
   // ready asserts.  These varibles let us toggle valid to beat on the ready/valid
   // logic
-  bit axi_incompatible_awready_toggling_mode=0;
-  bit axi_incompatible_wready_toggling_mode=0;
-  bit axi_incompatible_bready_toggling_mode=0;
-  bit axi_incompatible_rready_toggling_mode=0;
+  bit axi_incompatible_awvalid_toggling_mode=0;
+  bit  axi_incompatible_wvalid_toggling_mode=0;
+  bit  axi_incompatible_bvalid_toggling_mode=0;
+  //bit axi_incompatible_arvalid_toggling_mode=0;
+  bit  axi_incompatible_rvalid_toggling_mode=0;
 // \todo:issing ar toggling mode
 
-  int min_clks_between_ar_transfers=0;
-  int max_clks_between_ar_transfers=0;
-
-  int min_clks_between_r_transfers=0;
-  int max_clks_between_r_transfers=10;
 
    //
    // If multiple write transfers are queued,

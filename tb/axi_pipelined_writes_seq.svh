@@ -27,17 +27,17 @@
 class axi_pipelined_writes_seq extends axi_seq;
 
   `uvm_object_utils(axi_pipelined_writes_seq)
-  
+
 
   const int clearmemory   = 1;
   const int window_size   = 'h1000;
 
   axi_seq_item write_item [];
-  
+
   // all write responses have been received
   // Reads can go ahead
   event writes_done;
-  
+
 
   extern function   new (string name="axi_pipelined_writes_seq");
   extern task       body;
@@ -60,12 +60,12 @@ function void axi_pipelined_writes_seq::response_handler(uvm_sequence_item respo
   xfer_cnt=item.id;
   if (item.cmd== e_WRITE_RESPONSE) begin
    xfers_done++;
-   
+
    if (!check_memory(.item       (item),
                      .lower_addr (xfer_cnt*window_size),
                      .upper_addr ((xfer_cnt+1)*window_size))) begin
         `uvm_info("MISCOMPARE","Miscompare error", UVM_INFO)
-      end  
+      end
 
   if (xfers_done >= xfers_to_send) begin
      `uvm_info("axi_seq::response_handler::sending event ",
@@ -148,13 +148,13 @@ task axi_pipelined_writes_seq::body;
     addr_hi=addr_lo+'h100;
     xid =xfer_cnt[ID_WIDTH-1:0];
     start_item(write_item[xfer_cnt]);
-    
+
     `uvm_info(this.get_type_name(),
               $sformatf("item %0d id:0x%0x addr_lo: 0x%0x  addr_hi: 0x%0x",
                         xfer_cnt, xid, addr_lo,addr_hi),
               UVM_INFO)
 
-    
+
     assert( write_item[xfer_cnt].randomize() with {
                                          cmd        == e_WRITE;
                                          burst_size <= local::max_burst_size;
@@ -163,7 +163,11 @@ task axi_pipelined_writes_seq::body;
                                          addr       <  local::addr_hi;
 
     })
-      
+    // If valid specified, then pass it to seq item.
+    if (valid.size() > 0) begin
+       write_item[xfer_cnt].valid = new[valid.size()](valid);
+    end
+
     `uvm_info("DATA", $sformatf("\n\n\nItem %0d:  %s", xfer_cnt, write_item[xfer_cnt].convert2string()), UVM_INFO)
     finish_item(write_item[xfer_cnt]);
 

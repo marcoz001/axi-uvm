@@ -225,7 +225,7 @@ task axi_driver::write_data;
   bit[7:0] wdata[];
   bit      wstrb[];
 
-  bit iaxi_incompatible_wready_toggling_mode;
+  //bit iaxi_incompatible_wvalid_toggling_mode;
 
   int n=0;
 
@@ -252,21 +252,19 @@ task axi_driver::write_data;
       `uvm_info("axi_driver::write_data",
                 $sformatf("Item: %s", item.convert2string()),
                 UVM_HIGH)
+
     end
 
     // Look at this only one per loop, so there's no race condition of it
     // changing mid-loop.
-    iaxi_incompatible_wready_toggling_mode = m_config.axi_incompatible_wready_toggling_mode;
+    //iaxi_incompatible_wvalid_toggling_mode = m_config.axi_incompatible_wvalid_toggling_mode;
 
     vif.wait_for_clks(.cnt(1));
 
 
     // Check if done with this transfer
-    if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
 
-      if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
-         validcntr++;
-      end
+    if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
 
       beat_cntr++;
 
@@ -308,8 +306,6 @@ task axi_driver::write_data;
 
        s.wvalid = item.valid[validcntr]; // 1'b1;
 
-
-
       `uvm_info(this.get_type_name(),
                 $sformatf("Calling get_beat_N_data:  %s",
                           item.convert2string()),
@@ -330,22 +326,35 @@ task axi_driver::write_data;
        vif.write_w(.s(s));
 
 
-             // if invalid-toggling-mode is enabled, then allow deasserting valid
+       // if invalid-toggling-mode is enabled, then allow deasserting valid
        // before ready asserts.
        // Default is to stay asserted, and only allow deasssertion after ready asserts.
-       if (iaxi_incompatible_wready_toggling_mode == 1'b0) begin
-          if (vif.get_wvalid() == 1'b0) begin
-             validcntr++;
-          end
-       end else begin
-             validcntr++;
-       end
+       if (vif.get_wready()==1'b1 && vif.get_wvalid() == 1'b1) begin
+          validcntr++;
+          `uvm_info(this.get_type_name(),
+                    $sformatf("debuga validcntr=%0d",validcntr),
+                    UVM_HIGH)
+       end else if (m_config.axi_incompatible_wvalid_toggling_mode == 1'b1) begin
+         validcntr++;
+         `uvm_info(this.get_type_name(),
+                   $sformatf("debugb validcntr=%0d",validcntr),
+                UVM_HIGH)
+       end else if (vif.get_wvalid() == 1'b0) begin
+         validcntr++;
+         `uvm_info(this.get_type_name(),
+                   $sformatf("debugc validcntr=%0d",validcntr),
+                UVM_HIGH)
+
+        end
        if (validcntr >=  validcntr_max) begin
          validcntr=0;
        end
 
 
     end // (item != null)
+
+
+
 
     // No item for next clock, so close out bus
     if (item == null) begin

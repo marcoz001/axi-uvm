@@ -27,25 +27,91 @@ class axi_pipelined_writes_test extends axi_base_test;
 
   `uvm_component_utils(axi_pipelined_writes_test)
 
+
+  axi_agent_config  driver_agent_config;
+  axi_agent_config  responder_agent_config;
+
   function new (string name="axi_pipelined_writes_test", uvm_component parent=null);
     super.new(name, parent);
   endfunction : new
 
   function void build_phase(uvm_phase phase);
-    
-    axi_seq::type_id::set_type_override(axi_pipelined_writes_seq::get_type(), 1); 
-    
+
+
+  driver_agent_config = axi_agent_config::type_id::create("driver_agent_config", this);
+
+
+  assert(driver_agent_config.randomize() with {
+                                               bready_toggle_pattern == 32'hFFFF_FFFF;
+                                               rready_toggle_pattern == 32'hFFFF_FFFF;
+
+                                               min_clks_between_ar_transfers == 0;
+                                               max_clks_between_ar_transfers == 0;
+                                               min_clks_between_aw_transfers == 0;
+                                               max_clks_between_aw_transfers == 0;
+                                               min_clks_between_w_transfers  == 0;
+                                               max_clks_between_w_transfers  == 0;
+                                              });
+
+  driver_agent_config.m_active            = UVM_ACTIVE;
+  driver_agent_config.drv_type            = e_DRIVER;
+
+  //  Put the agent_config handle into config_db
+  uvm_config_db #(axi_agent_config)::set(null, "*", "m_axidriver_agent.m_config", driver_agent_config);
+
+
+  responder_agent_config = axi_agent_config::type_id::create("responder_agent_config", this);
+
+
+  assert(responder_agent_config.randomize() with {
+                                                  awready_toggle_pattern == 32'hFFFF_FFFF;
+                                                   wready_toggle_pattern == 32'hFFFF_FFFF;
+                                                  arready_toggle_pattern == 32'hFFFF_FFFF;
+
+                                                  min_clks_between_r_transfers == 0;
+                                                  max_clks_between_r_transfers == 0;
+                                                  min_clks_between_b_transfers == 0;
+                                                  max_clks_between_b_transfers == 0;
+
+                                                  });
+
+  responder_agent_config.m_active            = UVM_ACTIVE;
+  responder_agent_config.drv_type            = e_RESPONDER;
+
+  //  Put the agent_config handle into config_db
+    uvm_config_db #(axi_agent_config)::set(null, "*", "m_axiresponder_agent.m_config", responder_agent_config);
+
+    /*
+
+  bit axi_incompatible_awready_toggling_mode=0;
+  bit axi_incompatible_wready_toggling_mode=0;
+  bit axi_incompatible_bready_toggling_mode=0;
+  bit axi_incompatible_rready_toggling_mode=0;
+    */
+
+
+    axi_seq::type_id::set_type_override(axi_pipelined_writes_seq::get_type(), 1);
+
     super.build_phase(phase);
 
   endfunction : build_phase
 
   task run_phase(uvm_phase phase);
 
+    bit valid[];
+
     phase.raise_objection(this);
 
     fork
        m_resp_seq.start(m_env.m_responder_seqr);
     join_none
+
+    valid=new[3];
+    valid[0]=1'b1;
+    valid[1]=1'b1;
+    valid[2]=1'b0;
+    m_seq.set_valid(valid);
+
 
     m_seq.start(m_env.m_driver_seqr);
 
