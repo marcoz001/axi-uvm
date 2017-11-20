@@ -1,6 +1,8 @@
 <map id="calculate_wrap_boundary" name="calculate_wrap_boundary">
-<area shape="rect" id="node2" href="$result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="223,46,348,73"/>
-<area shape="rect" id="node3" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="396,5,536,47"/>
-<area shape="rect" id="node5" href="$classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="396,71,536,112"/>
-<area shape="rect" id="node4" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="584,46,741,73"/>
+<area shape="rect" id="node2" href="$result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="223,107,348,134"/>
+<area shape="rect" id="node3" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="413,5,553,47"/>
+<area shape="rect" id="node5" href="$classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="413,71,553,112"/>
+<area shape="rect" id="node6" href="$classaxi__monitor.html#a533d709a6e06148b22425eb52277983b" title="monitors Write Data channel " alt="" coords="405,137,562,163"/>
+<area shape="rect" id="node7" href="$classaxi__monitor.html#a1894a2a0b2a491fc4cfc047fe5bc62e9" title="monitors Read Address channel " alt="" coords="396,187,571,214"/>
+<area shape="rect" id="node4" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="619,46,776,73"/>
 </map>

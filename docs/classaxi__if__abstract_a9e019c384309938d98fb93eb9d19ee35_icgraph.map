@@ -1,4 +1,5 @@
 <map id="axi_if_abstract::wait_for_write_address" name="axi_if_abstract::wait_for_write_address">
 <area shape="rect" id="node2" href="$classaxi__monitor.html#a344d36a4b510a06f4a774fa76d2aca70" title="monitors Write Address channel " alt="" coords="192,5,332,47"/>
+<area shape="rect" id="node4" href="$classaxi__monitor.html#a6b7dc286ef67470782ca0d74f60dc692" title="monitors Write Address channel " alt="" coords="199,71,325,112"/>
 <area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="380,13,537,39"/>
 </map>

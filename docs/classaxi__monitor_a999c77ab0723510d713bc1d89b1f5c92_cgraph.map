@@ -1,0 +1,4 @@
+<map id="axi_monitor::write_response" name="axi_monitor::write_response">
+<area shape="rect" id="node2" href="$result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#a966a2770a1d733e0eec230225ca39f77" title="return values from a axi_seq_item_b_vector_s and return an axi_seq_item " alt="" coords="205,5,291,32"/>
+<area shape="rect" id="node3" href="$classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538" title="Wait for a valid write response to be acknowledged and return it. " alt="" coords="179,57,317,98"/>
+</map>

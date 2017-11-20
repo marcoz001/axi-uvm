@@ -1,2 +1,5 @@
 <map id="rtl/axi_uvm_pkg.sv" name="rtl/axi_uvm_pkg.sv">
+<area shape="rect" id="node9" href="$axi__sequential__writes__seq_8svh.html" title="axi_sequential_writes\l_seq.svh" alt="" coords="1041,80,1188,121"/>
+<area shape="rect" id="node20" href="$axi__sequential__writes__test_8svh.html" title="axi_sequential_writes\l_test.svh" alt="" coords="2705,80,2852,121"/>
+<area shape="rect" id="node21" href="$axi__pipelined__writes__test_8svh.html" title="axi_pipelined_writes\l_test.svh" alt="" coords="2876,80,3015,121"/>
 </map>

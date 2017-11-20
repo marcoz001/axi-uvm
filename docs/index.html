@@ -95,10 +95,12 @@ Introduction</h1>
 <li>- Supports 32-bit and 64-bit address widths</li>
 <li>- Supports full and partial transfers.</li>
 <li>- Supports aligned and unaligned transfers.</li>
+<li>- Supports Fixed, Incrementing and Wrapped transfers.</li>
 <li>- Fixed burst_type must be aligned. Unaligned Fixed transfers are not supported.</li>
 <li>- Testbench side is event driven. No #'delays, no , etc</li>
-<li>- Emulator friendly (TB side is event driven. no )</li>
+<li>- Emulator friendly (TB side is event driven. no  or # delays)</li>
 <li>- Pipelined AXI driver</li>
+<li>- back to back transfers with 0 in-between wait clocks.</li>
 <li>- Polymorphic interface</li>
 <li>- params_pkg.sv contains all dut parameters</li>
 <li>- A master driver - acts as an AXI master</li>

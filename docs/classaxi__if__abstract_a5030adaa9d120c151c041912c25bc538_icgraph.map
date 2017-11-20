@@ -1,4 +1,5 @@
 <map id="axi_if_abstract::wait_for_write_response" name="axi_if_abstract::wait_for_write_response">
 <area shape="rect" id="node2" href="$classaxi__monitor.html#a5ef999b66b6fe9b59cc5af19a130ae3d" title="monitors Write Response channel and sends out TLM pkt Loop Wait for activity on the Write Response Ch..." alt="" coords="192,5,332,47"/>
+<area shape="rect" id="node4" href="$classaxi__monitor.html#a999c77ab0723510d713bc1d89b1f5c92" title="monitors Write Response channel and sends out TLM pkt Loop Wait for activity on the Write Response Ch..." alt="" coords="199,71,325,112"/>
 <area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="380,13,537,39"/>
 </map>

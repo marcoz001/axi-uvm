@@ -1,5 +1,10 @@
 <map id="memory::write" name="memory::write">
-<area shape="rect" id="node2" href="$classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="177,5,280,32"/>
-<area shape="rect" id="node3" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="159,57,299,98"/>
-<area shape="rect" id="node4" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="347,64,504,91"/>
+<area shape="rect" id="node2" href="$classaxi__sequential__writes__seq.html#a6e2e64a3564fe96732d935f3f491031f" title="Does all the work. " alt="" coords="164,5,311,47"/>
+<area shape="rect" id="node3" href="$classaxi__pipelined__writes__seq.html#ac4683d48c4b0b45a6d8ffa3d2ecf6677" title="Does all the work. " alt="" coords="168,71,307,112"/>
+<area shape="rect" id="node4" href="$classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="186,137,289,163"/>
+<area shape="rect" id="node5" href="$classaxi__seq.html#ad76b628939ad2923dcad6e014db1103c" title="axi_seq::set_valid" alt="" coords="379,162,506,189"/>
+<area shape="rect" id="node7" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="167,239,307,280"/>
+<area shape="rect" id="node9" href="$classaxi__monitor.html#a533d709a6e06148b22425eb52277983b" title="monitors Write Data channel " alt="" coords="159,305,316,331"/>
+<area shape="rect" id="node6" href="$classaxi__pipelined__writes__test.html#a1e522e33f40b04e2f1879e39bd26dd94" title="axi_pipelined_writes\l_test::run_phase" alt="" coords="569,155,708,196"/>
+<area shape="rect" id="node8" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="364,246,521,273"/>
 </map>

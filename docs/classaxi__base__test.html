@@ -101,6 +101,8 @@ Inheritance diagram for axi_base_test:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__base__test__inherit__graph.png" border="0" usemap="#axi__base__test_inherit__map" alt="Inheritance graph"/></div>
 <map name="axi__base__test_inherit__map" id="axi__base__test_inherit__map">
+<area shape="rect" id="node3" href="classaxi__pipelined__writes__test.html" title="Sequential AXI writes. No pipelining. " alt="" coords="5,155,173,181"/>
+<area shape="rect" id="node4" href="classaxi__sequential__writes__test.html" title="Sequential AXI writes. No pipelining. " alt="" coords="197,155,373,181"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -143,6 +145,7 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>base test. AXI tests are to be extended from this test. </p>
+<p>This test creates the driver sequence and the responder sequence. Tests that extend this, can type_override to change the sequence. //</p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>: what if want to restart a seq? </dd></dl>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00023">23</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -194,9 +197,19 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="tb_2axi__base__test_8svh_source.html#l00035">35</a> of file <a class="el" href="tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
+<p>Definition at line <a class="el" href="tb_2axi__base__test_8svh_source.html#l00041">41</a> of file <a class="el" href="tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
 
-<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00029">m_resp_seq</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00028">m_seq</a>.</p>
+<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00029">m_resp_seq</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00028">m_seq</a>, and <a class="el" href="tb_2axi__seq_8svh_source.html#l00123">axi_seq::set_transaction_count()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__base__test_aafeae2a4e4ad4c00b421b87001272ffd_cgraph.png" border="0" usemap="#classaxi__base__test_aafeae2a4e4ad4c00b421b87001272ffd_cgraph" alt=""/></div>
+<map name="classaxi__base__test_aafeae2a4e4ad4c00b421b87001272ffd_cgraph" id="classaxi__base__test_aafeae2a4e4ad4c00b421b87001272ffd_cgraph">
+<area shape="rect" id="node2" href="classaxi__seq.html#acce4aa5766828b5f16357fef3be9619b" title="How many transactions? " alt="" coords="192,5,356,47"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -280,7 +293,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="tb_2axi__base__test_8svh_source.html#l00031">31</a> of file <a class="el" href="tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
+<p>Definition at line <a class="el" href="tb_2axi__base__test_8svh_source.html#l00037">37</a> of file <a class="el" href="tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
 
 </div>
 </div>
@@ -334,7 +347,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="tb_2axi__base__test_8svh_source.html#l00061">61</a> of file <a class="el" href="tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
+<p>Definition at line <a class="el" href="tb_2axi__base__test_8svh_source.html#l00062">62</a> of file <a class="el" href="tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
 
 <p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00029">m_resp_seq</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00028">m_seq</a>.</p>
 
@@ -385,7 +398,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00029">29</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="tb_2axi__base__test_8svh_source.html#l00035">build_phase()</a>, and <a class="el" href="tb_2axi__base__test_8svh_source.html#l00061">run_phase()</a>.</p>
+<p>Referenced by <a class="el" href="tb_2axi__base__test_8svh_source.html#l00041">build_phase()</a>, <a class="el" href="tb_2axi__base__test_8svh_source.html#l00062">run_phase()</a>, <a class="el" href="axi__sequential__writes__test_8svh_source.html#l00093">axi_sequential_writes_test::run_phase()</a>, and <a class="el" href="axi__pipelined__writes__test_8svh_source.html#l00099">axi_pipelined_writes_test::run_phase()</a>.</p>
 
 </div>
 </div>
@@ -401,7 +414,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00028">28</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="tb_2axi__base__test_8svh_source.html#l00035">build_phase()</a>, and <a class="el" href="tb_2axi__base__test_8svh_source.html#l00061">run_phase()</a>.</p>
+<p>Referenced by <a class="el" href="tb_2axi__base__test_8svh_source.html#l00041">build_phase()</a>, <a class="el" href="tb_2axi__base__test_8svh_source.html#l00062">run_phase()</a>, <a class="el" href="axi__sequential__writes__test_8svh_source.html#l00093">axi_sequential_writes_test::run_phase()</a>, and <a class="el" href="axi__pipelined__writes__test_8svh_source.html#l00099">axi_pipelined_writes_test::run_phase()</a>.</p>
 
 </div>
 </div>

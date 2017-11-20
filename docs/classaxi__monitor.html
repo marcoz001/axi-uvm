@@ -100,8 +100,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Inheritance diagram for axi_monitor:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__monitor__inherit__graph.png" border="0" usemap="#axi__monitor_inherit__map" alt="Inheritance graph"/></div>
-<map name="axi__monitor_inherit__map" id="axi__monitor_inherit__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for axi_monitor:</div>
@@ -124,6 +122,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae1cc05f18a24d7030f6cc05463435b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ae1cc05f18a24d7030f6cc05463435b65">More...</a><br /></td></tr>
 <tr class="separator:ae1cc05f18a24d7030f6cc05463435b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1adf9a7a1d88c827e3ae6353a1ee386b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a1adf9a7a1d88c827e3ae6353a1ee386b">build_phase</a> (uvm_phase phase)</td></tr>
+<tr class="memdesc:a1adf9a7a1d88c827e3ae6353a1ee386b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the analysis port and virtual interface.  <a href="#a1adf9a7a1d88c827e3ae6353a1ee386b">More...</a><br /></td></tr>
 <tr class="separator:a1adf9a7a1d88c827e3ae6353a1ee386b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf50ccb4de6b07caf13598a0e761250a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#adf50ccb4de6b07caf13598a0e761250a">connect_phase</a> (uvm_phase phase)</td></tr>
 <tr class="separator:adf50ccb4de6b07caf13598a0e761250a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,35 +154,44 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adf50ccb4de6b07caf13598a0e761250a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34a7e7fb040dbba2301f67bf6e40fe91"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91">run_phase</a> (uvm_phase phase)</td></tr>
 <tr class="separator:a34a7e7fb040dbba2301f67bf6e40fe91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a344d36a4b510a06f4a774fa76d2aca70"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a344d36a4b510a06f4a774fa76d2aca70">monitor_write_address</a> ()</td></tr>
-<tr class="separator:a344d36a4b510a06f4a774fa76d2aca70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab005117a8180b27f296f4b84e7c7d6b1"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1">monitor_write_data</a> ()</td></tr>
-<tr class="separator:ab005117a8180b27f296f4b84e7c7d6b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ef999b66b6fe9b59cc5af19a130ae3d"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a5ef999b66b6fe9b59cc5af19a130ae3d">monitor_write_response</a> ()</td></tr>
-<tr class="separator:a5ef999b66b6fe9b59cc5af19a130ae3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88ed98b94935cbc5846d6d23b7cb8766"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766">monitor_read_address</a> ()</td></tr>
-<tr class="separator:a88ed98b94935cbc5846d6d23b7cb8766"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22e36c827d9bcde956cc502ab4d1bb8d"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a22e36c827d9bcde956cc502ab4d1bb8d">monitor_read_data</a> ()</td></tr>
-<tr class="separator:a22e36c827d9bcde956cc502ab4d1bb8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b7dc286ef67470782ca0d74f60dc692"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a6b7dc286ef67470782ca0d74f60dc692">write_address</a> ()</td></tr>
+<tr class="memdesc:a6b7dc286ef67470782ca0d74f60dc692"><td class="mdescLeft">&#160;</td><td class="mdescRight">monitors Write Address channel  <a href="#a6b7dc286ef67470782ca0d74f60dc692">More...</a><br /></td></tr>
+<tr class="separator:a6b7dc286ef67470782ca0d74f60dc692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a533d709a6e06148b22425eb52277983b"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a533d709a6e06148b22425eb52277983b">write_data</a> ()</td></tr>
+<tr class="memdesc:a533d709a6e06148b22425eb52277983b"><td class="mdescLeft">&#160;</td><td class="mdescRight">monitors Write Data channel  <a href="#a533d709a6e06148b22425eb52277983b">More...</a><br /></td></tr>
+<tr class="separator:a533d709a6e06148b22425eb52277983b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a999c77ab0723510d713bc1d89b1f5c92"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a999c77ab0723510d713bc1d89b1f5c92">write_response</a> ()</td></tr>
+<tr class="memdesc:a999c77ab0723510d713bc1d89b1f5c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">monitors Write Response channel and sends out TLM pkt Loop Wait for activity on the Write Response Channel Convert into an <a class="el" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage ">axi_seq_item</a> Send out analysis port  <a href="#a999c77ab0723510d713bc1d89b1f5c92">More...</a><br /></td></tr>
+<tr class="separator:a999c77ab0723510d713bc1d89b1f5c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1894a2a0b2a491fc4cfc047fe5bc62e9"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a1894a2a0b2a491fc4cfc047fe5bc62e9">read_address</a> ()</td></tr>
+<tr class="memdesc:a1894a2a0b2a491fc4cfc047fe5bc62e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">monitors Read Address channel  <a href="#a1894a2a0b2a491fc4cfc047fe5bc62e9">More...</a><br /></td></tr>
+<tr class="separator:a1894a2a0b2a491fc4cfc047fe5bc62e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9d073687e001b3bde7cc83e11c76a96"><td class="memItemLeft" align="right" valign="top">task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#ae9d073687e001b3bde7cc83e11c76a96">read_data</a> ()</td></tr>
+<tr class="memdesc:ae9d073687e001b3bde7cc83e11c76a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel,store in queue Once read address packet received, store queue contents into tlm pkt When rlast received, send out analysis port  <a href="#ae9d073687e001b3bde7cc83e11c76a96">More...</a><br /></td></tr>
+<tr class="separator:ae9d073687e001b3bde7cc83e11c76a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a431025bc683e004a477cebd2c1cdd370"><td class="memItemLeft" align="right" valign="top">uvm_analysis_port&lt; <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a431025bc683e004a477cebd2c1cdd370">driver_activity_ap</a></td></tr>
 <tr class="separator:a431025bc683e004a477cebd2c1cdd370"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf08ceac3053b970a39253f85357cd7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtl_2axi__pkg_8sv.html#structaxi__seq__item__w__vector__s">axi_seq_item_w_vector_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#acf08ceac3053b970a39253f85357cd7c">w_q</a> [$]</td></tr>
-<tr class="separator:acf08ceac3053b970a39253f85357cd7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0987f38d866350fd1420412368b521f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtl_2axi__pkg_8sv.html#structaxi__seq__item__r__vector__s">axi_seq_item_r_vector_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a0987f38d866350fd1420412368b521f4">r_q</a> [$]</td></tr>
-<tr class="separator:a0987f38d866350fd1420412368b521f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a1fee4dea22f43376853f1afba27cad"><td class="memItemLeft" align="right" valign="top">mailbox&lt; <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a8a1fee4dea22f43376853f1afba27cad">aw_mbx</a> = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td></tr>
-<tr class="separator:a8a1fee4dea22f43376853f1afba27cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93df7d3d51da568acd457947f5ba8a58"><td class="memItemLeft" align="right" valign="top">mailbox&lt; <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a93df7d3d51da568acd457947f5ba8a58">ar_mbx</a> = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td></tr>
-<tr class="separator:a93df7d3d51da568acd457947f5ba8a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab80fd43d613f0fc32414b42f697e7bd0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtl_2axi__pkg_8sv.html#structaxi__seq__item__w__vector__s">axi_seq_item_w_vector_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#ab80fd43d613f0fc32414b42f697e7bd0">w_q</a> [$]</td></tr>
+<tr class="separator:ab80fd43d613f0fc32414b42f697e7bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cb635f7777cfd0e27e4d4fa634fbfa9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtl_2axi__pkg_8sv.html#structaxi__seq__item__r__vector__s">axi_seq_item_r_vector_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a4cb635f7777cfd0e27e4d4fa634fbfa9">r_q</a> [$]</td></tr>
+<tr class="separator:a4cb635f7777cfd0e27e4d4fa634fbfa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54126398b05004e03f08ba64d625ec12"><td class="memItemLeft" align="right" valign="top">mailbox&lt; <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a54126398b05004e03f08ba64d625ec12">aw_mbx</a> = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td></tr>
+<tr class="separator:a54126398b05004e03f08ba64d625ec12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48c6810c47a89190282fbc91b7f3ccc5"><td class="memItemLeft" align="right" valign="top">mailbox&lt; <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a48c6810c47a89190282fbc91b7f3ccc5">ar_mbx</a> = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td></tr>
+<tr class="separator:a48c6810c47a89190282fbc91b7f3ccc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19f6bfb89c02348e010c96b3ba70ba02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classaxi__if__abstract.html">axi_if_abstract</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a19f6bfb89c02348e010c96b3ba70ba02">vif</a></td></tr>
 <tr class="separator:a19f6bfb89c02348e010c96b3ba70ba02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a402836a98848f900644618787e2030e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classaxi__agent__config.html">axi_agent_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a402836a98848f900644618787e2030e8">m_config</a></td></tr>
 <tr class="separator:a402836a98848f900644618787e2030e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a606253997dae58935a0d5de9d4a69368"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmemory.html">memory</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a606253997dae58935a0d5de9d4a69368">m_memory</a></td></tr>
 <tr class="separator:a606253997dae58935a0d5de9d4a69368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59cd4aabf0d1e6e9064c94578ae75818"><td class="memItemLeft" align="right" valign="top">mailbox&lt; <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#a59cd4aabf0d1e6e9064c94578ae75818">writedata_mbx</a> = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td></tr>
+<tr class="separator:a59cd4aabf0d1e6e9064c94578ae75818"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad54a0f558dbdd6e86df4e8f9d9db92d7"><td class="memItemLeft" align="right" valign="top">mailbox&lt; <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaxi__monitor.html#ad54a0f558dbdd6e86df4e8f9d9db92d7">readdata_mbx</a> = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td></tr>
+<tr class="separator:ad54a0f558dbdd6e86df4e8f9d9db92d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>monitors all 5 channels for activity </p>
@@ -212,10 +220,6 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00074">74</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
-
-<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00038">driver_activity_ap</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00049">vif</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a1adf9a7a1d88c827e3ae6353a1ee386b"></a>
@@ -224,6 +228,28 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void axi_monitor::build_phase </td>
+          <td>(</td>
+          <td class="paramtype">uvm_phase&#160;</td>
+          <td class="paramname"><em>phase</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates the analysis port and virtual interface. </p>
+
+<p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00074">74</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00038">driver_activity_ap</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00049">vif</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adf50ccb4de6b07caf13598a0e761250a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_monitor::connect_phase </td>
           <td>(</td>
           <td class="paramtype">uvm_phase&#160;</td>
           <td class="paramname"><em>phase</em></td><td>)</td>
@@ -252,22 +278,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adf50ccb4de6b07caf13598a0e761250a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void axi_monitor::connect_phase </td>
-          <td>(</td>
-          <td class="paramtype">uvm_phase&#160;</td>
-          <td class="paramname"><em>phase</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a88ed98b94935cbc5846d6d23b7cb8766"></a>
 <div class="memitem">
 <div class="memproto">
@@ -286,7 +296,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">299</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00044">axi_seq_item::addr</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00047">ar_mbx</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00219">ar_to_class()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00049">axi_seq_item::burst_size</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00050">axi_seq_item::burst_type</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00312">calculate_axlen()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00071">axi_seq_item::cmd</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00296">axi_seq_item::convert2string()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00045">axi_seq_item::data</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00038">driver_activity_ap</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent__config_8svh_source.html#l00035">axi_agent_config::drv_type</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00049">e_READ</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00050">e_READ_DATA</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00069">e_RESPONDER</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00530">get_beat_N_byte_lanes()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00109">axi_if_abstract::get_data_bus_width()</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00439">get_next_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00046">axi_seq_item::len</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00050">m_config</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00051">m_memory</a>, <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html#l00054">memory::read()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00053">axi_seq_item::valid</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00193">axi_if_abstract::wait_for_read_address()</a>.</p>
+<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00044">axi_seq_item::addr</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00047">ar_mbx</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00219">ar_to_class()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00049">axi_seq_item::burst_size</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00050">axi_seq_item::burst_type</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00312">calculate_axlen()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00071">axi_seq_item::cmd</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00296">axi_seq_item::convert2string()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00045">axi_seq_item::data</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00038">driver_activity_ap</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent__config_8svh_source.html#l00035">axi_agent_config::drv_type</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00049">e_READ</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00050">e_READ_DATA</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00069">e_RESPONDER</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00530">get_beat_N_byte_lanes()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00109">axi_if_abstract::get_data_bus_width()</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00439">get_next_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00046">axi_seq_item::len</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00050">m_config</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00051">m_memory</a>, <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html#l00054">memory::read()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00458">read_data()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00053">axi_seq_item::valid</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00193">axi_if_abstract::wait_for_read_address()</a>.</p>
 
 <p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00515">run_phase()</a>.</p>
 
@@ -296,17 +306,19 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="classaxi__monitor_a88ed98b94935cbc5846d6d23b7cb8766_cgraph.png" border="0" usemap="#classaxi__monitor_a88ed98b94935cbc5846d6d23b7cb8766_cgraph" alt=""/></div>
 <map name="classaxi__monitor_a88ed98b94935cbc5846d6d23b7cb8766_cgraph" id="classaxi__monitor_a88ed98b94935cbc5846d6d23b7cb8766_cgraph">
 <area shape="rect" id="node2" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#aed1da5b42d561f8319065d7d6eed556b" title="Pull values out of a axi_seq_item_ar_vector_s and stuffs them into an axi_seq_item. " alt="" coords="243,5,333,32"/>
-<area shape="rect" id="node3" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="671,269,783,296"/>
+<area shape="rect" id="node3" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="671,67,783,93"/>
 <area shape="rect" id="node5" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="193,107,383,133"/>
-<area shape="rect" id="node6" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="436,155,595,181"/>
+<area shape="rect" id="node6" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="436,195,595,221"/>
 <area shape="rect" id="node9" href="classaxi__if__abstract.html#a834de2d058eec05c4c890435fae83a5b" title="returns data bus width " alt="" coords="221,209,355,250"/>
 <area shape="rect" id="node10" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="225,157,351,184"/>
 <area shape="rect" id="node12" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="237,325,339,352"/>
-<area shape="rect" id="node13" href="classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="219,377,357,418"/>
-<area shape="rect" id="node4" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="855,262,1005,303"/>
-<area shape="rect" id="node7" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="648,201,807,242"/>
-<area shape="rect" id="node8" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d" title="calculate bus&#45;siz aligned address " alt="" coords="652,135,803,177"/>
-<area shape="rect" id="node11" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="431,208,600,235"/>
+<area shape="rect" id="node13" href="classaxi__monitor.html#ae9d073687e001b3bde7cc83e11c76a96" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="211,376,365,403"/>
+<area shape="rect" id="node15" href="classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="219,427,357,469"/>
+<area shape="rect" id="node4" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="855,59,1005,101"/>
+<area shape="rect" id="node7" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="648,129,807,170"/>
+<area shape="rect" id="node8" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d" title="calculate bus&#45;siz aligned address " alt="" coords="652,194,803,235"/>
+<area shape="rect" id="node11" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="431,136,600,163"/>
+<area shape="rect" id="node14" href="classaxi__if__abstract.html#ad72883433768852cedc9acbf5263e071" title="Wait for a valid read data to be acknowledged and return it. " alt="" coords="446,369,585,410"/>
 </map>
 </div>
 </p>
@@ -320,21 +332,6 @@ Here is the caller graph for this function:</div>
 </map>
 </div>
 </p>
-
-</div>
-</div>
-<a class="anchor" id="a88ed98b94935cbc5846d6d23b7cb8766"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">task axi_monitor::monitor_read_address </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -381,36 +378,6 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a22e36c827d9bcde956cc502ab4d1bb8d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">task axi_monitor::monitor_read_data </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a344d36a4b510a06f4a774fa76d2aca70"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">task axi_monitor::monitor_write_address </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a344d36a4b510a06f4a774fa76d2aca70"></a>
 <div class="memitem">
 <div class="memproto">
@@ -454,21 +421,6 @@ Here is the caller graph for this function:</div>
 </map>
 </div>
 </p>
-
-</div>
-</div>
-<a class="anchor" id="ab005117a8180b27f296f4b84e7c7d6b1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">task axi_monitor::monitor_write_data </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -572,15 +524,26 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a5ef999b66b6fe9b59cc5af19a130ae3d"></a>
+<a class="anchor" id="ae1cc05f18a24d7030f6cc05463435b65"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">task axi_monitor::monitor_write_response </td>
+          <td class="memname">axi_monitor::new </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>name</em> = <code>&quot;axi_monitor&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uvm_component&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -617,29 +580,93 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="ae1cc05f18a24d7030f6cc05463435b65"></a>
+<a class="anchor" id="a1894a2a0b2a491fc4cfc047fe5bc62e9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">axi_monitor::new </td>
+          <td class="memname">task axi_monitor::read_address </td>
           <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>name</em> = <code>&quot;axi_monitor&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uvm_component&#160;</td>
-          <td class="paramname"><em>parent</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>monitors Read Address channel </p>
+<p>and sends out TLM pkt. If this monitor's agent is a responder, then also creates another TLM packet for Read Data channel monitoring thread to use to send back to the master Loop Wait for activity on the Write Address Channel Convert into an <a class="el" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage ">axi_seq_item</a> Send out analysis port If responder, read from agent's memory, create another TLM packet and send to Read Data channel to send back to master </p>
+
+<p>Definition at line <a class="el" href="tb_2axi__monitor_8svh_source.html#l00308">308</a> of file <a class="el" href="tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00044">axi_seq_item::addr</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00031">ADDR_WIDTH</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00219">ar_to_class()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00049">axi_seq_item::burst_size</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00050">axi_seq_item::burst_type</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00312">calculate_axlen()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00071">axi_seq_item::cmd</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00296">axi_seq_item::convert2string()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00045">axi_seq_item::data</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00038">driver_activity_ap</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent__config_8svh_source.html#l00035">axi_agent_config::drv_type</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00049">e_READ</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00050">e_READ_DATA</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00069">e_RESPONDER</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00530">get_beat_N_byte_lanes()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00109">axi_if_abstract::get_data_bus_width()</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00439">get_next_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00046">axi_seq_item::len</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00050">m_config</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00051">m_memory</a>, <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html#l00054">memory::read()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00458">read_data()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00044">readdata_mbx</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00053">axi_seq_item::valid</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00193">axi_if_abstract::wait_for_read_address()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__monitor_a1894a2a0b2a491fc4cfc047fe5bc62e9_cgraph.png" border="0" usemap="#classaxi__monitor_a1894a2a0b2a491fc4cfc047fe5bc62e9_cgraph" alt=""/></div>
+<map name="classaxi__monitor_a1894a2a0b2a491fc4cfc047fe5bc62e9_cgraph" id="classaxi__monitor_a1894a2a0b2a491fc4cfc047fe5bc62e9_cgraph">
+<area shape="rect" id="node2" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#aed1da5b42d561f8319065d7d6eed556b" title="Pull values out of a axi_seq_item_ar_vector_s and stuffs them into an axi_seq_item. " alt="" coords="278,5,367,32"/>
+<area shape="rect" id="node3" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="706,67,818,93"/>
+<area shape="rect" id="node5" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="228,107,417,133"/>
+<area shape="rect" id="node6" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="471,195,629,221"/>
+<area shape="rect" id="node9" href="classaxi__if__abstract.html#a834de2d058eec05c4c890435fae83a5b" title="returns data bus width " alt="" coords="256,209,389,250"/>
+<area shape="rect" id="node10" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="260,157,385,184"/>
+<area shape="rect" id="node12" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="271,325,374,352"/>
+<area shape="rect" id="node13" href="classaxi__monitor.html#ae9d073687e001b3bde7cc83e11c76a96" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="245,376,400,403"/>
+<area shape="rect" id="node15" href="classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="253,427,392,469"/>
+<area shape="rect" id="node4" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="889,59,1040,101"/>
+<area shape="rect" id="node7" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="683,129,841,170"/>
+<area shape="rect" id="node8" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d" title="calculate bus&#45;siz aligned address " alt="" coords="687,194,837,235"/>
+<area shape="rect" id="node11" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="465,136,635,163"/>
+<area shape="rect" id="node14" href="classaxi__if__abstract.html#ad72883433768852cedc9acbf5263e071" title="Wait for a valid read data to be acknowledged and return it. " alt="" coords="481,369,619,410"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ae9d073687e001b3bde7cc83e11c76a96"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">task axi_monitor::read_data </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel,store in queue Once read address packet received, store queue contents into tlm pkt When rlast received, send out analysis port </p>
+
+<p>Definition at line <a class="el" href="tb_2axi__monitor_8svh_source.html#l00458">458</a> of file <a class="el" href="tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00071">axi_seq_item::cmd</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00045">axi_seq_item::data</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00050">e_READ_DATA</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00046">axi_seq_item::len</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00042">r_q</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00044">readdata_mbx</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00200">axi_seq_item_r_vector_s::rlast</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00202">axi_if_abstract::wait_for_read_data()</a>.</p>
+
+<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">monitor_read_address()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00308">read_address()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__monitor_ae9d073687e001b3bde7cc83e11c76a96_cgraph.png" border="0" usemap="#classaxi__monitor_ae9d073687e001b3bde7cc83e11c76a96_cgraph" alt=""/></div>
+<map name="classaxi__monitor_ae9d073687e001b3bde7cc83e11c76a96_cgraph" id="classaxi__monitor_ae9d073687e001b3bde7cc83e11c76a96_cgraph">
+<area shape="rect" id="node2" href="classaxi__if__abstract.html#ad72883433768852cedc9acbf5263e071" title="Wait for a valid read data to be acknowledged and return it. " alt="" coords="208,5,347,47"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__monitor_ae9d073687e001b3bde7cc83e11c76a96_icgraph.png" border="0" usemap="#classaxi__monitor_ae9d073687e001b3bde7cc83e11c76a96_icgraph" alt=""/></div>
+<map name="classaxi__monitor_ae9d073687e001b3bde7cc83e11c76a96_icgraph" id="classaxi__monitor_ae9d073687e001b3bde7cc83e11c76a96_icgraph">
+<area shape="rect" id="node2" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="225,5,365,47"/>
+<area shape="rect" id="node4" href="classaxi__monitor.html#a1894a2a0b2a491fc4cfc047fe5bc62e9" title="monitors Read Address channel " alt="" coords="208,71,383,98"/>
+<area shape="rect" id="node3" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="431,13,588,39"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -684,30 +711,31 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__monitor_a34a7e7fb040dbba2301f67bf6e40fe91_cgraph.png" border="0" usemap="#classaxi__monitor_a34a7e7fb040dbba2301f67bf6e40fe91_cgraph" alt=""/></div>
 <map name="classaxi__monitor_a34a7e7fb040dbba2301f67bf6e40fe91_cgraph" id="classaxi__monitor_a34a7e7fb040dbba2301f67bf6e40fe91_cgraph">
-<area shape="rect" id="node2" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="211,216,351,257"/>
-<area shape="rect" id="node15" href="classaxi__monitor.html#a22e36c827d9bcde956cc502ab4d1bb8d" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="211,693,351,734"/>
-<area shape="rect" id="node17" href="classaxi__monitor.html#a344d36a4b510a06f4a774fa76d2aca70" title="monitors Write Address channel " alt="" coords="211,602,351,644"/>
-<area shape="rect" id="node20" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="211,464,351,505"/>
-<area shape="rect" id="node23" href="classaxi__monitor.html#a5ef999b66b6fe9b59cc5af19a130ae3d" title="monitors Write Response channel and sends out TLM pkt Loop Wait for activity on the Write Response Ch..." alt="" coords="211,785,351,826"/>
-<area shape="rect" id="node3" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#aed1da5b42d561f8319065d7d6eed556b" title="Pull values out of a axi_seq_item_ar_vector_s and stuffs them into an axi_seq_item. " alt="" coords="449,122,538,148"/>
-<area shape="rect" id="node4" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="877,114,989,140"/>
-<area shape="rect" id="node6" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="399,391,588,418"/>
-<area shape="rect" id="node7" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="641,340,800,367"/>
-<area shape="rect" id="node10" href="classaxi__if__abstract.html#a834de2d058eec05c4c890435fae83a5b" title="returns data bus width " alt="" coords="427,274,560,316"/>
-<area shape="rect" id="node11" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="431,340,556,367"/>
-<area shape="rect" id="node13" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="442,172,545,199"/>
-<area shape="rect" id="node14" href="classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="424,56,563,97"/>
-<area shape="rect" id="node5" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="1060,106,1211,148"/>
-<area shape="rect" id="node8" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="853,274,1012,316"/>
-<area shape="rect" id="node9" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d" title="calculate bus&#45;siz aligned address " alt="" coords="857,340,1008,381"/>
-<area shape="rect" id="node12" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="636,282,805,308"/>
-<area shape="rect" id="node16" href="classaxi__if__abstract.html#ad72883433768852cedc9acbf5263e071" title="Wait for a valid read data to be acknowledged and return it. " alt="" coords="424,726,563,768"/>
-<area shape="rect" id="node18" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#acaa78ee9684ddd7ba5bf9cdfa88808e0" title="Pull values out of a axi_seq_item_aw_vector_s and stuffs them into an axi_seq_item. " alt="" coords="446,610,541,636"/>
-<area shape="rect" id="node19" href="classaxi__if__abstract.html#a9e019c384309938d98fb93eb9d19ee35" title="Wait for a valid write address to be acknowledged and return it. " alt="" coords="424,661,563,702"/>
-<area shape="rect" id="node21" href="classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="424,493,563,534"/>
-<area shape="rect" id="node22" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="441,559,546,586"/>
-<area shape="rect" id="node24" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#a966a2770a1d733e0eec230225ca39f77" title="return values from a axi_seq_item_b_vector_s and return an axi_seq_item " alt="" coords="451,792,536,819"/>
-<area shape="rect" id="node25" href="classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538" title="Wait for a valid write response to be acknowledged and return it. " alt="" coords="424,844,563,885"/>
+<area shape="rect" id="node2" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="211,421,351,463"/>
+<area shape="rect" id="node17" href="classaxi__monitor.html#a22e36c827d9bcde956cc502ab4d1bb8d" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="211,603,351,644"/>
+<area shape="rect" id="node18" href="classaxi__monitor.html#a344d36a4b510a06f4a774fa76d2aca70" title="monitors Write Address channel " alt="" coords="211,689,351,731"/>
+<area shape="rect" id="node21" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="211,140,351,181"/>
+<area shape="rect" id="node24" href="classaxi__monitor.html#a5ef999b66b6fe9b59cc5af19a130ae3d" title="monitors Write Response channel and sends out TLM pkt Loop Wait for activity on the Write Response Ch..." alt="" coords="211,829,351,871"/>
+<area shape="rect" id="node3" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#aed1da5b42d561f8319065d7d6eed556b" title="Pull values out of a axi_seq_item_ar_vector_s and stuffs them into an axi_seq_item. " alt="" coords="449,341,538,367"/>
+<area shape="rect" id="node4" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="877,399,989,426"/>
+<area shape="rect" id="node6" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="399,661,588,687"/>
+<area shape="rect" id="node7" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="641,173,800,199"/>
+<area shape="rect" id="node10" href="classaxi__if__abstract.html#a834de2d058eec05c4c890435fae83a5b" title="returns data bus width " alt="" coords="427,224,560,265"/>
+<area shape="rect" id="node11" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="431,173,556,199"/>
+<area shape="rect" id="node13" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="442,458,545,485"/>
+<area shape="rect" id="node14" href="classaxi__monitor.html#ae9d073687e001b3bde7cc83e11c76a96" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="416,559,571,586"/>
+<area shape="rect" id="node16" href="classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="424,392,563,433"/>
+<area shape="rect" id="node5" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="1060,392,1211,433"/>
+<area shape="rect" id="node8" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="853,224,1012,265"/>
+<area shape="rect" id="node9" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d" title="calculate bus&#45;siz aligned address " alt="" coords="857,159,1008,200"/>
+<area shape="rect" id="node12" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="636,231,805,258"/>
+<area shape="rect" id="node15" href="classaxi__if__abstract.html#ad72883433768852cedc9acbf5263e071" title="Wait for a valid read data to be acknowledged and return it. " alt="" coords="651,581,790,623"/>
+<area shape="rect" id="node19" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#acaa78ee9684ddd7ba5bf9cdfa88808e0" title="Pull values out of a axi_seq_item_aw_vector_s and stuffs them into an axi_seq_item. " alt="" coords="446,778,541,805"/>
+<area shape="rect" id="node20" href="classaxi__if__abstract.html#a9e019c384309938d98fb93eb9d19ee35" title="Wait for a valid write address to be acknowledged and return it. " alt="" coords="424,712,563,753"/>
+<area shape="rect" id="node22" href="classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="424,5,563,47"/>
+<area shape="rect" id="node23" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="441,71,546,98"/>
+<area shape="rect" id="node25" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#a966a2770a1d733e0eec230225ca39f77" title="return values from a axi_seq_item_b_vector_s and return an axi_seq_item " alt="" coords="451,895,536,922"/>
+<area shape="rect" id="node26" href="classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538" title="Wait for a valid write response to be acknowledged and return it. " alt="" coords="424,829,563,871"/>
 </map>
 </div>
 </p>
@@ -746,13 +774,123 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a93df7d3d51da568acd457947f5ba8a58"></a>
+<a class="anchor" id="a6b7dc286ef67470782ca0d74f60dc692"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mailbox&lt; <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> &gt; axi_monitor::ar_mbx = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td>
+          <td class="memname">task axi_monitor::write_address </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>monitors Write Address channel </p>
+<p>and sends out TLM pkt. If this monitor's agent is a responder, then also creates another TLM packet for Write Data channel monitoring thread to use Loop Wait for activity on the Write Address Channel Convert into an <a class="el" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage ">axi_seq_item</a> Send out analysis port Add to Write Data Channel monitoring thread's queue </p>
+
+<p>Definition at line <a class="el" href="tb_2axi__monitor_8svh_source.html#l00108">108</a> of file <a class="el" href="tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00116">aw_to_class()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00071">axi_seq_item::cmd</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00296">axi_seq_item::convert2string()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00038">driver_activity_ap</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent__config_8svh_source.html#l00035">axi_agent_config::drv_type</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00069">e_RESPONDER</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00048">e_WRITE</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00046">axi_seq_item::len</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00050">m_config</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00049">vif</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00166">axi_if_abstract::wait_for_write_address()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00043">writedata_mbx</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__monitor_a6b7dc286ef67470782ca0d74f60dc692_cgraph.png" border="0" usemap="#classaxi__monitor_a6b7dc286ef67470782ca0d74f60dc692_cgraph" alt=""/></div>
+<map name="classaxi__monitor_a6b7dc286ef67470782ca0d74f60dc692_cgraph" id="classaxi__monitor_a6b7dc286ef67470782ca0d74f60dc692_cgraph">
+<area shape="rect" id="node2" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#acaa78ee9684ddd7ba5bf9cdfa88808e0" title="Pull values out of a axi_seq_item_aw_vector_s and stuffs them into an axi_seq_item. " alt="" coords="226,5,321,32"/>
+<area shape="rect" id="node3" href="classaxi__seq__item.html#a510d32edb7887045a31a308bc7198c46" title="Convert item&#39;s variable into one printable string. " alt="" coords="179,56,368,83"/>
+<area shape="rect" id="node4" href="classaxi__if__abstract.html#a9e019c384309938d98fb93eb9d19ee35" title="Wait for a valid write address to be acknowledged and return it. " alt="" coords="204,107,343,149"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a533d709a6e06148b22425eb52277983b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">task axi_monitor::write_data </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>monitors Write Data channel </p>
+<p>and sends out TLM pkt. Loop Wait for activity on the Write Data Channel and push it into a queue When a write address isavailable,</p><ul>
+<li>pop all queued write data into the write address packet.</li>
+<li>write to m_memory (likely the agent's local memory memory instantiation Once number of expected beats is received (matches awlen), then send out analysis port </li>
+</ul>
+
+<p>Definition at line <a class="el" href="tb_2axi__monitor_8svh_source.html#l00161">161</a> of file <a class="el" href="tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00044">axi_seq_item::addr</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00031">ADDR_WIDTH</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00049">axi_seq_item::burst_size</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00050">axi_seq_item::burst_type</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00071">axi_seq_item::cmd</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00045">axi_seq_item::data</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent__config_8svh_source.html#l00035">axi_agent_config::drv_type</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00069">e_RESPONDER</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00051">e_WRITE_DATA</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00530">get_beat_N_byte_lanes()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00109">axi_if_abstract::get_data_bus_width()</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00439">get_next_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00046">axi_seq_item::len</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00050">m_config</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00051">m_memory</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00049">vif</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00041">w_q</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00175">axi_if_abstract::wait_for_write_data()</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00134">axi_seq_item_w_vector_s::wdata</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00136">axi_seq_item_w_vector_s::wlast</a>, <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html#l00045">memory::write()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00043">writedata_mbx</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00057">axi_seq_item::wstrb</a>, and <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00135">axi_seq_item_w_vector_s::wstrb</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__monitor_a533d709a6e06148b22425eb52277983b_cgraph.png" border="0" usemap="#classaxi__monitor_a533d709a6e06148b22425eb52277983b_cgraph" alt=""/></div>
+<map name="classaxi__monitor_a533d709a6e06148b22425eb52277983b_cgraph" id="classaxi__monitor_a533d709a6e06148b22425eb52277983b_cgraph">
+<area shape="rect" id="node2" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="403,51,561,78"/>
+<area shape="rect" id="node5" href="classaxi__if__abstract.html#a834de2d058eec05c4c890435fae83a5b" title="returns data bus width " alt="" coords="213,40,347,81"/>
+<area shape="rect" id="node6" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="217,106,343,133"/>
+<area shape="rect" id="node10" href="classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="211,157,349,199"/>
+<area shape="rect" id="node11" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="227,223,333,250"/>
+<area shape="rect" id="node3" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="615,71,773,112"/>
+<area shape="rect" id="node4" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d" title="calculate bus&#45;siz aligned address " alt="" coords="619,5,769,47"/>
+<area shape="rect" id="node7" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="397,106,567,133"/>
+<area shape="rect" id="node8" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="638,137,750,163"/>
+<area shape="rect" id="node9" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="821,129,972,171"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a999c77ab0723510d713bc1d89b1f5c92"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">task axi_monitor::write_response </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>monitors Write Response channel and sends out TLM pkt Loop Wait for activity on the Write Response Channel Convert into an <a class="el" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage ">axi_seq_item</a> Send out analysis port </p>
+
+<p>Definition at line <a class="el" href="tb_2axi__monitor_8svh_source.html#l00275">275</a> of file <a class="el" href="tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00162">b_to_class()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__seq__item_8svh_source.html#l00071">axi_seq_item::cmd</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00052">e_WRITE_RESPONSE</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00049">vif</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__if__abstract_8svh_source.html#l00184">axi_if_abstract::wait_for_write_response()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaxi__monitor_a999c77ab0723510d713bc1d89b1f5c92_cgraph.png" border="0" usemap="#classaxi__monitor_a999c77ab0723510d713bc1d89b1f5c92_cgraph" alt=""/></div>
+<map name="classaxi__monitor_a999c77ab0723510d713bc1d89b1f5c92_cgraph" id="classaxi__monitor_a999c77ab0723510d713bc1d89b1f5c92_cgraph">
+<area shape="rect" id="node2" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#a966a2770a1d733e0eec230225ca39f77" title="return values from a axi_seq_item_b_vector_s and return an axi_seq_item " alt="" coords="205,5,291,32"/>
+<area shape="rect" id="node3" href="classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538" title="Wait for a valid write response to be acknowledged and return it. " alt="" coords="179,57,317,98"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a48c6810c47a89190282fbc91b7f3ccc5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mailbox&lt;<a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&gt; axi_monitor::ar_mbx = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -763,12 +901,12 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a8a1fee4dea22f43376853f1afba27cad"></a>
+<a class="anchor" id="a54126398b05004e03f08ba64d625ec12"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mailbox&lt; <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> &gt; axi_monitor::aw_mbx = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td>
+          <td class="memname">mailbox&lt;<a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&gt; axi_monitor::aw_mbx = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -791,7 +929,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00038">38</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00074">build_phase()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent_8svh_source.html#l00104">axi_agent::connect_phase()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">monitor_read_address()</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>.</p>
+<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00074">build_phase()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent_8svh_source.html#l00104">axi_agent::connect_phase()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">monitor_read_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00308">read_address()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00108">write_address()</a>.</p>
 
 </div>
 </div>
@@ -807,7 +945,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00050">50</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent_8svh_source.html#l00064">axi_agent::build_phase()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">monitor_read_address()</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>.</p>
+<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent_8svh_source.html#l00064">axi_agent::build_phase()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">monitor_read_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00308">read_address()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00108">write_address()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00161">write_data()</a>.</p>
 
 </div>
 </div>
@@ -823,23 +961,39 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00051">51</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent_8svh_source.html#l00064">axi_agent::build_phase()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">monitor_read_address()</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>.</p>
+<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__agent_8svh_source.html#l00064">axi_agent::build_phase()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">monitor_read_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00308">read_address()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00161">write_data()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0987f38d866350fd1420412368b521f4"></a>
+<a class="anchor" id="a4cb635f7777cfd0e27e4d4fa634fbfa9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="rtl_2axi__pkg_8sv.html#structaxi__seq__item__r__vector__s">axi_seq_item_r_vector_s</a> axi_monitor::r_q</td>
+          <td class="memname"><a class="el" href="rtl_2axi__pkg_8sv.html#structaxi__seq__item__r__vector__s">axi_seq_item_r_vector_s</a> axi_monitor::r_q[$]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00042">42</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00454">monitor_read_data()</a>.</p>
+<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00454">monitor_read_data()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00458">read_data()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad54a0f558dbdd6e86df4e8f9d9db92d7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mailbox&lt;<a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&gt; axi_monitor::readdata_mbx = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="tb_2axi__monitor_8svh_source.html#l00044">44</a> of file <a class="el" href="tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="tb_2axi__monitor_8svh_source.html#l00308">read_address()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00458">read_data()</a>.</p>
 
 </div>
 </div>
@@ -855,23 +1009,39 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00049">49</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00074">build_phase()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">monitor_read_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00454">monitor_read_data()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00103">monitor_write_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00266">monitor_write_response()</a>.</p>
+<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00074">build_phase()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">monitor_read_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00454">monitor_read_data()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00103">monitor_write_address()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00266">monitor_write_response()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00308">read_address()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00458">read_data()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00108">write_address()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00161">write_data()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00275">write_response()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="acf08ceac3053b970a39253f85357cd7c"></a>
+<a class="anchor" id="ab80fd43d613f0fc32414b42f697e7bd0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="rtl_2axi__pkg_8sv.html#structaxi__seq__item__w__vector__s">axi_seq_item_w_vector_s</a> axi_monitor::w_q</td>
+          <td class="memname"><a class="el" href="rtl_2axi__pkg_8sv.html#structaxi__seq__item__w__vector__s">axi_seq_item_w_vector_s</a> axi_monitor::w_q[$]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00041">41</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>.</p>
+<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">monitor_write_data()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00161">write_data()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a59cd4aabf0d1e6e9064c94578ae75818"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mailbox&lt;<a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&gt; axi_monitor::writedata_mbx = <a class="el" href="classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65">new</a>(0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="tb_2axi__monitor_8svh_source.html#l00043">43</a> of file <a class="el" href="tb_2axi__monitor_8svh_source.html">axi_monitor.svh</a>.</p>
+
+<p>Referenced by <a class="el" href="tb_2axi__monitor_8svh_source.html#l00108">write_address()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00161">write_data()</a>.</p>
 
 </div>
 </div>

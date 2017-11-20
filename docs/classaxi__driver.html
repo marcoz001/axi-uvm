@@ -100,8 +100,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Inheritance diagram for axi_driver:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__driver__inherit__graph.png" border="0" usemap="#axi__driver_inherit__map" alt="Inheritance graph"/></div>
-<map name="axi__driver_inherit__map" id="axi__driver_inherit__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for axi_driver:</div>
@@ -201,10 +199,6 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates the virtual interface. </p>
-
-<p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__driver_8svh_source.html#l00061">61</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__driver_8svh_source.html">axi_driver.svh</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a14add6f8f066f75c40d24ea9061c9c48"></a>
@@ -213,6 +207,26 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void axi_driver::build_phase </td>
+          <td>(</td>
+          <td class="paramtype">uvm_phase&#160;</td>
+          <td class="paramname"><em>phase</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates the virtual interface. </p>
+
+<p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__driver_8svh_source.html#l00061">61</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__driver_8svh_source.html">axi_driver.svh</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa94820f5234934a33e735a95ff748241"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_driver::connect_phase </td>
           <td>(</td>
           <td class="paramtype">uvm_phase&#160;</td>
           <td class="paramname"><em>phase</em></td><td>)</td>
@@ -243,16 +257,26 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa94820f5234934a33e735a95ff748241"></a>
+<a class="anchor" id="a6f3429022f72c05b1f0b140e113774d5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void axi_driver::connect_phase </td>
+          <td class="memname">axi_driver::new </td>
           <td>(</td>
-          <td class="paramtype">uvm_phase&#160;</td>
-          <td class="paramname"><em>phase</em></td><td>)</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>name</em> = <code>&quot;axi_driver&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uvm_component&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -290,26 +314,15 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6f3429022f72c05b1f0b140e113774d5"></a>
+<a class="anchor" id="a4edb359e7927c729b939ebd992f83d05"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">axi_driver::new </td>
+          <td class="memname">task axi_driver::read_address </td>
           <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>name</em> = <code>&quot;axi_driver&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uvm_component&#160;</td>
-          <td class="paramname"><em>parent</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -372,12 +385,12 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a4edb359e7927c729b939ebd992f83d05"></a>
+<a class="anchor" id="a916fc7b07ee0ecd3d20d8bfcaa292f6e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">task axi_driver::read_address </td>
+          <td class="memname">task axi_driver::read_data </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -402,7 +415,7 @@ Here is the caller graph for this function:</div>
 
 <p>monitors Read Data channel and sends out TLM pkt </p>
 <p>This task should match the corresponding on in <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a> but it doesn't yet </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>: match read_data task in <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a> Instead it waits for a pkt in its mailbox. This packet will come from read_address once it has put the address out on the bus. The just continually waits for a valid and ready beat on the channel and stores it in that packet it got from read address. When rlast received, send out analysis port and goes back to waiting for next pkt from read address. </dd></dl>
-<p>This task should match the corresponding on in <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a> but it doesn't yet </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>: match read_data task in <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a> Instead it waits for a pkt in its mailbox. This packet will come from read_address once it has put the address out on the bus. The just continually waits for a valid and ready beat on the channel and stores it in that packet it got from read address. When rlast received, send out analysis port and goes back to waiting for next pkt from read address. </dd></dl>
+<p>This task should match the corresponding on in <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a> but it doesn't yet </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>: match read_data task in <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a> Instead it waits for a pkt in its mailbox. This packet will come from read_address once it has put the address out on the bus. The just continually waits for a valid and ready beat on the channel and stores it in that packet it got from read address. When rlast received, send out analysis port and goes back to waiting for next pkt from read address. </dd></dl>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__driver_8svh_source.html#l00512">512</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__driver_8svh_source.html">axi_driver.svh</a>.</p>
 
@@ -436,14 +449,15 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a916fc7b07ee0ecd3d20d8bfcaa292f6e"></a>
+<a class="anchor" id="a805fb1f256df6dedb3a6d62389203245"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">task axi_driver::read_data </td>
+          <td class="memname">task axi_driver::run_phase </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uvm_phase&#160;</td>
+          <td class="paramname"><em>phase</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -494,22 +508,6 @@ Here is the call graph for this function:</div>
 </map>
 </div>
 </p>
-
-</div>
-</div>
-<a class="anchor" id="a805fb1f256df6dedb3a6d62389203245"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">task axi_driver::run_phase </td>
-          <td>(</td>
-          <td class="paramtype">uvm_phase&#160;</td>
-          <td class="paramname"><em>phase</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -721,7 +719,7 @@ Here is the caller graph for this function:</div>
 
 <p>Write Response channel thread. </p>
 <p>Wait for write response (bvalid and bready) Convert to TLM itemand send back to sequence </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>: this task needs to be cleaned up. it doesn't actually wait for response</dd></dl>
-<p>Wait for write response (bvalid and bready) Convert to TLM itemand send back to sequence </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>: this task needs to be cleaned up. it doesn't actually wait for response</dd></dl>
+<p>Wait for write response (bvalid and bready) Convert to TLM itemand send back to sequence </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>: this task needs to be cleaned up. it doesn't actually wait for response</dd></dl>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__driver_8svh_source.html#l00386">386</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__driver_8svh_source.html">axi_driver.svh</a>.</p>
 

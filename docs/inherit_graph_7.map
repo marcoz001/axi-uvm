@@ -1,4 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="164,5,231,32"/>
-<area shape="rect" id="node3" href="$classaxi__responder__seq.html" title="Forever running sequence that receives TLM packets from monitor and sends to responder. " alt="" coords="279,5,409,32"/>
+<area shape="rect" id="node2" href="$classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="164,56,231,83"/>
+<area shape="rect" id="node3" href="$classaxi__pipelined__writes__seq.html" title="Writes to memory over AXI, backdoor readback. " alt="" coords="283,5,449,32"/>
+<area shape="rect" id="node4" href="$classaxi__responder__seq.html" title="Forever running sequence that receives TLM packets from monitor and sends to responder. " alt="" coords="301,56,431,83"/>
+<area shape="rect" id="node5" href="$classaxi__sequential__writes__seq.html" title="Writes to memory over AXI, backdoor memory readback and verify. " alt="" coords="279,107,453,133"/>
 </map>

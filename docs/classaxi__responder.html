@@ -100,8 +100,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Inheritance diagram for axi_responder:</div>
 <div class="dyncontent">
 <div class="center"><img src="classaxi__responder__inherit__graph.png" border="0" usemap="#axi__responder_inherit__map" alt="Inheritance graph"/></div>
-<map name="axi__responder_inherit__map" id="axi__responder_inherit__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for axi_responder:</div>
@@ -201,10 +199,6 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates the virtual interface. </p>
-
-<p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__responder_8svh_source.html#l00064">64</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a2200e436e4d6a1a73eebcc284f64c853"></a>
@@ -213,6 +207,26 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void axi_responder::build_phase </td>
+          <td>(</td>
+          <td class="paramtype">uvm_phase&#160;</td>
+          <td class="paramname"><em>phase</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates the virtual interface. </p>
+
+<p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__responder_8svh_source.html#l00064">64</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8d3514286329a1dd89d9b51ac96cd11c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void axi_responder::connect_phase </td>
           <td>(</td>
           <td class="paramtype">uvm_phase&#160;</td>
           <td class="paramname"><em>phase</em></td><td>)</td>
@@ -243,16 +257,26 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8d3514286329a1dd89d9b51ac96cd11c"></a>
+<a class="anchor" id="ada904275ea4c683de5c2fae9f39d4cd4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void axi_responder::connect_phase </td>
+          <td class="memname">axi_responder::new </td>
           <td>(</td>
-          <td class="paramtype">uvm_phase&#160;</td>
-          <td class="paramname"><em>phase</em></td><td>)</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>name</em> = <code>&quot;axi_responder&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uvm_component&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -290,26 +314,15 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ada904275ea4c683de5c2fae9f39d4cd4"></a>
+<a class="anchor" id="ac2bfb80d5d72e298202f4f31f0a2db72"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">axi_responder::new </td>
+          <td class="memname">task axi_responder::read_address </td>
           <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>name</em> = <code>&quot;axi_responder&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uvm_component&#160;</td>
-          <td class="paramname"><em>parent</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -350,12 +363,12 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="ac2bfb80d5d72e298202f4f31f0a2db72"></a>
+<a class="anchor" id="a2944f2ebd74a2fbaef300d355ed917e0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">task axi_responder::read_address </td>
+          <td class="memname">task axi_responder::read_data </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -422,14 +435,15 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a2944f2ebd74a2fbaef300d355ed917e0"></a>
+<a class="anchor" id="a1cbb78601c4535a0ca361989b7ca2077"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">task axi_responder::read_data </td>
+          <td class="memname">task axi_responder::run_phase </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uvm_phase&#160;</td>
+          <td class="paramname"><em>phase</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -478,22 +492,6 @@ Here is the call graph for this function:</div>
 </map>
 </div>
 </p>
-
-</div>
-</div>
-<a class="anchor" id="a1cbb78601c4535a0ca361989b7ca2077"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">task axi_responder::run_phase </td>
-          <td>(</td>
-          <td class="paramtype">uvm_phase&#160;</td>
-          <td class="paramname"><em>phase</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -559,7 +557,7 @@ Here is the call graph for this function:</div>
 
 <p>Write Address channel thread. </p>
 <p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
-<p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000027">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
+<p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__responder_8svh_source.html#l00144">144</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 
@@ -609,7 +607,7 @@ Here is the caller graph for this function:</div>
 
 <p>Write Data channel thread. </p>
 <p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
-<p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
+<p>Actually does almost nothing. The monitor handles taking AXI write data and storing it into memory and loadable logic in the axi_if handles awready. This task is basically part of a chain that guarantees that a write response won't be sent back before both write address and write data have been received. </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000029">Todo:</a></b></dt><dd>: clean up this task. Destroy that chain. </dd></dl>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__responder_8svh_source.html#l00175">175</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__responder_8svh_source.html">axi_responder.svh</a>.</p>
 

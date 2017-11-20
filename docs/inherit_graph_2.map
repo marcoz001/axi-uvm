@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classaxi__base__test.html" title="base test. AXI tests are to be extended from this test. " alt="" coords="129,5,232,32"/>
+<area shape="rect" id="node2" href="$classaxi__base__test.html" title="base test. AXI tests are to be extended from this test. " alt="" coords="129,31,232,57"/>
+<area shape="rect" id="node3" href="$classaxi__pipelined__writes__test.html" title="Sequential AXI writes. No pipelining. " alt="" coords="284,5,452,32"/>
+<area shape="rect" id="node4" href="$classaxi__sequential__writes__test.html" title="Sequential AXI writes. No pipelining. " alt="" coords="280,56,456,83"/>
 </map>

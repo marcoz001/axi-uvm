@@ -1,0 +1,3 @@
+<map id="axi_monitor::read_data" name="axi_monitor::read_data">
+<area shape="rect" id="node2" href="$classaxi__if__abstract.html#ad72883433768852cedc9acbf5263e071" title="Wait for a valid read data to be acknowledged and return it. " alt="" coords="208,5,347,47"/>
+</map>
