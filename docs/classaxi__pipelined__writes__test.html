@@ -94,7 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Sequential AXI writes. No pipelining.  
+<p>Pipelined AXI writes.  
  <a href="classaxi__pipelined__writes__test.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for axi_pipelined_writes_test:</div>
@@ -141,7 +141,7 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a02f6286c2458f4ca58a42b1165fa7d22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Sequential AXI writes. No pipelining. </p>
+<div class="textblock"><p>Pipelined AXI writes. </p>
 <p>Send multiple WriteAddress transfers, then wait for all the write data and write resposes to finish. Verify memory as each write responses returns. </p>
 
 <p>Definition at line <a class="el" href="axi__pipelined__writes__test_8svh_source.html#l00026">26</a> of file <a class="el" href="axi__pipelined__writes__test_8svh_source.html">axi_pipelined_writes_test.svh</a>.</p>
@@ -244,27 +244,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="axi__pipelined__writes__test_8svh_source.html#l00099">99</a> of file <a class="el" href="axi__pipelined__writes__test_8svh_source.html">axi_pipelined_writes_test.svh</a>.</p>
+<p>Definition at line <a class="el" href="axi__pipelined__writes__test_8svh_source.html#l00091">91</a> of file <a class="el" href="axi__pipelined__writes__test_8svh_source.html">axi_pipelined_writes_test.svh</a>.</p>
 
-<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00029">axi_base_test::m_resp_seq</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00028">axi_base_test::m_seq</a>, and <a class="el" href="tb_2axi__seq_8svh_source.html#l00129">axi_seq::set_valid()</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="classaxi__pipelined__writes__test_a1e522e33f40b04e2f1879e39bd26dd94_cgraph.png" border="0" usemap="#classaxi__pipelined__writes__test_a1e522e33f40b04e2f1879e39bd26dd94_cgraph" alt=""/></div>
-<map name="classaxi__pipelined__writes__test_a1e522e33f40b04e2f1879e39bd26dd94_cgraph" id="classaxi__pipelined__writes__test_a1e522e33f40b04e2f1879e39bd26dd94_cgraph">
-<area shape="rect" id="node2" href="classaxi__seq.html#ad76b628939ad2923dcad6e014db1103c" title="axi_seq::set_valid" alt="" coords="192,69,319,96"/>
-<area shape="rect" id="node3" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="367,69,469,96"/>
-<area shape="rect" id="node5" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="547,5,652,32"/>
-<area shape="rect" id="node6" href="classaxi__seq.html#a39e676c6fdd179e113d3dc0d130d24b0" title="axi_seq::check_memory" alt="" coords="517,157,681,184"/>
-<area shape="rect" id="node4" href="classaxi__seq.html#a703120fea83a77c9cf9cf3801c7e8903" title="Make sure addr_width,data_width, etc are set. " alt="" coords="538,56,661,83"/>
-<area shape="rect" id="node10" href="classaxi__seq.html#a3e1d96cf1d872bcc860464bfbc72c8e1" title="axi_seq::compare_items" alt="" coords="517,107,681,133"/>
-<area shape="rect" id="node7" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="729,132,841,159"/>
-<area shape="rect" id="node9" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="734,183,837,209"/>
-<area shape="rect" id="node8" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="889,125,1040,166"/>
-</map>
-</div>
-</p>
+<p>References <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00029">axi_base_test::m_resp_seq</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00028">axi_base_test::m_seq</a>.</p>
 
 </div>
 </div>
@@ -329,7 +311,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00029">29</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="tb_2axi__base__test_8svh_source.html#l00041">axi_base_test::build_phase()</a>, <a class="el" href="tb_2axi__base__test_8svh_source.html#l00062">axi_base_test::run_phase()</a>, <a class="el" href="axi__sequential__writes__test_8svh_source.html#l00093">axi_sequential_writes_test::run_phase()</a>, and <a class="el" href="axi__pipelined__writes__test_8svh_source.html#l00099">run_phase()</a>.</p>
+<p>Referenced by <a class="el" href="tb_2axi__base__test_8svh_source.html#l00041">axi_base_test::build_phase()</a>, <a class="el" href="tb_2axi__base__test_8svh_source.html#l00062">axi_base_test::run_phase()</a>, <a class="el" href="axi__pipelined__writes__test_8svh_source.html#l00091">run_phase()</a>, <a class="el" href="axi__pipelined__reads__test_8svh_source.html#l00091">axi_pipelined_reads_test::run_phase()</a>, <a class="el" href="axi__sequential__reads__test_8svh_source.html#l00095">axi_sequential_reads_test::run_phase()</a>, and <a class="el" href="axi__sequential__writes__test_8svh_source.html#l00101">axi_sequential_writes_test::run_phase()</a>.</p>
 
 </div>
 </div>
@@ -353,7 +335,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html#l00028">28</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2axi__base__test_8svh_source.html">axi_base_test.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="tb_2axi__base__test_8svh_source.html#l00041">axi_base_test::build_phase()</a>, <a class="el" href="tb_2axi__base__test_8svh_source.html#l00062">axi_base_test::run_phase()</a>, <a class="el" href="axi__sequential__writes__test_8svh_source.html#l00093">axi_sequential_writes_test::run_phase()</a>, and <a class="el" href="axi__pipelined__writes__test_8svh_source.html#l00099">run_phase()</a>.</p>
+<p>Referenced by <a class="el" href="tb_2axi__base__test_8svh_source.html#l00041">axi_base_test::build_phase()</a>, <a class="el" href="tb_2axi__base__test_8svh_source.html#l00062">axi_base_test::run_phase()</a>, <a class="el" href="axi__pipelined__writes__test_8svh_source.html#l00091">run_phase()</a>, <a class="el" href="axi__pipelined__reads__test_8svh_source.html#l00091">axi_pipelined_reads_test::run_phase()</a>, <a class="el" href="axi__sequential__reads__test_8svh_source.html#l00095">axi_sequential_reads_test::run_phase()</a>, and <a class="el" href="axi__sequential__writes__test_8svh_source.html#l00101">axi_sequential_writes_test::run_phase()</a>.</p>
 
 </div>
 </div>

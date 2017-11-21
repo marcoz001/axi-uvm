@@ -1,4 +1,4 @@
 <map id="axi_seq::body" name="axi_seq::body">
-<area shape="rect" id="node2" href="$classaxi__seq.html#ad76b628939ad2923dcad6e014db1103c" title="axi_seq::set_valid" alt="" coords="156,13,283,39"/>
-<area shape="rect" id="node3" href="$classaxi__pipelined__writes__test.html#a1e522e33f40b04e2f1879e39bd26dd94" title="axi_pipelined_writes\l_test::run_phase" alt="" coords="331,5,469,47"/>
+<area shape="rect" id="node2" href="$classaxi__seq.html#acce4aa5766828b5f16357fef3be9619b" title="How many transactions? " alt="" coords="156,5,320,47"/>
+<area shape="rect" id="node3" href="$classaxi__base__test.html#aafeae2a4e4ad4c00b421b87001272ffd" title="axi_base_test::build\l_phase" alt="" coords="368,5,507,47"/>
 </map>

@@ -1,3 +1,11 @@
 <map id="axi_base_test::build_phase" name="axi_base_test::build_phase">
-<area shape="rect" id="node2" href="$classaxi__seq.html#acce4aa5766828b5f16357fef3be9619b" title="How many transactions? " alt="" coords="192,5,356,47"/>
+<area shape="rect" id="node2" href="$classaxi__seq.html#acce4aa5766828b5f16357fef3be9619b" title="How many transactions? " alt="" coords="192,125,356,166"/>
+<area shape="rect" id="node3" href="$classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="404,107,507,133"/>
+<area shape="rect" id="node10" href="$classaxi__seq.html#a3e1d96cf1d872bcc860464bfbc72c8e1" title="axi_seq::compare_items" alt="" coords="555,157,719,184"/>
+<area shape="rect" id="node4" href="$classaxi__seq.html#a703120fea83a77c9cf9cf3801c7e8903" title="Make sure addr_width,data_width, etc are set. " alt="" coords="575,5,698,32"/>
+<area shape="rect" id="node5" href="$classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. " alt="" coords="584,56,689,83"/>
+<area shape="rect" id="node6" href="$classaxi__seq.html#a39e676c6fdd179e113d3dc0d130d24b0" title="axi_seq::check_memory" alt="" coords="555,107,719,133"/>
+<area shape="rect" id="node7" href="$result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="767,81,879,108"/>
+<area shape="rect" id="node9" href="$classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="771,132,874,159"/>
+<area shape="rect" id="node8" href="$result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="927,74,1077,115"/>
 </map>

@@ -1,4 +1,6 @@
 <map id="axi_agent_config::new" name="axi_agent_config::new">
-<area shape="rect" id="node2" href="$classaxi__sequential__writes__test.html#af47904740ca0f7133c46aa56618d2119" title="axi_sequential_writes\l_test::new" alt="" coords="205,5,352,47"/>
-<area shape="rect" id="node3" href="$classaxi__pipelined__writes__test.html#a8f81287edf04772a3fccd4c75419bbaf" title="axi_pipelined_writes\l_test::new" alt="" coords="209,71,348,112"/>
+<area shape="rect" id="node2" href="$classaxi__sequential__reads__test.html#a67443bd605d35c176a83b1c836c94b6f" title="axi_sequential_reads\l_test::new" alt="" coords="207,5,351,47"/>
+<area shape="rect" id="node3" href="$classaxi__sequential__writes__test.html#af47904740ca0f7133c46aa56618d2119" title="axi_sequential_writes\l_test::new" alt="" coords="205,71,352,112"/>
+<area shape="rect" id="node4" href="$classaxi__pipelined__reads__test.html#a71a9c215892a0208941ae1ed3f5b1d0e" title="axi_pipelined_reads\l_test::new" alt="" coords="211,136,347,177"/>
+<area shape="rect" id="node5" href="$classaxi__pipelined__writes__test.html#a8f81287edf04772a3fccd4c75419bbaf" title="axi_pipelined_writes\l_test::new" alt="" coords="209,201,348,243"/>
 </map>

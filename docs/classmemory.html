@@ -125,6 +125,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2e7163441abfd74428d3b0813602c0aa"><td class="memItemLeft" align="right" valign="top">virtual bit&lt; 7:0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmemory.html#a2e7163441abfd74428d3b0813602c0aa">read</a> (input bit&lt; <a class="el" href="rtl_2axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt; addr)</td></tr>
 <tr class="memdesc:a2e7163441abfd74428d3b0813602c0aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads from memory.  <a href="#a2e7163441abfd74428d3b0813602c0aa">More...</a><br /></td></tr>
 <tr class="separator:a2e7163441abfd74428d3b0813602c0aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeddbe841fa4fb8a4342923b1abe4bd23"><td class="memItemLeft" align="right" valign="top">bit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmemory.html#aeddbe841fa4fb8a4342923b1abe4bd23">seq_item_check</a> (ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a> item, input bit&lt; <a class="el" href="rtl_2axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt; lower_addr, input bit&lt; <a class="el" href="rtl_2axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt; upper_addr)</td></tr>
+<tr class="memdesc:aeddbe841fa4fb8a4342923b1abe4bd23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares an <a class="el" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage ">axi_seq_item</a>'s data and burst_type against expected matching memory contents.  <a href="#aeddbe841fa4fb8a4342923b1abe4bd23">More...</a><br /></td></tr>
+<tr class="separator:aeddbe841fa4fb8a4342923b1abe4bd23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Extremely simple memory model with just <a class="el" href="classmemory.html#a9e041180ed26bc52eea610c25d6238ce" title="Writes into memory. ">write()</a> and <a class="el" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. ">read()</a> methods. </p>
@@ -233,22 +236,25 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html#l00054">54</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html">memory.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__pipelined__writes__seq_8svh_source.html#l00378">axi_seq::check_memory()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">axi_monitor::monitor_read_address()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00308">axi_monitor::read_address()</a>.</p>
+<p>Referenced by <a class="el" href="result__from__tec101_2tb_2tb_2axi__pipelined__writes__seq_8svh_source.html#l00378">axi_seq::check_memory()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00299">axi_monitor::monitor_read_address()</a>, <a class="el" href="tb_2axi__monitor_8svh_source.html#l00308">axi_monitor::read_address()</a>, and <a class="el" href="tb_2memory_8svh_source.html#l00077">seq_item_check()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmemory_aecfbebb23ede4d2d19475202305ac554_icgraph.png" border="0" usemap="#classmemory_aecfbebb23ede4d2d19475202305ac554_icgraph" alt=""/></div>
 <map name="classmemory_aecfbebb23ede4d2d19475202305ac554_icgraph" id="classmemory_aecfbebb23ede4d2d19475202305ac554_icgraph">
-<area shape="rect" id="node2" href="classaxi__seq.html#a39e676c6fdd179e113d3dc0d130d24b0" title="axi_seq::check_memory" alt="" coords="161,122,325,149"/>
-<area shape="rect" id="node8" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="173,203,313,244"/>
-<area shape="rect" id="node10" href="classaxi__monitor.html#a1894a2a0b2a491fc4cfc047fe5bc62e9" title="monitors Read Address channel " alt="" coords="156,269,331,295"/>
-<area shape="rect" id="node3" href="classaxi__sequential__writes__seq.html#a6e2e64a3564fe96732d935f3f491031f" title="Does all the work. " alt="" coords="385,5,532,47"/>
-<area shape="rect" id="node4" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="407,71,510,98"/>
-<area shape="rect" id="node5" href="classaxi__seq.html#ad76b628939ad2923dcad6e014db1103c" title="axi_seq::set_valid" alt="" coords="587,97,713,123"/>
-<area shape="rect" id="node7" href="classaxi__pipelined__writes__seq.html#ab96356044ac531e25629b1e1352508e4" title="Handles write responses, including verifying memory via backdoor reads. " alt="" coords="379,173,539,215"/>
-<area shape="rect" id="node6" href="classaxi__pipelined__writes__test.html#a1e522e33f40b04e2f1879e39bd26dd94" title="axi_pipelined_writes\l_test::run_phase" alt="" coords="761,89,900,131"/>
-<area shape="rect" id="node9" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="380,239,537,266"/>
+<area shape="rect" id="node2" href="classaxi__seq.html#a39e676c6fdd179e113d3dc0d130d24b0" title="axi_seq::check_memory" alt="" coords="161,13,325,39"/>
+<area shape="rect" id="node6" href="classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="173,64,313,105"/>
+<area shape="rect" id="node8" href="classaxi__monitor.html#a1894a2a0b2a491fc4cfc047fe5bc62e9" title="monitors Read Address channel " alt="" coords="156,130,331,157"/>
+<area shape="rect" id="node9" href="classmemory.html#aeddbe841fa4fb8a4342923b1abe4bd23" title="Compares an axi_seq_item&#39;s data and burst_type against expected matching memory contents. " alt="" coords="157,191,329,218"/>
+<area shape="rect" id="node3" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="407,13,510,39"/>
+<area shape="rect" id="node4" href="classaxi__seq.html#acce4aa5766828b5f16357fef3be9619b" title="How many transactions? " alt="" coords="587,5,751,47"/>
+<area shape="rect" id="node5" href="classaxi__base__test.html#aafeae2a4e4ad4c00b421b87001272ffd" title="axi_base_test::build\l_phase" alt="" coords="799,5,937,47"/>
+<area shape="rect" id="node7" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="380,67,537,94"/>
+<area shape="rect" id="node10" href="classaxi__pipelined__writes__seq.html#ab96356044ac531e25629b1e1352508e4" title="Handles write responses, including verifying memory via backdoor reads. " alt="" coords="379,119,539,160"/>
+<area shape="rect" id="node11" href="classaxi__pipelined__reads__seq.html#a98c58e462084001c736abc2298776374" title="Handles write responses, including verifying memory via backdoor reads. " alt="" coords="379,184,539,225"/>
+<area shape="rect" id="node12" href="classaxi__sequential__reads__seq.html#a66a5b21037c02406635a4289c5c38f89" title="Does all the work. " alt="" coords="387,249,531,291"/>
+<area shape="rect" id="node13" href="classaxi__sequential__writes__seq.html#a6e2e64a3564fe96732d935f3f491031f" title="Does all the work. " alt="" coords="385,315,532,356"/>
 </map>
 </div>
 </p>
@@ -280,7 +286,73 @@ Here is the caller graph for this function:</div>
 <p>Reads from memory. </p>
 <p>uses an associative array. If reading from unwritten address, 'z is returned. </p>
 
-<p>Definition at line <a class="el" href="tb_2memory_8svh_source.html#l00056">56</a> of file <a class="el" href="tb_2memory_8svh_source.html">memory.svh</a>.</p>
+<p>Definition at line <a class="el" href="tb_2memory_8svh_source.html#l00059">59</a> of file <a class="el" href="tb_2memory_8svh_source.html">memory.svh</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aeddbe841fa4fb8a4342923b1abe4bd23"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">automatic bit memory::seq_item_check </td>
+          <td>(</td>
+          <td class="paramtype">ref <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>&#160;</td>
+          <td class="paramname"><em>item</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; <a class="el" href="rtl_2axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>lower_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">input bit&lt; <a class="el" href="rtl_2axi__uvm__pkg_8sv.html#a137c0955e8f91047325731db53b341bf">ADDR_WIDTH</a>-1:0 &gt;&#160;</td>
+          <td class="paramname"><em>upper_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compares an <a class="el" href="classaxi__seq__item.html" title="contains all data and functions related to axi and usage ">axi_seq_item</a>'s data and burst_type against expected matching memory contents. </p>
+<p>This function takes into account fixed, incrementing and wrapped burst types. That includes accounting for burst_size. </p>
+
+<p>Definition at line <a class="el" href="tb_2memory_8svh_source.html#l00077">77</a> of file <a class="el" href="tb_2memory_8svh_source.html">memory.svh</a>.</p>
+
+<p>References <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv_source.html#l00031">ADDR_WIDTH</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00312">calculate_axlen()</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00081">e_FIXED</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00082">e_INCR</a>, <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv_source.html#l00083">e_WRAP</a>, and <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html#l00054">read()</a>.</p>
+
+<p>Referenced by <a class="el" href="axi__sequential__writes__seq_8svh_source.html#l00054">axi_sequential_writes_seq::body()</a>, <a class="el" href="axi__sequential__reads__seq_8svh_source.html#l00063">axi_sequential_reads_seq::body()</a>, <a class="el" href="tb_2axi__pipelined__writes__seq_8svh_source.html#l00053">axi_pipelined_writes_seq::response_handler()</a>, and <a class="el" href="axi__pipelined__reads__seq_8svh_source.html#l00053">axi_pipelined_reads_seq::response_handler()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classmemory_aeddbe841fa4fb8a4342923b1abe4bd23_cgraph.png" border="0" usemap="#classmemory_aeddbe841fa4fb8a4342923b1abe4bd23_cgraph" alt=""/></div>
+<map name="classmemory_aeddbe841fa4fb8a4342923b1abe4bd23_cgraph" id="classmemory_aeddbe841fa4fb8a4342923b1abe4bd23_cgraph">
+<area shape="rect" id="node2" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#afbfbf7a50bf6dabae3804e39d05434b1" title="calculate awlen or arlen " alt="" coords="225,13,337,39"/>
+<area shape="rect" id="node4" href="classmemory.html#aecfbebb23ede4d2d19475202305ac554" title="Reads from memory. " alt="" coords="230,63,333,90"/>
+<area shape="rect" id="node3" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="385,5,536,47"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classmemory_aeddbe841fa4fb8a4342923b1abe4bd23_icgraph.png" border="0" usemap="#classmemory_aeddbe841fa4fb8a4342923b1abe4bd23_icgraph" alt=""/></div>
+<map name="classmemory_aeddbe841fa4fb8a4342923b1abe4bd23_icgraph" id="classmemory_aeddbe841fa4fb8a4342923b1abe4bd23_icgraph">
+<area shape="rect" id="node2" href="classaxi__sequential__writes__seq.html#a6e2e64a3564fe96732d935f3f491031f" title="Does all the work. " alt="" coords="232,5,379,47"/>
+<area shape="rect" id="node3" href="classaxi__sequential__reads__seq.html#a66a5b21037c02406635a4289c5c38f89" title="Does all the work. " alt="" coords="233,71,377,112"/>
+<area shape="rect" id="node4" href="classaxi__pipelined__writes__seq.html#ab96356044ac531e25629b1e1352508e4" title="Handles write responses, including verifying memory via backdoor reads. " alt="" coords="225,136,385,177"/>
+<area shape="rect" id="node5" href="classaxi__pipelined__reads__seq.html#a98c58e462084001c736abc2298776374" title="Handles write responses, including verifying memory via backdoor reads. " alt="" coords="225,201,385,243"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -320,7 +392,7 @@ Here is the caller graph for this function:</div>
 
 <p>Definition at line <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html#l00045">45</a> of file <a class="el" href="result__from__tec101_2tb_2tb_2memory_8svh_source.html">memory.svh</a>.</p>
 
-<p>Referenced by <a class="el" href="axi__sequential__writes__seq_8svh_source.html#l00054">axi_sequential_writes_seq::body()</a>, <a class="el" href="tb_2axi__pipelined__writes__seq_8svh_source.html#l00106">axi_pipelined_writes_seq::body()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__pipelined__writes__seq_8svh_source.html#l00234">axi_seq::body()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, <a class="el" href="tb_2axi__seq_8svh_source.html#l00129">axi_seq::set_valid()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00161">axi_monitor::write_data()</a>.</p>
+<p>Referenced by <a class="el" href="axi__sequential__writes__seq_8svh_source.html#l00054">axi_sequential_writes_seq::body()</a>, <a class="el" href="axi__sequential__reads__seq_8svh_source.html#l00063">axi_sequential_reads_seq::body()</a>, <a class="el" href="axi__pipelined__reads__seq_8svh_source.html#l00107">axi_pipelined_reads_seq::body()</a>, <a class="el" href="tb_2axi__pipelined__writes__seq_8svh_source.html#l00106">axi_pipelined_writes_seq::body()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__pipelined__writes__seq_8svh_source.html#l00234">axi_seq::body()</a>, <a class="el" href="result__from__tec101_2tb_2tb_2axi__monitor_8svh_source.html#l00145">axi_monitor::monitor_write_data()</a>, and <a class="el" href="tb_2axi__monitor_8svh_source.html#l00161">axi_monitor::write_data()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -328,13 +400,15 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="classmemory_a9e041180ed26bc52eea610c25d6238ce_icgraph.png" border="0" usemap="#classmemory_a9e041180ed26bc52eea610c25d6238ce_icgraph" alt=""/></div>
 <map name="classmemory_a9e041180ed26bc52eea610c25d6238ce_icgraph" id="classmemory_a9e041180ed26bc52eea610c25d6238ce_icgraph">
 <area shape="rect" id="node2" href="classaxi__sequential__writes__seq.html#a6e2e64a3564fe96732d935f3f491031f" title="Does all the work. " alt="" coords="164,5,311,47"/>
-<area shape="rect" id="node3" href="classaxi__pipelined__writes__seq.html#ac4683d48c4b0b45a6d8ffa3d2ecf6677" title="Does all the work. " alt="" coords="168,71,307,112"/>
-<area shape="rect" id="node4" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="186,137,289,163"/>
-<area shape="rect" id="node5" href="classaxi__seq.html#ad76b628939ad2923dcad6e014db1103c" title="axi_seq::set_valid" alt="" coords="379,162,506,189"/>
-<area shape="rect" id="node7" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="167,239,307,280"/>
-<area shape="rect" id="node9" href="classaxi__monitor.html#a533d709a6e06148b22425eb52277983b" title="monitors Write Data channel " alt="" coords="159,305,316,331"/>
-<area shape="rect" id="node6" href="classaxi__pipelined__writes__test.html#a1e522e33f40b04e2f1879e39bd26dd94" title="axi_pipelined_writes\l_test::run_phase" alt="" coords="569,155,708,196"/>
-<area shape="rect" id="node8" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="364,246,521,273"/>
+<area shape="rect" id="node3" href="classaxi__sequential__reads__seq.html#a66a5b21037c02406635a4289c5c38f89" title="Does all the work. " alt="" coords="165,71,309,112"/>
+<area shape="rect" id="node4" href="classaxi__pipelined__reads__seq.html#a3e895a6b63903816945053861cd6a86d" title="Does all the work. " alt="" coords="169,136,305,177"/>
+<area shape="rect" id="node5" href="classaxi__pipelined__writes__seq.html#ac4683d48c4b0b45a6d8ffa3d2ecf6677" title="Does all the work. " alt="" coords="168,201,307,243"/>
+<area shape="rect" id="node6" href="classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="186,267,289,294"/>
+<area shape="rect" id="node9" href="classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="167,319,307,360"/>
+<area shape="rect" id="node11" href="classaxi__monitor.html#a533d709a6e06148b22425eb52277983b" title="monitors Write Data channel " alt="" coords="159,385,316,411"/>
+<area shape="rect" id="node7" href="classaxi__seq.html#acce4aa5766828b5f16357fef3be9619b" title="How many transactions? " alt="" coords="364,260,528,301"/>
+<area shape="rect" id="node8" href="classaxi__base__test.html#aafeae2a4e4ad4c00b421b87001272ffd" title="axi_base_test::build\l_phase" alt="" coords="576,260,715,301"/>
+<area shape="rect" id="node10" href="classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="367,326,525,353"/>
 </map>
 </div>
 </p>
@@ -375,7 +449,7 @@ Here is the caller graph for this function:</div>
 
 <p>Writes into memory. </p>
 
-<p>Definition at line <a class="el" href="tb_2memory_8svh_source.html#l00047">47</a> of file <a class="el" href="tb_2memory_8svh_source.html">memory.svh</a>.</p>
+<p>Definition at line <a class="el" href="tb_2memory_8svh_source.html#l00050">50</a> of file <a class="el" href="tb_2memory_8svh_source.html">memory.svh</a>.</p>
 
 </div>
 </div>

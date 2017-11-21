@@ -1,5 +1,9 @@
 <map id="rtl/axi_uvm_pkg.sv" name="rtl/axi_uvm_pkg.sv">
 <area shape="rect" id="node9" href="$axi__sequential__writes__seq_8svh.html" title="axi_sequential_writes\l_seq.svh" alt="" coords="1041,80,1188,121"/>
-<area shape="rect" id="node20" href="$axi__sequential__writes__test_8svh.html" title="axi_sequential_writes\l_test.svh" alt="" coords="2705,80,2852,121"/>
-<area shape="rect" id="node21" href="$axi__pipelined__writes__test_8svh.html" title="axi_pipelined_writes\l_test.svh" alt="" coords="2876,80,3015,121"/>
+<area shape="rect" id="node11" href="$axi__sequential__reads__seq_8svh.html" title="axi_sequential_reads\l_seq.svh" alt="" coords="1375,80,1519,121"/>
+<area shape="rect" id="node12" href="$axi__pipelined__reads__seq_8svh.html" title="axi_pipelined_reads\l_seq.svh" alt="" coords="1543,80,1679,121"/>
+<area shape="rect" id="node22" href="$axi__sequential__writes__test_8svh.html" title="axi_sequential_writes\l_test.svh" alt="" coords="3033,80,3180,121"/>
+<area shape="rect" id="node23" href="$axi__pipelined__writes__test_8svh.html" title="axi_pipelined_writes\l_test.svh" alt="" coords="3204,80,3343,121"/>
+<area shape="rect" id="node24" href="$axi__sequential__reads__test_8svh.html" title="axi_sequential_reads\l_test.svh" alt="" coords="3367,80,3511,121"/>
+<area shape="rect" id="node25" href="$axi__pipelined__reads__test_8svh.html" title="axi_pipelined_reads\l_test.svh" alt="" coords="3535,80,3671,121"/>
 </map>
