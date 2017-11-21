@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['initialize',['initialize',['../classaxi__seq.html#a703120fea83a77c9cf9cf3801c7e8903',1,'axi_seq::initialize()'],['../classaxi__seq.html#a703120fea83a77c9cf9cf3801c7e8903',1,'axi_seq::initialize()']]]
+  ['max_5flen',['max_len',['../classaxi__seq__item.html#a8ce3656acf87ec08f14fd18f7458ad2e',1,'axi_seq_item']]]
 ];

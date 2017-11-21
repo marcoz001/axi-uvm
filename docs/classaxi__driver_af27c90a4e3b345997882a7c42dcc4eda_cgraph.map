@@ -1,5 +1,0 @@
-<map id="axi_driver::responder_read_data" name="axi_driver::responder_read_data">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#a073680af7b72bdf0c022cfcd95b36c0a" title="axi_seq_item::initialize" alt="" coords="196,5,351,32"/>
-<area shape="rect" id="node4" href="$classaxi__seq__item.html#a4946ae5e29a74fb9a4b873df4ae23bf3" title="axi_seq_item::update\l_address" alt="" coords="200,57,347,98"/>
-<area shape="rect" id="node3" href="$classaxi__seq__item.html#a494c1a855d4078ec81d68c8e31187626" title="axi_seq_item::update" alt="" coords="399,35,545,61"/>
-</map>

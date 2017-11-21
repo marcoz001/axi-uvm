@@ -1,8 +1,0 @@
-<map id="axi_seq_item::calculate_beats" name="axi_seq_item::calculate_beats">
-<area shape="rect" id="node2" href="$classaxi__seq__item.html#a2718ea6ff7551a92fdbc6ff92d80bb14" title="take values from an axi_seq_item and stuff into a axi_seq_item_ar_vector_s " alt="" coords="215,5,366,47"/>
-<area shape="rect" id="node5" href="$classaxi__seq__item.html#aad0986d6f64e1a477f73f7b58044502b" title="axi_seq_item::wlast_c" alt="" coords="425,71,577,98"/>
-<area shape="rect" id="node6" href="$classaxi__seq__item.html#aada0d930cd4e6040a7584e068e01dc94" title="Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s. " alt="" coords="212,123,369,164"/>
-<area shape="rect" id="node3" href="$classaxi__driver.html#a4edb359e7927c729b939ebd992f83d05" title="Read Address channel thread. " alt="" coords="419,17,583,43"/>
-<area shape="rect" id="node4" href="$classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="632,70,779,97"/>
-<area shape="rect" id="node7" href="$classaxi__driver.html#a5948ddb7cc7b2f8f18b3d3d3f5530c03" title="Write Address channel thread. " alt="" coords="417,126,584,153"/>
-</map>

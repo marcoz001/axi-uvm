@@ -1,5 +1,0 @@
-<map id="axi_seq_item::ar_from_class" name="axi_seq_item::ar_from_class">
-<area shape="rect" id="node2" href="$classaxi__driver.html#a4edb359e7927c729b939ebd992f83d05" title="Read Address channel thread. " alt="" coords="204,5,368,32"/>
-<area shape="rect" id="node4" href="$classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="209,56,363,83"/>
-<area shape="rect" id="node3" href="$classaxi__driver.html#a805fb1f256df6dedb3a6d62389203245" title="Launches channel driver threads and then acts as a dispatcher. " alt="" coords="416,5,563,32"/>
-</map>

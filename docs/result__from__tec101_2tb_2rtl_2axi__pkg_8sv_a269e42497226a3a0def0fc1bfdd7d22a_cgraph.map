@@ -1,4 +1,0 @@
-<map id="get_beat_N_byte_lanes" name="get_beat_N_byte_lanes">
-<area shape="rect" id="node2" href="$result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="212,5,371,47"/>
-<area shape="rect" id="node3" href="$result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d" title="calculate bus&#45;siz aligned address " alt="" coords="216,71,367,112"/>
-</map>

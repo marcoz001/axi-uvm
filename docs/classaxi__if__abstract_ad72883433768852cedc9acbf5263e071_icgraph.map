@@ -1,7 +1,5 @@
 <map id="axi_if_abstract::wait_for_read_data" name="axi_if_abstract::wait_for_read_data">
-<area shape="rect" id="node2" href="$classaxi__monitor.html#a22e36c827d9bcde956cc502ab4d1bb8d" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="199,5,339,47"/>
-<area shape="rect" id="node4" href="$classaxi__monitor.html#ae9d073687e001b3bde7cc83e11c76a96" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="192,71,347,98"/>
-<area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="617,42,775,69"/>
-<area shape="rect" id="node5" href="$classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="412,64,552,105"/>
-<area shape="rect" id="node6" href="$classaxi__monitor.html#a1894a2a0b2a491fc4cfc047fe5bc62e9" title="monitors Read Address channel " alt="" coords="395,130,569,157"/>
+<area shape="rect" id="node2" href="$classaxi__monitor.html#ae9d073687e001b3bde7cc83e11c76a96" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="192,13,347,39"/>
+<area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="617,13,775,39"/>
+<area shape="rect" id="node4" href="$classaxi__monitor.html#a1894a2a0b2a491fc4cfc047fe5bc62e9" title="monitors Read Address channel " alt="" coords="395,38,569,65"/>
 </map>

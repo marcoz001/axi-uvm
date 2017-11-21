@@ -1,5 +1,0 @@
-<map id="axi_seq::compare_items" name="axi_seq::compare_items">
-<area shape="rect" id="node2" href="$classaxi__seq.html#a11904d8b48c4cabb8eb8b84dc9e52d48" title="Does all the work. " alt="" coords="255,5,357,32"/>
-<area shape="rect" id="node3" href="$classaxi__seq.html#a7a1d543939f792cbb7539aa8855e03a7" title="axi_seq::check_memory" alt="" coords="224,56,388,83"/>
-<area shape="rect" id="node4" href="$classaxi__seq.html#a8514cd0265ee9d53f6df519050e412a9" title="axi_seq::response_handler" alt="" coords="217,107,395,133"/>
-</map>

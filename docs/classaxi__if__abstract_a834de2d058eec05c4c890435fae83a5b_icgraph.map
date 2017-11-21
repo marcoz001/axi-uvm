@@ -1,7 +1,5 @@
 <map id="axi_if_abstract::get_data_bus_width" name="axi_if_abstract::get_data_bus_width">
-<area shape="rect" id="node2" href="$classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="204,5,344,47"/>
-<area shape="rect" id="node4" href="$classaxi__monitor.html#ab005117a8180b27f296f4b84e7c7d6b1" title="monitors Write Data channel " alt="" coords="204,71,344,112"/>
-<area shape="rect" id="node5" href="$classaxi__monitor.html#a1894a2a0b2a491fc4cfc047fe5bc62e9" title="monitors Read Address channel " alt="" coords="187,137,361,163"/>
-<area shape="rect" id="node6" href="$classaxi__monitor.html#a533d709a6e06148b22425eb52277983b" title="monitors Write Data channel " alt="" coords="195,187,353,214"/>
-<area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="409,46,567,73"/>
+<area shape="rect" id="node2" href="$classaxi__monitor.html#a1894a2a0b2a491fc4cfc047fe5bc62e9" title="monitors Read Address channel " alt="" coords="187,5,361,32"/>
+<area shape="rect" id="node4" href="$classaxi__monitor.html#a533d709a6e06148b22425eb52277983b" title="monitors Write Data channel " alt="" coords="195,56,353,83"/>
+<area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="409,31,567,57"/>
 </map>

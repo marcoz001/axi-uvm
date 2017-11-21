@@ -1,6 +1,0 @@
-<map id="tb/axi_seq_item.svh" name="tb/axi_seq_item.svh">
-<area shape="rect" id="node2" href="$result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html" title="result_from_tec101\l/tb/rtl/axi_uvm_pkg.sv" alt="" coords="5,80,156,121"/>
-<area shape="rect" id="node3" href="$rtl_2axi__uvm__pkg_8sv.html" title="rtl/axi_uvm_pkg.sv" alt="" coords="180,87,312,114"/>
-<area shape="rect" id="node4" href="$result__from__tec101_2tb_2tb_2testbench_8sv.html" title="result_from_tec101\l/tb/tb/testbench.sv" alt="" coords="106,169,239,211"/>
-<area shape="rect" id="node5" href="$tb_2testbench_8sv.html" title="tb/testbench.sv" alt="" coords="263,177,375,203"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="axi_seq_item::ar_to_class" name="axi_seq_item::ar_to_class">
-<area shape="rect" id="node2" href="$classaxi__monitor.html#a88ed98b94935cbc5846d6d23b7cb8766" title="monitors Read Address channel " alt="" coords="196,5,336,47"/>
-<area shape="rect" id="node4" href="$classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="189,71,343,98"/>
-<area shape="rect" id="node3" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="391,13,548,39"/>
-</map>

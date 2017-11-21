@@ -1,7 +1,5 @@
 <map id="axi_monitor" name="axi_monitor">
-<area shape="rect" id="node3" href="$classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="207,56,313,83"/>
-<area shape="rect" id="node7" href="$classaxi__agent__config.html" title="Configuration object for an axi_agent. " alt="" coords="200,107,320,133"/>
-<area shape="rect" id="node5" href="$classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="225,157,295,184"/>
-<area shape="rect" id="node8" href="$rtl_2axi__pkg_8sv.html#structaxi__seq__item__r__vector__s" title="This packed struct is used to send read data channel information between the DUT and TB..." alt="" coords="177,208,343,235"/>
-<area shape="rect" id="node9" href="$rtl_2axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="173,259,347,285"/>
+<area shape="rect" id="node3" href="$classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="127,81,234,108"/>
+<area shape="rect" id="node7" href="$classaxi__agent__config.html" title="Configuration object for an axi_agent. " alt="" coords="258,81,378,108"/>
+<area shape="rect" id="node5" href="$classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="402,81,471,108"/>
 </map>

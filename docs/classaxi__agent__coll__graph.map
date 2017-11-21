@@ -1,13 +1,11 @@
 <map id="axi_agent" name="axi_agent">
-<area shape="rect" id="node3" href="$classaxi__responder.html" title="Logic to act as an AXI slave (responder) for all 5 channels. " alt="" coords="487,131,589,157"/>
-<area shape="rect" id="node9" href="$classaxi__driver.html" title="Logic to act as an AXI master for all 5 channels. " alt="" coords="499,181,577,208"/>
-<area shape="rect" id="node5" href="$classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="225,212,295,239"/>
-<area shape="rect" id="node10" href="$classaxi__monitor.html" title="monitors all 5 channels for activity " alt="" coords="493,460,583,487"/>
-<area shape="rect" id="node7" href="$classaxi__agent__config.html" title="Configuration object for an axi_agent. " alt="" coords="200,369,320,396"/>
-<area shape="rect" id="node12" href="$classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="207,533,313,560"/>
-<area shape="rect" id="node13" href="$rtl_2axi__pkg_8sv.html#structaxi__seq__item__r__vector__s" title="This packed struct is used to send read data channel information between the DUT and TB..." alt="" coords="177,432,343,459"/>
-<area shape="rect" id="node14" href="$rtl_2axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB..." alt="" coords="173,483,347,509"/>
-<area shape="rect" id="node15" href="$classaxi__scoreboard.html" title="scoreboard " alt="" coords="483,699,593,725"/>
-<area shape="rect" id="node17" href="$classaxi__coveragecollector.html" title="Collects coverage. " alt="" coords="464,641,612,668"/>
-<area shape="rect" id="node18" href="$classaxi__sequencer.html" title="Normal sequencer with an extra analysis fifo and export. " alt="" coords="485,756,591,783"/>
+<area shape="rect" id="node3" href="$classaxi__responder.html" title="Logic to act as an AXI slave (responder) for all 5 channels. " alt="" coords="456,150,559,177"/>
+<area shape="rect" id="node9" href="$classaxi__driver.html" title="Logic to act as an AXI master for all 5 channels. " alt="" coords="468,99,547,126"/>
+<area shape="rect" id="node5" href="$classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="210,177,279,203"/>
+<area shape="rect" id="node10" href="$classaxi__monitor.html" title="monitors all 5 channels for activity " alt="" coords="463,383,552,410"/>
+<area shape="rect" id="node7" href="$classaxi__agent__config.html" title="Configuration object for an axi_agent. " alt="" coords="185,322,305,349"/>
+<area shape="rect" id="node12" href="$classaxi__if__abstract.html" title="abstract base class for polymorphic interface class (axi_if_concrete) for AXI UVM environment ..." alt="" coords="191,390,298,417"/>
+<area shape="rect" id="node13" href="$classaxi__scoreboard.html" title="scoreboard " alt="" coords="452,497,563,523"/>
+<area shape="rect" id="node15" href="$classaxi__coveragecollector.html" title="Collects coverage. " alt="" coords="433,438,581,465"/>
+<area shape="rect" id="node16" href="$classaxi__sequencer.html" title="Normal sequencer with an extra analysis fifo and export. " alt="" coords="454,565,561,591"/>
 </map>

@@ -1,5 +1,4 @@
 <map id="tb/axi_sequential_reads_test.svh" name="tb/axi_sequential_reads_test.svh">
-<area shape="rect" id="node2" href="$rtl_2axi__uvm__pkg_8sv.html" title="rtl/axi_uvm_pkg.sv" alt="" coords="79,95,211,121"/>
-<area shape="rect" id="node3" href="$result__from__tec101_2tb_2tb_2testbench_8sv.html" title="result_from_tec101\l/tb/tb/testbench.sv" alt="" coords="5,169,139,211"/>
-<area shape="rect" id="node4" href="$tb_2testbench_8sv.html" title="tb/testbench.sv" alt="" coords="163,177,275,203"/>
+<area shape="rect" id="node2" href="$axi__uvm__pkg_8sv.html" title="rtl/axi_uvm_pkg.sv" alt="" coords="19,95,151,121"/>
+<area shape="rect" id="node3" href="$testbench_8sv.html" title="tb/testbench.sv" alt="" coords="29,169,141,196"/>
 </map>

@@ -82,68 +82,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_todo000019"></a>Class <a class="el" href="classaxi__base__test.html">axi_base_test</a>  </dt>
+<dt><a class="anchor" id="_todo000004"></a>Class <a class="el" href="classaxi__base__test.html">axi_base_test</a>  </dt>
 <dd>: what if want to restart a seq?  </dd>
-<dt><a class="anchor" id="_todo000005"></a>Member <a class="el" href="classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e">axi_driver::read_data</a>  ()</dt>
-<dd><p class="startdd">: match read_data task in <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a> Instead it waits for a pkt in its mailbox. This packet will come from read_address once it has put the address out on the bus. The just continually waits for a valid and ready beat on the channel and stores it in that packet it got from read address. When rlast received, send out analysis port and goes back to waiting for next pkt from read address. </p>
-<p class="enddd">: match read_data task in <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a> Instead it waits for a pkt in its mailbox. This packet will come from read_address once it has put the address out on the bus. The just continually waits for a valid and ready beat on the channel and stores it in that packet it got from read address. When rlast received, send out analysis port and goes back to waiting for next pkt from read address.  </p>
-</dd>
-<dt><a class="anchor" id="_todo000004"></a>Member <a class="el" href="classaxi__driver.html#aa16a6b3196df0a50381d7dc7361de329">axi_driver::write_response</a>  ()</dt>
-<dd><p class="startdd">: this task needs to be cleaned up. it doesn't actually wait for response</p>
-<p class="enddd">: this task needs to be cleaned up. it doesn't actually wait for response </p>
-</dd>
-<dt><a class="anchor" id="_todo000009"></a>Member <a class="el" href="classaxi__if__abstract.html#a409e8cd096385a58742315b4f531cc2f">axi_if_abstract::disable_arready_toggle_pattern</a>  ()</dt>
-<dd><p class="startdd">: what happens when disabled..</p>
-<p class="enddd">: what happens when disabled.. </p>
-</dd>
-<dt><a class="anchor" id="_todo000006"></a>Member <a class="el" href="classaxi__if__abstract.html#ae95bb13d2cc5c21c4779f2f4ab76db2b">axi_if_abstract::disable_awready_toggle_pattern</a>  ()</dt>
-<dd><p class="startdd">: what happens when disabled..</p>
-<p class="enddd">: what happens when disabled.. </p>
-</dd>
-<dt><a class="anchor" id="_todo000008"></a>Member <a class="el" href="classaxi__if__abstract.html#a60864fb8651689fc67d0259dc86fa708">axi_if_abstract::disable_bready_toggle_pattern</a>  ()</dt>
-<dd><p class="startdd">: what happens when disabled..</p>
-<p class="enddd">: what happens when disabled.. </p>
-</dd>
-<dt><a class="anchor" id="_todo000010"></a>Member <a class="el" href="classaxi__if__abstract.html#a3fd2d64a318c06c972a54171da00f452">axi_if_abstract::disable_rready_toggle_pattern</a>  ()</dt>
-<dd><p class="startdd">: what happens when disabled..</p>
-<p class="enddd">: what happens when disabled.. </p>
-</dd>
-<dt><a class="anchor" id="_todo000007"></a>Member <a class="el" href="classaxi__if__abstract.html#ac18ab40e41ea97e37e88af846270a2fb">axi_if_abstract::disable_wready_toggle_pattern</a>  ()</dt>
-<dd><p class="startdd">: what happens when disabled..</p>
-<p class="enddd">: what happens when disabled.. </p>
-</dd>
-<dt><a class="anchor" id="_todo000011"></a>Member <a class="el" href="classaxi__if__abstract.html#ac189704968e2ee86d85e6a4d9e983f0e">axi_if_abstract::write_w</a>  (<a class="el" href="rtl_2axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB...">axi_seq_item_w_vector_s</a> s)</dt>
-<dd><p class="startdd">: is this parameter still used anywhere? </p>
-<p class="enddd">: is this parameter still used anywhere?  </p>
-</dd>
-<dt><a class="anchor" id="_todo000012"></a>Member <a class="el" href="classaxi__responder.html#a40c2090c7f4e386461faceb42937241d">axi_responder::write_address</a>  ()</dt>
-<dd><p class="startdd">: clean up this task. Destroy that chain. </p>
-<p class="enddd">: clean up this task. Destroy that chain.  </p>
-</dd>
-<dt><a class="anchor" id="_todo000013"></a>Member <a class="el" href="classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c">axi_responder::write_data</a>  ()</dt>
-<dd><p class="startdd">: clean up this task. Destroy that chain. </p>
-<p class="enddd">: clean up this task. Destroy that chain.  </p>
-</dd>
-<dt><a class="anchor" id="_todo000014"></a>Class <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>  </dt>
-<dd><p class="startdd">: this seq_item is laughably large. Don't judge me, I've seen your 'temporary' code too. ;) </p>
-<p class="enddd">: this seq_item is laughably large. Don't judge me, I've seen your 'temporary' code too. ;)  </p>
-</dd>
-<dt><a class="anchor" id="_todo000015"></a>Member <a class="el" href="classaxi__seq__item.html#aed01dfdc179d23f82545e23b53cb1322">axi_seq_item::do_compare</a>  (uvm_object rhs, uvm_comparer comparer)</dt>
-<dd><p class="startdd">: This function needs some attention. </p>
-<p class="enddd">: This function needs some attention.  </p>
-</dd>
-<dt><a class="anchor" id="_todo000001"></a>Member <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d">calculate_bus_aligned_address</a>  (input bit&lt; C_AXI_ADDR_WIDTH-1:0 &gt; addr, input int bus_size)</dt>
-<dd><p class="startdd">: bus_size could be byte instead of int? </p>
-<p class="enddd">: bus_size could be byte instead of int?  </p>
-</dd>
-<dt><a class="anchor" id="_todo000002"></a>Member <a class="el" href="result__from__tec101_2tb_2rtl_2axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3">calculate_wrap_boundary</a>  (input bit&lt; C_AXI_ADDR_WIDTH-1:0 &gt; addr, input bit&lt; 2:0 &gt; burst_size, input shortint burst_length, output bit&lt; C_AXI_ADDR_WIDTH-1:0 &gt; Lower_Wrap_Boundary, output bit&lt; C_AXI_ADDR_WIDTH-1:0 &gt; Upper_Wrap_Boundary)</dt>
-<dd><p class="startdd">: simplify the logic needed for the math in this function </p>
-<p class="enddd">: simplify the logic needed for the math in this function  </p>
-</dd>
-<dt><a class="anchor" id="_todo000003"></a>Member <a class="el" href="result__from__tec101_2tb_2rtl_2axi__uvm__pkg_8sv.html#ad8116d2e0fd01b57b2c352460a75e3c2">driver_type_t</a>  </dt>
-<dd><p class="startdd">: Split driver and responder into different components. </p>
-<p class="enddd">: Split driver and responder into different components. </p>
-</dd>
+<dt><a class="anchor" id="_todo000006"></a>Member <a class="el" href="classaxi__driver.html#a916fc7b07ee0ecd3d20d8bfcaa292f6e">axi_driver::read_data</a>  ()</dt>
+<dd>: match read_data task in <a class="el" href="classaxi__monitor.html" title="monitors all 5 channels for activity ">axi_monitor</a> Instead it waits for a pkt in its mailbox. This packet will come from read_address once it has put the address out on the bus. The just continually waits for a valid and ready beat on the channel and stores it in that packet it got from read address. When rlast received, send out analysis port and goes back to waiting for next pkt from read address.  </dd>
+<dt><a class="anchor" id="_todo000005"></a>Member <a class="el" href="classaxi__driver.html#aa16a6b3196df0a50381d7dc7361de329">axi_driver::write_response</a>  ()</dt>
+<dd>: this task needs to be cleaned up. it doesn't actually wait for response </dd>
+<dt><a class="anchor" id="_todo000010"></a>Member <a class="el" href="classaxi__if__abstract.html#a409e8cd096385a58742315b4f531cc2f">axi_if_abstract::disable_arready_toggle_pattern</a>  ()</dt>
+<dd>: what happens when disabled.. </dd>
+<dt><a class="anchor" id="_todo000007"></a>Member <a class="el" href="classaxi__if__abstract.html#ae95bb13d2cc5c21c4779f2f4ab76db2b">axi_if_abstract::disable_awready_toggle_pattern</a>  ()</dt>
+<dd>: what happens when disabled.. </dd>
+<dt><a class="anchor" id="_todo000009"></a>Member <a class="el" href="classaxi__if__abstract.html#a60864fb8651689fc67d0259dc86fa708">axi_if_abstract::disable_bready_toggle_pattern</a>  ()</dt>
+<dd>: what happens when disabled.. </dd>
+<dt><a class="anchor" id="_todo000011"></a>Member <a class="el" href="classaxi__if__abstract.html#a3fd2d64a318c06c972a54171da00f452">axi_if_abstract::disable_rready_toggle_pattern</a>  ()</dt>
+<dd>: what happens when disabled.. </dd>
+<dt><a class="anchor" id="_todo000008"></a>Member <a class="el" href="classaxi__if__abstract.html#ac18ab40e41ea97e37e88af846270a2fb">axi_if_abstract::disable_wready_toggle_pattern</a>  ()</dt>
+<dd>: what happens when disabled.. </dd>
+<dt><a class="anchor" id="_todo000012"></a>Member <a class="el" href="classaxi__if__abstract.html#ac189704968e2ee86d85e6a4d9e983f0e">axi_if_abstract::write_w</a>  (<a class="el" href="axi__pkg_8sv.html#structaxi__seq__item__w__vector__s" title="This packed struct is used to send write data channel information between the DUT and TB...">axi_seq_item_w_vector_s</a> s)</dt>
+<dd>: is this parameter still used anywhere?  </dd>
+<dt><a class="anchor" id="_todo000013"></a>Member <a class="el" href="classaxi__responder.html#a40c2090c7f4e386461faceb42937241d">axi_responder::write_address</a>  ()</dt>
+<dd>: clean up this task. Destroy that chain.  </dd>
+<dt><a class="anchor" id="_todo000014"></a>Member <a class="el" href="classaxi__responder.html#abf4ec1b477dcf27b80cc9f8bced9ef9c">axi_responder::write_data</a>  ()</dt>
+<dd>: clean up this task. Destroy that chain.  </dd>
+<dt><a class="anchor" id="_todo000015"></a>Class <a class="el" href="classaxi__seq__item.html">axi_seq_item</a>  </dt>
+<dd>: this seq_item is laughably large. Don't judge me, I've seen your 'temporary' code too. ;)  </dd>
+<dt><a class="anchor" id="_todo000016"></a>Member <a class="el" href="classaxi__seq__item.html#aed01dfdc179d23f82545e23b53cb1322">axi_seq_item::do_compare</a>  (uvm_object rhs, uvm_comparer comparer)</dt>
+<dd>: This function needs some attention.  </dd>
+<dt><a class="anchor" id="_todo000001"></a>Member <a class="el" href="axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d">calculate_bus_aligned_address</a>  (input bit&lt; C_AXI_ADDR_WIDTH-1:0 &gt; addr, input int bus_size)</dt>
+<dd>: bus_size could be byte instead of int?  </dd>
+<dt><a class="anchor" id="_todo000002"></a>Member <a class="el" href="axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3">calculate_wrap_boundary</a>  (input bit&lt; C_AXI_ADDR_WIDTH-1:0 &gt; addr, input bit&lt; 2:0 &gt; burst_size, input shortint burst_length, output bit&lt; C_AXI_ADDR_WIDTH-1:0 &gt; Lower_Wrap_Boundary, output bit&lt; C_AXI_ADDR_WIDTH-1:0 &gt; Upper_Wrap_Boundary)</dt>
+<dd>: simplify the logic needed for the math in this function  </dd>
+<dt><a class="anchor" id="_todo000003"></a>Member <a class="el" href="axi__uvm__pkg_8sv.html#ad8116d2e0fd01b57b2c352460a75e3c2">driver_type_t</a>  </dt>
+<dd>: Split driver and responder into different components. </dd>
 </dl>
 </div></div><!-- contents -->
 <!-- start footer part -->

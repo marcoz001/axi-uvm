@@ -1,7 +1,7 @@
 <map id="axi_seq" name="axi_seq">
 <area shape="rect" id="node3" href="$classaxi__pipelined__reads__seq.html" title="Backdoor memory writes, then reads from memory over AXI. " alt="" coords="340,5,504,32"/>
 <area shape="rect" id="node4" href="$classaxi__pipelined__writes__seq.html" title="Writes to memory over AXI, backdoor readback. " alt="" coords="339,56,505,83"/>
-<area shape="rect" id="node5" href="$classaxi__responder__seq.html" title="Forever running sequence that receives TLM packets from monitor and sends to responder. " alt="" coords="357,107,487,133"/>
+<area shape="rect" id="node5" href="$classaxi__responder__seq.html" title="Forever running sequence that setups up responder *ready toggle patterns, then receives TLM packet fr..." alt="" coords="357,107,487,133"/>
 <area shape="rect" id="node6" href="$classaxi__sequential__reads__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="336,157,508,184"/>
 <area shape="rect" id="node7" href="$classaxi__sequential__writes__seq.html" title="Writes to memory over AXI, backdoor memory readback and verify. " alt="" coords="335,208,509,235"/>
 </map>
