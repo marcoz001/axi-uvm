@@ -37,6 +37,11 @@ class axi_agent_config extends uvm_object;
   bit                     has_scoreboard = 1'b1; /*<! Enable scoreboard? */
   bit                     has_coverage   = 1'b1; /*<! Turn on coverage collection? */
 
+
+
+  bit    rvalid [];
+  bit    wvalid [];
+
   // Use toggle patterns. The interface can directly handle all the ready* toggling
   // without requiring the driver.
   // Keep it to where in the future the responder sequences could do this by

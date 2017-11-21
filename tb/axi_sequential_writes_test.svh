@@ -58,6 +58,12 @@ class axi_sequential_writes_test extends axi_base_test;
     driver_agent_config.m_active            = UVM_ACTIVE;
     driver_agent_config.drv_type            = e_DRIVER;
 
+
+    driver_agent_config.wvalid              = new[2];
+    driver_agent_config.wvalid[0]           = 1'b1;
+    driver_agent_config.wvalid[1]           = 1'b0;
+
+
     //  Put the agent_config handle into config_db
     uvm_config_db #(axi_agent_config)::set(null, "*", "m_axidriver_agent.m_config", driver_agent_config);
 
@@ -67,7 +73,7 @@ class axi_sequential_writes_test extends axi_base_test;
 
   assert(responder_agent_config.randomize() with {
                                                   awready_toggle_pattern == 32'hFFFF_FFFF;
-                                                   wready_toggle_pattern == 32'h111_1111;
+                                                   wready_toggle_pattern == 32'hFFFF_FFFF;
                                                   arready_toggle_pattern == 32'hFFFF_FFFF;
 
                                                   min_clks_between_r_transfers == 0;
@@ -81,6 +87,8 @@ class axi_sequential_writes_test extends axi_base_test;
   responder_agent_config.drv_type            = e_RESPONDER;
   responder_agent_config.axi_incompatible_wvalid_toggling_mode=1;
 
+
+
   //  Put the agent_config handle into config_db
     uvm_config_db #(axi_agent_config)::set(null, "*", "m_axiresponder_agent.m_config", responder_agent_config);
 
@@ -92,20 +100,11 @@ class axi_sequential_writes_test extends axi_base_test;
 
   task run_phase(uvm_phase phase);
 
-    bit valid[];
-
     phase.raise_objection(this);
 
     fork
        m_resp_seq.start(m_env.m_responder_seqr);
     join_none
-
-
-    valid=new[1];
-    valid[0]=1'b1;
-//    valid[1]=1'b1;
-//    valid[2]=1'b0;
- //   m_seq.set_valid(valid);
 
     m_seq.start(m_env.m_driver_seqr);
 

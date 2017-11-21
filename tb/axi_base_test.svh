@@ -49,7 +49,7 @@ class axi_base_test extends uvm_test;
     m_seq = axi_seq::type_id::create("m_seq");
 
     if ($value$plusargs("transactions=%d", transactions)) begin
-    `uvm_info("plusargs", $sformatf("TRANSACTIONS: %0d", transactions), UVM_INFO)
+       `uvm_info("plusargs", $sformatf("TRANSACTIONS: %0d", transactions), UVM_INFO)
        m_seq.set_transaction_count(transactions);
   end
 

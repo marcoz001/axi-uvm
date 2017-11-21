@@ -118,9 +118,9 @@ task axi_sequential_writes_seq::body;
 
     get_response(write_item);
 
-    if (!check_memory(.item       (write_item),
-                      .lower_addr (xfer_cnt*window_size),
-                      .upper_addr ((xfer_cnt+1)*window_size))) begin
+    if (!m_memory.seq_item_check(.item       (write_item),
+                                 .lower_addr (xfer_cnt*window_size),
+                                 .upper_addr ((xfer_cnt+1)*window_size))) begin
         `uvm_info("MISCOMPARE","Miscompare error", UVM_INFO)
     end
 

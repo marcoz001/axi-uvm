@@ -61,9 +61,9 @@ function void axi_pipelined_writes_seq::response_handler(uvm_sequence_item respo
   if (item.cmd== e_WRITE_RESPONSE) begin
    xfers_done++;
 
-   if (!check_memory(.item       (item),
-                     .lower_addr (xfer_cnt*window_size),
-                     .upper_addr ((xfer_cnt+1)*window_size))) begin
+   if (!m_memory.seq_item_check(.item       (item),
+                                .lower_addr (xfer_cnt*window_size),
+                                .upper_addr ((xfer_cnt+1)*window_size))) begin
         `uvm_info("MISCOMPARE","Miscompare error", UVM_INFO)
       end
 

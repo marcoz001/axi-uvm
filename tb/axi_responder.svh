@@ -282,7 +282,6 @@ task axi_responder::read_data;
   axi_seq_item cloned_item;
   axi_seq_item_r_vector_s s;
 
-  bit iaxi_incompatible_rvalid_toggling_mode;
 
   int n=0;
 
@@ -312,7 +311,6 @@ task axi_responder::read_data;
 
     // Look at this only one per loop, so there's no race condition of it
     // changing mid-loop.
-    iaxi_incompatible_rvalid_toggling_mode = m_config.axi_incompatible_rvalid_toggling_mode;
 
     vif.wait_for_clks(.cnt(1));
 
@@ -401,11 +399,17 @@ task axi_responder::read_data;
           `uvm_info(this.get_type_name(),
                     $sformatf("debuga validcntr=%0d",validcntr),
                     UVM_HIGH)
-      end else if (iaxi_incompatible_rvalid_toggling_mode == 1'b0) begin
+      end else if (m_config.axi_incompatible_rvalid_toggling_mode == 1'b1) begin
          validcntr++;
          `uvm_info(this.get_type_name(),
                    $sformatf("debugb validcntr=%0d",validcntr),
                 UVM_HIGH)
+      end else if (vif.get_rvalid() == 1'b0) begin
+         validcntr++;
+         `uvm_info(this.get_type_name(),
+                   $sformatf("debugc validcntr=%0d",validcntr),
+                UVM_HIGH)
+
         end
        if (validcntr >=  validcntr_max) begin
          validcntr=0;

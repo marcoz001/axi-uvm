@@ -28,48 +28,46 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
 
   const int axi_readback  = 1;
   const int clearmemory   = 1;
-  const int postcheck     = 1;
-  const int precheck      = 1;
+
   const int window_size   = 'h1000;
   int xfers_to_send = 1;
 
   bit valid [];
 
-  const int pipelined_bursts_enabled=0;
+  //const int pipelined_bursts_enabled=0;
 
   bit [2:0] max_burst_size;
-
 
   int xfers_done=0;
 
   memory m_memory;
 
-  axi_seq_item write_item [];
-  axi_seq_item read_item  [];
+  //axi_seq_item write_item [];
+  //axi_seq_item read_item  [];
 
   // all write responses have been received
   // Reads can go ahead
-  event writes_done;
+  //event writes_done;
+
+
+
 
 
   extern function   new (string name="axi_seq");
   extern task       body;
-  extern function void response_handler(uvm_sequence_item response);
+ // extern function void response_handler(uvm_sequence_item response);
 
   extern function void set_transaction_count(int count);
-  extern function void set_valid(ref bit valid []);
-
+// extern function void set_valid(ref bit valid []);
 
   extern function bit compare_items (ref axi_seq_item write_item, ref axi_seq_item read_item);
-  extern function bit check_memory(ref axi_seq_item item,
-                                   input bit [ADDR_WIDTH-1:0] lower_addr,
-                                   input bit [ADDR_WIDTH-1:0] upper_addr);
 
 endclass : axi_seq
 
 
 // This response_handler function is enabled to keep the sequence response FIFO empty
-function void axi_seq::response_handler(uvm_sequence_item response);
+/*
+    function void axi_seq::response_handler(uvm_sequence_item response);
 
 axi_seq_item item;
 int xfer_cnt;
@@ -104,13 +102,31 @@ end
 
 
 endfunction: response_handler
-
+*/
 /*! \brief Constructor
  *
  * Doesn't actually do anything except call parent constructor
  */
 function axi_seq::new (string name="axi_seq");
+
+  int dwidth;
   super.new(name);
+
+
+  // Getting width is done here in the constructor because
+  // it is used in randomize(), which is done before body() is called
+
+  `uvm_info(this.get_type_name(),
+            "Looking for AXI_DATA_WIDTH in uvm_config_db",
+            UVM_MEDIUM)
+
+  if (!uvm_config_db #(int)::get(null, "", "AXI_DATA_WIDTH", dwidth)) begin
+    `uvm_fatal(this.get_type_name(),
+               "Unable to fetch AXI_DATA_WIDTH from config db.")
+  end
+
+  max_burst_size=$clog2(dwidth/8);
+
 endfunction : new
 
 
@@ -121,15 +137,21 @@ endfunction : new
  * (Read Address, Read Data) is one transaction
  */
 function void axi_seq::set_transaction_count(int count);
+
+   `uvm_info(this.get_type_name(),
+             $sformatf("set_transaction_count(%0d)",count),
+             UVM_INFO)
+
+
   xfers_to_send = count;
 endfunction : set_transaction_count
 
 
 
-function void axi_seq::set_valid(ref bit valid []);
-  this.valid=new[valid.size()](valid);
+//function void axi_seq::set_valid(ref bit valid []);
+//  this.valid=new[valid.size()](valid);
 
-endfunction : set_valid
+//endfunction : set_valid
 
 /*! \brief Does all the work.
  *
@@ -145,7 +167,7 @@ endfunction : set_valid
  *     Parallel - Multiple write_adr, then multiple write_data, then multiple  resp, repeat
  */
 task axi_seq::body;
-
+/*
   string s;
   bit [7:0] read_data;
   bit [7:0] expected_data;
@@ -170,7 +192,7 @@ task axi_seq::body;
 
   bit [7:0] expected_data_array [];
 
-  bit [2:0] max_burst_size;
+  //bit [2:0] max_burst_size;
   int yy;
   bit [7:0] localbuffer [];
 
@@ -241,9 +263,9 @@ task axi_seq::body;
     if (!pipelined_bursts_enabled) begin
        get_response(write_item[xfer_cnt]);
 
-      if (!check_memory(.item       (write_item[xfer_cnt]),
-                        .lower_addr (xfer_cnt*window_size),
-                        .upper_addr ((xfer_cnt+1)*window_size))) begin
+      if (!m_memory.seq_item_check(.item       (write_item[xfer_cnt]),
+                                   .lower_addr (xfer_cnt*window_size),
+                                   .upper_addr ((xfer_cnt+1)*window_size))) begin
         `uvm_info("MISCOMPARE","Miscompare error", UVM_INFO)
       end
 
@@ -311,346 +333,8 @@ end // if axi_readback=1
   #10us
 
   `uvm_info(this.get_type_name(), "SEQ ALL DONE", UVM_INFO)
-
-endtask : body
-
-
-function automatic bit axi_seq::check_memory(
-                ref axi_seq_item item,
-                input bit [ADDR_WIDTH-1:0] lower_addr,
-                input bit [ADDR_WIDTH-1:0] upper_addr);
-
-
-  int max_beat_cnt;
-  int dtsize;
-
-  bit [ADDR_WIDTH-1:0] Lower_Wrap_Boundary;
-  bit [ADDR_WIDTH-1:0] Upper_Wrap_Boundary;
-  bit [ADDR_WIDTH-1:0] iaddr;
-
-  bit [ADDR_WIDTH-1:0]  pre_check_start_addr;
-  bit [ADDR_WIDTH-1:0]  pre_check_stop_addr;
-
-  bit [ADDR_WIDTH-1:0]  check_start_addr;
-  bit [ADDR_WIDTH-1:0]  check_stop_addr;
-
-  bit [ADDR_WIDTH-1:0]  post_check_start_addr;
-  bit [ADDR_WIDTH-1:0]  post_check_stop_addr;
-
-
- //  string write_item_s;
-  int idatacntr;
-  int miscompare_cntr;
-  string write_item_s;
-  string read_item_s;
-  string expected_data_s;
-  string actual_data_s;
-  string msg_s;
-  string localbuffer_s;
-  int rollover_cnt;
-
-  bit [7:0] expected_data_array [];
-  bit [7:0] actual_data_array [];
-
-  bit [2:0] max_burst_size;
-  int yy;
-  bit [7:0] localbuffer [];
-  bit [7:0] read_data;
-  bit [7:0] expected_data;
-
-
-  assert (item != null);
-
-  if (item == null) begin
-    `uvm_fatal(this.get_type_name(), "Item is null")
-  end
-
-
-
-
-    //***** Readback
-    `uvm_info("...", "Now reading back from memory to verify", UVM_LOW)
-
-
-    if (item.burst_type == e_WRAP) begin
-
-
-      max_beat_cnt = axi_pkg::calculate_axlen(.addr(item.addr),
-                                              .burst_size(item.burst_size),
-                                              .burst_length(item.len)) + 1;
-
-      dtsize = (2**item.burst_size) * max_beat_cnt;
-
-      Lower_Wrap_Boundary = (int'(item.addr/dtsize) * dtsize);
-      Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
-
-      pre_check_start_addr  = lower_addr;
-      pre_check_stop_addr   = Lower_Wrap_Boundary;
-
-      check_start_addr      = Lower_Wrap_Boundary;
-      check_stop_addr       = Upper_Wrap_Boundary;
-
-      post_check_start_addr = Upper_Wrap_Boundary;
-      post_check_stop_addr  = upper_addr;
-
-    end else begin
-       pre_check_start_addr=lower_addr;
-       pre_check_stop_addr= item.addr; // only different if burst_type=e_WRAP;
-
-       check_start_addr=item.addr;
-       check_stop_addr=item.addr+item.len;
-
-       post_check_start_addr=item.addr+item.len;
-       post_check_stop_addr=upper_addr;
-    end
-
-    msg_s="";
-  $sformat(msg_s, "%s Item: %s",                     msg_s, item.convert2string());
-  $sformat(msg_s, "%s pre_check_start_addr: 0x%0x",  msg_s, pre_check_start_addr);
-  $sformat(msg_s, "%s pre_check_stop_addr: 0x%0x",   msg_s, pre_check_stop_addr);
-  $sformat(msg_s, "%s check_start_addr: 0x%0x",      msg_s, check_start_addr);
-  $sformat(msg_s, "%s check_stop_addr: 0x%0x",       msg_s, check_stop_addr);
-  $sformat(msg_s, "%s post_check_start_addr: 0x%0x", msg_s, post_check_start_addr);
-  $sformat(msg_s, "%s post_check_stop_addr: 0x%0x",  msg_s, post_check_stop_addr);
-  $sformat(msg_s, "%s Lower_Wrap_Boundary: 0x%0x",   msg_s, Lower_Wrap_Boundary);
-  $sformat(msg_s, "%s Upper_Wrap_Boundary: 0x%0x",   msg_s, Upper_Wrap_Boundary);
-
-
-    `uvm_info("CHECK MEMORY",
-            msg_s,
-            UVM_INFO)
-
-
-
-     miscompare_cntr=0;
-
-    // compare pre-data
-    if (precheck==1) begin
-        expected_data='h0;
-        for (int i=pre_check_start_addr;i<pre_check_stop_addr;i++) begin
-             read_data=m_memory.read(i);
-             assert(expected_data==read_data) else begin
-                miscompare_cntr++;
-                `uvm_error("e_FIXED miscompare",
-                           $sformatf("expected: 0x%0x   actual:0x%0x",
-                                     expected_data,
-                                     read_data))
-             end
-          end
-     end // if precheck
-
-     // compare data
-     if (item.burst_type == e_FIXED) begin
-
-       expected_data_array = new[2**item.burst_size];
-       actual_data_array   = new[2**item.burst_size];
-       localbuffer         = new[2**item.burst_size];
-      // brute force, not elegant at all.
-      // write to local buffer, then compare that buffer (repeated) with the axi readback
-
-
-      yy=0;
-
-      for (int y=0;y<localbuffer.size();y++) begin
-         localbuffer[y]='h0;
-      end
-      for (int y=0;y<item.len;y++) begin
-        localbuffer[yy++]=item.data[y];
-        if (yy >= 2**item.burst_size) begin
-          yy=0;
-        end
-      end
-
-      yy=0;
-      for (int y=0; y<expected_data_array.size(); y++) begin
-        expected_data_array[y]=localbuffer[yy++];
-        if (yy >= localbuffer.size()) begin
-          yy=0;
-        end
-      end
-/*
-      for (int y=0;y<item.data.size();y++) begin
-         expected_data = expected_data_array[y];
-         read_data     = m_memory.read(item.addr+y);
-        actual_data_array[y] = read_data;
-         if (expected_data!=read_data) begin
-            miscompare_cntr++;
-         end
-      end
 */
-
-       // on a fixed burst, we only need to compare last beat of data
-       for (int y=0;y<localbuffer.size();y++) begin
-          expected_data = expected_data_array[y];
-          read_data     = m_memory.read(item.addr+y);
-          actual_data_array[y] = read_data;
-          if (expected_data!=read_data) begin
-             miscompare_cntr++;
-          end
-       end
-
-     assert (miscompare_cntr==0) else begin
-         write_item_s="";
-//        read_item_s="";
-         expected_data_s="";
-         actual_data_s="";
-         localbuffer_s="";
-
-         for (int z=0;z<item.data.size();z++) begin
-            $sformat(write_item_s, "%s 0x%2x", write_item_s, item.data[z]);
-         end
-
-
-        for (int z=0;z<expected_data_array.size();z++) begin
-          $sformat(expected_data_s, "%s 0x%2x", expected_data_s, expected_data_array[z]);
-        end
-
-       for (int z=0;z<actual_data_array.size();z++) begin
-         $sformat(actual_data_s, "%s 0x%2x", actual_data_s, actual_data_array[z]);
-        end
-
-        for (int z=0;z<localbuffer.size();z++) begin
-          $sformat(localbuffer_s, "%s 0x%2x", localbuffer_s, localbuffer[z]);
-        end
-
-        msg_s="";
-       $sformat(msg_s, "%s %0d miscompares between expected and actual data items.", msg_s, miscompare_cntr );
-       $sformat(msg_s, "%s \nExpected:    %s", msg_s, expected_data_s);
-       $sformat(msg_s, "%s \nActual:      %s", msg_s, actual_data_s);
-       $sformat(msg_s, "%s \nWritten:     %s", msg_s, write_item_s);
-       $sformat(msg_s, "%s \nLocalbuffer: %s", msg_s, localbuffer_s);
-
-        `uvm_error("READBACK e_FIXED miscompare", msg_s);
-      end
-
-
-
-
-     end else if (item.burst_type == e_INCR) begin
-       for (int z=0;z<item.len;z++) begin
-          expected_data=item.data[z];
-         read_data=m_memory.read(item.addr+z);
-          //s=$sformatf("%s 0x%0x", s, read_data);
-          assert(expected_data==read_data) else begin
-                miscompare_cntr++;
-            `uvm_error("e_INCR miscompare",
-                       $sformatf("addr:0x%0x expected: 0x%0x   actual:0x%0x",
-                                  item.addr+z,
-                                  expected_data,
-                                  read_data))
-          end
-       end
-     end else if (item.burst_type == e_WRAP) begin
-
-       if (item.addr + item.len < Upper_Wrap_Boundary) begin
-         expected_data='h0;
-         for (int z=Lower_Wrap_Boundary;z<item.addr;z++) begin
-           read_data=m_memory.read(z);
-            assert(expected_data==read_data) else begin
-                miscompare_cntr++;
-              `uvm_fatal("e_WRAP miscompare",
-                       $sformatf("expected: 0x%0x   actual:0x%0x",
-                                 expected_data,
-                                 read_data))
-            end
-         end
-
-         for (int z=0;z<item.len;z++) begin
-            expected_data=item.data[z];
-           read_data=m_memory.read(item.addr+z);
-            assert(expected_data==read_data) else begin
-                miscompare_cntr++;
-               `uvm_fatal("e_WRAP miscompare",
-                          $sformatf("expected: 0x%0x   actual:0x%0x",
-                                    expected_data,
-                                    read_data))
-            end
-         end
-
-         expected_data='h0;
-         for (int z=item.addr+item.len;z<Upper_Wrap_Boundary;z++) begin
-           read_data=m_memory.read(z);
-           assert(expected_data==read_data) else begin
-                miscompare_cntr++;
-              `uvm_fatal("e_WRAP miscompare",
-                       $sformatf("expected: 0x%0x   actual:0x%0x",
-                                 expected_data,
-                                 read_data))
-            end
-         end
-
-
-       end else begin // data actually wraps.
-
-         // compare beginning of data, which is towards the end of the boundary window
-         for (int i=item.addr; i<Upper_Wrap_Boundary; i++) begin
-            expected_data=item.data[i-item.addr];
-            read_data=m_memory.read(i);
-            assert(expected_data==read_data) else begin
-                miscompare_cntr++;
-               `uvm_error("e_WRAP miscompare",
-                          $sformatf("expected: 0x%0x   actual:0x%0x",
-                                    expected_data,
-                                    read_data))
-            end
-         end
-
-         // at which offset did the wrap occur?  compar that starting at lower_wrap_boundary
-
-         rollover_cnt=item.len-((item.addr+item.len)-Upper_Wrap_Boundary);
-         for (int i=rollover_cnt;i<item.len;i++) begin
-           expected_data=item.data[i];
-           read_data=m_memory.read(Lower_Wrap_Boundary+(i-rollover_cnt));
-            assert(expected_data==read_data) else begin
-                miscompare_cntr++;
-              msg_s="";
-              for (int j=Lower_Wrap_Boundary;j<Upper_Wrap_Boundary;j++) begin
-                $sformat(msg_s, "%s 0x%2x", msg_s, m_memory.read(j));
-              end
-               `uvm_fatal("e_WRAP miscompare",
-                          $sformatf("Wrap Window contents: [0x%0x - 0x%0x]: %s   expected: 0x%0x   actual:[0x%0x]=0x%0x (rollover_cnt: 0x%0x)",
-                                    Lower_Wrap_Boundary,
-                                    Upper_Wrap_Boundary-1,
-                                    msg_s,
-                                    expected_data,
-                                    Lower_Wrap_Boundary+(i-rollover_cnt),
-                                    read_data,
-                                    rollover_cnt))
-            end
-         end
-
-         // `uvm_warning(this.get_type_name(),
-         //              "Not currently verifying eWRAP AXi readback data if data actually wraps.")
-       end
-
-
-
-
-     end else begin
-                miscompare_cntr++;
-        `uvm_fatal(this.get_type_name(), $sformatf("Invalid burst_type: %0d", item.burst_type))
-     end
-
-
-      // compare post-data
-      if (postcheck==1) begin
-         expected_data='h0;
-        for (int i=post_check_start_addr;i<post_check_stop_addr;i++) begin
-            read_data=m_memory.read(i);
-            assert(expected_data==read_data) else begin
-                miscompare_cntr++;
-               `uvm_error("e_FIXED miscompare",
-                          $sformatf("expected: 0x%0x   actual:0x%0x",
-                                    expected_data,
-                                    read_data))
-            end
-         end
-      end // if postcheck
-
-
-return (miscompare_cntr == 0);
-
-endfunction : check_memory
+endtask : body
 
 
 // This functionompares thewrite-item withthe correspondingread_item

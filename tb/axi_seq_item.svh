@@ -89,7 +89,9 @@ class axi_seq_item extends uvm_sequence_item;
   const shortint c_AXI3_MAXBEATCNT=16;
   const shortint c_AXI4_MAXBEATCNT=256;
 
+  burst_size_t  foo [];
 
+  constraint foo_c {burst_size inside {foo};}
 
   constraint protocol_c   { solve protocol   before len; }
 //                            protocol inside { axi_uvm_pkg::e_AXI4, axi_uvm_pkg::e_AXI4};}
@@ -270,6 +272,11 @@ endclass : axi_seq_item
  * Doesn't actually do anything except call parent constructor */
 function axi_seq_item::new (string name="axi_seq_item");
   super.new(name);
+
+
+  foo = new[1];
+  foo[0] = e_2BYTES;
+
 endfunction : new
 
 /*! \brief Convert item's variable into one printable string.

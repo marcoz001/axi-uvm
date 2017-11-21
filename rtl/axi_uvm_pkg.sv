@@ -70,9 +70,9 @@ typedef enum {e_DRIVER,  /**< Agent is a master */
              } driver_type_t;
 
 
-
-`include "memory.svh"
 `include "axi_seq_item.svh"
+`include "memory.svh"
+
 
 
 /*! \brief Pull values out of axi_seq_item and stuff into a axi_seq_item_aw_vector_s
@@ -247,6 +247,8 @@ endfunction : ar_to_class
 `include "axi_responder_seq.svh"
 `include "axi_sequential_writes_seq.svh"
 `include "axi_pipelined_writes_seq.svh"
+`include "axi_sequential_reads_seq.svh"
+`include "axi_pipelined_reads_seq.svh"
 
 `include "axi_driver.svh"
 `include "axi_responder.svh"
@@ -263,6 +265,7 @@ endfunction : ar_to_class
 `include "axi_base_test.svh"
 `include "axi_sequential_writes_test.svh"
 `include "axi_pipelined_writes_test.svh"
-
+`include "axi_sequential_reads_test.svh"
+`include "axi_pipelined_reads_test.svh"
 
 endpackage : axi_uvm_pkg

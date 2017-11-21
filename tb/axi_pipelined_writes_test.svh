@@ -18,7 +18,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 /*! \class axi_pipelined_writes_test
- * \brief Sequential AXI writes. No pipelining.
+ * \brief Pipelined AXI writes.
  *
  * Send multiple WriteAddress transfers, then wait for all the write data and write
  * resposes to finish. Verify memory as each write responses returns.
@@ -81,14 +81,6 @@ class axi_pipelined_writes_test extends axi_base_test;
   //  Put the agent_config handle into config_db
     uvm_config_db #(axi_agent_config)::set(null, "*", "m_axiresponder_agent.m_config", responder_agent_config);
 
-    /*
-
-  bit axi_incompatible_awready_toggling_mode=0;
-  bit axi_incompatible_wready_toggling_mode=0;
-  bit axi_incompatible_bready_toggling_mode=0;
-  bit axi_incompatible_rready_toggling_mode=0;
-    */
-
 
     axi_seq::type_id::set_type_override(axi_pipelined_writes_seq::get_type(), 1);
 
@@ -98,20 +90,11 @@ class axi_pipelined_writes_test extends axi_base_test;
 
   task run_phase(uvm_phase phase);
 
-    bit valid[];
-
     phase.raise_objection(this);
 
     fork
        m_resp_seq.start(m_env.m_responder_seqr);
     join_none
-
-    valid=new[3];
-    valid[0]=1'b1;
-    valid[1]=1'b1;
-    valid[2]=1'b0;
-    m_seq.set_valid(valid);
-
 
     m_seq.start(m_env.m_driver_seqr);
 
