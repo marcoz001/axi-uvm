@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017, Matt Dew
+// Copyright (C) 2017, Matt Dew @ Dew Technologies, LLC
 //
 // This program is free software (firmware): you can redistribute it and/or
 // modify it under the terms of  the GNU General Public License as published
@@ -25,13 +25,13 @@
 class axi_sequential_reads_seq extends axi_seq;
 
   `uvm_object_utils(axi_sequential_reads_seq)
-  
+
   int xfers_done=0;
 
   memory m_memory;
 
   axi_seq_item read_item;
-  
+
 
   extern function   new (string name="axi_sequential_reads_seq");
   extern task       body;
@@ -46,7 +46,7 @@ endclass : axi_sequential_reads_seq
   super.new(name);
 endfunction : new
 
-    
+
 /*! \brief Does all the work.
  *
  * -# Creates constrained random AXI write packet
@@ -70,7 +70,7 @@ task axi_sequential_reads_seq::body;
   int dtsize;
   bit [ADDR_WIDTH-1:0] Lower_Wrap_Boundary;
   bit [ADDR_WIDTH-1:0] Upper_Wrap_Boundary;
-  bit [ADDR_WIDTH-1:0] write_addr;  
+  bit [ADDR_WIDTH-1:0] write_addr;
 
   xfers_done=0;
 
@@ -83,7 +83,7 @@ task axi_sequential_reads_seq::body;
   // Clear memory
   // backdoor write to memory
   // AXI readback of memory
-  
+
   for (int xfer_cnt=0;xfer_cnt<xfers_to_send;xfer_cnt++) begin
 
     // clear memory
@@ -104,13 +104,13 @@ task axi_sequential_reads_seq::body;
     addr_hi = addr_lo+'h100;
     xid     = xfer_cnt[ID_WIDTH-1:0];
 
-    
+
     `uvm_info(this.get_type_name(),
               $sformatf("item %0d id:0x%0x addr_lo: 0x%0x  addr_hi: 0x%0x",
                         xfer_cnt, xid, addr_lo,addr_hi),
               UVM_INFO)
 
-    
+
      assert( read_item.randomize() with {
                                          cmd        == e_READ;
        burst_type == e_FIXED;
@@ -119,19 +119,19 @@ task axi_sequential_reads_seq::body;
                                          addr       >= local::addr_lo;
                                          addr       <  local::addr_hi;
     })
-    
+
      `uvm_info("DATA", $sformatf("\n\n\nItem %0d:  %s",
                                   xfer_cnt, read_item.convert2string()),
                 UVM_INFO)
-       
-       
+
+
       //backdoor fill memory
       case (read_item.burst_type)
         e_FIXED : begin
 
           Lower_Wrap_Boundary = read_item.addr;
-          Upper_Wrap_Boundary = Lower_Wrap_Boundary + (2**read_item.burst_size);          
-        
+          Upper_Wrap_Boundary = Lower_Wrap_Boundary + (2**read_item.burst_size);
+
         end
         e_INCR : begin
           Lower_Wrap_Boundary = read_item.addr;
@@ -147,10 +147,10 @@ task axi_sequential_reads_seq::body;
 
           Lower_Wrap_Boundary = (int'(read_item.addr/dtsize) * dtsize);
           Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
-          
+
         end
       endcase
-      
+
       write_addr = read_item.addr;
       for (int i=0;i<read_item.len;i++) begin
          m_memory.write(write_addr, i[7:0]);
@@ -158,20 +158,20 @@ task axi_sequential_reads_seq::body;
          if (write_addr >= Upper_Wrap_Boundary) begin
             write_addr = Lower_Wrap_Boundary;
          end
-      end              
- 
-       
+      end
+
+
     start_item  (read_item);
     finish_item (read_item);
     get_response(read_item);
-    
-    
-    
+
+
+
     assert(m_memory.seq_item_check(.item(read_item),
                                    .lower_addr(addr_lo),
                                    .upper_addr(addr_hi)));
-    
-    
+
+
   end  //for
 
   `uvm_info(this.get_type_name(), "SEQ ALL DONE", UVM_INFO)

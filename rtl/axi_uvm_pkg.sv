@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017, Matt Dew
+// Copyright (C) 2017, Matt Dew @ Dew Technologies, LLC
 //
 // This program is free software (firmware): you can redistribute it and/or
 // modify it under the terms of  the GNU General Public License as published
@@ -30,6 +30,7 @@ import params_pkg::*;
 
 localparam ADDR_WIDTH = params_pkg::AXI_ADDR_WIDTH;
 localparam ID_WIDTH   = params_pkg::AXI_ID_WIDTH;
+localparam LEN_WIDTH  = params_pkg::AXI_LEN_WIDTH;
 
 import axi_pkg::*;
 
@@ -125,6 +126,7 @@ function automatic void aw_to_class(
      t.id          = s.awid;
      t.addr        = s.awaddr;
      t.len         = (s.awlen+1)*(2**s.awsize);
+     t.axlen       = s.awlen;
      t.burst_size  = s.awsize;
      t.burst_type  = s.awburst;
      t.lock        = s.awlock;

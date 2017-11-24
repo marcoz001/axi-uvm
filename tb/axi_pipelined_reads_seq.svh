@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017, Matt Dew
+// Copyright (C) 2017, Matt Dew @ Dew Technologies, LLC
 //
 // This program is free software (firmware): you can redistribute it and/or
 // modify it under the terms of  the GNU General Public License as published
@@ -27,17 +27,17 @@
 class axi_pipelined_reads_seq extends axi_seq;
 
   `uvm_object_utils(axi_pipelined_reads_seq)
-  
+
 
   const int clearmemory   = 1;
   const int window_size   = 'h1000;
 
   axi_seq_item read_item [];
-  
+
   // all write responses have been received
   // Reads can go ahead
   event reads_done;
-  
+
 
   extern function   new (string name="axi_pipelined_reads_seq");
   extern task       body;
@@ -59,14 +59,14 @@ function void axi_pipelined_reads_seq::response_handler(uvm_sequence_item respon
 
   xfer_cnt=item.id;
   if (item.cmd == e_READ_DATA) begin
-    
+
    xfers_done++;
-   
+
    if (!m_memory.seq_item_check(.item       (item),
                                 .lower_addr (xfer_cnt*window_size),
                                 .upper_addr ((xfer_cnt+1)*window_size))) begin
         `uvm_info("MISCOMPARE","Miscompare error", UVM_INFO)
-      end  
+      end
 
   if (xfers_done >= xfers_to_send) begin
      `uvm_info("axi_seq::response_handler::sending event ",
@@ -111,12 +111,12 @@ task axi_pipelined_reads_seq::body;
   bit [ADDR_WIDTH-1:0] addr_lo;
   bit [ADDR_WIDTH-1:0] addr_hi;
   bit [ID_WIDTH-1:0] xid;
-  
+
   int max_beat_cnt;
     int dtsize;
     bit [ADDR_WIDTH-1:0] Lower_Wrap_Boundary;
     bit [ADDR_WIDTH-1:0] Upper_Wrap_Boundary;
-    bit [ADDR_WIDTH-1:0] write_addr;  
+    bit [ADDR_WIDTH-1:0] write_addr;
 
 
   xfers_done=0;
@@ -155,8 +155,8 @@ task axi_pipelined_reads_seq::body;
     addr_lo=xfer_cnt*window_size;
     addr_hi=addr_lo+'h100;
     xid =xfer_cnt[ID_WIDTH-1:0];
-    
-    
+
+
     assert( read_item[xfer_cnt].randomize() with {
                                          cmd        == e_READ;
                                          burst_size <= local::max_burst_size;
@@ -165,15 +165,15 @@ task axi_pipelined_reads_seq::body;
                                          addr       <  local::addr_hi;
 
     })
-    
+
 
       //backdoor fill memory
       case (read_item[xfer_cnt].burst_type)
         e_FIXED : begin
 
           Lower_Wrap_Boundary = read_item[xfer_cnt].addr;
-          Upper_Wrap_Boundary = Lower_Wrap_Boundary + (2**read_item[xfer_cnt].burst_size);          
-        
+          Upper_Wrap_Boundary = Lower_Wrap_Boundary + (2**read_item[xfer_cnt].burst_size);
+
         end
         e_INCR : begin
           Lower_Wrap_Boundary = read_item[xfer_cnt].addr;
@@ -189,10 +189,10 @@ task axi_pipelined_reads_seq::body;
 
           Lower_Wrap_Boundary = (int'(read_item[xfer_cnt].addr/dtsize) * dtsize);
           Upper_Wrap_Boundary = Lower_Wrap_Boundary + dtsize;
-          
+
         end
       endcase
-      
+
       write_addr = read_item[xfer_cnt].addr;
       for (int i=0;i<read_item[xfer_cnt].len;i++) begin
          m_memory.write(write_addr, i[7:0]);
@@ -200,25 +200,25 @@ task axi_pipelined_reads_seq::body;
          if (write_addr >= Upper_Wrap_Boundary) begin
             write_addr = Lower_Wrap_Boundary;
          end
-      end              
-      
+      end
+
      start_item(read_item[xfer_cnt]);
-    
+
     `uvm_info(this.get_type_name(),
               $sformatf("item %0d id:0x%0x addr_lo: 0x%0x  addr_hi: 0x%0x",
                         xfer_cnt, xid, addr_lo,addr_hi),
               UVM_INFO)
 
-    
+
 
     // If valid specified, then pass it to seq item.
     if (valid.size() > 0) begin
        read_item[xfer_cnt].valid = new[valid.size()](valid);
     end
-    
+
     `uvm_info("DATA", $sformatf("\n\n\nItem %0d:  %s", xfer_cnt, read_item[xfer_cnt].convert2string()), UVM_INFO)
     finish_item(read_item[xfer_cnt]);
-    
+
   end  //for
 
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017, Matt Dew
+// Copyright (C) 2017, Matt Dew @ Dew Technologies, LLC
 //
 // This program is free software (firmware): you can redistribute it and/or
 // modify it under the terms of  the GNU General Public License as published
@@ -47,7 +47,7 @@ class axi_coveragecollector extends uvm_subscriber #(axi_seq_item);
       bins e_WRAP    = {axi_pkg::e_WRAP};
     }
 
-   // AWLEN : coverpoint item.awlen[3:0];
+    AWLEN : coverpoint item.axlen[LEN_WIDTH-1:0];
 
     /* awcache, awlock, awprot, awqos here someday */
 
@@ -74,7 +74,7 @@ class axi_coveragecollector extends uvm_subscriber #(axi_seq_item);
       bins e_WRAP    = {axi_pkg::e_WRAP};
     }
 
-  //  ARLEN : coverpoint item.arlen[3:0];
+    ARLEN : coverpoint item.axlen[LEN_WIDTH-1:0];
 
     /* awcache, awlock, awprot, awqos here someday */
 

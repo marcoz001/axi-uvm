@@ -1,15 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename: 	axi_seq_item.svh
-//
-// Purpose:
-//          UVM sequence item for AXI UVM environment
-//
-// Creator:	Matt Dew
-//
-////////////////////////////////////////////////////////////////////////////////
-//
-// Copyright (C) 2017, Matt Dew
+// Copyright (C) 2017, Matt Dew @ Dew Technologies, LLC
 //
 // This program is free software (firmware): you can redistribute it and/or
 // modify it under the terms of  the GNU General Public License as published
@@ -56,6 +47,7 @@ class axi_seq_item extends uvm_sequence_item;
 
     rand  bit                                     wstrb [];
     rand  bit                                     wlast [];
+  bit                   [LEN_WIDTH-1:0]           axlen;    //used by monitor and coverage
 
    //rand  burst_size_t burst_size; // Burst size
     //rand  burst_type_t burst_type;
@@ -89,11 +81,14 @@ class axi_seq_item extends uvm_sequence_item;
   const shortint c_AXI3_MAXBEATCNT=16;
   const shortint c_AXI4_MAXBEATCNT=256;
 
-  burst_size_t  foo [];
+//  burst_size_t  foo [];
+//  constraint foo_c {burst_size inside {foo};}
 
-  constraint foo_c {burst_size inside {foo};}
-
-  constraint protocol_c   { solve protocol   before len; }
+  constraint protocol_c   { solve protocol   before len;
+                           if (LEN_WIDTH < 8) {
+                             protocol == e_AXI3;
+                           }
+                          }
 //                            protocol inside { axi_uvm_pkg::e_AXI4, axi_uvm_pkg::e_AXI4};}
   //
   constraint burst_type_c { solve burst_type before addr;
@@ -229,7 +224,7 @@ class axi_seq_item extends uvm_sequence_item;
                         if (protocol == axi_uvm_pkg::e_AXI4) {
                           len <= c_AXI4_MAXBEATCNT;
                         } else {
-                         len <= c_AXI4_MAXBEATCNT ;
+                          len <= c_AXI3_MAXBEATCNT ;
                         }
                           } else {
                          len == 0;
@@ -274,8 +269,8 @@ function axi_seq_item::new (string name="axi_seq_item");
   super.new(name);
 
 
-  foo = new[1];
-  foo[0] = e_2BYTES;
+//  foo = new[1];
+//  foo[0] = e_2BYTES;
 
 endfunction : new
 
@@ -413,6 +408,8 @@ function void axi_seq_item::post_randomize;
 
 
   super.post_randomize;
+
+
 //  data=new[len];
   //wstrb=new[len];
   valid=new[len];  // only need one per beat instead of one per byte,
@@ -460,6 +457,11 @@ function void axi_seq_item::post_randomize;
 
      data[len-1] = 'hFE; // specific value to eaily identify last byte
   end // if (cmd == e_WRITE)
+
+
+  if ($clog2(len) > LEN_WIDTH) begin
+    `uvm_error("POST_RANDOMIZATION", $sformatf("LEN OVERRUN ERROR. Protocol = %s.  Len=%0d(0x%0x) but LEN_WIDTH=%0d.", protocol.name, len, len, LEN_WIDTH))
+  end
 
 
   `uvm_info(this.get_type_name(), "Done post_randomize", UVM_HIGH)
