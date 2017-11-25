@@ -28,15 +28,21 @@ class axi_pipelined_writes_seq extends axi_seq;
 
   `uvm_object_utils(axi_pipelined_writes_seq)
 
-
-  const int clearmemory   = 1;
-  const int window_size   = 'h1000;
-
   axi_seq_item write_item [];
+
+    int transaction_id;
 
   // all write responses have been received
   // Reads can go ahead
   event writes_done;
+
+
+  typedef struct {
+    bit [ADDR_WIDTH-1:0] laddr;
+    bit [ADDR_WIDTH-1:0] uaddr;
+  } mem_chk_s;
+
+  mem_chk_s mem_chk_array [*];
 
 
   extern function   new (string name="axi_pipelined_writes_seq");
@@ -54,6 +60,8 @@ function automatic void axi_pipelined_writes_seq::response_handler(uvm_sequence_
 
   axi_seq_item item;
   int xfer_cnt;
+  int id;
+
   bit [ADDR_WIDTH-1:0] lower_addr;
   bit [ADDR_WIDTH-1:0] upper_addr;
   $cast(item,response);
@@ -61,9 +69,11 @@ function automatic void axi_pipelined_writes_seq::response_handler(uvm_sequence_
   xfer_cnt=item.id;
   if (item.cmd== e_WRITE_RESPONSE) begin
    xfers_done++;
-  lower_addr = item.addr;
-  lower_addr[11:0] = 'h0;
-  upper_addr = lower_addr + window_size;
+
+  id=item.get_transaction_id();
+
+  lower_addr = mem_chk_array[id].laddr;
+  upper_addr = mem_chk_array[id].uaddr;
 
    if (!m_memory.seq_item_check(.item       (item),
                                 .lower_addr (lower_addr),
@@ -147,6 +157,7 @@ task axi_pipelined_writes_seq::body;
     end
 
     write_item[xfer_cnt] = axi_seq_item::type_id::create("write_item");
+    write_item[xfer_cnt].set_transaction_id(transaction_id++);
 
     // Not sure why I have to define and set these and
     // then use them in the randomize with {} but
@@ -154,6 +165,12 @@ task axi_pipelined_writes_seq::body;
     addr_lo=xfer_cnt*window_size;
     addr_hi=addr_lo+'h100;
     xid =xfer_cnt[ID_WIDTH-1:0];
+
+
+    mem_chk_array[write_item[xfer_cnt].get_transaction_id()].laddr =addr_lo;
+    mem_chk_array[write_item[xfer_cnt].get_transaction_id()].uaddr =addr_lo+window_size;
+
+
     start_item(write_item[xfer_cnt]);
 
     `uvm_info(this.get_type_name(),

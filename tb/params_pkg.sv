@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2017, Matt Dew
+// Copyright (C) 2017, Matt Dew @ Dew Technologies, LLC
 //
 // This program is free software (firmware): you can redistribute it and/or
 // modify it under the terms of  the GNU General Public License as published
@@ -33,9 +33,9 @@ package params_pkg;
 
 // The obvious question is what to do with multiple instantiations of
 // different sizes?
-  parameter AXI_ID_WIDTH   = 6;
+  parameter AXI_ID_WIDTH   = 4;
   parameter AXI_ADDR_WIDTH = 32;
-  parameter AXI_DATA_WIDTH = 32;
+  parameter AXI_DATA_WIDTH = 256;
   parameter AXI_LEN_WIDTH  = 8;
 
 

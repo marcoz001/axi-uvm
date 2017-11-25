@@ -230,6 +230,7 @@ function automatic void ar_to_class(
      t.id          = s.arid;
      t.addr        = s.araddr;
      t.len         = (s.arlen+1)*(2**s.arsize);
+     t.axlen       = s.arlen;
      t.burst_size  = s.arsize;
      t.burst_type  = s.arburst;
      t.lock        = s.arlock;

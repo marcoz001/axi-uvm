@@ -26,9 +26,6 @@ class axi_sequential_writes_seq extends axi_seq;
 
   `uvm_object_utils(axi_sequential_writes_seq)
 
-  const int clearmemory   = 1;
-  const int window_size   = 'h1000;
-
   extern function   new (string name="axi_sequential_writes_seq");
   extern task       body;
 
@@ -114,7 +111,6 @@ task axi_sequential_writes_seq::body;
                         xfer_cnt, write_item.convert2string()),
               UVM_INFO)
     finish_item(write_item);
-
 
     get_response(write_item);
 

@@ -28,16 +28,21 @@ class axi_pipelined_reads_seq extends axi_seq;
 
   `uvm_object_utils(axi_pipelined_reads_seq)
 
-
-  const int clearmemory   = 1;
-  const int window_size   = 'h1000;
-
   axi_seq_item read_item [];
+
+  int transaction_id;
 
   // all write responses have been received
   // Reads can go ahead
   event reads_done;
 
+
+  typedef struct {
+    bit [ADDR_WIDTH-1:0] laddr;
+    bit [ADDR_WIDTH-1:0] uaddr;
+  } mem_chk_s;
+
+  mem_chk_s mem_chk_array [*];
 
   extern function   new (string name="axi_pipelined_reads_seq");
   extern task       body;
@@ -54,6 +59,7 @@ function automatic void axi_pipelined_reads_seq::response_handler(uvm_sequence_i
 
   axi_seq_item item;
   int xfer_cnt;
+  int id;
 
   bit [ADDR_WIDTH-1:0] lower_addr;
   bit [ADDR_WIDTH-1:0] upper_addr;
@@ -61,13 +67,22 @@ function automatic void axi_pipelined_reads_seq::response_handler(uvm_sequence_i
   $cast(item,response);
 
   xfer_cnt=item.id;
-  lower_addr = item.addr;
-  lower_addr[11:0] = 'h0;
-  upper_addr = lower_addr + window_size;
+
 
   if (item.cmd == e_READ_DATA) begin
 
    xfers_done++;
+
+   id=item.get_transaction_id();
+
+  lower_addr = mem_chk_array[id].laddr;
+  upper_addr = mem_chk_array[id].uaddr;
+
+
+    `uvm_info("LLLLLLLLLLLLLLL",
+              $sformatf("SEQ_response_handler id:%0d uaddr=0x%0x laddr=0x%0x",
+                      id, , lower_addr, upper_addr),
+            UVM_INFO)
 
    if (!m_memory.seq_item_check(.item       (item),
                                 .lower_addr (lower_addr),
@@ -133,6 +148,10 @@ task axi_pipelined_reads_seq::body;
 
   read_item = new [xfers_to_send];
 
+  //mem_chk_array = new [xfers_to_send];
+
+
+
   use_response_handler(1); // Enable Response Handler
 
   if (!uvm_config_db #(memory)::get(null, "", "m_memory", m_memory)) begin
@@ -158,6 +177,7 @@ task axi_pipelined_reads_seq::body;
     end
 
     read_item[xfer_cnt] = axi_seq_item::type_id::create("read_item");
+    read_item[xfer_cnt].set_transaction_id(transaction_id++);
 
     // Not sure why I have to define and set these and
     // then use them in the randomize with {} but
@@ -165,6 +185,10 @@ task axi_pipelined_reads_seq::body;
     addr_lo=xfer_cnt*window_size;
     addr_hi=addr_lo+'h100;
     xid =xfer_cnt[ID_WIDTH-1:0];
+
+
+    mem_chk_array[read_item[xfer_cnt].get_transaction_id()].laddr =addr_lo;
+    mem_chk_array[read_item[xfer_cnt].get_transaction_id()].uaddr =addr_lo+window_size;
 
 
     assert( read_item[xfer_cnt].randomize() with {
@@ -181,6 +205,8 @@ task axi_pipelined_reads_seq::body;
       burst_type == 'h0;
 
     })
+
+
 
 
       //backdoor fill memory
@@ -219,6 +245,10 @@ task axi_pipelined_reads_seq::body;
       end
 
      start_item(read_item[xfer_cnt]);
+
+        `uvm_info("YOYOYOYOYOYO",
+                $sformatf("Transactionid: %0d", read_item[xfer_cnt].get_transaction_id()),
+                UVM_INFO)
 
     `uvm_info(this.get_type_name(),
               $sformatf("item %0d id:0x%0x addr_lo: 0x%0x  addr_hi: 0x%0x",

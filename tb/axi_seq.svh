@@ -26,15 +26,12 @@ class axi_seq extends uvm_sequence #(axi_seq_item);
 
   `uvm_object_utils(axi_seq)
 
-  const int axi_readback  = 1;
-  const int clearmemory   = 1;
-
-  const int window_size   = 'h1000;
+//  const int axi_readback  = 1;
+  const int clearmemory   = 0;
+  const int window_size   = 'h1_0000;
   int xfers_to_send = 1;
 
   bit valid [];
-
-  //const int pipelined_bursts_enabled=0;
 
   bit [2:0] max_burst_size;
 

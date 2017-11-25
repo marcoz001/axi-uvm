@@ -47,7 +47,7 @@ endfunction : new
 /*! \brief Writes into memory
  *
  */
-function void memory::write(input bit [ADDR_WIDTH-1:0] addr, input bit [7:0] data);
+function automatic void memory::write(input bit [ADDR_WIDTH-1:0] addr, input bit [7:0] data);
   `uvm_info(this.get_type_name(), $sformatf("write mem(0x%0x)=0x%0x", addr, data), UVM_HIGH)
   mem[addr] = data;
 endfunction : write
@@ -56,7 +56,7 @@ endfunction : write
  *
  * uses an associative array.  If reading from unwritten address, 'z is returned.
 */
-function bit [7:0] memory::read(input bit [ADDR_WIDTH-1:0] addr);
+function automatic bit [7:0] memory::read(input bit [ADDR_WIDTH-1:0] addr);
   if (mem.exists(addr))  begin
     `uvm_info(this.get_type_name(), $sformatf("read mem(0x%0x)=0x%0x", addr, mem[addr]), UVM_HIGH)
 
@@ -194,7 +194,7 @@ function automatic bit memory::seq_item_check(
              read_data=read(i);
              assert(expected_data==read_data) else begin
                 miscompare_cntr++;
-               `uvm_error("MEMORY PRE-CHECK e_FIXED miscompare",
+               `uvm_error("MEMORY PRE-CHECK miscompare",
                           $sformatf("Address: 0x%0x expected: 0x%0x   actual:0x%0x",
                                     i,
                                      expected_data,
@@ -403,7 +403,7 @@ function automatic bit memory::seq_item_check(
             read_data=read(i);
             assert(expected_data==read_data) else begin
                 miscompare_cntr++;
-               `uvm_error("e_FIXED miscompare",
+              `uvm_error("MEMORY POST-CHECK miscompare",
                           $sformatf("expected: 0x%0x   actual:0x%0x",
                                     expected_data,
                                     read_data))

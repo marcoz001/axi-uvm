@@ -26,13 +26,6 @@ class axi_sequential_reads_seq extends axi_seq;
 
   `uvm_object_utils(axi_sequential_reads_seq)
 
-  int xfers_done=0;
-
-  memory m_memory;
-
-  axi_seq_item read_item;
-
-
   extern function   new (string name="axi_sequential_reads_seq");
   extern task       body;
 
@@ -71,6 +64,8 @@ task axi_sequential_reads_seq::body;
   bit [ADDR_WIDTH-1:0] Lower_Wrap_Boundary;
   bit [ADDR_WIDTH-1:0] Upper_Wrap_Boundary;
   bit [ADDR_WIDTH-1:0] write_addr;
+
+  axi_seq_item read_item;
 
   xfers_done=0;
 
@@ -113,7 +108,6 @@ task axi_sequential_reads_seq::body;
 
      assert( read_item.randomize() with {
                                          cmd        == e_READ;
-       burst_type == e_FIXED;
                                          burst_size <= local::max_burst_size;
                                          id         == local::xid;
                                          addr       >= local::addr_lo;
