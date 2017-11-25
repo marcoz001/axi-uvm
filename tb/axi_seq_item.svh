@@ -230,13 +230,13 @@ class axi_seq_item extends uvm_sequence_item;
                          len == 0;
                        }
                           }
-
-    constraint valid_c { solve len before valid;
-                        valid.size() == len; }
-    constraint data_c {  solve len before data;
-                         data.size() == len; }
-    constraint wstrb_c { solve len before wstrb;
-                         wstrb.size() == len; }
+//these aredonein post-randomize
+//    constraint valid_c { solve len before valid;
+//                        valid.size() == len; }
+//    constraint data_c {  solve len before data;
+//                         data.size() == len; }
+//    constraint wstrb_c { solve len before wstrb;
+//                         wstrb.size() == len; }
 
   //constraint wlast_c { solve len before wlast;
     //                    wlast.size() == len/4;
@@ -410,8 +410,8 @@ function void axi_seq_item::post_randomize;
   super.post_randomize;
 
 
-//  data=new[len];
-  //wstrb=new[len];
+  data=new[len];
+  wstrb=new[len];
   valid=new[len];  // only need one per beat instead of one per byte,
                      // we won't use the extras.
   // \todo: howto guaranteesufficient valid
@@ -459,9 +459,9 @@ function void axi_seq_item::post_randomize;
   end // if (cmd == e_WRITE)
 
 
-  if ($clog2(len) > LEN_WIDTH) begin
-    `uvm_error("POST_RANDOMIZATION", $sformatf("LEN OVERRUN ERROR. Protocol = %s.  Len=%0d(0x%0x) but LEN_WIDTH=%0d.", protocol.name, len, len, LEN_WIDTH))
-  end
+//  if ($clog2(len) > (LEN_WIDTH*(2**burst_size)) begin
+//    `uvm_error("POST_RANDOMIZATION", $sformatf("LEN OVERRUN ERROR. Protocol = %s.  Len=%0d(0x%0x), burst_size=%0d but LEN_WIDTH=%0d.", protocol.name, len, len, burst_size,LEN_WIDTH))
+//  end
 
 
   `uvm_info(this.get_type_name(), "Done post_randomize", UVM_HIGH)

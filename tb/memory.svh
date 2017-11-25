@@ -157,14 +157,14 @@ function automatic bit memory::seq_item_check(
       post_check_stop_addr  = upper_addr;
 
     end else begin
-       pre_check_start_addr=lower_addr;
-       pre_check_stop_addr= item.addr; // only different if burst_type=e_WRAP;
+       pre_check_start_addr = lower_addr;
+       pre_check_stop_addr  = item.addr; // only different if burst_type=e_WRAP;
 
-       check_start_addr=item.addr;
-       check_stop_addr=item.addr+item.len;
+       check_start_addr     = item.addr;
+       check_stop_addr      = item.addr+item.len;
 
-       post_check_start_addr=item.addr+item.len;
-       post_check_stop_addr=upper_addr;
+       post_check_start_addr = item.addr+item.len;
+       post_check_stop_addr = upper_addr;
     end
 
     msg_s="";
@@ -194,8 +194,9 @@ function automatic bit memory::seq_item_check(
              read_data=read(i);
              assert(expected_data==read_data) else begin
                 miscompare_cntr++;
-                `uvm_error("e_FIXED miscompare",
-                           $sformatf("expected: 0x%0x   actual:0x%0x",
+               `uvm_error("MEMORY PRE-CHECK e_FIXED miscompare",
+                          $sformatf("Address: 0x%0x expected: 0x%0x   actual:0x%0x",
+                                    i,
                                      expected_data,
                                      read_data))
              end

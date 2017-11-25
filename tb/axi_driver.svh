@@ -144,6 +144,8 @@ task axi_driver::write_address;
 
   vif.set_awvalid(1'b0);
 
+  vif.wait_for_not_in_reset();
+
   forever begin
 
     if (item == null) begin
@@ -171,6 +173,9 @@ task axi_driver::write_address;
              // if not, check if there's another item
 
             if (writeaddress_mbx.try_get(item)) begin
+                    `uvm_info("axi_driver::write_address",
+                $sformatf("Item: %s", item.convert2string()),
+                UVM_HIGH)
 
                 axi_uvm_pkg::aw_from_class(.t(item), .v(v));
              end
@@ -233,6 +238,9 @@ task axi_driver::write_data;
   int beat_cntr_max;
   int validcntr;
   int validcntr_max;
+  int j;
+  int valid_asserts;
+  int valid_assert_bit;
 
   vif.set_wvalid(1'b0);
   forever begin
@@ -247,6 +255,25 @@ task axi_driver::write_data;
          for (int i=0;i<item.len;i++) begin
            item.valid[i]=$random;
          end
+       end
+
+       valid_asserts = 0;
+       j=item.valid.size();
+       for (int i=0;i<j;i++) begin
+          item.valid[i] = $random;
+         if (item.valid[i] == 1'b1) begin
+             valid_asserts++;
+          end
+       end
+
+
+       // valid must be asserted at least once to avoid never sending data.
+       if (valid_asserts==0) begin
+          valid_assert_bit=$urandom_range(j-1,0);
+          item.valid[valid_assert_bit] = 1'b1;
+          `uvm_info("axi_driver::write_data",
+                    $sformatf("All zeros. Settin bit %0d to 1", valid_assert_bit),
+                    UVM_HIGH)
        end
 
 
@@ -292,6 +319,10 @@ task axi_driver::write_data;
              // if not, check if there's another item
 
             if (writedata_mbx.try_get(item)) begin
+                  `uvm_info("axi_driver::write_data",
+                $sformatf("Item: %s", item.convert2string()),
+                UVM_HIGH)
+
                 if (m_config.wvalid.size > 0) begin
                    item.valid=new[m_config.wvalid.size](m_config.wvalid);
                 end else begin
@@ -299,6 +330,25 @@ task axi_driver::write_data;
                   for (int i=0;i<item.len;i++) begin
                       item.valid[i]=$random;
                    end
+                end
+
+                valid_asserts = 0;
+                j=item.valid.size();
+                for (int i=0;i<j;i++) begin
+                   item.valid[i] = $random;
+                  if (item.valid[i] == 1'b1) begin
+                       valid_asserts++;
+                   end
+                end
+
+
+                // valid must be asserted at least once to avoid never sending data.
+              if (valid_asserts==0) begin
+                   valid_assert_bit=$urandom_range(j-1,0);
+                   item.valid[valid_assert_bit] = 1'b1;
+                   `uvm_info("axi_driver::write_data",
+                             $sformatf("All zeros. Settin bit %0d to 1", valid_assert_bit),
+                             UVM_HIGH)
                 end
 
                 validcntr=0;
@@ -449,6 +499,8 @@ task axi_driver::read_address;
 
 
   vif.set_arvalid(1'b0);
+
+  vif.wait_for_not_in_reset();
 
   forever begin
 

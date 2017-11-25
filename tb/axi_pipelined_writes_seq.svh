@@ -50,20 +50,24 @@ endclass : axi_pipelined_writes_seq
 /*! \brief Handles write responses, including verifying memory via backdoor reads.
  *
  */
-function void axi_pipelined_writes_seq::response_handler(uvm_sequence_item response);
+function automatic void axi_pipelined_writes_seq::response_handler(uvm_sequence_item response);
 
   axi_seq_item item;
   int xfer_cnt;
-
+  bit [ADDR_WIDTH-1:0] lower_addr;
+  bit [ADDR_WIDTH-1:0] upper_addr;
   $cast(item,response);
 
   xfer_cnt=item.id;
   if (item.cmd== e_WRITE_RESPONSE) begin
    xfers_done++;
+  lower_addr = item.addr;
+  lower_addr[11:0] = 'h0;
+  upper_addr = lower_addr + window_size;
 
    if (!m_memory.seq_item_check(.item       (item),
-                                .lower_addr (xfer_cnt*window_size),
-                                .upper_addr ((xfer_cnt+1)*window_size))) begin
+                                .lower_addr (lower_addr),
+                                .upper_addr (upper_addr))) begin
         `uvm_info("MISCOMPARE","Miscompare error", UVM_INFO)
       end
 
@@ -76,7 +80,10 @@ function void axi_pipelined_writes_seq::response_handler(uvm_sequence_item respo
   end
 
 end
-  `uvm_info(this.get_type_name(), $sformatf("SEQ_response_handler xfers_done=%0d.   Item: %s",xfers_done, item.convert2string()), UVM_INFO)
+  `uvm_info(this.get_type_name(),
+            $sformatf("SEQ_response_handler xfers_done=%0d/%0d.   Item: %s",
+                      xfers_done, xfers_to_send, item.convert2string()),
+            UVM_INFO)
 
 
 endfunction: response_handler
@@ -161,7 +168,6 @@ task axi_pipelined_writes_seq::body;
                                          id         == local::xid;
                                          addr       >= local::addr_lo;
                                          addr       <  local::addr_hi;
-
     })
     // If valid specified, then pass it to seq item.
     if (valid.size() > 0) begin
