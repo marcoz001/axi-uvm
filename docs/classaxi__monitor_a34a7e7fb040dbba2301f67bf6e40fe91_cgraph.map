@@ -10,7 +10,7 @@
 <area shape="rect" id="node7" href="$axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="676,173,835,199"/>
 <area shape="rect" id="node10" href="$classaxi__if__abstract.html#a834de2d058eec05c4c890435fae83a5b" title="returns data bus width " alt="" coords="461,224,595,265"/>
 <area shape="rect" id="node11" href="$axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="465,173,591,199"/>
-<area shape="rect" id="node13" href="$classmemory.html#a2e7163441abfd74428d3b0813602c0aa" title="Reads from memory. " alt="" coords="477,341,579,367"/>
+<area shape="rect" id="node13" href="$classmemory.html#ab676c74a01283bf843f4a31f632d36b1" title="Reads from memory. " alt="" coords="477,341,579,367"/>
 <area shape="rect" id="node16" href="$classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="459,392,597,433"/>
 <area shape="rect" id="node5" href="$axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="1095,392,1245,433"/>
 <area shape="rect" id="node8" href="$axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="888,224,1047,265"/>
@@ -20,7 +20,7 @@
 <area shape="rect" id="node18" href="$classaxi__if__abstract.html#a9e019c384309938d98fb93eb9d19ee35" title="Wait for a valid write address to be acknowledged and return it. " alt="" coords="459,661,597,703"/>
 <area shape="rect" id="node19" href="$axi__uvm__pkg_8sv.html#acaa78ee9684ddd7ba5bf9cdfa88808e0" title="Pull values out of a axi_seq_item_aw_vector_s and stuffs them into an axi_seq_item. " alt="" coords="481,727,575,754"/>
 <area shape="rect" id="node21" href="$classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="459,5,597,47"/>
-<area shape="rect" id="node22" href="$classmemory.html#a70d1c69818ee00fb080d6c397778439a" title="Writes into memory. " alt="" coords="475,122,581,149"/>
+<area shape="rect" id="node22" href="$classmemory.html#a244362130b448b6842b19d6951304b51" title="Writes into memory. " alt="" coords="475,122,581,149"/>
 <area shape="rect" id="node24" href="$classaxi__if__abstract.html#a5030adaa9d120c151c041912c25bc538" title="Wait for a valid write response to be acknowledged and return it. " alt="" coords="459,779,597,820"/>
 <area shape="rect" id="node25" href="$axi__uvm__pkg_8sv.html#a966a2770a1d733e0eec230225ca39f77" title="return values from a axi_seq_item_b_vector_s and return an axi_seq_item " alt="" coords="485,845,571,871"/>
 </map>

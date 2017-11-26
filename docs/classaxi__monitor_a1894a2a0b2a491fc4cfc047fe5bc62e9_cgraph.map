@@ -5,7 +5,7 @@
 <area shape="rect" id="node6" href="$axi__pkg_8sv.html#a269e42497226a3a0def0fc1bfdd7d22a" title="return byte lanes that contain valid data " alt="" coords="471,195,629,221"/>
 <area shape="rect" id="node9" href="$classaxi__if__abstract.html#a834de2d058eec05c4c890435fae83a5b" title="returns data bus width " alt="" coords="256,209,389,250"/>
 <area shape="rect" id="node10" href="$axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="260,157,385,184"/>
-<area shape="rect" id="node12" href="$classmemory.html#a2e7163441abfd74428d3b0813602c0aa" title="Reads from memory. " alt="" coords="271,325,374,352"/>
+<area shape="rect" id="node12" href="$classmemory.html#ab676c74a01283bf843f4a31f632d36b1" title="Reads from memory. " alt="" coords="271,325,374,352"/>
 <area shape="rect" id="node13" href="$classaxi__monitor.html#ae9d073687e001b3bde7cc83e11c76a96" title="monitors Read Data channel and sends out TLM pkt Loop Wait for activity on the Read Data Channel..." alt="" coords="245,376,400,403"/>
 <area shape="rect" id="node15" href="$classaxi__if__abstract.html#ac122b014826138edcbb74b601b625364" title="Wait for a valid read address to be acknowledged and return it. " alt="" coords="253,427,392,469"/>
 <area shape="rect" id="node4" href="$axi__pkg_8sv.html#a1bb88ba6ed9a3a081a64f90042a681b5" title="calculate how unaligned the address is from the burst size " alt="" coords="889,59,1040,101"/>

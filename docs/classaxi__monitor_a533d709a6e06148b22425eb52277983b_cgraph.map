@@ -3,7 +3,7 @@
 <area shape="rect" id="node5" href="$classaxi__if__abstract.html#a834de2d058eec05c4c890435fae83a5b" title="returns data bus width " alt="" coords="213,40,347,81"/>
 <area shape="rect" id="node6" href="$axi__pkg_8sv.html#a2bdf1895089f5dfc5195f221ecfc02d8" title="Get next address for reading/writing to memory. " alt="" coords="217,106,343,133"/>
 <area shape="rect" id="node10" href="$classaxi__if__abstract.html#ae1a2ca6a8c9c35f84db03942796fc092" title="Wait for a valid write data to be acknowledged and return it. " alt="" coords="211,157,349,199"/>
-<area shape="rect" id="node11" href="$classmemory.html#a70d1c69818ee00fb080d6c397778439a" title="Writes into memory. " alt="" coords="227,223,333,250"/>
+<area shape="rect" id="node11" href="$classmemory.html#a244362130b448b6842b19d6951304b51" title="Writes into memory. " alt="" coords="227,223,333,250"/>
 <area shape="rect" id="node3" href="$axi__pkg_8sv.html#a6c8ade980c77973114ddfd403d25bc23" title="calculate burst_size aligned address " alt="" coords="615,71,773,112"/>
 <area shape="rect" id="node4" href="$axi__pkg_8sv.html#a4af175634a55ae773681009062989a5d" title="calculate bus&#45;siz aligned address " alt="" coords="619,5,769,47"/>
 <area shape="rect" id="node7" href="$axi__pkg_8sv.html#a1fe6872099e588c0924c5bb71a9964b3" title="calculate the wrap boundaries for a given burst " alt="" coords="397,106,567,133"/>

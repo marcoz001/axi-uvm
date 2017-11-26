@@ -1,0 +1,8 @@
+<map id="memory::write" name="memory::write">
+<area shape="rect" id="node2" href="$classaxi__sequential__reads__seq.html#a66a5b21037c02406635a4289c5c38f89" title="Does all the work. " alt="" coords="165,5,309,47"/>
+<area shape="rect" id="node3" href="$classaxi__sequential__writes__seq.html#a6e2e64a3564fe96732d935f3f491031f" title="Does all the work. " alt="" coords="164,71,311,112"/>
+<area shape="rect" id="node4" href="$classaxi__pipelined__reads__seq.html#a3e895a6b63903816945053861cd6a86d" title="Does all the work. " alt="" coords="169,136,305,177"/>
+<area shape="rect" id="node5" href="$classaxi__pipelined__writes__seq.html#ac4683d48c4b0b45a6d8ffa3d2ecf6677" title="Does all the work. " alt="" coords="168,201,307,243"/>
+<area shape="rect" id="node6" href="$classaxi__monitor.html#a533d709a6e06148b22425eb52277983b" title="monitors Write Data channel " alt="" coords="159,267,316,294"/>
+<area shape="rect" id="node7" href="$classaxi__monitor.html#a34a7e7fb040dbba2301f67bf6e40fe91" title="Starts the monitoring threads. " alt="" coords="364,267,521,294"/>
+</map>

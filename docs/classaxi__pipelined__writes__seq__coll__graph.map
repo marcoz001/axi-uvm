@@ -1,5 +1,5 @@
 <map id="axi_pipelined_writes_seq" name="axi_pipelined_writes_seq">
-<area shape="rect" id="node2" href="$classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="198,185,265,212"/>
+<area shape="rect" id="node2" href="$classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="77,193,143,219"/>
 <area shape="rect" id="node4" href="$classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="197,89,266,115"/>
-<area shape="rect" id="node6" href="$classaxi__seq__item.html" title="contains all data and functions related to axi and usage " alt="" coords="301,185,399,212"/>
+<area shape="rect" id="node6" href="$classaxi__pipelined__writes__seq.html#structaxi__pipelined__writes__seq_1_1mem__chk__s" title="axi_pipelined_writes\l_seq::mem_chk_s" alt="" coords="167,185,306,227"/>
 </map>

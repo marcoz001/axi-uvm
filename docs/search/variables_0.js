@@ -38,5 +38,6 @@ var searchData=
   ['axi_5fseq_5fitem_5faw_5fnum_5fbits',['AXI_SEQ_ITEM_AW_NUM_BITS',['../axi__pkg_8sv.html#a3609a21c67a3c1b8ffe65c66bd413bdc',1,'axi_pkg.sv']]],
   ['axi_5fseq_5fitem_5fb_5fnum_5fbits',['AXI_SEQ_ITEM_B_NUM_BITS',['../axi__pkg_8sv.html#a39ab1b1c2a814941adb3f0ceeef4b2aa',1,'axi_pkg.sv']]],
   ['axi_5fseq_5fitem_5fr_5fnum_5fbits',['AXI_SEQ_ITEM_R_NUM_BITS',['../axi__pkg_8sv.html#a5ca03583008df77c259a2f1503fb3e9c',1,'axi_pkg.sv']]],
-  ['axi_5fseq_5fitem_5fw_5fnum_5fbits',['AXI_SEQ_ITEM_W_NUM_BITS',['../axi__pkg_8sv.html#abcfb4d0ea71d9d468d8d8ee492acdcc7',1,'axi_pkg.sv']]]
+  ['axi_5fseq_5fitem_5fw_5fnum_5fbits',['AXI_SEQ_ITEM_W_NUM_BITS',['../axi__pkg_8sv.html#abcfb4d0ea71d9d468d8d8ee492acdcc7',1,'axi_pkg.sv']]],
+  ['axlen',['axlen',['../classaxi__seq__item.html#a89a4c8333ba4c85f30702909c2a9153b',1,'axi_seq_item']]]
 ];

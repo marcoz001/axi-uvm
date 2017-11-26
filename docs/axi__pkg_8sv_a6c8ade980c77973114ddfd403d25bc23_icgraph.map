@@ -14,6 +14,6 @@
 <area shape="rect" id="node14" href="$classaxi__seq__item.html#acde9a137c164b77ec0846fe343870215" title="return beat values for write data and read data channels " alt="" coords="434,173,591,214"/>
 <area shape="rect" id="node15" href="$classaxi__driver.html#a415576ba733708ac11b31726bbd31cff" title="Write Data channel thread. " alt="" coords="658,155,805,181"/>
 <area shape="rect" id="node16" href="$classaxi__responder.html#a2944f2ebd74a2fbaef300d355ed917e0" title="Read Data channel thread. " alt="" coords="647,256,815,283"/>
-<area shape="rect" id="node18" href="$classaxi__seq__item.html#a3e6570de0d4aef1f8b24c4336c1c99ec" title="axi_seq_item::wstrb_c" alt="" coords="655,205,808,232"/>
+<area shape="rect" id="node18" href="$classaxi__seq__item.html#a8ce3656acf87ec08f14fd18f7458ad2e" title="axi_seq_item::max_len" alt="" coords="653,205,809,232"/>
 <area shape="rect" id="node17" href="$classaxi__responder.html#a1cbb78601c4535a0ca361989b7ca2077" title="Launches channel responder threads and then acts as a dispatcher. " alt="" coords="881,249,1010,290"/>
 </map>

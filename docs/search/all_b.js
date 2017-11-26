@@ -1,32 +1,4 @@
 var searchData=
 [
-  ['m_5faxidriver_5fagent',['m_axidriver_agent',['../classaxi__env.html#a128e456c61597c053b2985523d4ceef5',1,'axi_env']]],
-  ['m_5faxiresponder_5fagent',['m_axiresponder_agent',['../classaxi__env.html#a859f5fe7be21f2e2a2f21c4ebecec974',1,'axi_env']]],
-  ['m_5fconfig',['m_config',['../classaxi__agent.html#adb3187bc0e91db087427cab4d4936899',1,'axi_agent::m_config()'],['../classaxi__driver.html#a04ce20f3e43634f19731150a745a2b03',1,'axi_driver::m_config()'],['../classaxi__monitor.html#a402836a98848f900644618787e2030e8',1,'axi_monitor::m_config()'],['../classaxi__responder.html#aa0d60ec62cfecdc8ae5a366413cf72bc',1,'axi_responder::m_config()']]],
-  ['m_5fcoveragecollector',['m_coveragecollector',['../classaxi__agent.html#a4c21d84aec7132137389b525d7566882',1,'axi_agent']]],
-  ['m_5fdriver',['m_driver',['../classaxi__agent.html#aa0f38ae35ed9d4b1e6c5913397cb4c05',1,'axi_agent']]],
-  ['m_5fdriver_5fseqr',['m_driver_seqr',['../classaxi__env.html#ae4e826b71d819928608abec1701cd167',1,'axi_env']]],
-  ['m_5fmemory',['m_memory',['../classaxi__agent.html#a0ba1dc6b3d01b140074209d6758a76b2',1,'axi_agent::m_memory()'],['../classaxi__driver.html#afbd67cca9ea7c169442b88d843105385',1,'axi_driver::m_memory()'],['../classaxi__env.html#a17d1524bde3172c2fa409ad2736e1a04',1,'axi_env::m_memory()'],['../classaxi__monitor.html#a606253997dae58935a0d5de9d4a69368',1,'axi_monitor::m_memory()'],['../classaxi__responder.html#a540af7edbec8d9caef05a8c7dbccf80a',1,'axi_responder::m_memory()'],['../classaxi__seq.html#a9e081ffeeb0b6ee993973c75439b5614',1,'axi_seq::m_memory()'],['../classaxi__sequential__reads__seq.html#ae03ff570101e33a1d5768a895c06b9ba',1,'axi_sequential_reads_seq::m_memory()']]],
-  ['m_5fmonitor',['m_monitor',['../classaxi__agent.html#ab347099a57dca596edae1aac16f9815a',1,'axi_agent']]],
-  ['m_5fresp_5fseq',['m_resp_seq',['../classaxi__base__test.html#a02f6286c2458f4ca58a42b1165fa7d22',1,'axi_base_test']]],
-  ['m_5fresponder',['m_responder',['../classaxi__agent.html#a0379528db12987846a0e574293b6b30e',1,'axi_agent']]],
-  ['m_5fresponder_5fseqr',['m_responder_seqr',['../classaxi__env.html#a582e64d989640d06e90251b619baed54',1,'axi_env']]],
-  ['m_5fscoreboard',['m_scoreboard',['../classaxi__agent.html#ae9aa1dc6c8716eb880fb427432d23b32',1,'axi_agent']]],
-  ['m_5fseq',['m_seq',['../classaxi__base__test.html#a626ddf54e6e32e7bf5b7aee51e4a07ee',1,'axi_base_test']]],
-  ['m_5fseqr',['m_seqr',['../classaxi__agent.html#a5944354468812d3e00c06fe26bc1d9bd',1,'axi_agent']]],
-  ['max_5fburst_5fsize',['max_burst_size',['../classaxi__seq.html#aeeb48cb95c098c51ae3aada90ecd50e2',1,'axi_seq']]],
-  ['max_5fclks_5fbetween_5far_5ftransfers',['max_clks_between_ar_transfers',['../classaxi__agent__config.html#acaf68218a470d9157ce2af133100f330',1,'axi_agent_config']]],
-  ['max_5fclks_5fbetween_5faw_5ftransfers',['max_clks_between_aw_transfers',['../classaxi__agent__config.html#abf39957adabc5c03b279cb307b6acaa8',1,'axi_agent_config']]],
-  ['max_5fclks_5fbetween_5fb_5ftransfers',['max_clks_between_b_transfers',['../classaxi__agent__config.html#afd567dd66523222b9f71b0150e7969cc',1,'axi_agent_config']]],
-  ['max_5fclks_5fbetween_5fr_5ftransfers',['max_clks_between_r_transfers',['../classaxi__agent__config.html#aa425b9c50a42fd85af4ef1463ffc41fa',1,'axi_agent_config']]],
-  ['max_5fclks_5fbetween_5fw_5ftransfers',['max_clks_between_w_transfers',['../classaxi__agent__config.html#a2e7aba347e519f8654dca6ca863b6293',1,'axi_agent_config']]],
-  ['max_5flen',['max_len',['../classaxi__seq__item.html#a8ce3656acf87ec08f14fd18f7458ad2e',1,'axi_seq_item']]],
-  ['memory',['memory',['../classmemory.html',1,'']]],
-  ['memory_2esvh',['memory.svh',['../memory_8svh.html',1,'']]],
-  ['min_5fclks_5fbetween_5far_5ftransfers',['min_clks_between_ar_transfers',['../classaxi__agent__config.html#a8d448e72ae4e9811d87ce6db3871e51d',1,'axi_agent_config']]],
-  ['min_5fclks_5fbetween_5faw_5ftransfers',['min_clks_between_aw_transfers',['../classaxi__agent__config.html#ac068d14183cd2101f52f0c0f854e269e',1,'axi_agent_config']]],
-  ['min_5fclks_5fbetween_5fb_5ftransfers',['min_clks_between_b_transfers',['../classaxi__agent__config.html#a8ce3268574166ea7c5eddc82de536050',1,'axi_agent_config']]],
-  ['min_5fclks_5fbetween_5fr_5ftransfers',['min_clks_between_r_transfers',['../classaxi__agent__config.html#aadd7c273e399aa76e22001feca38c571',1,'axi_agent_config']]],
-  ['min_5fclks_5fbetween_5fw_5ftransfers',['min_clks_between_w_transfers',['../classaxi__agent__config.html#a7eba64fd6bb723fe1009d46a1678d607',1,'axi_agent_config']]],
-  ['modules',['Modules',['../group__SVmodule.html',1,'']]]
+  ['new',['new',['../classaxi__agent.html#a6ec6e714389eaee48391dd850be31997',1,'axi_agent::new()'],['../classaxi__agent__config.html#a0286f72cf4b41b65811db9bfb540d42d',1,'axi_agent_config::new()'],['../classaxi__base__test.html#af0e66237dfdaf9ffb043d56402cfc7db',1,'axi_base_test::new()'],['../classaxi__coveragecollector.html#a150e2b2ebb19bfe681c50e45e4b4e05f',1,'axi_coveragecollector::new()'],['../classaxi__driver.html#a6f3429022f72c05b1f0b140e113774d5',1,'axi_driver::new()'],['../classaxi__env.html#a5ff0216daf8473ea21dc53fa7153db8b',1,'axi_env::new()'],['../classaxi__monitor.html#ae1cc05f18a24d7030f6cc05463435b65',1,'axi_monitor::new()'],['../classaxi__pipelined__reads__seq.html#a5b7fbcc8488d3c4cc3014039bc5f52ff',1,'axi_pipelined_reads_seq::new()'],['../classaxi__pipelined__reads__test.html#a71a9c215892a0208941ae1ed3f5b1d0e',1,'axi_pipelined_reads_test::new()'],['../classaxi__pipelined__writes__seq.html#a29962de7ffb5d4820941186b814732cb',1,'axi_pipelined_writes_seq::new()'],['../classaxi__pipelined__writes__test.html#a8f81287edf04772a3fccd4c75419bbaf',1,'axi_pipelined_writes_test::new()'],['../classaxi__responder.html#ada904275ea4c683de5c2fae9f39d4cd4',1,'axi_responder::new()'],['../classaxi__responder__seq.html#addce24fca5a2030ca79ace2dcfb9ba62',1,'axi_responder_seq::new()'],['../classaxi__seq.html#a9e3a9642246211575719fb840e1e9343',1,'axi_seq::new()'],['../classaxi__seq__item.html#ae9a267104871cd5660de0a0ca7f1c6cb',1,'axi_seq_item::new()'],['../classaxi__sequencer.html#aa0f8c5652275be7be8fdbf803ad676e0',1,'axi_sequencer::new()'],['../classaxi__sequential__reads__test.html#a67443bd605d35c176a83b1c836c94b6f',1,'axi_sequential_reads_test::new()'],['../classaxi__sequential__writes__test.html#af47904740ca0f7133c46aa56618d2119',1,'axi_sequential_writes_test::new()'],['../classmemory.html#ace6f1dfa5c936c043d9304ab2cac91fd',1,'memory::new()']]]
 ];

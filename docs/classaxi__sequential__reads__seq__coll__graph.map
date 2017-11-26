@@ -1,5 +1,4 @@
 <map id="axi_sequential_reads_seq" name="axi_sequential_reads_seq">
-<area shape="rect" id="node2" href="$classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="109,185,175,212"/>
+<area shape="rect" id="node2" href="$classaxi__seq.html" title="Writes to memory over AXI, backdoor readback, then AXI readback. " alt="" coords="102,185,169,212"/>
 <area shape="rect" id="node4" href="$classmemory.html" title="Extremely simple memory model with just write() and read() methods. " alt="" coords="197,89,266,115"/>
-<area shape="rect" id="node6" href="$classaxi__seq__item.html" title="contains all data and functions related to axi and usage " alt="" coords="325,185,423,212"/>
 </map>

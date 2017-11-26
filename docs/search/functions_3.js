@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['data_5fc',['data_c',['../classaxi__seq__item.html#ac9ec7a8710cde01bb533e4951e492b5f',1,'axi_seq_item']]],
   ['disable_5farready_5ftoggle_5fpattern',['disable_arready_toggle_pattern',['../classaxi__if__abstract.html#a409e8cd096385a58742315b4f531cc2f',1,'axi_if_abstract']]],
   ['disable_5fawready_5ftoggle_5fpattern',['disable_awready_toggle_pattern',['../classaxi__if__abstract.html#ae95bb13d2cc5c21c4779f2f4ab76db2b',1,'axi_if_abstract']]],
   ['disable_5fbready_5ftoggle_5fpattern',['disable_bready_toggle_pattern',['../classaxi__if__abstract.html#a60864fb8651689fc67d0259dc86fa708',1,'axi_if_abstract']]],
