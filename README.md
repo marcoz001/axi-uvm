@@ -9,6 +9,7 @@
  * - Supports full and partial transfers.
  * - Supports aligned and unaligned transfers.
  * - Supports Fixed, Incrementing and Wrapped transfers.
+ * - Supports toggling *ready and *valid. Including AXI-incompatibly mode which randomly asserts and deasserts valid before ready asserts.
  * - Fixed burst_type must be aligned. Unaligned Fixed transfers are not supported.
  * - Testbench side is event driven.  No #'delays, no @clock, etc
  * - Emulator friendly (TB side is event driven. no @clock or # delays)
