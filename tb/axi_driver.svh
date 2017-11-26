@@ -439,9 +439,6 @@ task axi_driver::write_data;
 
     end // (item != null)
 
-
-
-
     // No item for next clock, so close out bus
     if (item == null) begin
        s.wvalid = 1'b0;

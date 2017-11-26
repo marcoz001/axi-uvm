@@ -685,5 +685,7 @@ end
 
 endfunction : use_concrete_class
 
+
 endinterface : axi_if
+
 
