@@ -5,7 +5,7 @@ RTLFILES      = ../rtl/axi_pkg.sv ../rtl/axi_if.sv
 TBFILES       = ../rtl/axi_uvm_pkg.sv ../tb/tb.sv
 
 UVM_TESTNAME ?= axi_base_test
-transactions ?= 1
+transactions ?= 100
 REGRESSION_TESTS = axi_sequential_reads_test axi_sequential_writes_test axi_pipelined_reads_test axi_pipelined_writes_test
 
 LOG_DIR      = logs
@@ -22,7 +22,7 @@ params_pkgs:
 	./gen_params_pkg.py --template $(PARAMS_PKGS_TEMPLATE) --outputdir=$(PARAMS_PKGS_DIR)
 
 regression: uvm_dpi uvm.lib params_pkgs comp
-	@$(foreach rtest, $(REGRESSION_TESTS), $(foreach var,$(ALL_PARAM_PKGS), make comp_params_pkg sim UVM_TESTNAME=$(rtest) PARAMS_STRING=$(var) transactions=10;))
+	@$(foreach rtest, $(REGRESSION_TESTS), $(foreach var,$(ALL_PARAM_PKGS), make comp_params_pkg sim UVM_TESTNAME=$(rtest) PARAMS_STRING=$(var) transactions=$(transactions);))
 
 comp_params_pkg:
 	vlog -O0 -novopt -sv +incdir+`pwd`/../tb +incdir+$(UVM_HOME)/src $(PARAMSFILE)
