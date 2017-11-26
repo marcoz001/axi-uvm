@@ -83,6 +83,11 @@ class axi_agent_config extends uvm_object;
   bit  axi_incompatible_rvalid_toggling_mode=0;
 // \todo:issing ar toggling mode
 
+  // Prevent ready and valid not overlapping, which results in data never sending,
+  // which hangs the sim.
+  byte clks_without_wvalid_or_wready_max=25;
+  byte clks_without_rvalid_or_rready_max=25;
+
 
    //
    // If multiple write transfers are queued,

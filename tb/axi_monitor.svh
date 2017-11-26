@@ -351,32 +351,37 @@ task axi_monitor::read_address();
     `uvm_info("axi_monitor::read_address",
               $sformatf("rvalid.size=%0d", m_config.rvalid.size),
                     UVM_INFO)
+
+    valid_asserts = 0;
     if (m_config.rvalid.size > 0) begin
       cloned_item.valid=new[m_config.rvalid.size](m_config.rvalid);
     end else begin
        cloned_item.valid=new[cloned_item.len];
-       valid_s="";
-       valid_asserts = 0;
        j=cloned_item.valid.size();
        for (int i=0;i<j;i++) begin
           cloned_item.valid[i] = $random;
-             if (cloned_item.valid[i] == 1'b1) begin
-                valid_asserts++;
-             end
        end
+    end
 
-       if (valid_asserts==0) begin
-          valid_assert_bit=$urandom_range(j-1,0);
-          cloned_item.valid[valid_assert_bit] = 1'b1;
-          `uvm_info("axi_monitor",
-                    $sformatf("All zeros. Settin bit %0d to 1", valid_assert_bit),
-                    UVM_INFO)
+    j=cloned_item.valid.size();
+    for (int i=0;i<j;i++) begin
+       if (cloned_item.valid[i] == 1'b1) begin
+          valid_asserts++;
+          break;
        end
+    end
 
-       valid_s="";
-       for (int i=0;i<j;i++) begin
-          $sformat(valid_s, "%s%0b", valid_s, cloned_item.valid[i]);
-       end
+    if (valid_asserts==0) begin
+       valid_assert_bit=$urandom_range(j-1,0);
+       cloned_item.valid[valid_assert_bit] = 1'b1;
+       `uvm_info("axi_monitor",
+                 $sformatf("All zeros. Settin bit %0d to 1", valid_assert_bit),
+                 UVM_INFO)
+    end
+
+    valid_s="";
+    for (int i=0;i<j;i++) begin
+       $sformat(valid_s, "%s%0b", valid_s, cloned_item.valid[i]);
     end
 
 

@@ -42,15 +42,15 @@ class axi_pipelined_writes_test extends axi_base_test;
 
 
   assert(driver_agent_config.randomize() with {
-                                               bready_toggle_pattern == 32'hFFFF_FFFF;
-                                               rready_toggle_pattern == 32'hFFFF_FFFF;
+                                               //bready_toggle_pattern == 32'hFFFF_FFFF;
+                                               //rready_toggle_pattern == 32'hFFFF_FFFF;
 
                                                min_clks_between_ar_transfers == 0;
-                                               max_clks_between_ar_transfers == 0;
+                                               max_clks_between_ar_transfers == 3;
                                                min_clks_between_aw_transfers == 0;
-                                               max_clks_between_aw_transfers == 0;
+                                               max_clks_between_aw_transfers == 3;
                                                min_clks_between_w_transfers  == 0;
-                                               max_clks_between_w_transfers  == 0;
+                                               max_clks_between_w_transfers  == 3;
                                               });
 
   driver_agent_config.m_active            = UVM_ACTIVE;
@@ -64,14 +64,14 @@ class axi_pipelined_writes_test extends axi_base_test;
 
 
   assert(responder_agent_config.randomize() with {
-                                                  awready_toggle_pattern == 32'hFFFF_FFFF;
-                                                   wready_toggle_pattern == 32'hFFFF_FFFF;
-                                                  arready_toggle_pattern == 32'hFFFF_FFFF;
+                                                 // awready_toggle_pattern == 32'hFFFF_FFFF;
+                                                  // wready_toggle_pattern == 32'hFFFF_FFFF;
+                                                 // arready_toggle_pattern == 32'hFFFF_FFFF;
 
                                                   min_clks_between_r_transfers == 0;
-                                                  max_clks_between_r_transfers == 0;
+                                                  max_clks_between_r_transfers == 3;
                                                   min_clks_between_b_transfers == 0;
-                                                  max_clks_between_b_transfers == 0;
+                                                  max_clks_between_b_transfers == 3;
 
                                                   });
 

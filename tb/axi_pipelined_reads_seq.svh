@@ -81,7 +81,7 @@ function automatic void axi_pipelined_reads_seq::response_handler(uvm_sequence_i
 
     `uvm_info("LLLLLLLLLLLLLLL",
               $sformatf("SEQ_response_handler id:%0d uaddr=0x%0x laddr=0x%0x",
-                      id, , lower_addr, upper_addr),
+                      id, lower_addr, upper_addr),
             UVM_INFO)
 
    if (!m_memory.seq_item_check(.item       (item),
@@ -197,13 +197,7 @@ task axi_pipelined_reads_seq::body;
                                          id         == local::xid;
                                          addr       >= local::addr_lo;
                                          addr       <  local::addr_hi;
-
-      //Protocol: e_AXI4 Cmd: e_READ    Addr = 0x90ae  ID = 0x9  Len = 0x18 (24)  BurstSize = 0x1  BurstType = 0x0
-      protocol ==e_AXI4;
-      len == 'h18;
-      burst_size == 'h1;
-      burst_type == 'h0;
-
+      len < 5;
     })
 
 

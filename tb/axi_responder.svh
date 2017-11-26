@@ -284,6 +284,7 @@ task axi_responder::read_data;
 
 
   int n=0;
+  int j;
 
   int minval;
   int maxval;
@@ -295,6 +296,8 @@ task axi_responder::read_data;
   bit strb []; // throwaway
   int validcntr;
   int validcntr_max;
+  int valid_assert_bit;
+  int clks_without_rvalid_or_rready;
 
   vif.set_rvalid(1'b0);
   forever begin
@@ -307,8 +310,8 @@ task axi_responder::read_data;
                                              .burst_length(item.len)) + 1;
       validcntr=0;
       validcntr_max=item.valid.size();
+      clks_without_rvalid_or_rready=0;
     end
-
     // Look at this only one per loop, so there's no race condition of it
     // changing mid-loop.
 
@@ -353,6 +356,7 @@ task axi_responder::read_data;
                                                        .burst_length(item.len)) + 1;
                 validcntr=0;
                 validcntr_max=item.valid.size();
+                clks_without_rvalid_or_rready=0;
             end
 
           end
@@ -364,6 +368,23 @@ task axi_responder::read_data;
 
     // Update values
     if (item != null) begin
+       // if too long withoutsending any data, then add an extra valid.
+       // it is entirely possible for ready and valid to not have overlap,
+       // which will hang the sim.  Add additional valids to counteract.
+       // \Todo: Need to report all this to help with reproducing bugs
+       if (vif.get_rready()==1'b0 && vif.get_rvalid() == 1'b0) begin
+          clks_without_rvalid_or_rready++;
+          if (clks_without_rvalid_or_rready > m_config.clks_without_rvalid_or_rready_max) begin
+            j=item.valid.size();
+
+            valid_assert_bit=$urandom_range(j-1,0);
+            item.valid[valid_assert_bit] = 1'b1;
+            `uvm_info("axi_driver::write_data",
+                      $sformatf("%0d clocks without ready/valid overlap.  Setting another valid[], bit %0d, to 1", clks_without_rvalid_or_rready, valid_assert_bit),
+                      UVM_INFO)
+            clks_without_rvalid_or_rready=0;
+         end
+       end
 
        s.rvalid = item.valid[validcntr];
 
