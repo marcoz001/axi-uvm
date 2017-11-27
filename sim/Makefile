@@ -4,15 +4,19 @@ PARAMSFILE    = $(PARAMS_PKGS_DIR)/params_pkg_$(PARAMS_STRING).sv
 RTLFILES      = ../rtl/axi_pkg.sv ../rtl/axi_if.sv
 TBFILES       = ../rtl/axi_uvm_pkg.sv ../tb/tb.sv
 
+
+# default: go big or go home 
+transactions ?= 200
+#Set SEED=0 for stable/consistent runs like pre-commit checks
+SEED ?=random
 UVM_TESTNAME ?= axi_base_test
-transactions ?= 100
 REGRESSION_TESTS = axi_sequential_reads_test axi_sequential_writes_test axi_pipelined_reads_test axi_pipelined_writes_test
 
 LOG_DIR      = logs
 COVERAGE_DIR = coverage
 PARAMS_PKGS_TEMPLATE = params_pkg.sv_TMPL
 PARAMS_PKGS_DIR = params_pkgs
-MERGED_COVERAGE_UCDB =/merged_coverage.ucdb
+MERGED_COVERAGE_UCDB = merged_coverage.ucdb
 
 all: uvm_dpi uvm.lib params_pkgs comp sim coverage_report
 
@@ -22,7 +26,7 @@ params_pkgs:
 	./gen_params_pkg.py --template $(PARAMS_PKGS_TEMPLATE) --outputdir=$(PARAMS_PKGS_DIR)
 
 regression: uvm_dpi uvm.lib params_pkgs comp
-	@$(foreach rtest, $(REGRESSION_TESTS), $(foreach var,$(ALL_PARAM_PKGS), make comp_params_pkg sim UVM_TESTNAME=$(rtest) PARAMS_STRING=$(var) transactions=$(transactions);))
+	@$(foreach rtest, $(REGRESSION_TESTS), $(foreach var,$(ALL_PARAM_PKGS), $(MAKE)  comp_params_pkg sim UVM_TESTNAME=$(rtest) PARAMS_STRING=$(var) transactions=$(transactions);))
 
 comp_params_pkg:
 	vlog -O0 -novopt -sv +incdir+`pwd`/../tb +incdir+$(UVM_HOME)/src $(PARAMSFILE)
@@ -30,6 +34,10 @@ comp_params_pkg:
 comp: comp_params_pkg
 	vlog -assertdebug -O0 -novopt -sv +incdir+`pwd`/../tb +incdir+$(UVM_HOME)/src $(RTLFILES) $(TBFILES) /opt/mentor/questasim_10.6/questasim/verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv $(UVM_HOME)/src/uvm_pkg.sv
 
+pre_release_check: regression
+	echo "Checking logs for UVM errors"
+	grep '\(UVM_ERROR\|UVM_FATAL\)' $(LOG_DIR)/* | grep -v ':    0'; test $$? -eq 1
+	
 
 
 uvm.lib:
@@ -47,10 +55,10 @@ $(COVERAGE_DIR):
 	mkdir -p $(COVERAGE_DIR)
 	
 sim: $(COVERAGE_DIR) $(LOG_DIR)
-	vsim -assertdebug -l $(LOG_DIR)/$(UVM_TESTNAME)_$(PARAMS_STRING).log -c -sv_lib uvm_dpi/uvm_dpi -L uvm.lib -assertcover -coverage +UVM_TESTNAME=$(UVM_TESTNAME) +transactions=$(transactions) tb -do 'coverage save -onexit $(COVERAGE_DIR)/coverage_$(UVM_TESTNAME)_$(PARAMS_STRING).ucdb; run -all'
+	vsim -assertdebug -l $(LOG_DIR)/$(UVM_TESTNAME)_$(PARAMS_STRING).log -c -sv_seed $(SEED) -sv_lib uvm_dpi/uvm_dpi -L uvm.lib -assertcover -coverage +UVM_TESTNAME=$(UVM_TESTNAME) +transactions=$(transactions) tb -do 'coverage save -onexit $(COVERAGE_DIR)/coverage_$(UVM_TESTNAME)_$(PARAMS_STRING).ucdb; run -all'
 
 sim_gui:
-	vsim -novopt -sv_lib uvm_dpi/uvm_dpi -L uvm.lib +UVM_TESTNAME=$(UVM_TESTNAME) +transactions=$(transactions) tb
+	vsim -novopt -sv_seed $(SEED) -sv_lib uvm_dpi/uvm_dpi -L uvm.lib +UVM_TESTNAME=$(UVM_TESTNAME) +transactions=$(transactions) tb
 
 coverage_report:
 	-rm $(COVERAGE_DIR)/$(MERGED_COVERAGE_UCDB)
