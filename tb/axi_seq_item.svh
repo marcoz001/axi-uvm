@@ -291,7 +291,7 @@ function string axi_seq_item::convert2string;
     int j=0;
     sdata="";
     $sformat(s, "%s", super.convert2string());
-  $sformat(s, "%s Protocol: %s", s, protocol.name);
+    $sformat(s, "%s Protocol: %s", s, protocol.name);
     $sformat(s, "%s Cmd: %s   ", s, cmd.name);
     $sformat(s, "%s Addr = 0x%0x ", s, addr);
     $sformat(s, "%s ID = 0x%0x ",   s, id);
@@ -300,6 +300,7 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s BurstType = 0x%0x ",   s, burst_type);
     $sformat(s, "%s BID = 0x%0x",   s, bid);
     $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
+/*
 
     j=data.size();
     sdata="";
@@ -316,7 +317,6 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s valid[]: %s", s, sdata);
 
 
-/*
     j=wstrb.size();
     sdata="";
     for (int i =0; i< j; i++) begin
