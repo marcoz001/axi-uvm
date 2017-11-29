@@ -32,7 +32,7 @@ comp_params_pkg:
 	vlog -O0 -novopt -sv +incdir+`pwd`/../tb +incdir+$(UVM_HOME)/src $(PARAMSFILE)
 
 comp: comp_params_pkg
-	vlog -assertdebug -O0 -novopt -sv +incdir+`pwd`/../tb +incdir+$(UVM_HOME)/src $(RTLFILES) $(TBFILES) /opt/mentor/questasim_10.6/questasim/verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv $(UVM_HOME)/src/uvm_pkg.sv
+	vlog -assertdebug -O0 -novopt -sv +incdir+`pwd`/../rtl +incdir+`pwd`/../tb +incdir+$(UVM_HOME)/src $(RTLFILES) $(TBFILES) /opt/mentor/questasim_10.6/questasim/verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv $(UVM_HOME)/src/uvm_pkg.sv
 
 pre_release_check: regression
 	echo "Checking logs for UVM errors"
