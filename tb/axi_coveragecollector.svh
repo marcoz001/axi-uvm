@@ -55,8 +55,13 @@ class axi_coveragecollector extends uvm_subscriber #(axi_seq_item);
       bins e_WRAP    = {axi_pkg::e_WRAP};
     }
 
-    AWLEN : coverpoint item.axlen[LEN_WIDTH-1:0];
-
+    AWLEN : coverpoint item.axlen[LEN_WIDTH-1:0] {
+       bins bin0       = {0};
+       bins bin1_14    = {[1:14]};
+       bins bin15      = {15};
+       bins bin16_254  = {[16:254]};
+       bins bin255     = {255};
+   }
     /* awcache, awlock, awprot, awqos here someday */
 
   endgroup: aw_cg
@@ -82,7 +87,13 @@ class axi_coveragecollector extends uvm_subscriber #(axi_seq_item);
       bins e_WRAP    = {axi_pkg::e_WRAP};
     }
 
-    ARLEN : coverpoint item.axlen[LEN_WIDTH-1:0];
+    ARLEN : coverpoint item.axlen[LEN_WIDTH-1:0] {
+       bins bin0       = {0};
+       bins bin1_14    = {[1:14]};
+       bins bin15      = {15};
+       bins bin16_254  = {[16:254]};
+       bins bin255     = {255};
+   }
 
     /* awcache, awlock, awprot, awqos here someday */
 

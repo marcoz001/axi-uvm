@@ -300,8 +300,8 @@ function string axi_seq_item::convert2string;
     $sformat(s, "%s BurstType = 0x%0x ",   s, burst_type);
     $sformat(s, "%s BID = 0x%0x",   s, bid);
     $sformat(s, "%s BRESP = 0x%0x",   s, bresp);
-/*
 
+/*
     j=data.size();
     sdata="";
     for (int i =0; i< j; i++) begin

@@ -693,6 +693,8 @@ end
 
 endfunction : use_concrete_class
 
+`include "axi_sva.svh"
+
 
 endinterface : axi_if
 
